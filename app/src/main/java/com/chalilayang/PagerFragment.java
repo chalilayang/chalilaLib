@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,8 +60,15 @@ public class PagerFragment extends Fragment {
     }
 
     public void init(View root) {
+        TabLayout tabLayout = (TabLayout) root.findViewById(R.id.tab_layout);
+
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
+
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
+
+        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
         mSectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager, mParam1);
-        mViewPager = root.findViewById(R.id.view_pager);
+        mViewPager = (ViewPager) root.findViewById(R.id.view_pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
     }
 

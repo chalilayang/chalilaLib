@@ -3,12 +3,12 @@ apply plugin: 'org.greenrobot.greendao' // apply plugin
 //apply plugin: 'io.objectbox' // after applying Android plugin
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 24
     buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.chalilayang"
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
