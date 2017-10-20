@@ -70,6 +70,7 @@ public class PagerFragment extends Fragment {
         mSectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager, mParam1);
         mViewPager = (ViewPager) root.findViewById(R.id.view_pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        tabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.chalilayang;
 
+import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,15 +18,12 @@ import com.chalilayang.dummy.DummyContent;
 
 import static com.chalilayang.PagerFragment.ARG_PARAM1;
 
-public class TabActivity extends AppCompatActivity implements ItemFragment.OnListFragmentInteractionListener {
+public class TabActivity extends Activity implements ItemFragment.OnListFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         PagerFragment pagerFragment
                 = (PagerFragment) getFragmentManager().findFragmentById(R.id.page_fragment);
