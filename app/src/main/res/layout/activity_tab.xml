@@ -9,9 +9,8 @@
     android:fitsSystemWindows="true"
     tools:context="com.chalilayang.TabActivity">
 
-    <fragment
-        android:id="@+id/page_fragment"
-        android:name="com.chalilayang.PagerFragment"
+    <FrameLayout
+        android:id="@+id/page_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

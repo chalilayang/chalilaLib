@@ -12,24 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chalilayang.parcelables.PageData;
+import com.chalilayang.parcelables.PageItemData;
+
 
 public class PagerFragment extends Fragment {
-    public static final String ARG_PARAM1 = "param1";
-    private int mParam1;
+    private static final String PAGE_DATA = "PAGE_DATA";
+    private PageData pageData;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private FragmentManager fragmentManager;
 
     private ViewPager mViewPager;
-    private OnFragmentInteractionListener mListener;
 
     public PagerFragment() {
         // Required empty public constructor
     }
 
-    public static PagerFragment newInstance(String param1) {
+    public static PagerFragment newInstance(PageData data) {
         PagerFragment fragment = new PagerFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        args.putParcelable(PAGE_DATA, data);
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,10 +40,7 @@ public class PagerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getInt(ARG_PARAM1);
-        }
-        if (mParam1 == 0) {
-            mParam1 = 4;
+            pageData = getArguments().getParcelable(PAGE_DATA);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             fragmentManager = getChildFragmentManager();
@@ -53,62 +52,42 @@ public class PagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_pager, container, false);
         init(root);
         return root;
     }
 
     public void init(View root) {
-        TabLayout tabLayout = (TabLayout) root.findViewById(R.id.tab_layout);
-
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
-
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-
-        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
-        mSectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager, mParam1);
-        mViewPager = (ViewPager) root.findViewById(R.id.view_pager);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        tabLayout.setupWithViewPager(mViewPager);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        TabLayout tabLayout = root.findViewById(R.id.tab_layout);
+        mViewPager = root.findViewById(R.id.view_pager);
+        if (pageData != null && pageData.getCount() > 0) {
+            mSectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager, pageData);
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+            tabLayout.setupWithViewPager(mViewPager);
         }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        private int count;
-        public SectionsPagerAdapter(FragmentManager fm, int pageCount) {
+        private PageData pageData;
+        public SectionsPagerAdapter(FragmentManager fm, PageData pageCount) {
             super(fm);
-            count = pageCount;
+            pageData = pageCount;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return ItemFragment.newInstance(7);
+            return ItemFragment.newInstance(pageData.getItemDataList().get(position));
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return count;
+            return pageData.getCount();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return pageData.getItemDataList().get(position).getTitle();
         }
     }
 }

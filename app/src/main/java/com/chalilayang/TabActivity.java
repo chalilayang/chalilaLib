@@ -3,30 +3,31 @@ package com.chalilayang;
 import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.support.v4.view.ViewPager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
-import com.chalilayang.dummy.DummyContent;
+import com.chalilayang.parcelables.PageData;
+import com.chalilayang.parcelables.PageItemData;
 
-import static com.chalilayang.PagerFragment.ARG_PARAM1;
+import java.util.ArrayList;
+import java.util.List;
 
-public class TabActivity extends Activity implements ItemFragment.OnListFragmentInteractionListener {
+public class TabActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
 
-        PagerFragment pagerFragment
-                = (PagerFragment) getFragmentManager().findFragmentById(R.id.page_fragment);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        List<PageItemData> list = new ArrayList<>(3);
+        for (int index = 0; index < 3; index ++) {
+            PageItemData pageItemData = new PageItemData(String.valueOf(index), 0);
+            list.add(pageItemData);
+        }
+        PagerFragment pagerFragment = PagerFragment.newInstance(new PageData(list));
+        transaction.replace(R.id.page_fragment_container, pagerFragment).commit();
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,33 +36,5 @@ public class TabActivity extends Activity implements ItemFragment.OnListFragment
                         .setAction("Action", null).show();
             }
         });
-
-    }
-
-    @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tab, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
