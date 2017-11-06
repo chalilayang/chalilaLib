@@ -12,6 +12,7 @@ import com.chalilayang.db.entity.DaoSession;
 
 class DaoManager {
     private DaoMaster.DevOpenHelper openDevHelper;
+    private DaoMaster daoMaster;
     private DaoSession daoSession;
     private Context appContext;
     private static DaoManager ourInstance;
@@ -30,13 +31,9 @@ class DaoManager {
     private DaoManager(Context context) {
         appContext = context.getApplicationContext();
         String dbName = context.getPackageName() + "database";
+        daoMaster = new DaoMaster(getWritableDatabase());
         openDevHelper = new DaoMaster.DevOpenHelper(context, dbName);
         daoSession = new DaoMaster(getWritableDatabase()).newSession();
-    }
-
-    private SQLiteDatabase getReadableDatabase() {
-        SQLiteDatabase db = openDevHelper.getReadableDatabase();
-        return db;
     }
 
     /**
