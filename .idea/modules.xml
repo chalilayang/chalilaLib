@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/chalilaLib.iml" filepath="$PROJECT_DIR$/chalilaLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chalilalib/chalilalib.iml" filepath="$PROJECT_DIR$/chalilalib/chalilalib.iml" />
     </modules>
   </component>
 </project>
