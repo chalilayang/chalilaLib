@@ -9,13 +9,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.reshape.app.model.homepage.HomePageActivity"
+            android:name=".model.homepage.HomePageActivity"
             android:label="@string/title_activity_home_page">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".model.search.SearchActivity">
+        </activity>
+        <activity android:name=".BaseActivity">
         </activity>
     </application>
 

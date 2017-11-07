@@ -17,7 +17,7 @@ import com.chalilayang.parcelables.PageItemData;
 
 
 public class PagerFragment extends Fragment {
-    private static final String PAGE_DATA = "PAGE_DATA";
+    public static final String PAGE_DATA = "PAGE_DATA";
     private PageData pageData;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private FragmentManager fragmentManager;
