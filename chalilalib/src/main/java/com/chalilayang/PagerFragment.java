@@ -16,7 +16,7 @@ import com.chalilayang.parcelables.PageData;
 import com.chalilayang.parcelables.PageItemData;
 
 
-public class PagerFragment extends Fragment {
+public class PagerFragment extends BaseFragment {
     public static final String PAGE_DATA = "PAGE_DATA";
     private PageData pageData;
     private SectionsPagerAdapter mSectionsPagerAdapter;
@@ -61,7 +61,7 @@ public class PagerFragment extends Fragment {
         TabLayout tabLayout = root.findViewById(R.id.tab_layout);
         mViewPager = root.findViewById(R.id.view_pager);
         if (pageData != null && pageData.getCount() > 0) {
-            mSectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager, pageData);
+            mSectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager);
             mViewPager.setAdapter(mSectionsPagerAdapter);
             tabLayout.setupWithViewPager(mViewPager);
         }
@@ -69,25 +69,31 @@ public class PagerFragment extends Fragment {
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        private PageData pageData;
-        public SectionsPagerAdapter(FragmentManager fm, PageData pageCount) {
+        public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
-            pageData = pageCount;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return ItemFragment.newInstance(pageData.getItemDataList().get(position));
+            return createFragment(position);
         }
 
         @Override
         public int getCount() {
-            return pageData.getCount();
+            if (pageData == null) {
+                return 0;
+            } else {
+                return pageData.getCount();
+            }
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             return pageData.getItemDataList().get(position).getTitle();
         }
+    }
+
+    public BaseFragment createFragment(int pageIndex) {
+        return ItemFragment.newInstance(pageData.getItemDataList().get(pageIndex));
     }
 }
