@@ -1,6 +1,5 @@
 package com.chalilayang;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +19,7 @@ public class ItemFragment extends BaseItemFragment implements SwipeRefreshLayout
     private static final String PAGE_DATA = "PAGE_DATA";
     private PageItemData pageData;
     private SwipeRefreshLayout refreshLayout;
+    private View contentView;
     private RecyclerView.LayoutManager layoutManager;
     private ItemRecyclerViewAdapter recyclerViewAdapter;
 
@@ -47,24 +47,29 @@ public class ItemFragment extends BaseItemFragment implements SwipeRefreshLayout
             layoutManager = new LinearLayoutManager(getActivity());
             recyclerViewAdapter = new ItemRecyclerViewAdapter(DummyContent.ITEMS);
         }
+        Log.i(TAG, "onCreate: " + pageData.getTitle());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
-        if (view instanceof RecyclerView) {
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.setAdapter(recyclerViewAdapter);
-        } else if (view instanceof SwipeRefreshLayout ){
-            refreshLayout = (SwipeRefreshLayout) view;
-            RecyclerView child = refreshLayout.findViewById(R.id.list);
-            child.setLayoutManager(layoutManager);
-            child.setAdapter(recyclerViewAdapter);
-            refreshLayout.setOnRefreshListener(this);
+        if (contentView == null) {
+            View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+            if (view instanceof RecyclerView) {
+                RecyclerView recyclerView = (RecyclerView) view;
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(recyclerViewAdapter);
+            } else if (view instanceof SwipeRefreshLayout ){
+                refreshLayout = (SwipeRefreshLayout) view;
+                RecyclerView child = refreshLayout.findViewById(R.id.list);
+                child.setLayoutManager(layoutManager);
+                child.setAdapter(recyclerViewAdapter);
+                refreshLayout.setOnRefreshListener(this);
+            }
+            contentView = view;
         }
-        return view;
+        Log.i(TAG, "onCreateView: " + pageData.getTitle());
+        return contentView;
     }
 
     @Override
