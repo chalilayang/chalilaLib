@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.reshape.app.model.search.SearchActivity">
 
     <com.chalilayang.scaleview.ScaleRelativeLayout
+        android:id="@+id/search_top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true">
@@ -28,4 +30,11 @@
 
     </com.chalilayang.scaleview.ScaleRelativeLayout>
 
+    <com.nex3z.flowlayout.FlowLayout
+        android:id="@+id/search_label_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginRight="@dimen/size_30"
+        android:layout_below="@+id/search_top_layout"/>
 </com.chalilayang.scaleview.ScaleRelativeLayout>

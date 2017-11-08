@@ -17,4 +17,8 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <declare-styleable name="FlowLayout">
+        <attr name="width_space" format="dimension"/>
+        <attr name="height_space" format="dimension"/>
+    </declare-styleable>
 </resources>

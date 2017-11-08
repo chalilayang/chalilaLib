@@ -41,8 +41,8 @@ public class ScaleCalculator {
     /**
      * the current system screen size and density.
      */
-    private static float mCurScreenWidth = 720.0f;
-    private static float mCurScreenHeight = 1280.0f;
+    private static float mCurScreenWidth = 750.0f;
+    private static float mCurScreenHeight = 1136.0f;
 
     private static ScaleCalculator mInstance;
 
