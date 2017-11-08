@@ -68,7 +68,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/size_30"
         android:layout_marginRight="@dimen/size_30"
-        android:layout_below="@+id/search_top_layout">
+        android:layout_below="@+id/search_top_layout"
+        android:overScrollMode="never"
+        android:fadingEdgeLength="@dimen/size_57"
+        android:scrollbars="none">
         <com.chalilayang.scaleview.ScaleLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -101,7 +104,11 @@
                     android:layout_alignParentRight="true"
                     android:src="@mipmap/search_history_clear"/>
             </com.chalilayang.scaleview.ScaleRelativeLayout>
-
+            <com.nex3z.flowlayout.FlowLayout
+                android:id="@+id/search_history_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_30"/>
         </com.chalilayang.scaleview.ScaleLinearLayout>
     </ScrollView>
 

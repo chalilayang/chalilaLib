@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chalilayang.scaleview.ScaleLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <com.chalilayang.scaleview.ScaleTextView
+        android:id="@+id/history_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/search_label"/>
+    <ImageView
+        android:id="@+id/history_item_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/search_history_clear"
+        android:layout_marginLeft="@dimen/size_30"/>
+</com.chalilayang.scaleview.ScaleLinearLayout>
