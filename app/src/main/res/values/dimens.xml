@@ -22,6 +22,7 @@
     <dimen name="size_100">100px</dimen>
     <dimen name="size_66">66px</dimen>
     <dimen name="size_56">56px</dimen>
+    <dimen name="size_57">57px</dimen>
     <dimen name="size_160">160px</dimen>
     <dimen name="size_187">187px</dimen>
     <dimen name="size_50">50px</dimen>
@@ -40,4 +41,5 @@
     <dimen name="size_240">240px</dimen>
     <dimen name="size_320">450px</dimen>
     <dimen name="size_480">480px</dimen>
+    <dimen name="size_568">568px</dimen>
 </resources>

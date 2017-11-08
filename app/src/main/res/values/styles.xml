@@ -21,4 +21,13 @@
         <attr name="width_space" format="dimension"/>
         <attr name="height_space" format="dimension"/>
     </declare-styleable>
+
+    <style name="search_column_title">
+        <item name="android:textSize">@dimen/size_28</item>
+        <item name="android:textColor">#999999</item>
+    </style>
+    <style name="search_label">
+        <item name="android:textSize">@dimen/size_26</item>
+        <item name="android:textColor">@color/search_label_text</item>
+    </style>
 </resources>

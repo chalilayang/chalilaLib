@@ -4,37 +4,105 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.reshape.app.model.search.SearchActivity">
 
     <com.chalilayang.scaleview.ScaleRelativeLayout
         android:id="@+id/search_top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_30"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginRight="@dimen/size_30"
         android:layout_alignParentTop="true">
 
-        <SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/search_tv"
-            android:iconifiedByDefault="false"
-            android:queryHint="请输入您要查找的内容"/>
+        <com.chalilayang.scaleview.ScaleRelativeLayout
+            android:layout_width="@dimen/size_568"
+            android:layout_height="@dimen/size_57"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/search_edit_bg">
+            <ImageView
+                android:id="@+id/search_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20"
+                android:layout_marginRight="@dimen/size_10"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/search_icon"/>
+            <com.chalilayang.scaleview.ScaleEditText
+                android:id="@+id/search_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/search_interesting_video"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/search_icon"
+                android:textAppearance="@style/search_label"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@drawable/edit_text_cursor"
+                android:background="@color/transparent"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_10"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/search_delete"/>
+        </com.chalilayang.scaleview.ScaleRelativeLayout>
+
         <com.chalilayang.scaleview.ScaleTextView
             android:id="@+id/search_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/search"
+            android:textColor="@color/reshape_red"
+            android:textSize="@dimen/size_34"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"/>
 
     </com.chalilayang.scaleview.ScaleRelativeLayout>
 
-    <com.nex3z.flowlayout.FlowLayout
-        android:id="@+id/search_label_layout"
+
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/size_30"
         android:layout_marginRight="@dimen/size_30"
-        android:layout_below="@+id/search_top_layout"/>
+        android:layout_below="@+id/search_top_layout">
+        <com.chalilayang.scaleview.ScaleLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.chalilayang.scaleview.ScaleTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_60"
+                android:text="@string/all_is_searching"
+                android:textAppearance="@style/search_column_title"/>
+            <com.nex3z.flowlayout.FlowLayout
+                android:id="@+id/search_label_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_30"/>
+            <com.chalilayang.scaleview.ScaleRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_60">
+                <com.chalilayang.scaleview.ScaleTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/search_history"
+                    android:textAppearance="@style/search_column_title"
+                    android:layout_centerVertical="true"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/search_history_clear"/>
+            </com.chalilayang.scaleview.ScaleRelativeLayout>
+
+        </com.chalilayang.scaleview.ScaleLinearLayout>
+    </ScrollView>
+
 </com.chalilayang.scaleview.ScaleRelativeLayout>
