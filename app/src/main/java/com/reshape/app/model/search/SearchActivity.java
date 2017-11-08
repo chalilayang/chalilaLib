@@ -104,9 +104,9 @@ public class SearchActivity extends BaseActivity {
             for (int i = 0, count = list.size(); i < count; i++) {
                 View container = LayoutInflater.from(getApplicationContext())
                         .inflate(R.layout.search_item_layout, null);
-                final TextView view = container.findViewById(R.id.history_title);
-                view.setText(list.get(i));
-                view.setIncludeFontPadding(false);
+                final TextView tv = container.findViewById(R.id.history_title);
+                tv.setText(list.get(i));
+                tv.setIncludeFontPadding(false);
                 container.setPadding(paddingLeft, paddingTop, paddingLeft, paddingTop);
                 container.setOnClickListener(new View.OnClickListener() {
                     @Override
