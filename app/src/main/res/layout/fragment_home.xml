@@ -22,6 +22,7 @@
             app:tabTextColor="@color/black"/>
 
         <ImageView
+            android:id="@+id/search_btn"
             android:layout_width="@dimen/size_66"
             android:layout_height="@dimen/size_66"
             android:layout_marginRight="@dimen/size_36"

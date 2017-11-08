@@ -1,10 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<com.chalilayang.scaleview.ScaleRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.reshape.app.model.search.SearchActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <com.chalilayang.scaleview.ScaleRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/search_tv"
+            android:iconifiedByDefault="false"
+            android:queryHint="请输入您要查找的内容"/>
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/search_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"/>
+
+    </com.chalilayang.scaleview.ScaleRelativeLayout>
+
+</com.chalilayang.scaleview.ScaleRelativeLayout>

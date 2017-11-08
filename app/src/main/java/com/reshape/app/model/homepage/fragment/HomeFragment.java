@@ -1,5 +1,6 @@
 package com.reshape.app.model.homepage.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.chalilayang.PagerFragment;
 import com.chalilayang.parcelables.PageData;
 import com.chalilayang.parcelables.PageItemData;
 import com.reshape.app.R;
+import com.reshape.app.model.search.SearchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.List;
 
 public class HomeFragment extends PagerFragment {
 
+    private View searchBtn;
     public static HomeFragment newInstance(PageData data) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -37,6 +40,19 @@ public class HomeFragment extends PagerFragment {
     }
 
     @Override
+    public void init(View root) {
+        super.init(root);
+        searchBtn = root.findViewById(R.id.search_btn);
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+    }
+
+    @Override
     public BaseFragment createFragment(int pageIndex) {
         if (pageIndex == 1) {
             List<PageItemData> list = new ArrayList<>(2);
@@ -50,6 +66,5 @@ public class HomeFragment extends PagerFragment {
         } else {
             return super.createFragment(pageIndex);
         }
-
     }
 }
