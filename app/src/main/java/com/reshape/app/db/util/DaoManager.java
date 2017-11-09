@@ -1,16 +1,16 @@
-package com.chalilayang.db.util;
+package com.reshape.app.db.util;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.chalilayang.db.entity.DaoMaster;
-import com.chalilayang.db.entity.DaoSession;
+import com.reshape.app.db.entity.DaoMaster;
+import com.reshape.app.db.entity.DaoSession;
 
 /**
  * Created by chalilayang on 2017/10/19.
  */
 
-class DaoManager {
+public class DaoManager {
     private DaoMaster.DevOpenHelper openDevHelper;
     private DaoMaster daoMaster;
     private DaoSession daoSession;
@@ -28,11 +28,15 @@ class DaoManager {
         return ourInstance;
     }
 
+    public DaoSession getDaoSession() {
+        return daoSession;
+    }
+
     private DaoManager(Context context) {
         appContext = context.getApplicationContext();
         String dbName = context.getPackageName() + "database";
-        daoMaster = new DaoMaster(getWritableDatabase());
         openDevHelper = new DaoMaster.DevOpenHelper(context, dbName);
+        daoMaster = new DaoMaster(getWritableDatabase());
         daoSession = new DaoMaster(getWritableDatabase()).newSession();
     }
 

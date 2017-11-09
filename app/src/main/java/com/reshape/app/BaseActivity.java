@@ -21,5 +21,8 @@ public class BaseActivity extends Activity {
         }
     }
 
+    public void showShortToast(String msg) {
+
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.chalilayang.db.util;
+package com.reshape.app.db.util;
 
 /**
  * Created by chalilayang on 2017/10/19.

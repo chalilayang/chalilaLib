@@ -1,21 +1,28 @@
 package com.reshape.app.model.search;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.nex3z.flowlayout.FlowLayout;
 import com.reshape.app.BaseActivity;
 import com.reshape.app.R;
+import com.reshape.app.db.entity.SearchItemEntity;
+import com.reshape.app.db.entity.SearchItemEntityDao;
+import com.reshape.app.db.util.DaoManager;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +31,9 @@ public class SearchActivity extends BaseActivity {
     private static final String TAG = "SearchActivity";
     private FlowLayout flowLayout;
     private FlowLayout searchHistoryView;
+    private EditText editText;
+    private TextView searchBtn;
+    private SearchItemEntityDao entityDao;
     /**
      * 显示的文字
      */
@@ -50,13 +60,50 @@ public class SearchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        entityDao = DaoManager.getInstance(getApplicationContext())
+                .getDaoSession().getSearchItemEntityDao();
+        editText = (EditText) findViewById(R.id.search_edit);
+        editText.setFilters(new InputFilter[]{new MaxTextLengthFilter(31)});
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String content = editable.toString();
+                if (TextUtils.isEmpty(content)) {
+                    searchBtn.setText(getString(R.string.search_cancel));
+                } else {
+                    searchBtn.setText(getString(R.string.search));
+                }
+            }
+        });
+        searchBtn = (TextView) findViewById(R.id.search_tv);
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String currentTitle = editText.getText().toString();
+                if (!TextUtils.isEmpty(currentTitle)) {
+                    search(currentTitle);
+                } else {
+                    finish();
+                }
+            }
+        });
         flowLayout = findViewById(R.id.search_label_layout);
         int space = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(20);
         flowLayout.setChildSpacing(space);
         flowLayout.setRowSpacing(space);
         addLabel();
 
-        searchHistoryView = findViewById(R.id.search_history_list);
+        searchHistoryView = (FlowLayout) findViewById(R.id.search_history_list);
         searchHistoryView.setChildSpacing(space);
         searchHistoryView.setRowSpacing(space);
         List<String> list = new ArrayList<>();
@@ -116,6 +163,39 @@ public class SearchActivity extends BaseActivity {
                 });
                 container.setBackgroundResource(R.drawable.round_corner_rec);
                 searchHistoryView.addView(container);
+            }
+        }
+    }
+
+    private void search(String content) {
+        List<SearchItemEntity> list = entityDao.queryBuilder()
+                .where(SearchItemEntityDao.Properties.Content.eq(content)).build().list();
+        for (int index = 0, count = list.size(); index < count; index ++) {
+            entityDao.delete(list.get(index));
+        }
+        entityDao.insert(new SearchItemEntity(content, System.currentTimeMillis()));
+
+        List<SearchItemEntity> newlist = entityDao.queryBuilder().build().list();
+        Log.i(TAG, "search: " + newlist.size());
+    }
+
+    class MaxTextLengthFilter implements InputFilter {
+        private int mMaxLength;
+        public MaxTextLengthFilter(int max) {
+            mMaxLength = max - 1;
+        }
+        public CharSequence filter(CharSequence source, int start, int end,
+                                   Spanned dest, int dstart, int dend) {
+            int keep = mMaxLength - (dest.length() - (dend - dstart));
+            if (keep < (end - start)) {
+                showShortToast("视频标题最多输入30个字");
+            }
+            if (keep <= 0) {
+                return "";
+            } else if (keep >= end - start) {
+                return null;
+            } else {
+                return source.subSequence(start, start + keep);
             }
         }
     }
