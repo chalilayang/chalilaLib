@@ -1,4 +1,4 @@
-package com.chalilayang.application;
+package com.reshape.app;
 
 import android.app.Application;
 

@@ -1,13 +1,9 @@
-package com.chalilayang.net;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+package com.reshape.app.net;
 
 import java.io.IOException;
 
 import okhttp3.Interceptor;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 /**
  * Created by chalilayang on 2017/10/18.

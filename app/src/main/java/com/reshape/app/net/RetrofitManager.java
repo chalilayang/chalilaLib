@@ -1,7 +1,7 @@
-package com.chalilayang.net;
+package com.reshape.app.net;
 
-import com.chalilayang.constance.AppConstance;
-import com.chalilayang.constance.UrlConstance;
+import com.reshape.app.constance.AppConstance;
+import com.reshape.app.constance.UrlConstance;
 
 import java.util.concurrent.TimeUnit;
 
