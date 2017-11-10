@@ -13,7 +13,7 @@ import org.greenrobot.greendao.database.DatabaseStatement;
 /** 
  * DAO for table "SEARCH_ITEM_ENTITY".
 */
-public class SearchItemEntityDao extends AbstractDao<SearchItemEntity, Void> {
+public class SearchItemEntityDao extends AbstractDao<SearchItemEntity, Long> {
 
     public static final String TABLENAME = "SEARCH_ITEM_ENTITY";
 
@@ -22,8 +22,9 @@ public class SearchItemEntityDao extends AbstractDao<SearchItemEntity, Void> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Content = new Property(0, String.class, "content", false, "CONTENT");
-        public final static Property Time = new Property(1, Long.class, "time", false, "TIME");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property Content = new Property(1, String.class, "content", false, "CONTENT");
+        public final static Property Time = new Property(2, Long.class, "time", false, "TIME");
     }
 
 
@@ -39,8 +40,9 @@ public class SearchItemEntityDao extends AbstractDao<SearchItemEntity, Void> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"SEARCH_ITEM_ENTITY\" (" + //
-                "\"CONTENT\" TEXT," + // 0: content
-                "\"TIME\" INTEGER);"); // 1: time
+                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
+                "\"CONTENT\" TEXT," + // 1: content
+                "\"TIME\" INTEGER);"); // 2: time
     }
 
     /** Drops the underlying database table. */
@@ -53,14 +55,19 @@ public class SearchItemEntityDao extends AbstractDao<SearchItemEntity, Void> {
     protected final void bindValues(DatabaseStatement stmt, SearchItemEntity entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         String content = entity.getContent();
         if (content != null) {
-            stmt.bindString(1, content);
+            stmt.bindString(2, content);
         }
  
         Long time = entity.getTime();
         if (time != null) {
-            stmt.bindLong(2, time);
+            stmt.bindLong(3, time);
         }
     }
 
@@ -68,52 +75,62 @@ public class SearchItemEntityDao extends AbstractDao<SearchItemEntity, Void> {
     protected final void bindValues(SQLiteStatement stmt, SearchItemEntity entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         String content = entity.getContent();
         if (content != null) {
-            stmt.bindString(1, content);
+            stmt.bindString(2, content);
         }
  
         Long time = entity.getTime();
         if (time != null) {
-            stmt.bindLong(2, time);
+            stmt.bindLong(3, time);
         }
     }
 
     @Override
-    public Void readKey(Cursor cursor, int offset) {
-        return null;
+    public Long readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public SearchItemEntity readEntity(Cursor cursor, int offset) {
         SearchItemEntity entity = new SearchItemEntity( //
-            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // content
-            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1) // time
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // content
+            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2) // time
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, SearchItemEntity entity, int offset) {
-        entity.setContent(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setTime(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setContent(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setTime(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
      }
     
     @Override
-    protected final Void updateKeyAfterInsert(SearchItemEntity entity, long rowId) {
-        // Unsupported or missing PK type
-        return null;
+    protected final Long updateKeyAfterInsert(SearchItemEntity entity, long rowId) {
+        entity.setId(rowId);
+        return rowId;
     }
     
     @Override
-    public Void getKey(SearchItemEntity entity) {
-        return null;
+    public Long getKey(SearchItemEntity entity) {
+        if(entity != null) {
+            return entity.getId();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public boolean hasKey(SearchItemEntity entity) {
-        // TODO
-        return false;
+        return entity.getId() != null;
     }
 
     @Override

@@ -32,6 +32,7 @@ public class SearchActivity extends BaseActivity {
     private FlowLayout flowLayout;
     private FlowLayout searchHistoryView;
     private EditText editText;
+    private View editClear;
     private TextView searchBtn;
     private SearchItemEntityDao entityDao;
     /**
@@ -85,6 +86,13 @@ public class SearchActivity extends BaseActivity {
                 }
             }
         });
+        editClear = findViewById(R.id.edit_clear);
+        editClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText.setText("");
+            }
+        });
         searchBtn = (TextView) findViewById(R.id.search_tv);
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +118,7 @@ public class SearchActivity extends BaseActivity {
         for (int index = 0, count = mDatas.length; index < count; index ++) {
             list.add(mDatas[index]);
         }
-        updateHistory(list);
+        updateHistory();
     }
 
     private void addLabel() {
@@ -138,12 +146,13 @@ public class SearchActivity extends BaseActivity {
         }
     }
 
-    private void updateHistory(List<String> list) {
-        if (list == null || list.size() == 0) {
-            if (searchHistoryView != null) {
-                searchHistoryView.removeAllViews();
-            }
-        } else {
+    private void updateHistory() {
+        List<SearchItemEntity> list = entityDao.queryBuilder()
+                .orderDesc(SearchItemEntityDao.Properties.Time).build().list();
+        if (searchHistoryView != null) {
+            searchHistoryView.removeAllViews();
+        }
+        if (list != null && list.size() != 0) {
             int paddingLeft
                     = ScaleCalculator.getInstance(getApplicationContext()).scaleTextSize(30);
             int paddingTop
@@ -152,7 +161,7 @@ public class SearchActivity extends BaseActivity {
                 View container = LayoutInflater.from(getApplicationContext())
                         .inflate(R.layout.search_item_layout, null);
                 final TextView tv = container.findViewById(R.id.history_title);
-                tv.setText(list.get(i));
+                tv.setText(list.get(i).getContent());
                 tv.setIncludeFontPadding(false);
                 container.setPadding(paddingLeft, paddingTop, paddingLeft, paddingTop);
                 container.setOnClickListener(new View.OnClickListener() {
@@ -170,13 +179,9 @@ public class SearchActivity extends BaseActivity {
     private void search(String content) {
         List<SearchItemEntity> list = entityDao.queryBuilder()
                 .where(SearchItemEntityDao.Properties.Content.eq(content)).build().list();
-        for (int index = 0, count = list.size(); index < count; index ++) {
-            entityDao.delete(list.get(index));
-        }
+        entityDao.deleteInTx(list);
         entityDao.insert(new SearchItemEntity(content, System.currentTimeMillis()));
-
-        List<SearchItemEntity> newlist = entityDao.queryBuilder().build().list();
-        Log.i(TAG, "search: " + newlist.size());
+        updateHistory();
     }
 
     class MaxTextLengthFilter implements InputFilter {

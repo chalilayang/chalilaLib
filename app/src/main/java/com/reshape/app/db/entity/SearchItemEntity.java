@@ -10,17 +10,30 @@ import org.greenrobot.greendao.annotation.Property;
  */
 @Entity
 public class SearchItemEntity {
+    @Id
+    private Long id;
     @Property
     private String content;
     @Property
     private Long time;
-    @Generated(hash = 1239644255)
+    @Generated(hash = 162082132)
+    public SearchItemEntity(Long id, String content, Long time) {
+        this.id = id;
+        this.content = content;
+        this.time = time;
+    }
     public SearchItemEntity(String content, Long time) {
         this.content = content;
         this.time = time;
     }
     @Generated(hash = 757630992)
     public SearchItemEntity() {
+    }
+    public Long getId() {
+        return this.id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
     public String getContent() {
         return this.content;
