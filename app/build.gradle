@@ -20,7 +20,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    greendao{
+    greendao {
         schemaVersion 2
         targetGenDir 'src/main/java'
     }

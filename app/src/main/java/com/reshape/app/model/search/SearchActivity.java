@@ -1,6 +1,7 @@
 package com.reshape.app.model.search;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -242,6 +243,10 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         entityDao.deleteInTx(list);
         entityDao.insert(new SearchItemEntity(content, System.currentTimeMillis()));
         updateHistory();
+        if (!TextUtils.isEmpty(content)) {
+            Intent intent = new Intent(this, SearchResultActivity.class);
+            startActivity(intent);
+        }
     }
 
     class MaxTextLengthFilter implements InputFilter {
