@@ -1,5 +1,6 @@
 package com.reshape.app.model.search;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -9,9 +10,12 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -26,13 +30,15 @@ import com.reshape.app.db.util.DaoManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "SearchActivity";
+    private static final int KEY = "SEARCH_KEY".hashCode();
     private FlowLayout flowLayout;
     private FlowLayout searchHistoryView;
     private EditText editText;
     private View editClear;
+    private View historyClear;
     private TextView searchBtn;
     private SearchItemEntityDao entityDao;
     /**
@@ -86,6 +92,19 @@ public class SearchActivity extends BaseActivity {
                 }
             }
         });
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+            @Override
+            public boolean onEditorAction(TextView arg0, int actionId, KeyEvent arg2) {
+                // TODO Auto-generated method stub
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    // 当按了搜索之后关闭软键盘
+                    hideKeyBoard();
+                    searchBtn.performClick();
+                    return true;
+                }
+                return false;
+            }
+        });
         editClear = findViewById(R.id.edit_clear);
         editClear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +130,15 @@ public class SearchActivity extends BaseActivity {
         flowLayout.setRowSpacing(space);
         addLabel();
 
+        historyClear = findViewById(R.id.search_history_clear);
+        historyClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<SearchItemEntity> list = entityDao.queryBuilder().build().list();
+                entityDao.deleteInTx(list);
+                updateHistory();
+            }
+        });
         searchHistoryView = (FlowLayout) findViewById(R.id.search_history_list);
         searchHistoryView.setChildSpacing(space);
         searchHistoryView.setRowSpacing(space);
@@ -121,8 +149,24 @@ public class SearchActivity extends BaseActivity {
         updateHistory();
     }
 
+    private void hideKeyBoard() {
+        ((InputMethodManager) SearchActivity.this.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Object object = v.getTag(KEY);
+        if (object != null && object instanceof String) {
+            String str = (String) object;
+            if (!TextUtils.isEmpty(str)) {
+                search(str);
+            }
+        }
+    }
+
     private void addLabel() {
-        // 循环添加TextView到容器
         int paddingLeft
                 = ScaleCalculator.getInstance(getApplicationContext()).scaleTextSize(30);
         int paddingTop
@@ -142,6 +186,8 @@ public class SearchActivity extends BaseActivity {
                     TypedValue.COMPLEX_UNIT_PX,
                     ScaleCalculator.getInstance(getApplicationContext()).scaleTextSize(26));
             view.setBackgroundResource(R.drawable.round_corner_rec);
+            view.setTag(KEY, mDatas[i]);
+            view.setOnClickListener(this);
             flowLayout.addView(view);
         }
     }
@@ -158,19 +204,33 @@ public class SearchActivity extends BaseActivity {
             int paddingTop
                     = ScaleCalculator.getInstance(getApplicationContext()).scaleTextSize(22);
             for (int i = 0, count = list.size(); i < count; i++) {
-                View container = LayoutInflater.from(getApplicationContext())
+                final View container = LayoutInflater.from(getApplicationContext())
                         .inflate(R.layout.search_item_layout, null);
                 final TextView tv = container.findViewById(R.id.history_title);
                 tv.setText(list.get(i).getContent());
                 tv.setIncludeFontPadding(false);
                 container.setPadding(paddingLeft, paddingTop, paddingLeft, paddingTop);
-                container.setOnClickListener(new View.OnClickListener() {
+                View delete = container.findViewById(R.id.history_item_delete);
+                delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        searchHistoryView.removeView(view);
+                        Object object = container.getTag(KEY);
+                        if (object != null && object instanceof String) {
+                            String str = (String) object;
+                            if (!TextUtils.isEmpty(str)) {
+                                List<SearchItemEntity> list = entityDao.queryBuilder()
+                                        .where(SearchItemEntityDao.Properties.Content.eq(str)
+                                        ).build().list();
+                                entityDao.deleteInTx(list);
+                                updateHistory();
+                            }
+                        }
                     }
                 });
+                Log.i(TAG, "updateHistory: " + list.get(i).getContent());
                 container.setBackgroundResource(R.drawable.round_corner_rec);
+                container.setTag(KEY, list.get(i).getContent());
+                container.setOnClickListener(this);
                 searchHistoryView.addView(container);
             }
         }

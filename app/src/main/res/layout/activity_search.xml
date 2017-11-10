@@ -39,6 +39,8 @@
                 android:textAppearance="@style/search_label"
                 android:cursorVisible="true"
                 android:textCursorDrawable="@drawable/edit_text_cursor"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
                 android:background="@color/transparent"/>
             <ImageView
                 android:id="@+id/edit_clear"
@@ -69,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/size_30"
         android:layout_marginRight="@dimen/size_30"
+        android:layout_marginBottom="@dimen/size_30"
         android:layout_below="@+id/search_top_layout"
         android:overScrollMode="never"
         android:fadingEdgeLength="@dimen/size_57"
@@ -100,6 +103,7 @@
                     android:textAppearance="@style/search_column_title"
                     android:layout_centerVertical="true"/>
                 <ImageView
+                    android:id="@+id/search_history_clear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
