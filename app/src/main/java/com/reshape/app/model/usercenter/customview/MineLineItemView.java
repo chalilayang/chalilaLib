@@ -1,7 +1,9 @@
 package com.reshape.app.model.usercenter.customview;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.res.TypedArray;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.ViewGroup;
@@ -20,8 +22,11 @@ import com.reshape.app.R;
 public class MineLineItemView extends RelativeLayout {
     private TextView textView;
     private ImageView moreView;
+    private int size_20px;
     private int size_30px;
     private int size_110px;
+    private String title;
+    private Drawable resID;
     public MineLineItemView(Context context) {
         this(context, null);
     }
@@ -32,15 +37,26 @@ public class MineLineItemView extends RelativeLayout {
 
     public MineLineItemView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MineLineItemViewAttr);
+
+        title = ta.getString(R.styleable.MineLineItemViewAttr_title);
+        resID = (BitmapDrawable) ta.getDrawable(R.styleable.MineLineItemViewAttr_item_icon);
+        ta.recycle();
         init(context);
     }
     private void init(Context context) {
+        size_20px = ScaleCalculator.getInstance(context).scaleWidth(20);
         size_30px = ScaleCalculator.getInstance(context).scaleWidth(30);
         size_110px = ScaleCalculator.getInstance(context).scaleWidth(110);
         textView = new ScaleTextView(context);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 36);
-        textView.setTextColor(Color.WHITE);
-        textView.setText("我的缓存");
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 30);
+        textView.setTextColor(getResources().getColor(R.color.search_label_text));
+        textView.setText(title);
+        if (resID != null) {
+            resID.setBounds(0, 0, size_30px, size_30px);
+            textView.setCompoundDrawables(resID, null, null, null);
+            textView.setCompoundDrawablePadding(size_20px);
+        }
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         rlp.addRule(ALIGN_PARENT_LEFT);
@@ -50,7 +66,6 @@ public class MineLineItemView extends RelativeLayout {
 
         moreView = new ImageView(context);
         moreView.setImageResource(R.mipmap.more_arrow_icon);
-        moreView.setBackgroundColor(Color.RED);
         rlp = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         rlp.addRule(ALIGN_PARENT_RIGHT);

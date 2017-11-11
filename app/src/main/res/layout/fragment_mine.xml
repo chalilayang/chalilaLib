@@ -1,18 +1,45 @@
-<com.chalilayang.scaleview.ScaleRelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.reshape.app.model.usercenter.fragment.MineFragment">
 
     <com.chalilayang.scaleview.ScaleLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <com.chalilayang.scaleview.ScaleRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_320">
+
+        </com.chalilayang.scaleview.ScaleRelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_20"
+            android:background="@color/channel_list_divider"/>
+
+        <com.reshape.app.model.usercenter.customview.MineLineItemView
+            android:id="@+id/user_grade"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_110"
+            app:title="@string/user_grade"
+            app:item_icon="@mipmap/user_grade"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_20"
+            android:background="@color/channel_list_divider"/>
+
         <com.reshape.app.model.usercenter.customview.MineLineItemView
             android:id="@+id/my_cache"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_110"/>
+            android:layout_height="@dimen/size_110"
+            app:title="@string/user_cache"
+            app:item_icon="@mipmap/user_cache"/>
 
         <View
             android:layout_width="match_parent"
@@ -24,7 +51,9 @@
         <com.reshape.app.model.usercenter.customview.MineLineItemView
             android:id="@+id/my_collect"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_110"/>
+            android:layout_height="@dimen/size_110"
+            app:title="@string/user_collect"
+            app:item_icon="@mipmap/user_collect"/>
 
         <View
             android:layout_width="match_parent"
@@ -36,7 +65,9 @@
         <com.reshape.app.model.usercenter.customview.MineLineItemView
             android:id="@+id/play_history"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_110"/>
+            android:layout_height="@dimen/size_110"
+            app:title="@string/user_play_history"
+            app:item_icon="@mipmap/user_play_history"/>
 
         <View
             android:layout_width="match_parent"
@@ -46,7 +77,9 @@
         <com.reshape.app.model.usercenter.customview.MineLineItemView
             android:id="@+id/response"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_110"/>
+            android:layout_height="@dimen/size_110"
+            app:title="@string/user_response"
+            app:item_icon="@mipmap/user_response"/>
 
         <View
             android:layout_width="match_parent"
@@ -58,7 +91,9 @@
         <com.reshape.app.model.usercenter.customview.MineLineItemView
             android:id="@+id/thumb_up"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_110"/>
+            android:layout_height="@dimen/size_110"
+            app:title="@string/user_thumb_up"
+            app:item_icon="@mipmap/user_thumb_up"/>
 
         <View
             android:layout_width="match_parent"
@@ -70,7 +105,21 @@
         <com.reshape.app.model.usercenter.customview.MineLineItemView
             android:id="@+id/system_notify"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_110"/>
+            android:layout_height="@dimen/size_110"
+            app:title="@string/system_notify"
+            app:item_icon="@mipmap/system_notify"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_20"
+            android:background="@color/channel_list_divider"/>
+
+        <com.reshape.app.model.usercenter.customview.MineLineItemView
+            android:id="@+id/setting"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_110"
+            app:title="@string/setting"
+            app:item_icon="@mipmap/setting"/>
     </com.chalilayang.scaleview.ScaleLinearLayout>
 
-</com.chalilayang.scaleview.ScaleRelativeLayout>
+</ScrollView>
