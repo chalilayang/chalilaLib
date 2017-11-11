@@ -18,8 +18,10 @@
     <dimen name="size_90">90px</dimen>
     <dimen name="size_74">74px</dimen>
     <dimen name="size_78">78px</dimen>
-    <dimen name="size_110">110px</dimen>
     <dimen name="size_100">100px</dimen>
+    <dimen name="size_110">110px</dimen>
+    <dimen name="size_120">120px</dimen>
+    <dimen name="size_190">190px</dimen>
     <dimen name="size_66">66px</dimen>
     <dimen name="size_56">56px</dimen>
     <dimen name="size_57">57px</dimen>

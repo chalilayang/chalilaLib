@@ -11,6 +11,7 @@ import com.chalilayang.parcelables.PageData;
 import com.chalilayang.parcelables.PageItemData;
 import com.reshape.app.BaseActivity;
 import com.reshape.app.R;
+import com.reshape.app.model.channel.fragment.ChannelListFragment;
 import com.reshape.app.model.homepage.fragment.HomeFragment;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class HomePageActivity extends BaseActivity {
 
     private FrameLayout fragmentContainer;
     private HomeFragment homeFragment;
+    private ChannelListFragment channelListFragment;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -30,6 +32,7 @@ public class HomePageActivity extends BaseActivity {
                     showHomeFragment();
                     return true;
                 case R.id.navigation_dashboard:
+                    showChannelListFragment();
                     return true;
                 case R.id.navigation_notifications:
                     return true;
@@ -64,5 +67,13 @@ public class HomePageActivity extends BaseActivity {
             homeFragment = HomeFragment.newInstance(new PageData(list));
         }
         transaction.replace(R.id.fragment_container, homeFragment).commit();
+    }
+
+    private void showChannelListFragment() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        if (channelListFragment == null) {
+            channelListFragment = ChannelListFragment.newInstance();
+        }
+        transaction.replace(R.id.fragment_container, channelListFragment).commit();
     }
 }

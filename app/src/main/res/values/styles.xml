@@ -30,4 +30,21 @@
         <item name="android:textSize">@dimen/size_26</item>
         <item name="android:textColor">@color/search_label_text</item>
     </style>
+    <style name="title_big_style">
+        <item name="android:textSize">@dimen/size_34</item>
+        <item name="android:textColor">@color/reshape_red</item>
+    </style>
+    <style name="channel_item_title">
+        <item name="android:textSize">@dimen/size_30</item>
+        <item name="android:textColor">#333333</item>
+    </style>
+    <style name="channel_item_video_count">
+        <item name="android:textSize">@dimen/size_24</item>
+        <item name="android:textColor">#999999</item>
+    </style>
+    <style name="channel_item_desc">
+        <item name="android:textSize">@dimen/size_26</item>
+        <item name="android:textColor">#777777</item>
+    </style>
+    <style name="channel_item_update_time" parent="channel_item_video_count"/>
 </resources>

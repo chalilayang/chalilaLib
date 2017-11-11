@@ -1,7 +1,7 @@
 package com.reshape.app.net;
 
-import com.reshape.app.constance.AppConstance;
-import com.reshape.app.constance.UrlConstance;
+import com.reshape.app.constant.AppConstance;
+import com.reshape.app.constant.UrlConstance;
 
 import java.util.concurrent.TimeUnit;
 
