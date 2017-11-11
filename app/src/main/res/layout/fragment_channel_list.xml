@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.chalilayang.PagerFragment">
+    tools:context="com.reshape.app.model.channel.fragment.ChannelListFragment">
 
     <com.chalilayang.scaleview.ScaleRelativeLayout
         android:id="@+id/segment_title_container"

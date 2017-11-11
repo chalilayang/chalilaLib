@@ -12,6 +12,7 @@ import com.reshape.app.BaseActivity;
 import com.reshape.app.R;
 import com.reshape.app.model.channel.fragment.ChannelListFragment;
 import com.reshape.app.model.homepage.fragment.HomeFragment;
+import com.reshape.app.model.usercenter.fragment.MineFragment;
 import com.reshape.app.parcelables.PageData;
 import com.reshape.app.parcelables.PageItemData;
 
@@ -23,6 +24,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     private FrameLayout fragmentContainer;
     private HomeFragment homeFragment;
     private ChannelListFragment channelListFragment;
+    private MineFragment mineFragment;
     private TextView homeBtn;
     private TextView channelBtn;
     private TextView userCenterBtn;
@@ -135,10 +137,10 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void showUserCenterFragment() {
-//        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//        if (channelListFragment == null) {
-//            channelListFragment = ChannelListFragment.newInstance();
-//        }
-//        transaction.replace(R.id.fragment_container, channelListFragment).commit();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        if (mineFragment == null) {
+            mineFragment = MineFragment.newInstance();
+        }
+        transaction.replace(R.id.fragment_container, mineFragment).commit();
     }
 }
