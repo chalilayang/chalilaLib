@@ -1,4 +1,4 @@
-package com.chalilayang;
+package com.reshape.app;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.chalilayang.dummy.DummyContent;
-import com.chalilayang.parcelables.PageItemData;
+import com.reshape.app.parcelables.PageItemData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ItemFragment extends BaseItemFragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -45,7 +47,11 @@ public class ItemFragment extends BaseItemFragment implements SwipeRefreshLayout
         if (getArguments() != null) {
             pageData = getArguments().getParcelable(PAGE_DATA);
             layoutManager = new LinearLayoutManager(getActivity());
-            recyclerViewAdapter = new ItemRecyclerViewAdapter(DummyContent.ITEMS);
+            List<String> list = new ArrayList<>();
+            for (int index = 0; index < 10; index ++) {
+                list.add(index+"");
+            }
+            recyclerViewAdapter = new ItemRecyclerViewAdapter(list);
         }
         Log.i(TAG, "onCreate: " + pageData.getTitle());
     }

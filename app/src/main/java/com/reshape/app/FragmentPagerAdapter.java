@@ -1,9 +1,9 @@
-package com.chalilayang;
+package com.reshape.app;
 
-import android.os.Parcelable;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.View;

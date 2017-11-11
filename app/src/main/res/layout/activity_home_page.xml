@@ -17,12 +17,43 @@
         android:layout_above="@+id/navigation"
         android:background="@color/transparent"/>
 
-    <android.support.design.widget.BottomNavigationView
+    <com.chalilayang.scaleview.ScaleLinearLayout
         android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
-        app:menu="@menu/navigation"/>
+        android:padding="@dimen/size_20"
+        android:orientation="horizontal">
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/home_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/title_home"
+            android:textSize="@dimen/size_20"
+            android:textColor="@color/reshape_red"
+            android:drawableTop="@mipmap/home_page_positive"/>
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/channel_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/title_channel"
+            android:textSize="@dimen/size_20"
+            android:textColor="@color/reshape_red"
+            android:drawableTop="@mipmap/channel_positive"/>
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/user_center_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/title_user_center"
+            android:textSize="@dimen/size_20"
+            android:textColor="@color/reshape_red"
+            android:drawableTop="@mipmap/user_center_positive"/>
+    </com.chalilayang.scaleview.ScaleLinearLayout>
 
 </com.chalilayang.scaleview.ScaleRelativeLayout>

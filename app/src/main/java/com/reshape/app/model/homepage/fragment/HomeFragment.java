@@ -6,12 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.chalilayang.BaseFragment;
-import com.chalilayang.PagerFragment;
-import com.chalilayang.parcelables.PageData;
-import com.chalilayang.parcelables.PageItemData;
+import com.reshape.app.BaseFragment;
+import com.reshape.app.PagerFragment;
 import com.reshape.app.R;
 import com.reshape.app.model.search.SearchActivity;
+import com.reshape.app.parcelables.PageData;
+import com.reshape.app.parcelables.PageItemData;
 
 import java.util.ArrayList;
 import java.util.List;

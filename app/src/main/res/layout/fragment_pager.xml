@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.chalilayang.PagerFragment">
+    tools:context="com.reshape.app.PagerFragment">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
@@ -12,8 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         app:tabMode="fixed"
-        app:tabIndicatorColor="@color/colorAccent"
-        app:tabTextColor="@color/black">
+        app:tabIndicatorColor="@color/reshape_red"
+        app:tabTextColor="#333333"
+        app:tabSelectedTextColor="@color/reshape_red">
     </android.support.design.widget.TabLayout>
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"

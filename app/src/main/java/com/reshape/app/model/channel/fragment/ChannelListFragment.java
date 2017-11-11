@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.chalilayang.BaseFragment;
 import com.chalilayang.customview.RecyclerViewDivider;
+import com.reshape.app.BaseFragment;
 import com.reshape.app.R;
 import com.reshape.app.model.channel.adapter.ChannelListAdapter;
 import com.reshape.app.model.channel.entity.ChannelData;
@@ -23,7 +23,7 @@ import java.util.List;
  * Created by chalilayang on 2017/11/11.
  */
 
-public class ChannelListFragment extends BaseFragment 
+public class ChannelListFragment extends BaseFragment
         implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "ChannelListFragment";
     private View root;

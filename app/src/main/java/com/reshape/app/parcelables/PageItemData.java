@@ -1,4 +1,4 @@
-package com.chalilayang.parcelables;
+package com.reshape.app.parcelables;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -33,7 +33,7 @@ public class PageItemData implements Parcelable {
         this.type = in.readInt();
     }
 
-    public static final Parcelable.Creator<PageItemData> CREATOR = new Parcelable.Creator<PageItemData>() {
+    public static final Creator<PageItemData> CREATOR = new Creator<PageItemData>() {
         @Override
         public PageItemData createFromParcel(Parcel source) {
             return new PageItemData(source);

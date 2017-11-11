@@ -1,6 +1,4 @@
-package com.chalilayang;
-
-import com.chalilayang.BaseFragment;
+package com.reshape.app;
 
 /**
  * Created by chalilayang on 2017/10/21.

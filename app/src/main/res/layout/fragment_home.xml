@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.chalilayang.PagerFragment">
+    tools:context="com.reshape.app.model.homepage.fragment.HomeFragment">
 
     <com.chalilayang.scaleview.ScaleRelativeLayout
         android:id="@+id/segment_title_container"
@@ -17,14 +17,16 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             app:tabMode="scrollable"
-            app:tabIndicatorHeight="6dp"
-            app:tabIndicatorColor="@color/red"
-            app:tabTextColor="@color/black"/>
+            app:tabIndicatorHeight="2dp"
+            app:tabIndicatorColor="@color/reshape_red"
+            app:tabSelectedTextColor="@color/reshape_red"
+            app:tabTextColor="#333333"
+            app:tabTextAppearance="@style/home_tab_text_style"/>
 
         <ImageView
             android:id="@+id/search_btn"
-            android:layout_width="@dimen/size_66"
-            android:layout_height="@dimen/size_66"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/size_36"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"

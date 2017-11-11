@@ -1,4 +1,4 @@
-package com.chalilayang;
+package com.reshape.app;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
@@ -7,16 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.chalilayang.dummy.DummyContent.DummyItem;
+import com.reshape.app.parcelables.PageItemData;
 
 import java.util.List;
 
 public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter
         .ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<String> mValues;
 
-    public ItemRecyclerViewAdapter(List<DummyItem> items) {
+    public ItemRecyclerViewAdapter(List<String> items) {
         mValues = items;
     }
 
@@ -43,7 +43,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final ImageView mContentView;
-        public DummyItem mItem;
+        public String mItem;
 
         public ViewHolder(View view) {
             super(view);

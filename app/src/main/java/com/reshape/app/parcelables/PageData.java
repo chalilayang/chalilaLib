@@ -1,4 +1,4 @@
-package com.chalilayang.parcelables;
+package com.reshape.app.parcelables;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -51,7 +51,7 @@ public class PageData implements Parcelable {
         this.itemDataList = in.createTypedArrayList(PageItemData.CREATOR);
     }
 
-    public static final Parcelable.Creator<PageData> CREATOR = new Parcelable.Creator<PageData>() {
+    public static final Creator<PageData> CREATOR = new Creator<PageData>() {
         @Override
         public PageData createFromParcel(Parcel source) {
             return new PageData(source);
