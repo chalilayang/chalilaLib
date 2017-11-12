@@ -2,6 +2,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="size_1">1px</dimen>
     <dimen name="size_8">8px</dimen>
     <dimen name="size_10">10px</dimen>
     <dimen name="size_15">15px</dimen>
@@ -27,6 +28,7 @@
     <dimen name="size_56">56px</dimen>
     <dimen name="size_57">57px</dimen>
     <dimen name="size_160">160px</dimen>
+    <dimen name="size_180">180px</dimen>
     <dimen name="size_187">187px</dimen>
     <dimen name="size_50">50px</dimen>
     <dimen name="size_80">80px</dimen>
@@ -45,4 +47,6 @@
     <dimen name="size_320">450px</dimen>
     <dimen name="size_480">480px</dimen>
     <dimen name="size_568">568px</dimen>
+
+    <dimen name="register_btn_bg_height">@dimen/size_70</dimen>
 </resources>
