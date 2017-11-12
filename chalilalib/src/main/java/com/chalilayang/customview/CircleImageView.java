@@ -34,7 +34,6 @@ public class CircleImageView extends AppCompatImageView {
         mMatrix = new Matrix();
         mPaintCircle = new Paint();
         mPaintCircle.setAntiAlias(true);
-        mPaintCircle.setStrokeWidth(12);
         mPaintBackgroud = new Paint();
         mPaintBackgroud.setAntiAlias(true);
         mPaintBackgroud.setStyle(Paint.Style.FILL);
