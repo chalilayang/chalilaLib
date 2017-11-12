@@ -55,7 +55,7 @@ public class ChannelListAdapter extends RecyclerView.Adapter<ChannelListAdapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mContentView.setBackgroundColor(position % 2 == 0 ? Color.BLUE:Color.YELLOW);
+        holder.mContentView.setImageResource(R.mipmap.user_default_icon);
         holder.updateInfo();
     }
 
