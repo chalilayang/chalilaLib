@@ -16,9 +16,9 @@
 
     <string name="mine">我的</string>
     <string name="height">身高</string>
-    <string name="height_format">%dcm</string>
+    <string name="height_format">%d</string>
     <string name="body_weight">体重</string>
-    <string name="body_weight_format">%dkg</string>
+    <string name="body_weight_format">%d</string>
     <string name="body_fat">体脂</string>
     <string name="body_fat_format">%d</string>
 

@@ -75,10 +75,21 @@ public class MineBodyInfoView extends LinearLayout {
         heightTv.setText(getResources().getText(R.string.height_format));
         container.addView(heightTv);
 
+        textView = new ScaleTextView(context);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 36);
+        textView.setTextColor(getResources().getColor(R.color.search_label_text));
+        textView.setText("cm");
+        textView.setIncludeFontPadding(false);
+        textView.setGravity(Gravity.BOTTOM);
+        textView.setTextColor(Color.BLACK);
+        textView.setTypeface(fontFace);
+        container.addView(textView);
+
         addView(container, llp);
 
         container = new LinearLayout(context);
         container.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+
         textView = new TextView(context);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size_24px);
         textView.setTextColor(getResources().getColor(R.color.search_label_text));
@@ -95,6 +106,16 @@ public class MineBodyInfoView extends LinearLayout {
         bodyWeightTv.setTypeface(fontFace);
         bodyWeightTv.setText(getResources().getText(R.string.body_weight_format));
         container.addView(bodyWeightTv);
+
+        textView = new ScaleTextView(context);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 36);
+        textView.setTextColor(getResources().getColor(R.color.search_label_text));
+        textView.setText("kg");
+        textView.setIncludeFontPadding(false);
+        textView.setGravity(Gravity.BOTTOM);
+        textView.setTextColor(Color.BLACK);
+        textView.setTypeface(fontFace);
+        container.addView(textView);
 
         addView(container, llp);
 
@@ -117,6 +138,16 @@ public class MineBodyInfoView extends LinearLayout {
         bodyFatTv.setText(getResources().getText(R.string.body_fat_format));
         container.addView(bodyFatTv);
 
+        textView = new ScaleTextView(context);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 36);
+        textView.setTextColor(getResources().getColor(R.color.search_label_text));
+        textView.setText("%");
+        textView.setIncludeFontPadding(false);
+        textView.setGravity(Gravity.BOTTOM);
+        textView.setTextColor(Color.BLACK);
+        textView.setTypeface(fontFace);
+        container.addView(textView);
+
         addView(container, llp);
     }
 
@@ -132,6 +163,6 @@ public class MineBodyInfoView extends LinearLayout {
 
     public void setBodyFat(int h) {
         this.bodyFat = h;
-        this.bodyFatTv.setText(String.format(getResources().getString(R.string.body_fat_format), bodyFat) + "%");
+        this.bodyFatTv.setText(String.format(getResources().getString(R.string.body_fat_format), bodyFat));
     }
 }
