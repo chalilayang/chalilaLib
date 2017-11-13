@@ -11,6 +11,13 @@ import com.reshape.app.BaseFragment;
 import com.reshape.app.BaseTitleActivity;
 import com.reshape.app.R;
 import com.reshape.app.model.usercenter.LoginManager;
+import com.reshape.app.model.usercenter.activity.CacheActivity;
+import com.reshape.app.model.usercenter.activity.MyCollectActivity;
+import com.reshape.app.model.usercenter.activity.PlayHistoryActivity;
+import com.reshape.app.model.usercenter.activity.ResponseActivity;
+import com.reshape.app.model.usercenter.activity.SettingActivity;
+import com.reshape.app.model.usercenter.activity.SystemNotifyAcitvity;
+import com.reshape.app.model.usercenter.activity.ThumbUpActivity;
 import com.reshape.app.model.usercenter.activity.UserGradeDescActivity;
 import com.reshape.app.model.usercenter.customview.MineBodyInfoView;
 import com.reshape.app.model.usercenter.customview.MineLineItemView;
@@ -98,35 +105,33 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.my_cache:
-                intent = new Intent(this.getActivity(), BaseTitleActivity.class);
+                intent = new Intent(this.getActivity(), CacheActivity.class);
                 startActivity(intent);
                 break;
             case R.id.my_collect:
-                intent = new Intent(this.getActivity(), BaseTitleActivity.class);
+                intent = new Intent(this.getActivity(), MyCollectActivity.class);
                 startActivity(intent);
                 break;
             case R.id.play_history:
-                intent = new Intent(this.getActivity(), BaseTitleActivity.class);
+                intent = new Intent(this.getActivity(), PlayHistoryActivity.class);
                 startActivity(intent);
                 break;
             case R.id.response:
-                intent = new Intent(this.getActivity(), BaseTitleActivity.class);
+                intent = new Intent(this.getActivity(), ResponseActivity.class);
                 startActivity(intent);
                 break;
             case R.id.thumb_up:
-                intent = new Intent(this.getActivity(), BaseTitleActivity.class);
+                intent = new Intent(this.getActivity(), ThumbUpActivity.class);
                 startActivity(intent);
                 break;
             case R.id.system_notify:
-                intent = new Intent(this.getActivity(), BaseTitleActivity.class);
+                intent = new Intent(this.getActivity(), SystemNotifyAcitvity.class);
                 startActivity(intent);
                 break;
             case R.id.setting:
-                intent = new Intent(this.getActivity(), BaseTitleActivity.class);
+                intent = new Intent(this.getActivity(), SettingActivity.class);
                 startActivity(intent);
                 break;
         }
     }
-
-
 }

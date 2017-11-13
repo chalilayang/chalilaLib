@@ -27,6 +27,20 @@
         </activity>
         <activity android:name=".model.usercenter.activity.UserGradeDescActivity">
         </activity>
+        <activity android:name=".model.usercenter.activity.CacheActivity">
+        </activity>
+        <activity android:name=".model.usercenter.activity.MyCollectActivity">
+        </activity>
+        <activity android:name=".model.usercenter.activity.PlayHistoryActivity">
+        </activity>
+        <activity android:name=".model.usercenter.activity.ResponseActivity">
+        </activity>
+        <activity android:name=".model.usercenter.activity.ThumbUpActivity">
+        </activity>
+        <activity android:name=".model.usercenter.activity.SystemNotifyAcitvity">
+        </activity>
+        <activity android:name=".model.usercenter.activity.SettingActivity">
+        </activity>
     </application>
 
 </manifest>
