@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.chalilayang.scaleview.ScaleTextView;
 import com.reshape.app.R;
+
+import java.lang.ref.SoftReference;
 
 /**
  * Created by chalilayang on 2017/11/11.
@@ -71,6 +74,24 @@ public class MineLineItemView extends RelativeLayout {
         rlp.addRule(ALIGN_PARENT_RIGHT);
         rlp.addRule(CENTER_VERTICAL);
         rlp.rightMargin = size_30px;
+        moreView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mRef != null && mRef.get() != null) {
+                    mRef.get().onMoreViewClick();
+                }
+            }
+        });
         addView(moreView, rlp);
+    }
+
+    private SoftReference<ClickCallback> mRef;
+    public void setClickCallback(ClickCallback back) {
+        if (back != null) {
+            mRef = new SoftReference<ClickCallback>(back);
+        }
+    }
+    public interface ClickCallback {
+        void onMoreViewClick();
     }
 }

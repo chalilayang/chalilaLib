@@ -40,6 +40,8 @@
     <string name="system_notify">系统通知</string>
     <string name="setting">设置</string>
 
+    <string name="my_grade">我的等级</string>
+
     <string name="register">注册</string>
     <string name="login">登录</string>
 

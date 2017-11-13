@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chalilayang.scaleview.ScaleRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.reshape.app.BaseTitleActivity">
+    <include
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        layout="@layout/base_title_layout"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_container">
+        <com.chalilayang.scaleview.ScaleRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.chalilayang.customview.CircleImageView
+                android:id="@+id/user_icon"
+                android:layout_width="@dimen/size_140"
+                android:layout_height="@dimen/size_140"
+                android:layout_marginTop="@dimen/size_40"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/user_default_icon"/>
+            <com.reshape.app.model.usercenter.customview.UpgradeProgress
+                android:id="@+id/user_grade_progress"
+                android:layout_width="@dimen/size_690"
+                android:layout_height="@dimen/size_10"
+                android:layout_below="@+id/user_icon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/size_40"
+                android:layout_marginTop="@dimen/size_54"/>
+            <com.chalilayang.scaleview.ScaleLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"></com.chalilayang.scaleview.ScaleLinearLayout>
+        </com.chalilayang.scaleview.ScaleRelativeLayout>
+    </ScrollView>
+</com.chalilayang.scaleview.ScaleRelativeLayout>

@@ -23,6 +23,7 @@
     <dimen name="size_100">100px</dimen>
     <dimen name="size_110">110px</dimen>
     <dimen name="size_120">120px</dimen>
+    <dimen name="size_140">140px</dimen>
     <dimen name="size_190">190px</dimen>
     <dimen name="size_66">66px</dimen>
     <dimen name="size_56">56px</dimen>
@@ -47,6 +48,6 @@
     <dimen name="size_320">450px</dimen>
     <dimen name="size_480">480px</dimen>
     <dimen name="size_568">568px</dimen>
-
+    <dimen name="size_690">690px</dimen>
     <dimen name="register_btn_bg_height">@dimen/size_70</dimen>
 </resources>

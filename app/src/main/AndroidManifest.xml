@@ -23,6 +23,10 @@
         </activity>
         <activity android:name=".model.search.SearchResultActivity">
         </activity>
+        <activity android:name=".BaseTitleActivity">
+        </activity>
+        <activity android:name=".model.usercenter.activity.UserGradeDescActivity">
+        </activity>
     </application>
 
 </manifest>
