@@ -27,6 +27,14 @@
             android:layout_centerInParent="true"
             android:textAppearance="@style/title_big_style"/>
 
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/right_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textAppearance="@style/title_big_style"/>
+
     </com.chalilayang.scaleview.ScaleRelativeLayout>
     <View
         android:id="@+id/divider"

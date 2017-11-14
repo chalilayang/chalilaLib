@@ -29,6 +29,7 @@ public class MyCollectActivity extends BaseTitleActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitleActivity(getString(R.string.user_collect));
+        setRightTitle(getString(R.string.all_delete));
         init();
     }
 
