@@ -15,21 +15,25 @@ import com.reshape.app.model.usercenter.entity.VideoData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CacheListAdapter extends RecyclerView.Adapter<CacheListAdapter.ViewHolder> {
+public class CollectListAdapter extends RecyclerView.Adapter<CollectListAdapter.ViewHolder> {
 
     private final List<VideoData> mValues;
     private Context mContext;
     private int margin_8px;
     private int margin_15px;
     private int margin_20px;
+    private int margin_30px;
+    private int margin_160px;
     private String videoCountFormat;
 
-    public CacheListAdapter(Context context) {
+    public CollectListAdapter(Context context) {
         mValues = new ArrayList<>();
         mContext = context;
         margin_8px = ScaleCalculator.getInstance(mContext).scaleWidth(8);
         margin_15px = ScaleCalculator.getInstance(mContext).scaleWidth(15);
         margin_20px = ScaleCalculator.getInstance(mContext).scaleWidth(20);
+        margin_30px = ScaleCalculator.getInstance(mContext).scaleWidth(30);
+        margin_160px = ScaleCalculator.getInstance(mContext).scaleWidth(160);
         videoCountFormat = mContext.getString(R.string.video_count_format);
     }
 
@@ -52,7 +56,7 @@ public class CacheListAdapter extends RecyclerView.Adapter<CacheListAdapter.View
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mContentView.setImageResource(R.mipmap.user_default_icon);
+        holder.mImageView.setImageResource(R.mipmap.user_default_icon);
         holder.updateInfo();
     }
 
@@ -63,9 +67,11 @@ public class CacheListAdapter extends RecyclerView.Adapter<CacheListAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final ImageView mContentView;
+        public final View contentRoot;
+        public final ImageView mImageView;
         public final TextView title;
         public final TextView updateTime;
+        public final TextView deleteBtn;
         public VideoData mItem;
 
         public void updateInfo() {
@@ -76,9 +82,13 @@ public class CacheListAdapter extends RecyclerView.Adapter<CacheListAdapter.View
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mContentView = (ImageView) view.findViewById(R.id.video_item_icon);
+            contentRoot = view.findViewById(R.id.item_content_view);
+            contentRoot.setPadding(margin_30px, 0, 0, 0);
+            mImageView = (ImageView) view.findViewById(R.id.video_item_icon);
             title = (TextView) view.findViewById(R.id.video_title);
             updateTime = (TextView) view.findViewById(R.id.video_time);
+            deleteBtn = (TextView) view.findViewById(R.id.btn_delete);
+            deleteBtn.getLayoutParams().width = margin_160px;
         }
     }
 }

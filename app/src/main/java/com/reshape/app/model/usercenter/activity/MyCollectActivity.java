@@ -7,10 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.chalilayang.customview.RecyclerViewDivider;
+import com.chalilayang.scaleview.ScaleCalculator;
 import com.reshape.app.BaseTitleActivity;
 import com.reshape.app.R;
-import com.reshape.app.model.channel.entity.ChannelData;
-import com.reshape.app.model.usercenter.adapter.CacheListAdapter;
+import com.reshape.app.model.usercenter.adapter.CollectListAdapter;
 import com.reshape.app.model.usercenter.entity.VideoData;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class MyCollectActivity extends BaseTitleActivity
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private CacheListAdapter recyclerViewAdapter;
+    private CollectListAdapter recyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +44,11 @@ public class MyCollectActivity extends BaseTitleActivity
                 = new RecyclerViewDivider(this,
                 LinearLayoutManager.HORIZONTAL, 1,
                 getResources().getColor(R.color.channel_list_divider));
+        int margin_30px = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(30);
+        divider.setMargin(margin_30px);
         recyclerView.addItemDecoration(divider);
         layoutManager = new LinearLayoutManager(this);
-        recyclerViewAdapter = new CacheListAdapter(this);
+        recyclerViewAdapter = new CollectListAdapter(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
         refreshLayout.setOnRefreshListener(this);

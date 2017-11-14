@@ -22,6 +22,7 @@ public class RecyclerViewDivider extends RecyclerView.ItemDecoration {
     private int mDividerHeight = 2;//分割线高度，默认为1px
     private int mOrientation;//列表的方向：LinearLayoutManager.VERTICAL或LinearLayoutManager.HORIZONTAL
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
+    private int margin = 0;
 
     /**
      * 默认分割线：高度为2px，颜色为灰色
@@ -99,11 +100,11 @@ public class RecyclerViewDivider extends RecyclerView.ItemDecoration {
             final int top = child.getBottom() + layoutParams.bottomMargin;
             final int bottom = top + mDividerHeight;
             if (mDivider != null) {
-                mDivider.setBounds(left, top, right, bottom);
+                mDivider.setBounds(left+margin, top, right-margin, bottom);
                 mDivider.draw(canvas);
             }
             if (mPaint != null) {
-                canvas.drawRect(left, top, right, bottom, mPaint);
+                canvas.drawRect(left+margin, top, right-margin, bottom, mPaint);
             }
         }
     }
@@ -126,5 +127,9 @@ public class RecyclerViewDivider extends RecyclerView.ItemDecoration {
                 canvas.drawRect(left, top, right, bottom, mPaint);
             }
         }
+    }
+
+    public void setMargin(int marginValue) {
+        this.margin = marginValue;
     }
 }

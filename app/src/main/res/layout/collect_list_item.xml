@@ -1,34 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.chalilayang.scaleview.ScaleRelativeLayout
+<com.chalilayang.customview.SwipeMenuLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/size_190"
-    android:orientation="horizontal">
-    <ImageView
-        android:id="@+id/video_item_icon"
-        android:layout_width="@dimen/size_256"
-        android:layout_height="@dimen/size_135"
-        android:background="@color/black"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"/>
-    <com.chalilayang.scaleview.ScaleLinearLayout
+    app:swipeEnable="true"
+    app:ios="false"
+    app:leftSwipe="true">
+    <com.chalilayang.scaleview.ScaleRelativeLayout
+        android:id="@+id/item_content_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/size_24"
-        android:layout_toRightOf="@+id/video_item_icon"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
-        <com.chalilayang.scaleview.ScaleTextView
-            android:id="@+id/video_title"
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/size_30">
+        <ImageView
+            android:id="@+id/video_item_icon"
+            android:layout_width="@dimen/size_256"
+            android:layout_height="@dimen/size_135"
+            android:background="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
+        <com.chalilayang.scaleview.ScaleLinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/action_settings"
-            android:textAppearance="@style/cache_list_item_title"/>
-        <com.chalilayang.scaleview.ScaleTextView
-            android:id="@+id/video_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/cache_list_item_desc"/>
-    </com.chalilayang.scaleview.ScaleLinearLayout>
-</com.chalilayang.scaleview.ScaleRelativeLayout>
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_24"
+            android:layout_toRightOf="@+id/video_item_icon"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+            <com.chalilayang.scaleview.ScaleTextView
+                android:id="@+id/video_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_settings"
+                android:textAppearance="@style/cache_list_item_title"/>
+            <com.chalilayang.scaleview.ScaleTextView
+                android:id="@+id/video_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/cache_list_item_desc"/>
+        </com.chalilayang.scaleview.ScaleLinearLayout>
+    </com.chalilayang.scaleview.ScaleRelativeLayout>
+    <com.chalilayang.scaleview.ScaleTextView
+        android:id="@+id/btn_delete"
+        android:layout_width="@dimen/size_320"
+        android:layout_height="match_parent"
+        android:background="@color/reshape_red"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="@string/delete"
+        android:textSize="@dimen/size_45"
+        android:textColor="@android:color/white"/>
+</com.chalilayang.customview.SwipeMenuLayout>
