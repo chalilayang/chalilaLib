@@ -1,19 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.chalilayang.scaleview.ScaleRelativeLayout
+<com.chalilayang.scaleview.ScaleLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.reshape.app.BaseTitleActivity">
+
     <include
         android:id="@+id/title_container"
+        layout="@layout/base_title_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        layout="@layout/base_title_layout"/>
-    <com.chalilayang.scaleview.ScaleFrameLayout
-        android:id="@+id/root_container"
+        android:layout_height="wrap_content"/>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/title_container"/>
-</com.chalilayang.scaleview.ScaleRelativeLayout>
+        android:layout_height="wrap_content">
+
+        <com.chalilayang.scaleview.ScaleLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.reshape.app.model.usercenter.customview.MineLineItemView
+                android:id="@+id/net_set"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_110"
+                app:check_type="true"
+                app:title="@string/setting_4g_2g"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/size_30"
+                android:layout_marginRight="@dimen/size_30"
+                android:background="@color/channel_list_divider"/>
+
+            <com.reshape.app.model.usercenter.customview.MineLineItemView
+                android:id="@+id/cache_clear"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_110"
+                app:title="@string/clear_cache"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_20"
+                android:background="@color/channel_list_divider"/>
+
+            <com.reshape.app.model.usercenter.customview.MineLineItemView
+                android:id="@+id/thumb_up_push"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_110"
+                app:check_type="true"
+                app:title="@string/thumb_up_push"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/size_30"
+                android:layout_marginRight="@dimen/size_30"
+                android:background="@color/channel_list_divider"/>
+
+            <com.reshape.app.model.usercenter.customview.MineLineItemView
+                android:id="@+id/comment_push"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_110"
+                app:check_type="true"
+                app:title="@string/comment_push"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_20"
+                android:background="@color/channel_list_divider"/>
+
+            <com.reshape.app.model.usercenter.customview.MineLineItemView
+                android:id="@+id/give_score"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_110"
+                app:title="@string/give_score"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/size_30"
+                android:layout_marginRight="@dimen/size_30"
+                android:background="@color/channel_list_divider"/>
+
+            <com.reshape.app.model.usercenter.customview.MineLineItemView
+                android:id="@+id/advice"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_110"
+                android:layout_below="@id/thumb_up_push"
+                app:title="@string/advice"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_20"
+                android:background="@color/channel_list_divider"/>
+
+            <com.reshape.app.model.usercenter.customview.MineLineItemView
+                android:id="@+id/current_version"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_110"
+                app:title="@string/current_version"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/size_30"
+                android:layout_marginRight="@dimen/size_30"
+                android:background="@color/channel_list_divider"/>
+
+            <com.reshape.app.model.usercenter.customview.MineLineItemView
+                android:id="@+id/video_introduce"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_110"
+                app:title="@string/video_introduce"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/size_30"
+                android:layout_marginRight="@dimen/size_30"
+                android:background="@color/channel_list_divider"/>
+
+            <com.reshape.app.model.usercenter.customview.MineLineItemView
+                android:id="@+id/user_license"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_110"
+                app:title="@string/user_license"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginLeft="@dimen/size_30"
+                android:layout_marginRight="@dimen/size_30"
+                android:background="@color/channel_list_divider"/>
+
+            <com.reshape.app.model.usercenter.customview.MineLineItemView
+                android:id="@+id/version_right"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_110"
+                app:title="@string/version_right"/>
+        </com.chalilayang.scaleview.ScaleLinearLayout>
+    </ScrollView>
+
+</com.chalilayang.scaleview.ScaleLinearLayout>

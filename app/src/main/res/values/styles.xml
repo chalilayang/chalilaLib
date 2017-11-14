@@ -62,5 +62,6 @@
     <declare-styleable name="MineLineItemViewAttr">
         <attr name="title" format="string"/>
         <attr name="item_icon" format="reference"/>
+        <attr name="check_type" format="boolean"/>
     </declare-styleable>
 </resources>

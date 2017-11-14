@@ -22,33 +22,28 @@ import java.lang.ref.SoftReference;
  * Created by chalilayang on 2017/11/11.
  */
 
-public class MineLineItemView extends RelativeLayout {
+public class SettingLineItemView extends RelativeLayout {
     private TextView textView;
-    private TextView versionTv;
-    private ImageView newLogoView;
     private ImageView moreView;
     private int size_20px;
     private int size_30px;
     private int size_110px;
     private String title;
     private Drawable resID;
-    private boolean checkType;
-    private boolean open;
-    public MineLineItemView(Context context) {
+    public SettingLineItemView(Context context) {
         this(context, null);
     }
 
-    public MineLineItemView(Context context, AttributeSet attrs) {
+    public SettingLineItemView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MineLineItemView(Context context, AttributeSet attrs, int defStyle) {
+    public SettingLineItemView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.MineLineItemViewAttr);
 
         title = ta.getString(R.styleable.MineLineItemViewAttr_title);
         resID = (BitmapDrawable) ta.getDrawable(R.styleable.MineLineItemViewAttr_item_icon);
-        checkType = ta.getBoolean(R.styleable.MineLineItemViewAttr_check_type, false);
         ta.recycle();
         init(context);
     }
@@ -65,7 +60,7 @@ public class MineLineItemView extends RelativeLayout {
             textView.setCompoundDrawables(resID, null, null, null);
             textView.setCompoundDrawablePadding(size_20px);
         }
-        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(
+        LayoutParams rlp = new LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         rlp.addRule(ALIGN_PARENT_LEFT);
         rlp.addRule(CENTER_VERTICAL);
@@ -73,10 +68,8 @@ public class MineLineItemView extends RelativeLayout {
         addView(textView, rlp);
 
         moreView = new ImageView(context);
-        moreView.setId(R.id.more_view_id);
-        moreView.setImageResource(checkType ? R.mipmap.closed_icon : R.mipmap.more_arrow_icon);
-        open = false;
-        rlp = new RelativeLayout.LayoutParams(
+        moreView.setImageResource(R.mipmap.more_arrow_icon);
+        rlp = new LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         rlp.addRule(ALIGN_PARENT_RIGHT);
         rlp.addRule(CENTER_VERTICAL);
@@ -90,30 +83,6 @@ public class MineLineItemView extends RelativeLayout {
             }
         });
         addView(moreView, rlp);
-
-        versionTv = new TextView(context);
-        versionTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, 30);
-        versionTv.setTextColor(getResources().getColor(R.color.search_label_text));
-        rlp = new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        rlp.addRule(RelativeLayout.LEFT_OF, moreView.getId());
-        rlp.addRule(CENTER_VERTICAL);
-        rlp.rightMargin = size_30px;
-        addView(versionTv, rlp);
-    }
-
-    public boolean isOpen() {
-        return open;
-    }
-
-    public void swichOpenState() {
-        if (open) {
-            moreView.setImageResource(R.mipmap.closed_icon);
-            open = false;
-        } else {
-            moreView.setImageResource(R.mipmap.opened_icon);
-            open = true;
-        }
     }
 
     private SoftReference<ClickCallback> mRef;
