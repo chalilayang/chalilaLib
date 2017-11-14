@@ -186,7 +186,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             view.setTextSize(
                     TypedValue.COMPLEX_UNIT_PX,
                     ScaleCalculator.getInstance(getApplicationContext()).scaleTextSize(26));
-            view.setBackgroundResource(R.drawable.login_btn_bg);
+            view.setBackgroundResource(R.drawable.search_label_bg);
             view.setTag(KEY, mDatas[i]);
             view.setOnClickListener(this);
             flowLayout.addView(view);
@@ -229,7 +229,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     }
                 });
                 Log.i(TAG, "updateHistory: " + list.get(i).getContent());
-                container.setBackgroundResource(R.drawable.login_btn_bg);
+                container.setBackgroundResource(R.drawable.search_label_bg);
                 container.setTag(KEY, list.get(i).getContent());
                 container.setOnClickListener(this);
                 searchHistoryView.addView(container);

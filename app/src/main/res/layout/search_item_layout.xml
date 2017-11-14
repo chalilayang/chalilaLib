@@ -8,11 +8,13 @@
         android:id="@+id/history_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:textAppearance="@style/search_label"/>
     <ImageView
         android:id="@+id/history_item_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/search_history_clear"
+        android:src="@mipmap/search_item_delete"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/size_30"/>
 </com.chalilayang.scaleview.ScaleLinearLayout>
