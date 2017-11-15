@@ -82,6 +82,7 @@
         android:orientation="horizontal">
 
         <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/register_tv"
             android:layout_width="@dimen/size_330"
             android:layout_height="@dimen/video_login_btn_bg_height"
             android:background="@drawable/video_login_red_bg"
@@ -91,6 +92,7 @@
             android:textSize="@dimen/size_30"/>
 
         <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/login_tv"
             android:layout_width="@dimen/size_330"
             android:layout_height="@dimen/video_login_btn_bg_height"
             android:layout_marginLeft="@dimen/size_20"

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.chalilayang.scaleview.ScaleLinearLayout
+<com.chalilayang.scaleview.ScaleRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
+    android:layout_height="match_parent"
+    android:background="@mipmap/blue_login_bg"
+    tools:context="com.reshape.app.model.usercenter.activity.LoginActivity">
     <com.chalilayang.scaleview.ScaleRelativeLayout
+        android:id="@+id/title_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -17,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/back_icon"/>
+            android:src="@mipmap/back_icon_white"/>
 
         <com.chalilayang.scaleview.ScaleTextView
             android:id="@+id/title"
@@ -35,9 +38,10 @@
             android:textAppearance="@style/title_big_style"/>
 
     </com.chalilayang.scaleview.ScaleRelativeLayout>
-    <View
-        android:id="@+id/divider"
+    <com.chalilayang.scaleview.ScaleRelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/reshape_gray"/>
-</com.chalilayang.scaleview.ScaleLinearLayout>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_container">
+
+    </com.chalilayang.scaleview.ScaleRelativeLayout>
+</com.chalilayang.scaleview.ScaleRelativeLayout>

@@ -6,4 +6,7 @@ package com.reshape.app.constant;
 
 public class AppConstance {
     public static final boolean DEBUG = true;
+
+
+    public static int REQUEST_CODE_LOGIN_ACTIVITY = 1000;
 }
