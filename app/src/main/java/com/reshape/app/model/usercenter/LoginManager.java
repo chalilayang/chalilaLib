@@ -6,6 +6,6 @@ package com.reshape.app.model.usercenter;
 
 public class LoginManager {
     public static boolean hasLogin() {
-        return true;
+        return false;
     }
 }

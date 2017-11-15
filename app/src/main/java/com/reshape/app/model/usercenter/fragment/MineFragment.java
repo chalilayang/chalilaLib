@@ -20,6 +20,7 @@ import com.reshape.app.model.usercenter.activity.SystemNotifyAcitvity;
 import com.reshape.app.model.usercenter.activity.ThumbUpActivity;
 import com.reshape.app.model.usercenter.activity.UserGradeDescActivity;
 import com.reshape.app.model.usercenter.activity.UserInfoActivity;
+import com.reshape.app.model.usercenter.activity.VideoLoginActivity;
 import com.reshape.app.model.usercenter.customview.MineBodyInfoView;
 import com.reshape.app.model.usercenter.customview.MineLineItemView;
 import com.reshape.app.model.usercenter.customview.UpgradeProgress;
@@ -71,6 +72,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             }
         });
         notLoginView = view.findViewById(R.id.no_login_view);
+        notLoginView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), VideoLoginActivity.class);
+                startActivity(intent);
+            }
+        });
         if (LoginManager.hasLogin()) {
             hasLoginView.setVisibility(View.VISIBLE);
             notLoginView.setVisibility(View.GONE);

@@ -43,6 +43,8 @@
         </activity>
         <activity android:name=".model.usercenter.activity.UserInfoActivity">
         </activity>
+        <activity android:name=".model.usercenter.activity.VideoLoginActivity">
+        </activity>
     </application>
 
 </manifest>
