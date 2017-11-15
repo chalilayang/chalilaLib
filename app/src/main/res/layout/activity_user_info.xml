@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chalilayang.scaleview.ScaleRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.reshape.app.model.usercenter.activity.UserInfoActivity">
+    <include
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        layout="@layout/base_title_layout"/>
+    <com.chalilayang.scaleview.ScaleLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_container"
+        android:orientation="vertical">
+
+        <com.reshape.app.model.usercenter.customview.MineLineItemView
+            android:id="@+id/user_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:right_image_visible="true"
+            app:title="@string/user_icon"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/size_30"
+            android:layout_marginRight="@dimen/size_30"
+            android:background="@color/channel_list_divider"/>
+
+        <com.reshape.app.model.usercenter.customview.MineLineItemView
+            android:id="@+id/user_grade"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_110"
+            app:title="@string/user_grade"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_20"
+            android:background="@color/channel_list_divider"/>
+
+        <com.reshape.app.model.usercenter.customview.MineLineItemView
+            android:id="@+id/user_nick_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_110"
+            app:title="@string/nick_name"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/size_30"
+            android:layout_marginRight="@dimen/size_30"
+            android:background="@color/channel_list_divider"/>
+
+        <com.reshape.app.model.usercenter.customview.MineLineItemView
+            android:id="@+id/user_sex"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_110"
+            app:title="@string/user_sex"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_20"
+            android:background="@color/channel_list_divider"/>
+
+        <com.reshape.app.model.usercenter.customview.MineLineItemView
+            android:id="@+id/user_birthday"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_110"
+            app:title="@string/user_birthday"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/size_30"
+            android:layout_marginRight="@dimen/size_30"
+            android:background="@color/channel_list_divider"/>
+
+        <com.reshape.app.model.usercenter.customview.MineLineItemView
+            android:id="@+id/user_body_info"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_110"
+            app:title="@string/user_body_info"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_20"
+            android:background="@color/channel_list_divider"/>
+
+        <com.reshape.app.model.usercenter.customview.MineLineItemView
+            android:id="@+id/user_signature"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_110"
+            app:title="@string/user_signature"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/channel_list_divider"/>
+    </com.chalilayang.scaleview.ScaleLinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></FrameLayout>
+</com.chalilayang.scaleview.ScaleRelativeLayout>

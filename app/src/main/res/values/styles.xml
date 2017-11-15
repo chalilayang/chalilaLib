@@ -63,5 +63,6 @@
         <attr name="title" format="string"/>
         <attr name="item_icon" format="reference"/>
         <attr name="check_type" format="boolean"/>
+        <attr name="right_image_visible" format="boolean"/>
     </declare-styleable>
 </resources>

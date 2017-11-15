@@ -18,6 +18,8 @@ import com.reshape.app.R;
 
 import java.lang.ref.SoftReference;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by chalilayang on 2017/11/11.
  */
@@ -27,6 +29,7 @@ public class MineLineItemView extends RelativeLayout {
     private TextView versionTv;
     private ImageView newLogoView;
     private ImageView moreView;
+    private ImageView rightImageView;
     private int size_20px;
     private int size_30px;
     private int size_110px;
@@ -34,6 +37,7 @@ public class MineLineItemView extends RelativeLayout {
     private Drawable resID;
     private boolean checkType;
     private boolean open;
+    private boolean rightVisible;
     public MineLineItemView(Context context) {
         this(context, null);
     }
@@ -49,10 +53,12 @@ public class MineLineItemView extends RelativeLayout {
         title = ta.getString(R.styleable.MineLineItemViewAttr_title);
         resID = (BitmapDrawable) ta.getDrawable(R.styleable.MineLineItemViewAttr_item_icon);
         checkType = ta.getBoolean(R.styleable.MineLineItemViewAttr_check_type, false);
+        rightVisible = ta.getBoolean(R.styleable.MineLineItemViewAttr_right_image_visible, false);
         ta.recycle();
         init(context);
     }
     private void init(Context context) {
+        setBackgroundResource(R.color.white);
         size_20px = ScaleCalculator.getInstance(context).scaleWidth(20);
         size_30px = ScaleCalculator.getInstance(context).scaleWidth(30);
         size_110px = ScaleCalculator.getInstance(context).scaleWidth(110);
@@ -100,6 +106,18 @@ public class MineLineItemView extends RelativeLayout {
         rlp.addRule(CENTER_VERTICAL);
         rlp.rightMargin = size_30px;
         addView(versionTv, rlp);
+
+        if (rightVisible) {
+            rightImageView = new CircleImageView(context);
+            rightImageView.setImageResource(R.mipmap.user_default_icon);
+            rlp = new RelativeLayout.LayoutParams(size_110px, size_110px);
+            rlp.addRule(RelativeLayout.LEFT_OF, moreView.getId());
+            rlp.addRule(CENTER_VERTICAL);
+            rlp.rightMargin = size_30px;
+            rlp.bottomMargin = size_30px;
+            rlp.topMargin = size_30px;
+            addView(rightImageView, rlp);
+        }
     }
 
     public boolean isOpen() {
@@ -114,6 +132,10 @@ public class MineLineItemView extends RelativeLayout {
             moreView.setImageResource(R.mipmap.opened_icon);
             open = true;
         }
+    }
+
+    public ImageView getRightImageView() {
+        return rightImageView;
     }
 
     private SoftReference<ClickCallback> mRef;

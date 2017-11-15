@@ -216,7 +216,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_110"
                 app:item_icon="@mipmap/user_grade"
-                app:title="@string/user_grade"/>
+                app:title="@string/user_grade_desc"/>
 
             <View
                 android:layout_width="match_parent"
