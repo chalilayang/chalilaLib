@@ -5,11 +5,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import com.umeng.message.PushAgent;
+
 public class BaseActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PushAgent.getInstance(this).onAppStart();
 //        initState();
     }
     private void initState() {
