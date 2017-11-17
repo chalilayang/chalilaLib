@@ -9,3 +9,4 @@
 .externalNativeBuild
 libs/
 /.idea/misc.xml
+/PushSDK

@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.baogetv.app">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_ADDED" />
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_CHANGED" />
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_INSTALL" />
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -49,6 +61,7 @@
         <activity android:name="com.baogetv.app.model.usercenter.activity.LoginActivity">
         </activity>
 
+        <service android:name="com.baogetv.app.push.MyPushIntentService" />
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5a0e54ddf29d9817aa0000d7">
