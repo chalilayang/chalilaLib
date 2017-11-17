@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.reshape.app">
+          package="com.baogetv.app">
 
     <application
         android:allowBackup="true"
@@ -9,43 +9,43 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".model.homepage.HomePageActivity"
-            android:label="@string/title_activity_home_page">
+            android:name="com.baogetv.app.model.homepage.HomePageActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".model.search.SearchActivity">
+        <activity android:name="com.baogetv.app.model.search.SearchActivity">
         </activity>
-        <activity android:name=".BaseActivity">
+        <activity android:name="com.baogetv.app.BaseActivity">
         </activity>
-        <activity android:name=".model.search.SearchResultActivity">
+        <activity android:name="com.baogetv.app.model.search.SearchResultActivity">
         </activity>
-        <activity android:name=".BaseTitleActivity">
+        <activity android:name="com.baogetv.app.BaseTitleActivity">
         </activity>
-        <activity android:name=".model.usercenter.activity.UserGradeDescActivity">
+        <activity android:name="com.baogetv.app.model.usercenter.activity.UserGradeDescActivity">
         </activity>
-        <activity android:name=".model.usercenter.activity.CacheActivity">
+        <activity android:name="com.baogetv.app.model.usercenter.activity.CacheActivity">
         </activity>
-        <activity android:name=".model.usercenter.activity.MyCollectActivity">
+        <activity android:name="com.baogetv.app.model.usercenter.activity.MyCollectActivity">
         </activity>
-        <activity android:name=".model.usercenter.activity.PlayHistoryActivity">
+        <activity android:name="com.baogetv.app.model.usercenter.activity.PlayHistoryActivity">
         </activity>
-        <activity android:name=".model.usercenter.activity.ResponseActivity">
+        <activity android:name="com.baogetv.app.model.usercenter.activity.ResponseActivity">
         </activity>
-        <activity android:name=".model.usercenter.activity.ThumbUpActivity">
+        <activity android:name="com.baogetv.app.model.usercenter.activity.ThumbUpActivity">
         </activity>
-        <activity android:name=".model.usercenter.activity.SystemNotifyAcitvity">
+        <activity android:name="com.baogetv.app.model.usercenter.activity.SystemNotifyAcitvity">
         </activity>
-        <activity android:name=".model.usercenter.activity.SettingActivity">
+        <activity android:name="com.baogetv.app.model.usercenter.activity.SettingActivity">
         </activity>
-        <activity android:name=".model.usercenter.activity.UserInfoActivity">
+        <activity android:name="com.baogetv.app.model.usercenter.activity.UserInfoActivity">
         </activity>
-        <activity android:name=".model.usercenter.activity.VideoLoginActivity">
+        <activity android:name="com.baogetv.app.model.usercenter.activity.VideoLoginActivity">
         </activity>
-        <activity android:name=".model.usercenter.activity.LoginActivity">
+        <activity android:name="com.baogetv.app.model.usercenter.activity.LoginActivity">
         </activity>
     </application>
 

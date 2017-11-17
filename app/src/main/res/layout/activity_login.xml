@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/blue_login_bg"
-    tools:context="com.reshape.app.model.usercenter.activity.LoginActivity">
+    tools:context="com.baogetv.app.model.usercenter.activity.LoginActivity">
     <com.chalilayang.scaleview.ScaleRelativeLayout
         android:id="@+id/title_container"
         android:layout_width="match_parent"

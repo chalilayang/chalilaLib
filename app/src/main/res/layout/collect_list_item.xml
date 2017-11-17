@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/size_30">
-        <com.reshape.app.customview.LogoImageView
+        <com.baogetv.app.customview.LogoImageView
             android:id="@+id/video_item_icon"
             android:layout_width="@dimen/size_256"
             android:layout_height="@dimen/size_135"

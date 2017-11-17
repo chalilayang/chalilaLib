@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context="com.reshape.app.model.homepage.HomePageActivity">
+    tools:context="com.baogetv.app.model.homepage.HomePageActivity">
 
     <FrameLayout
         android:id="@+id/fragment_container"
