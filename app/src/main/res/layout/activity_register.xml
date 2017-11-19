@@ -50,13 +50,16 @@
             android:id="@+id/register_step_one"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
             <com.baogetv.app.model.usercenter.customview.TitleInputView
+                android:id="@+id/mobile_num_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:input_title="@string/mobile_num"
                 app:mobile_type="true"/>
             <com.baogetv.app.model.usercenter.customview.VerifyCodeInputView
+                android:id="@+id/verify_code_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_30"/>
@@ -82,14 +85,23 @@
             <com.baogetv.app.model.usercenter.customview.TitleInputView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:input_title="@string/mobile_num"
-                app:mobile_type="true"/>
-            <com.baogetv.app.model.usercenter.customview.PasswordInputView
+                app:input_title="@string/nick_name"
+                app:input_text_size="@dimen/size_48"
+                app:input_tip="@string/less_than_ten_words"/>
+            <com.baogetv.app.model.usercenter.customview.TitleInputView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_30"
-                android:focusableInTouchMode="true"/>
-
+                android:layout_marginTop="@dimen/size_50"
+                app:input_title="@string/password"
+                app:password_type="true"
+                app:input_tip="@string/more_than_six_num_and_char"/>
+            <com.baogetv.app.model.usercenter.customview.TitleInputView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_50"
+                app:input_title="@string/confirm_password"
+                app:password_type="true"
+                app:input_hint="@string/input_password_again"/>
             <com.chalilayang.scaleview.ScaleTextView
                 android:id="@+id/complete_tv"
                 android:layout_width="match_parent"

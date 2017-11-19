@@ -2,6 +2,9 @@ package com.baogetv.app.model.usercenter.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -22,12 +25,18 @@ public class TitleInputView extends ScaleFrameLayout {
 
     private TextView titleTv;
     private String title;
+    private int textSize;
     private LinearLayout inputContainer;
 
     private boolean isMobileType;
+    private boolean inputPasswordType;
     private TextView areaNum;
     private EditText inputEdit;
     private View baseLine;
+
+    private String hint;
+    private String tip;
+    private TextView tipTv;
     public TitleInputView(Context context) {
         this(context, null);
     }
@@ -41,7 +50,11 @@ public class TitleInputView extends ScaleFrameLayout {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TitleInputViewAttr);
 
         title = ta.getString(R.styleable.TitleInputViewAttr_input_title);
+        textSize = ta.getDimensionPixelSize(R.styleable.TitleInputViewAttr_input_text_size, 36);
         isMobileType = ta.getBoolean(R.styleable.TitleInputViewAttr_mobile_type, false);
+        inputPasswordType = ta.getBoolean(R.styleable.TitleInputViewAttr_password_type, false);
+        hint = ta.getString(R.styleable.TitleInputViewAttr_input_hint);
+        tip = ta.getString(R.styleable.TitleInputViewAttr_input_tip);
         ta.recycle();
         init(context);
     }
@@ -65,9 +78,17 @@ public class TitleInputView extends ScaleFrameLayout {
         }
         inputEdit = root.findViewById(R.id.input_edit);
         inputEdit.setTextColor(getResources().getColor(R.color.white));
-        inputEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, 36);
+        inputEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         inputEdit.setCursorVisible(true);
         inputEdit = findViewById(R.id.input_edit);
+        if(!inputPasswordType){
+            inputEdit.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        }else{
+            inputEdit.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        }
+        if (!TextUtils.isEmpty(hint)) {
+            inputEdit.setHint(hint);
+        }
         baseLine = findViewById(R.id.base_line);
         baseLine.setBackgroundColor(getResources().getColor(R.color.white_40_percent));
         inputEdit.setOnFocusChangeListener(new OnFocusChangeListener() {
@@ -83,6 +104,11 @@ public class TitleInputView extends ScaleFrameLayout {
             }
         });
         inputEdit.clearFocus();
+        tipTv = findViewById(R.id.input_tip);
+        if (!TextUtils.isEmpty(tip)) {
+            tipTv.setText(tip);
+            tipTv.setVisibility(VISIBLE);
+        }
     }
 
     public String getInputText() {

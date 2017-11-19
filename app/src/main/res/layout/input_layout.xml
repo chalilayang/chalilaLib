@@ -15,7 +15,7 @@
         android:id="@+id/input_edit_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_36"
+        android:layout_marginTop="@dimen/size_20"
         android:orientation="horizontal">
         <com.chalilayang.scaleview.ScaleTextView
             android:id="@+id/area_num"
@@ -29,6 +29,8 @@
             android:id="@+id/input_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white_40_percent"
             android:cursorVisible="true"
             android:textCursorDrawable="@drawable/edit_text_cursor"
             android:background="@color/transparent"/>
@@ -39,5 +41,12 @@
         android:layout_height="@dimen/size_1"
         android:layout_marginTop="@dimen/size_10"
         android:background="@color/white"/>
+    <com.chalilayang.scaleview.ScaleTextView
+        android:id="@+id/input_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/size_24"
+        android:textColor="@color/white"
+        android:visibility="gone"/>
 
 </com.chalilayang.scaleview.ScaleLinearLayout>
