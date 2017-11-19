@@ -9,6 +9,7 @@ import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
 
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
 
 public class VideoLoginActivity extends BaseActivity {
 
@@ -33,6 +34,16 @@ public class VideoLoginActivity extends BaseActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(VideoLoginActivity.this, LoginActivity.class);
                     startActivityForResult(intent, REQUEST_CODE_LOGIN_ACTIVITY);
+                }
+            });
+        }
+        registerBtn = findViewById(R.id.register_tv);
+        if (registerBtn != null) {
+            registerBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(VideoLoginActivity.this, RegisterActivity.class);
+                    startActivityForResult(intent, REQUEST_CODE_REGISTER_ACTIVITY);
                 }
             });
         }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chalilayang.scaleview.ScaleLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <com.chalilayang.scaleview.ScaleTextView
+        android:id="@+id/input_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/verify_code"
+        android:textSize="@dimen/size_36"
+        android:textColor="@color/white"/>
+    <com.chalilayang.scaleview.ScaleRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_36">
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/verify_code_image"
+            android:layout_width="@dimen/size_210"
+            android:layout_height="@dimen/size_68"
+            android:text="@string/fetch_verify_code"
+            android:textSize="@dimen/size_26"
+            android:textColor="#2c2c2f"
+            android:layout_marginLeft="@dimen/size_30"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:background="@drawable/verify_code_bg"/>
+        <com.chalilayang.scaleview.ScaleLinearLayout
+            android:id="@+id/input_edit_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/verify_code_image"
+            android:layout_toLeftOf="@+id/verify_code_image"
+            android:orientation="vertical">
+            <com.chalilayang.scaleview.ScaleEditText
+                android:id="@+id/input_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@drawable/edit_text_cursor"
+                android:background="@color/transparent"/>
+            <View
+                android:id="@+id/base_line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:background="@color/white"/>
+        </com.chalilayang.scaleview.ScaleLinearLayout>
+    </com.chalilayang.scaleview.ScaleRelativeLayout>
+
+
+
+</com.chalilayang.scaleview.ScaleLinearLayout>

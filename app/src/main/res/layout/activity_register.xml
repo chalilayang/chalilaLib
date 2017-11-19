@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chalilayang.scaleview.ScaleRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/blue_login_bg"
+    tools:context="com.baogetv.app.model.usercenter.activity.RegisterActivity">
+    <com.chalilayang.scaleview.ScaleRelativeLayout
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/size_30">
+
+        <ImageView
+            android:id="@+id/back_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/back_icon_white"/>
+
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textAppearance="@style/title_big_style"/>
+
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/right_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textAppearance="@style/title_big_style"/>
+
+    </com.chalilayang.scaleview.ScaleRelativeLayout>
+
+    <com.chalilayang.scaleview.ScaleFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/size_110"
+        android:layout_marginLeft="@dimen/size_80"
+        android:layout_marginRight="@dimen/size_80"
+        android:layout_below="@+id/title_container">
+        <com.chalilayang.scaleview.ScaleLinearLayout
+            android:id="@+id/register_step_one"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <com.baogetv.app.model.usercenter.customview.TitleInputView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:input_title="@string/mobile_num"
+                app:mobile_type="true"/>
+            <com.baogetv.app.model.usercenter.customview.VerifyCodeInputView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_30"/>
+
+            <com.chalilayang.scaleview.ScaleTextView
+                android:id="@+id/next_step_tv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/video_login_btn_bg_height"
+                android:background="@drawable/video_login_red_bg"
+                android:layout_marginTop="@dimen/size_110"
+                android:gravity="center"
+                android:text="@string/next_step"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_30"/>
+        </com.chalilayang.scaleview.ScaleLinearLayout>
+
+        <com.chalilayang.scaleview.ScaleLinearLayout
+            android:id="@+id/register_step_two"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <com.baogetv.app.model.usercenter.customview.TitleInputView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:input_title="@string/mobile_num"
+                app:mobile_type="true"/>
+            <com.baogetv.app.model.usercenter.customview.PasswordInputView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_30"
+                android:focusableInTouchMode="true"/>
+
+            <com.chalilayang.scaleview.ScaleTextView
+                android:id="@+id/complete_tv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/video_login_btn_bg_height"
+                android:background="@drawable/video_login_red_bg"
+                android:layout_marginTop="@dimen/size_110"
+                android:gravity="center"
+                android:text="@string/complete"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_30"/>
+        </com.chalilayang.scaleview.ScaleLinearLayout>
+
+    </com.chalilayang.scaleview.ScaleFrameLayout>
+
+</com.chalilayang.scaleview.ScaleRelativeLayout>
