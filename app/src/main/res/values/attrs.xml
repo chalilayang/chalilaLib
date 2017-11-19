@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TitleInputViewAttr">
+        <attr name="input_title" format="string"/>
+        <attr name="mobile_type" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="MineLineItemViewAttr">
+        <attr name="title" format="string"/>
+        <attr name="item_icon" format="reference"/>
+        <attr name="check_type" format="boolean"/>
+        <attr name="right_image_visible" format="boolean"/>
+    </declare-styleable>
+</resources>

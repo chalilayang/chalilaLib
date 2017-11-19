@@ -59,10 +59,4 @@
         <item name="android:textColor">#999999</item>
     </style>
     <style name="channel_item_update_time" parent="channel_item_video_count"/>
-    <declare-styleable name="MineLineItemViewAttr">
-        <attr name="title" format="string"/>
-        <attr name="item_icon" format="reference"/>
-        <attr name="check_type" format="boolean"/>
-        <attr name="right_image_visible" format="boolean"/>
-    </declare-styleable>
 </resources>
