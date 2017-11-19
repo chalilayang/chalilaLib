@@ -1,1 +1,1 @@
-include ':chalilalib', ':app'
+include ':chalilalib', ':app', ':PushSDK'

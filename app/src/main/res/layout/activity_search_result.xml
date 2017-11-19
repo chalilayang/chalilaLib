@@ -5,6 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.reshape.app.model.search.SearchResultActivity">
+    tools:context="com.baogetv.app.model.search.SearchResultActivity">
 
 </android.support.constraint.ConstraintLayout>

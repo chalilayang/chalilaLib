@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.reshape.app.BaseTitleActivity">
+    tools:context="com.baogetv.app.BaseTitleActivity">
     <include
         android:id="@+id/title_container"
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_marginTop="@dimen/size_40"
                 android:layout_centerHorizontal="true"
                 android:src="@mipmap/user_default_icon"/>
-            <com.reshape.app.model.usercenter.customview.UpgradeProgress
+            <com.baogetv.app.model.usercenter.customview.UpgradeProgress
                 android:id="@+id/user_grade_progress"
                 android:layout_width="@dimen/size_690"
                 android:layout_height="@dimen/size_10"

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.reshape.app.model.homepage.fragment.HomeFragment">
+    tools:context="com.baogetv.app.model.homepage.fragment.HomeFragment">
 
     <com.chalilayang.scaleview.ScaleRelativeLayout
         android:id="@+id/segment_title_container"

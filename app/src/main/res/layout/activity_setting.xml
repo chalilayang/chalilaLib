@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.reshape.app.BaseTitleActivity">
+    tools:context="com.baogetv.app.BaseTitleActivity">
 
     <include
         android:id="@+id/title_container"
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.reshape.app.model.usercenter.customview.MineLineItemView
+            <com.baogetv.app.model.usercenter.customview.MineLineItemView
                 android:id="@+id/net_set"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_110"
@@ -37,7 +37,7 @@
                 android:layout_marginRight="@dimen/size_30"
                 android:background="@color/channel_list_divider"/>
 
-            <com.reshape.app.model.usercenter.customview.MineLineItemView
+            <com.baogetv.app.model.usercenter.customview.MineLineItemView
                 android:id="@+id/cache_clear"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_110"
@@ -48,7 +48,7 @@
                 android:layout_height="@dimen/size_20"
                 android:background="@color/channel_list_divider"/>
 
-            <com.reshape.app.model.usercenter.customview.MineLineItemView
+            <com.baogetv.app.model.usercenter.customview.MineLineItemView
                 android:id="@+id/thumb_up_push"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_110"
@@ -62,7 +62,7 @@
                 android:layout_marginRight="@dimen/size_30"
                 android:background="@color/channel_list_divider"/>
 
-            <com.reshape.app.model.usercenter.customview.MineLineItemView
+            <com.baogetv.app.model.usercenter.customview.MineLineItemView
                 android:id="@+id/comment_push"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_110"
@@ -74,7 +74,7 @@
                 android:layout_height="@dimen/size_20"
                 android:background="@color/channel_list_divider"/>
 
-            <com.reshape.app.model.usercenter.customview.MineLineItemView
+            <com.baogetv.app.model.usercenter.customview.MineLineItemView
                 android:id="@+id/give_score"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_110"
@@ -87,7 +87,7 @@
                 android:layout_marginRight="@dimen/size_30"
                 android:background="@color/channel_list_divider"/>
 
-            <com.reshape.app.model.usercenter.customview.MineLineItemView
+            <com.baogetv.app.model.usercenter.customview.MineLineItemView
                 android:id="@+id/advice"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_110"
@@ -99,7 +99,7 @@
                 android:layout_height="@dimen/size_20"
                 android:background="@color/channel_list_divider"/>
 
-            <com.reshape.app.model.usercenter.customview.MineLineItemView
+            <com.baogetv.app.model.usercenter.customview.MineLineItemView
                 android:id="@+id/current_version"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_110"
@@ -112,7 +112,7 @@
                 android:layout_marginRight="@dimen/size_30"
                 android:background="@color/channel_list_divider"/>
 
-            <com.reshape.app.model.usercenter.customview.MineLineItemView
+            <com.baogetv.app.model.usercenter.customview.MineLineItemView
                 android:id="@+id/video_introduce"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_110"
@@ -125,7 +125,7 @@
                 android:layout_marginRight="@dimen/size_30"
                 android:background="@color/channel_list_divider"/>
 
-            <com.reshape.app.model.usercenter.customview.MineLineItemView
+            <com.baogetv.app.model.usercenter.customview.MineLineItemView
                 android:id="@+id/user_license"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_110"
@@ -138,7 +138,7 @@
                 android:layout_marginRight="@dimen/size_30"
                 android:background="@color/channel_list_divider"/>
 
-            <com.reshape.app.model.usercenter.customview.MineLineItemView
+            <com.baogetv.app.model.usercenter.customview.MineLineItemView
                 android:id="@+id/version_right"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_110"

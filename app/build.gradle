@@ -6,7 +6,7 @@ android {
     buildToolsVersion "26.0.1"
 
     defaultConfig {
-        applicationId "com.reshape"
+        applicationId "com.baogetv.app"
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 1
@@ -32,11 +32,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile project(':chalilalib')
-
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
     compile 'com.android.support:support-vector-drawable:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.nex3z:flow-layout:1.0.0'
     testCompile 'junit:junit:4.12'
+    compile project(':PushSDK')
 }
