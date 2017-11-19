@@ -41,7 +41,12 @@
     <com.chalilayang.scaleview.ScaleRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/size_110"
+        android:layout_marginLeft="@dimen/size_80"
+        android:layout_marginRight="@dimen/size_80"
         android:layout_below="@+id/title_container">
-
+        <com.reshape.app.model.usercenter.customview.TitleInputView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </com.chalilayang.scaleview.ScaleRelativeLayout>
 </com.chalilayang.scaleview.ScaleRelativeLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chalilayang.scaleview.ScaleLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.chalilayang.scaleview.ScaleTextView
+        android:id="@+id/input_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mobile_num"
+        android:textSize="@dimen/size_36"
+        android:textColor="@color/white"/>
+    <com.chalilayang.scaleview.ScaleLinearLayout
+        android:id="@+id/input_edit_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_36"
+        android:orientation="horizontal">
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/area_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="+86"
+            android:layout_marginRight="@dimen/size_50"
+            android:visibility="gone"/>
+        <com.chalilayang.scaleview.ScaleEditText
+            android:id="@+id/input_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="true"
+            android:textCursorDrawable="@drawable/edit_text_cursor"
+            android:background="@color/transparent"/>
+    </com.chalilayang.scaleview.ScaleLinearLayout>
+    <View
+        android:id="@+id/base_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1"
+        android:layout_marginTop="@dimen/size_10"
+        android:background="@color/white"/>
+
+</com.chalilayang.scaleview.ScaleLinearLayout>

@@ -67,6 +67,9 @@
     <string name="change_mobile_num">更换绑定手机</string>
     <string name="other_login_method">其他登录方式</string>
 
+    <string name="mobile_num">手机号</string>
+    <string name="password">密码</string>
+
     <string name="delete">删除</string>
     <string name="all_delete">全部删除</string>
 
