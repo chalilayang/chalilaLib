@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.PagerFragment;
 import com.baogetv.app.R;
+import com.baogetv.app.model.videodetail.entity.CommentData;
+import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.parcelables.PageData;
 import com.baogetv.app.parcelables.PageItemData;
 
@@ -19,7 +21,7 @@ import java.util.List;
  */
 
 public class VideoDetailFragment extends PagerFragment {
-    public static VideoDetailFragment newInstance(PageData data) {
+    public static VideoDetailFragment newInstance(VideoDetailData data) {
         VideoDetailFragment fragment = new VideoDetailFragment();
         Bundle args = new Bundle();
         args.putParcelable(PAGE_DATA, data);
@@ -30,7 +32,7 @@ public class VideoDetailFragment extends PagerFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        View root = inflater.inflate(R.layout.fragment_video_detail, container, false);
         init(root);
         return root;
     }
@@ -43,16 +45,9 @@ public class VideoDetailFragment extends PagerFragment {
     @Override
     public BaseFragment createFragment(int pageIndex) {
         if (pageIndex == 1) {
-            List<PageItemData> list = new ArrayList<>(2);
-            PageItemData pageItemData = new PageItemData(getString(R.string.week_ranking), 0);
-            list.add(pageItemData);
-            pageItemData = new PageItemData(getString(R.string.month_ranking), 0);
-            list.add(pageItemData);
-            pageItemData = new PageItemData(getString(R.string.all_ranking), 0);
-            list.add(pageItemData);
-            return PagerFragment.newInstance(new PageData(list));
+            return CommentListFragment.newInstance();
         } else {
-            return super.createFragment(pageIndex);
+            return CommentListFragment.newInstance();
         }
     }
 }

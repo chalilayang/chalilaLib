@@ -12,8 +12,8 @@ import java.lang.ref.SoftReference;
 public abstract class ItemViewHolder<T>
         extends RecyclerView.ViewHolder implements View.OnClickListener {
     protected T mData;
-    private int position;
-    private View root;
+    protected int position;
+    protected View root;
     private SoftReference<ItemClickListener> mRef;
     public ItemViewHolder(View itemView) {
         super(itemView);
@@ -33,8 +33,9 @@ public abstract class ItemViewHolder<T>
     public void setData(T data, int pos) {
         mData = data;
         position = pos;
+        bindData(mData, position);
     }
-    public abstract void bindData(T data);
+    public abstract void bindData(T data, int pos);
 
     public void setItemClick(ItemClickListener listener) {
         if (listener != null) {

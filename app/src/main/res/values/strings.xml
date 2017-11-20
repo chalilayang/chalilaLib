@@ -14,6 +14,9 @@
     <string name="channel">频道精选</string>
     <string name="video_count_format">%s个视频</string>
 
+    <string name="simple_introduce">简介</string>
+    <string name="comment">评论</string>
+
     <string name="mine">我的</string>
     <string name="height">身高</string>
     <string name="height_format">%d</string>

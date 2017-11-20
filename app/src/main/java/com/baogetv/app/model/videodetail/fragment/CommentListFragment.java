@@ -1,4 +1,4 @@
-package com.baogetv.app;
+package com.baogetv.app.model.videodetail.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,55 +10,56 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.baogetv.app.BaseItemAdapter;
+import com.baogetv.app.BaseItemFragment;
+import com.baogetv.app.ItemViewHolder;
+import com.baogetv.app.R;
 import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
+import com.baogetv.app.model.videodetail.adapter.CommentListAdapter;
 import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
-import com.baogetv.app.parcelables.PageItemData;
+import com.baogetv.app.model.videodetail.entity.CommentData;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ItemFragment extends BaseItemFragment
+public class CommentListFragment extends BaseItemFragment
         implements SwipeRefreshLayout.OnRefreshListener, ItemViewHolder.ItemClickListener<String>{
 
-    private static final String TAG = "ItemFragment";
+    private static final String TAG = "CommentListFragment";
     private static final String PAGE_DATA = "PAGE_DATA";
-    private PageItemData pageData;
+    private List<CommentData> commentDataList;
     private SwipeRefreshLayout refreshLayout;
     private View contentView;
     private RecyclerView.LayoutManager layoutManager;
     private BaseItemAdapter recyclerViewAdapter;
 
-    public ItemFragment() {
+    public CommentListFragment() {
     }
 
     @Override
     public String getTitle() {
-        return pageData.getTitle();
+        return getString(R.string.comment);
     }
 
-    public static ItemFragment newInstance(PageItemData data) {
-        ItemFragment fragment = new ItemFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(PAGE_DATA, data);
-        fragment.setArguments(args);
+    public static CommentListFragment newInstance() {
+        CommentListFragment fragment = new CommentListFragment();
+//        Bundle args = new Bundle();
+//        args.putParcelable(PAGE_DATA, data);
+//        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            pageData = getArguments().getParcelable(PAGE_DATA);
-            layoutManager = new LinearLayoutManager(getActivity());
-            List<String> list = new ArrayList<>();
-            for (int index = 0; index < 10; index ++) {
-                list.add(index+"");
-            }
-            recyclerViewAdapter = new VideoListAdapter(list);
-            recyclerViewAdapter.setItemClick(this);
+        layoutManager = new LinearLayoutManager(getActivity());
+        List<CommentData> list = new ArrayList<>();
+        for (int index = 0; index < 10; index ++) {
+            list.add(new CommentData());
         }
-        Log.i(TAG, "onCreate: " + pageData.getTitle());
+        recyclerViewAdapter = new CommentListAdapter(list);
+        recyclerViewAdapter.setItemClick(this);
     }
 
     @Override
@@ -79,7 +80,6 @@ public class ItemFragment extends BaseItemFragment
             }
             contentView = view;
         }
-        Log.i(TAG, "onCreateView: " + pageData.getTitle());
         return contentView;
     }
 

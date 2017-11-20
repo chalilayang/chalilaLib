@@ -6,21 +6,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.baogetv.app.model.videodetail.activity.VideoDetailActivity">
+
     <com.chalilayang.scaleview.ScaleFrameLayout
         android:id="@+id/video_player_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/video_player_height"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true"
+        android:background="@color/black"/>
+
     <com.chalilayang.scaleview.ScaleFrameLayout
         android:id="@+id/video_detail_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/video_player_height"
         android:layout_alignParentTop="true"
         android:layout_marginTop="@dimen/video_player_height"/>
-    <com.chalilayang.scaleview.ScaleFrameLayout
-        android:id="@+id/video_page_fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/video_player_height"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/video_player_height"/>
+
 </com.chalilayang.scaleview.ScaleRelativeLayout>

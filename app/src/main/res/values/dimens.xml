@@ -64,5 +64,5 @@
 
     <dimen name="video_login_btn_bg_height">@dimen/size_90</dimen>
 
-    <dimen name="video_player_height">500px</dimen>
+    <dimen name="video_player_height">422px</dimen>
 </resources>

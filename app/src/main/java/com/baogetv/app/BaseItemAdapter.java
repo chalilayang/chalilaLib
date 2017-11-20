@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import java.lang.ref.SoftReference;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseItemAdapter<T, D extends ItemViewHolder<T>>
@@ -17,7 +18,20 @@ public abstract class BaseItemAdapter<T, D extends ItemViewHolder<T>>
         }
     }
     public BaseItemAdapter(List<T> items) {
-        mValues = items;
+        mValues = new ArrayList<>();
+        update(items);
+    }
+
+    public BaseItemAdapter() {
+        mValues = new ArrayList<>();
+    }
+
+    public void update(List<T> list) {
+        mValues.clear();
+        if (list != null && list.size() > 0) {
+            mValues.addAll(list);
+        }
+        notifyDataSetChanged();
     }
 
     @Override
