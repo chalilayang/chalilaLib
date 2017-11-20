@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.baogetv.app">
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_ADDED" />
-    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_CHANGED" />
-    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_INSTALL" />
-    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_ADDED"/>
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_CHANGED"/>
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_INSTALL"/>
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REPLACED"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
 
     <application
+        android:name=".BaoGeApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name="com.baogetv.app.BaoGeApplication"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.baogetv.app.model.homepage.HomePageActivity"
+            android:name=".model.homepage.HomePageActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -30,41 +31,41 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.baogetv.app.model.search.SearchActivity">
+        <activity android:name=".model.search.SearchActivity">
         </activity>
-        <activity android:name="com.baogetv.app.BaseActivity">
+        <activity android:name=".BaseActivity">
         </activity>
-        <activity android:name="com.baogetv.app.model.search.SearchResultActivity">
+        <activity android:name=".model.search.SearchResultActivity">
         </activity>
-        <activity android:name="com.baogetv.app.BaseTitleActivity">
+        <activity android:name=".BaseTitleActivity">
         </activity>
-        <activity android:name="com.baogetv.app.model.usercenter.activity.UserGradeDescActivity">
+        <activity android:name=".model.usercenter.activity.UserGradeDescActivity">
         </activity>
-        <activity android:name="com.baogetv.app.model.usercenter.activity.CacheActivity">
+        <activity android:name=".model.usercenter.activity.CacheActivity">
         </activity>
-        <activity android:name="com.baogetv.app.model.usercenter.activity.MyCollectActivity">
+        <activity android:name=".model.usercenter.activity.MyCollectActivity">
         </activity>
-        <activity android:name="com.baogetv.app.model.usercenter.activity.PlayHistoryActivity">
+        <activity android:name=".model.usercenter.activity.PlayHistoryActivity">
         </activity>
-        <activity android:name="com.baogetv.app.model.usercenter.activity.ResponseActivity">
+        <activity android:name=".model.usercenter.activity.ResponseActivity">
         </activity>
-        <activity android:name="com.baogetv.app.model.usercenter.activity.ThumbUpActivity">
+        <activity android:name=".model.usercenter.activity.ThumbUpActivity">
         </activity>
-        <activity android:name="com.baogetv.app.model.usercenter.activity.SystemNotifyAcitvity">
+        <activity android:name=".model.usercenter.activity.SystemNotifyAcitvity">
         </activity>
-        <activity android:name="com.baogetv.app.model.usercenter.activity.SettingActivity">
+        <activity android:name=".model.usercenter.activity.SettingActivity">
         </activity>
-        <activity android:name="com.baogetv.app.model.usercenter.activity.UserInfoActivity">
+        <activity android:name=".model.usercenter.activity.UserInfoActivity">
         </activity>
-        <activity android:name="com.baogetv.app.model.usercenter.activity.VideoLoginActivity">
+        <activity android:name=".model.usercenter.activity.VideoLoginActivity">
         </activity>
-        <activity android:name="com.baogetv.app.model.usercenter.activity.LoginActivity">
+        <activity android:name=".model.usercenter.activity.LoginActivity">
         </activity>
-        <activity
-            android:name="com.baogetv.app.model.usercenter.activity.RegisterActivity">
+        <activity android:name=".model.usercenter.activity.RegisterActivity">
         </activity>
 
-        <service android:name="com.baogetv.app.push.MyPushIntentService" />
+        <service android:name=".push.MyPushIntentService"/>
+
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5a0e54ddf29d9817aa0000d7">
@@ -73,6 +74,9 @@
             android:name="UMENG_MESSAGE_SECRET"
             android:value="367df8049e6d8f1cb4a9ef2a2e0cbf38">
         </meta-data>
+
+        <activity android:name=".model.videodetail.activity.VideoDetailActivity">
+        </activity>
     </application>
 
 </manifest>
