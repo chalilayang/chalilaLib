@@ -9,13 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
 import com.baogetv.app.parcelables.PageItemData;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ItemFragment extends BaseItemFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ItemFragment extends BaseItemFragment
+        implements SwipeRefreshLayout.OnRefreshListener, ItemViewHolder.ItemClickListener<String>{
 
     private static final String TAG = "ItemFragment";
     private static final String PAGE_DATA = "PAGE_DATA";
@@ -23,7 +25,7 @@ public class ItemFragment extends BaseItemFragment implements SwipeRefreshLayout
     private SwipeRefreshLayout refreshLayout;
     private View contentView;
     private RecyclerView.LayoutManager layoutManager;
-    private ItemRecyclerViewAdapter recyclerViewAdapter;
+    private BaseItemAdapter recyclerViewAdapter;
 
     public ItemFragment() {
     }
@@ -51,7 +53,8 @@ public class ItemFragment extends BaseItemFragment implements SwipeRefreshLayout
             for (int index = 0; index < 10; index ++) {
                 list.add(index+"");
             }
-            recyclerViewAdapter = new ItemRecyclerViewAdapter(list);
+            recyclerViewAdapter = new VideoListAdapter(list);
+            recyclerViewAdapter.setItemClick(this);
         }
         Log.i(TAG, "onCreate: " + pageData.getTitle());
     }
@@ -81,5 +84,10 @@ public class ItemFragment extends BaseItemFragment implements SwipeRefreshLayout
     @Override
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");
+    }
+
+    @Override
+    public void onItemClick(String data, int position) {
+        Log.i(TAG, "onItemClick: " + position);
     }
 }
