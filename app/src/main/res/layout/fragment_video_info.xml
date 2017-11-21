@@ -4,25 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.baogetv.app.model.videodetail.fragment.VideoDetailFragment">
-    <com.chalilayang.scaleview.ScaleLinearLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/video_list_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <com.chalilayang.scaleview.ScaleLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        </com.chalilayang.scaleview.ScaleLinearLayout>
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/video_list_container"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/video_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/title_container">
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/video_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </android.support.v4.widget.SwipeRefreshLayout>
-    </com.chalilayang.scaleview.ScaleLinearLayout>
 </com.chalilayang.scaleview.ScaleRelativeLayout>

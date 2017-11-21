@@ -12,6 +12,7 @@ import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
 import com.baogetv.app.model.usercenter.adapter.CollectListAdapter;
 import com.baogetv.app.model.usercenter.entity.VideoData;
+import com.baogetv.app.model.videodetail.adapter.VideoInfoListAdapter;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
 
@@ -28,7 +29,7 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private CollectListAdapter recyclerViewAdapter;
+    private VideoInfoListAdapter recyclerViewAdapter;
 
     public static VideoInfoFragment newInstance() {
         VideoInfoFragment fragment = new VideoInfoFragment();
@@ -64,7 +65,7 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
         divider.setMargin(margin_30px);
         recyclerView.addItemDecoration(divider);
         layoutManager = new LinearLayoutManager(getActivity());
-        recyclerViewAdapter = new CollectListAdapter(getActivity());
+        recyclerViewAdapter = new VideoInfoListAdapter(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
         refreshLayout.setOnRefreshListener(this);
@@ -73,7 +74,7 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
         for (int index = 0; index < 10; index ++) {
             datas.add(new VideoData("", "" + index, System.currentTimeMillis()));
         }
-        recyclerViewAdapter.updateChannelList(datas);
+        recyclerViewAdapter.updateList(datas);
     }
 
     /**
