@@ -2,10 +2,12 @@ package com.baogetv.app.customview;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
 import com.baogetv.app.R;
+import com.chalilayang.scaleview.ScaleCalculator;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -20,6 +22,7 @@ public class LogoCircleImageView extends CircleImageView {
     private Drawable three;
     private Drawable four;
     private Drawable five;
+    private Paint circlePaint;
     public LogoCircleImageView(Context context) {
         this(context, null);
     }
@@ -35,6 +38,11 @@ public class LogoCircleImageView extends CircleImageView {
         three = context.getResources().getDrawable(R.mipmap.user_grade_three_icon);
         four = context.getResources().getDrawable(R.mipmap.user_grade_four_icon);
         five = context.getResources().getDrawable(R.mipmap.user_grade_five_icon);
+        circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        circlePaint.setColor(getResources().getColor(R.color.reshape_red));
+        int paintWidth = ScaleCalculator.getInstance(context).scaleWidth(4);
+        circlePaint.setStrokeWidth(paintWidth);
+        circlePaint.setStyle(Paint.Style.STROKE);
     }
 
     public void setLogo(int level) {
@@ -68,6 +76,9 @@ public class LogoCircleImageView extends CircleImageView {
         int width = canvas.getWidth();
         int height = canvas.getHeight();
         if (proLogo != null && width > 0 && height > 0) {
+            float cx = width / 2.0f;
+            float cy = height / 2.0f;
+            canvas.drawCircle(cx, cy, cx - circlePaint.getStrokeWidth()/2, circlePaint);
             int left = width - proLogo.getIntrinsicWidth();
             int top = height - proLogo.getIntrinsicHeight();
             int right = width;
