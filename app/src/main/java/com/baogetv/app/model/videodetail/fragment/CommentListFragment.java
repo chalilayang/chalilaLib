@@ -63,6 +63,7 @@ public class CommentListFragment extends BaseItemFragment
             UserData replyer = new UserData();
             replyer.setNickName("防腐层");
             replyer.setDesc("ddddd");
+            replyer.setGrage(index);
             data.setOwner(replyer);
             data.setContent("瓦尔特VRTV让他 ");
             data.setTime(System.currentTimeMillis());
