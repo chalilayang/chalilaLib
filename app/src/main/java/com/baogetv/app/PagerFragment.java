@@ -15,7 +15,7 @@ import com.baogetv.app.parcelables.PageData;
 
 public class PagerFragment extends BaseFragment {
     public static final String PAGE_DATA = "PAGE_DATA";
-    private PageData pageData;
+    protected PageData pageData;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private FragmentManager fragmentManager;
 

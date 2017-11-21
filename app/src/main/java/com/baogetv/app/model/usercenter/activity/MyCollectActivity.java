@@ -18,7 +18,7 @@ import java.util.List;
 
 
 public class MyCollectActivity extends BaseTitleActivity
-        implements SwipeRefreshLayout.OnRefreshListener{
+        implements SwipeRefreshLayout.OnRefreshListener {
     private static final String TAG = "MyCollectActivity";
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;

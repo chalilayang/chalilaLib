@@ -41,7 +41,7 @@ public class VideoDetailFragment extends PagerFragment {
         if (pageIndex == 1) {
             return CommentListFragment.newInstance();
         } else {
-            return super.createFragment(pageIndex);
+            return VideoInfoFragment.newInstance();
         }
     }
 }
