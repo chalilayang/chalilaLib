@@ -1,6 +1,5 @@
 package com.baogetv.app.model.videodetail.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,18 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.baogetv.app.BaseFragment;
-import com.baogetv.app.PagerFragment;
 import com.baogetv.app.R;
 import com.baogetv.app.model.usercenter.adapter.CollectListAdapter;
 import com.baogetv.app.model.usercenter.entity.VideoData;
-import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.baogetv.app.PagerFragment.PAGE_DATA;
 
 /**
  * Created by chalilayang on 2017/11/20.

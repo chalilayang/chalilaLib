@@ -1,10 +1,7 @@
 package com.baogetv.app.model.videodetail.activity;
 
 import android.app.FragmentTransaction;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
@@ -22,11 +19,6 @@ public class VideoDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_detail);
-        View content = findViewById(R.id.content_view);
-        Rect outRect = new Rect();
-        getWindow().getDecorView().getWindowVisibleDisplayFrame(outRect);
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) content.getLayoutParams();
-        params.height = outRect.bottom - outRect.top;
         showHomeFragment();
     }
 
