@@ -56,7 +56,9 @@ public class CommentListFragment extends BaseItemFragment
         layoutManager = new LinearLayoutManager(getActivity());
         List<CommentData> list = new ArrayList<>();
         for (int index = 0; index < 10; index ++) {
-            list.add(new CommentData());
+            CommentData data = new CommentData();
+            data.setContent("fdfddddddddddcf");
+            list.add(data);
         }
         recyclerViewAdapter = new CommentListAdapter(list);
         recyclerViewAdapter.setItemClick(this);

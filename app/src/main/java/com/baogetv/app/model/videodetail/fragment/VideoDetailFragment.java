@@ -8,13 +8,7 @@ import android.view.ViewGroup;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.PagerFragment;
 import com.baogetv.app.R;
-import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
-import com.baogetv.app.parcelables.PageData;
-import com.baogetv.app.parcelables.PageItemData;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by chalilayang on 2017/11/20.
@@ -47,7 +41,7 @@ public class VideoDetailFragment extends PagerFragment {
         if (pageIndex == 1) {
             return CommentListFragment.newInstance();
         } else {
-            return CommentListFragment.newInstance();
+            return super.createFragment(pageIndex);
         }
     }
 }

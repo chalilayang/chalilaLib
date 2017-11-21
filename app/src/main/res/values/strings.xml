@@ -16,6 +16,9 @@
 
     <string name="simple_introduce">简介</string>
     <string name="comment">评论</string>
+    <string name="reply">回复</string>
+    <string name="reply_format">%1$s回复%2$s:%3$s</string>
+    <string name="reply_format_no_to">%1$s:%2$s</string>
 
     <string name="mine">我的</string>
     <string name="height">身高</string>

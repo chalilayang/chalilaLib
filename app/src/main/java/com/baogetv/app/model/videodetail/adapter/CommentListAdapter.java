@@ -8,6 +8,7 @@ import com.baogetv.app.BaseItemAdapter;
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
 import com.baogetv.app.customview.LogoImageView;
+import com.baogetv.app.model.videodetail.customview.ReplyView;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 
 import java.util.List;
@@ -26,16 +27,16 @@ public class CommentListAdapter extends BaseItemAdapter<CommentData, CommentList
     }
 
     public class ViewHolder extends ItemViewHolder<CommentData> {
-        public final LogoImageView mContentView;
+        public final ReplyView mReplyView;
 
         public ViewHolder(View view) {
             super(view);
-            mContentView = (LogoImageView) view.findViewById(R.id.img);
+            mReplyView = (ReplyView) view.findViewById(R.id.replay_view);
         }
 
         @Override
         public void bindData(CommentData data, int pos) {
-            mContentView.setChnLogoVisible(true);
+            mReplyView.setComment(data);
         }
     }
 }
