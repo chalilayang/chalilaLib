@@ -31,6 +31,7 @@
     <dimen name="size_100">100px</dimen>
     <dimen name="size_110">110px</dimen>
     <dimen name="size_120">120px</dimen>
+    <dimen name="size_130">130px</dimen>
     <dimen name="size_140">140px</dimen>
     <dimen name="size_190">190px</dimen>
     <dimen name="size_66">66px</dimen>

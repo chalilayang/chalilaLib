@@ -17,7 +17,6 @@ import com.baogetv.app.R;
 import com.baogetv.app.model.usercenter.entity.UserData;
 import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.CommentListAdapter;
-import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;

@@ -18,6 +18,7 @@
     <color name="reply_name">#777777</color>
     <color name="reply_time">#999999</color>
     <color name="reply_content">#333333</color>
+    <color name="video_detail_name_link">#da4c3e</color>
 
     <color name="send_edit_text_color">#c6c6c6</color>
 </resources>
