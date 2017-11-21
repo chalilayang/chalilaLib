@@ -24,9 +24,10 @@
     <dimen name="size_58">58px</dimen>
     <dimen name="size_62">62px</dimen>
     <dimen name="size_68">68px</dimen>
-    <dimen name="size_90">90px</dimen>
     <dimen name="size_74">74px</dimen>
     <dimen name="size_78">78px</dimen>
+    <dimen name="size_90">90px</dimen>
+    <dimen name="size_98">98px</dimen>
     <dimen name="size_100">100px</dimen>
     <dimen name="size_110">110px</dimen>
     <dimen name="size_120">120px</dimen>

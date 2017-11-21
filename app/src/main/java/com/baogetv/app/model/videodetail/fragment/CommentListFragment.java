@@ -76,25 +76,19 @@ public class CommentListFragment extends BaseItemFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (contentView == null) {
-            View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+            View view = inflater.inflate(R.layout.fragment_comment_list, container, false);
             RecyclerViewDivider divider
                     = new RecyclerViewDivider(getActivity(),
                     LinearLayoutManager.HORIZONTAL, 1,
                     getResources().getColor(R.color.channel_list_divider));
             int margin_30px = ScaleCalculator.getInstance(getActivity()).scaleWidth(30);
             divider.setMargin(margin_30px);
-            if (view instanceof RecyclerView) {
-                RecyclerView recyclerView = (RecyclerView) view;
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setAdapter(recyclerViewAdapter);
-            } else if (view instanceof SwipeRefreshLayout ){
-                refreshLayout = (SwipeRefreshLayout) view;
-                RecyclerView child = refreshLayout.findViewById(R.id.list);
-                child.setLayoutManager(layoutManager);
-                child.addItemDecoration(divider);
-                child.setAdapter(recyclerViewAdapter);
-                refreshLayout.setOnRefreshListener(this);
-            }
+            refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl);
+            RecyclerView child = refreshLayout.findViewById(R.id.list);
+            child.setLayoutManager(layoutManager);
+            child.addItemDecoration(divider);
+            child.setAdapter(recyclerViewAdapter);
+            refreshLayout.setOnRefreshListener(this);
             contentView = view;
         }
         return contentView;

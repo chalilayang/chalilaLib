@@ -32,37 +32,78 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".model.search.SearchActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".model.search.SearchActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".BaseActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".BaseActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".model.search.SearchResultActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".model.search.SearchResultActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".BaseTitleActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".BaseTitleActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".model.usercenter.activity.UserGradeDescActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".model.usercenter.activity.UserGradeDescActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".model.usercenter.activity.CacheActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".model.usercenter.activity.CacheActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".model.usercenter.activity.MyCollectActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".model.usercenter.activity.MyCollectActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".model.usercenter.activity.PlayHistoryActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".model.usercenter.activity.PlayHistoryActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".model.usercenter.activity.ResponseActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".model.usercenter.activity.ResponseActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".model.usercenter.activity.ThumbUpActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".model.usercenter.activity.ThumbUpActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".model.usercenter.activity.SystemNotifyAcitvity" android:screenOrientation="portrait">
+        <activity
+            android:name=".model.usercenter.activity.SystemNotifyAcitvity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".model.usercenter.activity.SettingActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".model.usercenter.activity.SettingActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".model.usercenter.activity.UserInfoActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".model.usercenter.activity.UserInfoActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".model.usercenter.activity.VideoLoginActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".model.usercenter.activity.VideoLoginActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".model.usercenter.activity.LoginActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".model.usercenter.activity.LoginActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".model.usercenter.activity.RegisterActivity" android:screenOrientation="portrait">
+        <activity
+            android:name=".model.usercenter.activity.RegisterActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".model.videodetail.activity.VideoDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="portrait">
         </activity>
 
         <service android:name=".push.MyPushIntentService"/>
@@ -75,11 +116,6 @@
             android:name="UMENG_MESSAGE_SECRET"
             android:value="367df8049e6d8f1cb4a9ef2a2e0cbf38">
         </meta-data>
-
-        <activity android:name=".model.videodetail.activity.VideoDetailActivity">
-        </activity>
-        <activity android:name=".SplashActivity">
-        </activity>
     </application>
 
 </manifest>
