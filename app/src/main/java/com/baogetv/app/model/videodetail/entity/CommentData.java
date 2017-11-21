@@ -12,6 +12,7 @@ import java.util.List;
 public class CommentData {
     private UserData owner;
     private String content;
+    private long time;
     private List<ReplyData> replyList;
 
     public UserData getOwner() {
@@ -46,5 +47,13 @@ public class CommentData {
         if (list != null && list.size() > 0) {
             replyList.addAll(list);
         }
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 }

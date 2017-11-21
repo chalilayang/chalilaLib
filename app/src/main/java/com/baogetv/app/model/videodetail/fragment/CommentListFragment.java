@@ -14,17 +14,20 @@ import com.baogetv.app.BaseItemAdapter;
 import com.baogetv.app.BaseItemFragment;
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
+import com.baogetv.app.model.usercenter.entity.UserData;
 import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.CommentListAdapter;
 import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
 import com.baogetv.app.model.videodetail.entity.CommentData;
+import com.chalilayang.customview.RecyclerViewDivider;
+import com.chalilayang.scaleview.ScaleCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class CommentListFragment extends BaseItemFragment
-        implements SwipeRefreshLayout.OnRefreshListener, ItemViewHolder.ItemClickListener<String>{
+        implements SwipeRefreshLayout.OnRefreshListener, ItemViewHolder.ItemClickListener<CommentData>{
 
     private static final String TAG = "CommentListFragment";
     private static final String PAGE_DATA = "PAGE_DATA";
@@ -57,7 +60,12 @@ public class CommentListFragment extends BaseItemFragment
         List<CommentData> list = new ArrayList<>();
         for (int index = 0; index < 10; index ++) {
             CommentData data = new CommentData();
-            data.setContent("fdfddddddddddcf");
+            UserData replyer = new UserData();
+            replyer.setNickName("防腐层");
+            replyer.setDesc("ddddd");
+            data.setOwner(replyer);
+            data.setContent("瓦尔特VRTV让他 ");
+            data.setTime(System.currentTimeMillis());
             list.add(data);
         }
         recyclerViewAdapter = new CommentListAdapter(list);
@@ -69,6 +77,12 @@ public class CommentListFragment extends BaseItemFragment
                              Bundle savedInstanceState) {
         if (contentView == null) {
             View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+            RecyclerViewDivider divider
+                    = new RecyclerViewDivider(getActivity(),
+                    LinearLayoutManager.HORIZONTAL, 1,
+                    getResources().getColor(R.color.channel_list_divider));
+            int margin_30px = ScaleCalculator.getInstance(getActivity()).scaleWidth(30);
+            divider.setMargin(margin_30px);
             if (view instanceof RecyclerView) {
                 RecyclerView recyclerView = (RecyclerView) view;
                 recyclerView.setLayoutManager(layoutManager);
@@ -77,6 +91,7 @@ public class CommentListFragment extends BaseItemFragment
                 refreshLayout = (SwipeRefreshLayout) view;
                 RecyclerView child = refreshLayout.findViewById(R.id.list);
                 child.setLayoutManager(layoutManager);
+                child.addItemDecoration(divider);
                 child.setAdapter(recyclerViewAdapter);
                 refreshLayout.setOnRefreshListener(this);
             }
@@ -91,7 +106,7 @@ public class CommentListFragment extends BaseItemFragment
     }
 
     @Override
-    public void onItemClick(String data, int position) {
+    public void onItemClick(CommentData data, int position) {
         Log.i(TAG, "onItemClick: " + position);
         Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
         getActivity().startActivity(intent);

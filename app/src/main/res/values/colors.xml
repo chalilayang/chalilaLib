@@ -15,4 +15,7 @@
     <color name="transparent">#00000000</color><!--透明色 -->
     <color name="white">#FFFFFF</color><!--白色 -->
     <color name="white_40_percent">#66FFFFFF</color><!--白色 40透明度 -->
+    <color name="reply_name">#777777</color>
+    <color name="reply_time">#999999</color>
+    <color name="reply_content">#333333</color>
 </resources>

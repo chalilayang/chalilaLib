@@ -6,8 +6,10 @@ package com.baogetv.app.model.usercenter.entity;
 
 public class UserData {
     private int userId;
+    private int grage;
     private String iconUrl;
     private String nickName;
+    private String desc;
 
     public int getUserId() {
         return userId;
@@ -31,5 +33,21 @@ public class UserData {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public int getGrage() {
+        return grage;
+    }
+
+    public void setGrage(int grage) {
+        this.grage = grage;
     }
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chalilayang.scaleview.ScaleRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.baogetv.app.model.videodetail.customview.CommentView
+        android:id="@+id/comment_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginRight="@dimen/size_30"
+        android:layout_marginTop="@dimen/size_20"
+        android:layout_marginBottom="@dimen/size_20"/>
+</com.chalilayang.scaleview.ScaleRelativeLayout>
