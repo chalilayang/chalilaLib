@@ -2,6 +2,7 @@ package com.baogetv.app.model.videodetail.customview;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -14,6 +15,7 @@ import com.baogetv.app.model.videodetail.entity.ReplyData;
 import com.baogetv.app.util.TimeUtil;
 import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleFrameLayout;
+import com.chalilayang.scaleview.ScaleTextView;
 
 import java.util.List;
 
@@ -31,6 +33,9 @@ public class CommentView extends ScaleFrameLayout {
     private TextView commentTime;
     private TextView commentContent;
     private LinearLayout replyContainer;
+    private TextView moreReplyBtn;
+
+    private String moreReplyFormat;
 
     public CommentView(Context context) {
         this(context, null);
@@ -46,6 +51,7 @@ public class CommentView extends ScaleFrameLayout {
     }
 
     private void init(Context context) {
+        moreReplyFormat = getResources().getString(R.string.more_reply_format);
         View root = LayoutInflater.from(context).inflate(R.layout.comment_layout, this);
         userLogoImage = root.findViewById(R.id.comment_user_icon);
         userName = root.findViewById(R.id.comment_name);
@@ -53,10 +59,15 @@ public class CommentView extends ScaleFrameLayout {
         commentTime = root.findViewById(R.id.comment_time);
         commentContent = root.findViewById(R.id.comment_content);
         replyContainer = root.findViewById(R.id.comment_reply_container);
+        moreReplyBtn = new ScaleTextView(context);
+        moreReplyBtn.setTextSize(TypedValue.COMPLEX_UNIT_PX, 28);
+        moreReplyBtn.setTextColor(getResources().getColor(R.color.video_detail_name_link));
     }
 
     public void setCommentData(CommentData data) {
         commentData = data;
+        replyContainer.setVisibility(GONE);
+        replyContainer.removeAllViews();
         if (commentData != null) {
             Glide.with(getContext()).load(data.getOwner()
                             .getIconUrl()).error(R.mipmap.user_default_icon).into(userLogoImage);
@@ -71,10 +82,15 @@ public class CommentView extends ScaleFrameLayout {
                 if (count > 0) {
                     replyContainer.setVisibility(VISIBLE);
                     for (int index = 0; index < count; index ++) {
+                        if (index == 3) {
+                            moreReplyBtn.setText(String.format(moreReplyFormat, count));
+                            replyContainer.addView(moreReplyBtn, index);
+                            break;
+                        }
                         ReplyData replyData = replyDataList.get(index);
                         ReplyView replyView = new ReplyView(getContext());
                         replyView.setReply(replyData);
-                        replyContainer.addView(replyView);
+                        replyContainer.addView(replyView, index);
                     }
                 }
             }
