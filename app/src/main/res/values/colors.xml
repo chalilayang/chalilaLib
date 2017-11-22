@@ -22,4 +22,7 @@
     <color name="video_detail_name_link">#da4c3e</color>
 
     <color name="send_edit_text_color">#c6c6c6</color>
+
+    <color name="play_seek_bar_start">#ffa300</color>
+    <color name="play_seek_bar_end">#dc4b38</color>
 </resources>
