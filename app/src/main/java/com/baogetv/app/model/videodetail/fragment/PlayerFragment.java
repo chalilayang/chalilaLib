@@ -1,9 +1,6 @@
 package com.baogetv.app.model.videodetail.fragment;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +8,12 @@ import android.widget.ImageView;
 
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
-import com.baogetv.app.model.usercenter.entity.VideoData;
-import com.baogetv.app.model.videodetail.adapter.VideoInfoListAdapter;
-import com.baogetv.app.model.videodetail.customview.VideoPlayerView;
-import com.baogetv.app.model.videodetail.entity.PlayData;
-import com.chalilayang.customview.RecyclerViewDivider;
-import com.chalilayang.scaleview.ScaleCalculator;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.baogetv.app.model.videodetail.player.PlayerController;
+import com.bumptech.glide.Glide;
+import com.xiao.nicevideoplayer.NiceVideoPlayer;
+import com.xiao.nicevideoplayer.NiceVideoPlayerController;
+import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
+import com.xiao.nicevideoplayer.TxVideoPlayerController;
 
 /**
  * Created by chalilayang on 2017/11/20.
@@ -28,9 +22,9 @@ import java.util.List;
 public class PlayerFragment extends BaseFragment {
 
     private View contentView;
-    private VideoPlayerView playerView;
     private ImageView playPauseBtn;
 
+    private NiceVideoPlayer mNiceVideoPlayer;
     public static PlayerFragment newInstance() {
         PlayerFragment fragment = new PlayerFragment();
         Bundle args = new Bundle();
@@ -55,26 +49,14 @@ public class PlayerFragment extends BaseFragment {
     }
 
     public void init(View root) {
-        playerView = root.findViewById(R.id.player_surface);
-        playerView.setData(new PlayData(PlayData.NET, "http://videos.baoge.tv/Uploads/Download/2017-11-19/5a114d32969a5.mp4"));
-        playPauseBtn = (ImageView) root.findViewById(R.id.pause_btn);
-        playPauseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (playerView.isPlaying()) {
-                    playPauseBtn.setImageResource(R.mipmap.play_start);
-                    playerView.pause();
-                } else {
-                    playPauseBtn.setImageResource(R.mipmap.play_pause);
-                    playerView.resume();
-                }
-            }
-        });
+        mNiceVideoPlayer = (NiceVideoPlayer) root.findViewById(R.id.player_surface);
+        mNiceVideoPlayer.setPlayerType(NiceVideoPlayer.TYPE_NATIVE);
+        mNiceVideoPlayer.setUp("http://videos.baoge.tv/Uploads/Download/2017-11-19/5a114d32969a5.mp4", null);
+        NiceVideoPlayerController controller = new PlayerController(this.getActivity());
+        mNiceVideoPlayer.setController(controller);
     }
 
     public void release() {
-        if (playerView != null) {
-            playerView.release();
-        }
+        NiceVideoPlayerManager.instance().releaseNiceVideoPlayer();
     }
 }

@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.baogetv.app"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -39,6 +39,6 @@ dependencies {
     compile 'com.nex3z:flow-layout:1.0.0'
     testCompile 'junit:junit:4.12'
     compile project(':PushSDK')
-
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile project(':nicevideoplayer')
 }
