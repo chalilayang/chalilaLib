@@ -17,6 +17,7 @@ import com.baogetv.app.model.videodetail.entity.PlayData;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.ref.SoftReference;
 
 /**
  * Created by chalilayang on 2017/9/7.
@@ -246,5 +247,18 @@ public class VideoPlayerView extends TextureView
             }
             mHomePressReceiver = null;
         }
+    }
+
+    private SoftReference<OnPlayCallBack> softReference;
+    public void setPlayCallBack(OnPlayCallBack callBack) {
+        if (callBack != null) {
+            softReference = new SoftReference<OnPlayCallBack>(callBack);
+        }
+    }
+    public interface OnPlayCallBack {
+        void onPrepared();
+        void onPlayUpdate(int pos);
+        void onPause();
+        void onResume();
     }
 }

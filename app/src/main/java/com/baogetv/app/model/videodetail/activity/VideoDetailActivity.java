@@ -31,14 +31,7 @@ public class VideoDetailActivity extends BaseActivity {
     }
 
     private void init() {
-        findViewById(R.id.content_view).setOnClickListener(new View.OnClickListener() {
-            boolean flag = false;
-            @Override
-            public void onClick(View v) {
-                setFullScreen(!flag);
-                flag = !flag;
-            }
-        });
+
     }
     /**
      * 设置是否全屏
