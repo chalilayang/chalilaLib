@@ -70,8 +70,10 @@ public class CommentListFragment extends BaseItemFragment
             ReplyData replyData = new ReplyData();
             replyData.setReplyer(replyer);
             replyData.setReplyTo(replyer);
-            replyData.setContent("饿哦日女偶俄如女儿");
+            replyData.setContent("饿哦日女偶俄如女儿地方女偶儿女偶😈👹👺💀💤💩🤡╮(￣▽￣)╭🀂🀂😁😀尔女人额如厕我软编");
             List<ReplyData> list1 = new ArrayList<>();
+            list1.add(replyData);
+            list1.add(replyData);
             list1.add(replyData);
             data.setReplyList(list1);
             list.add(data);
