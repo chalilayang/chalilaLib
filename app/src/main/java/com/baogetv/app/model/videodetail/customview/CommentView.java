@@ -10,9 +10,12 @@ import android.widget.TextView;
 import com.baogetv.app.R;
 import com.baogetv.app.customview.LogoCircleImageView;
 import com.baogetv.app.model.videodetail.entity.CommentData;
+import com.baogetv.app.model.videodetail.entity.ReplyData;
 import com.baogetv.app.util.TimeUtil;
 import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleFrameLayout;
+
+import java.util.List;
 
 /**
  * Created by chalilayang on 2017/11/21.
@@ -62,6 +65,19 @@ public class CommentView extends ScaleFrameLayout {
             userDesc.setText(data.getOwner().getDesc());
             commentContent.setText(data.getContent());
             commentTime.setText(TimeUtil.getTimeStateNew(String.valueOf(data.getTime())));
+            List<ReplyData> replyDataList = commentData.getReplyList();
+            if (replyDataList != null) {
+                int count = replyDataList.size();
+                if (count > 0) {
+                    replyContainer.setVisibility(VISIBLE);
+                    for (int index = 0; index < count; index ++) {
+                        ReplyData replyData = replyDataList.get(index);
+                        ReplyView replyView = new ReplyView(getContext());
+                        replyView.setReply(replyData);
+                        replyContainer.addView(replyView);
+                    }
+                }
+            }
         }
     }
 }

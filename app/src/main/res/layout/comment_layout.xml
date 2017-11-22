@@ -89,6 +89,13 @@
             android:id="@+id/comment_reply_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_30"
+            android:background="@color/replay_container_bg"
+            android:paddingLeft="@dimen/size_20"
+            android:paddingTop="@dimen/size_30"
+            android:paddingRight="@dimen/size_20"
+            android:paddingBottom="@dimen/size_30"
+            android:visibility="gone"
             android:orientation="vertical"/>
     </com.chalilayang.scaleview.ScaleLinearLayout>
 </com.chalilayang.scaleview.ScaleRelativeLayout>

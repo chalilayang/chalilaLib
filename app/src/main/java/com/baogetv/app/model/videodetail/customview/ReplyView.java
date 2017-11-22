@@ -2,17 +2,17 @@ package com.baogetv.app.model.videodetail.customview;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.baogetv.app.R;
-import com.baogetv.app.model.usercenter.entity.UserData;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.chalilayang.scaleview.ScaleLinearLayout;
-import com.chalilayang.scaleview.ScaleTextView;
 
 import java.lang.ref.SoftReference;
 
@@ -22,9 +22,9 @@ import java.lang.ref.SoftReference;
 
 public class ReplyView extends ScaleLinearLayout {
 
-    private ScaleTextView contentTv;
-    private ScaleTextView time;
-    private ScaleTextView replyBtn;
+    private TextView contentTv;
+    private TextView time;
+    private TextView replyBtn;
 
     private int nameColor;
     private int contentColor;
@@ -66,8 +66,8 @@ public class ReplyView extends ScaleLinearLayout {
         replyFormatNoTo = getResources().getString(R.string.reply_format_no_to);
 
         setOrientation(VERTICAL);
-        contentTv = new ScaleTextView(context);
-        contentTv.setTextSize(contentSize);
+        contentTv = new TextView(context);
+        contentTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, contentSize);
         LinearLayout.LayoutParams llp
                 = new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -77,14 +77,14 @@ public class ReplyView extends ScaleLinearLayout {
         RelativeLayout.LayoutParams rlp
                 = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        time = new ScaleTextView(context);
-        time.setTextSize(timeSize);
+        time = new TextView(context);
+        time.setTextSize(TypedValue.COMPLEX_UNIT_PX, timeSize);
         time.setTextColor(timeColor);
         time.setText(getResources().getString(R.string.reply));
         rlp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         bottomContainer.addView(time, rlp);
-        replyBtn = new ScaleTextView(context);
-        replyBtn.setTextSize(timeSize);
+        replyBtn = new TextView(context);
+        replyBtn.setTextSize(TypedValue.COMPLEX_UNIT_PX, timeSize);
         replyBtn.setTextColor(replyBtnColor);
         replyBtn.setText(getResources().getString(R.string.reply));
         rlp = new RelativeLayout.LayoutParams(
@@ -93,19 +93,6 @@ public class ReplyView extends ScaleLinearLayout {
         bottomContainer.addView(replyBtn, rlp);
 
         addView(bottomContainer, llp);
-    }
-
-    public void setComment(CommentData data) {
-        this.commentData = data;
-        ReplyData replyData = new ReplyData();
-        UserData replyer = new UserData();
-        replyer.setNickName("防腐层");
-        UserData replyTo = new UserData();
-        replyTo.setNickName("吃软饭");
-        replyData.setReplyer(replyer);
-        replyData.setReplyTo(replyTo);
-        replyData.setContent("让他VRTV让他VRTV");
-        setReply(replyData);
     }
 
     public void setReply(ReplyData data) {

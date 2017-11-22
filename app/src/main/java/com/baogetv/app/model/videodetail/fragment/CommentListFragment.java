@@ -18,6 +18,7 @@ import com.baogetv.app.model.usercenter.entity.UserData;
 import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.CommentListAdapter;
 import com.baogetv.app.model.videodetail.entity.CommentData;
+import com.baogetv.app.model.videodetail.entity.ReplyData;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
 
@@ -66,6 +67,13 @@ public class CommentListFragment extends BaseItemFragment
             data.setOwner(replyer);
             data.setContent("瓦尔特VRTV让他 ");
             data.setTime(System.currentTimeMillis());
+            ReplyData replyData = new ReplyData();
+            replyData.setReplyer(replyer);
+            replyData.setReplyTo(replyer);
+            replyData.setContent("饿哦日女偶俄如女儿");
+            List<ReplyData> list1 = new ArrayList<>();
+            list1.add(replyData);
+            data.setReplyList(list1);
             list.add(data);
         }
         recyclerViewAdapter = new CommentListAdapter(list);
