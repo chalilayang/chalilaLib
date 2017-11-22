@@ -50,10 +50,13 @@ public class NiceUtil {
     }
 
     public static void showActionBar(Context context) {
-        ActionBar ab = getAppCompActivity(context).getSupportActionBar();
-        if (ab != null) {
-            ab.setShowHideAnimationEnabled(false);
-            ab.show();
+        AppCompatActivity appCompatActivity = getAppCompActivity(context);
+        if (appCompatActivity != null) {
+            ActionBar ab = getAppCompActivity(context).getSupportActionBar();
+            if (ab != null) {
+                ab.setShowHideAnimationEnabled(false);
+                ab.show();
+            }
         }
         scanForActivity(context)
                 .getWindow()
@@ -61,10 +64,13 @@ public class NiceUtil {
     }
 
     public static void hideActionBar(Context context) {
-        ActionBar ab = getAppCompActivity(context).getSupportActionBar();
-        if (ab != null) {
-            ab.setShowHideAnimationEnabled(false);
-            ab.hide();
+        AppCompatActivity appCompatActivity = getAppCompActivity(context);
+        if (appCompatActivity != null) {
+            ActionBar ab = getAppCompActivity(context).getSupportActionBar();
+            if (ab != null) {
+                ab.setShowHideAnimationEnabled(false);
+                ab.hide();
+            }
         }
         scanForActivity(context)
                 .getWindow()
