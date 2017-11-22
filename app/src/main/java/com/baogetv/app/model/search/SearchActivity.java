@@ -125,7 +125,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 }
             }
         });
-        flowLayout = findViewById(R.id.search_label_layout);
+        flowLayout = (FlowLayout) findViewById(R.id.search_label_layout);
         int space = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(20);
         flowLayout.setChildSpacing(space);
         flowLayout.setRowSpacing(space);

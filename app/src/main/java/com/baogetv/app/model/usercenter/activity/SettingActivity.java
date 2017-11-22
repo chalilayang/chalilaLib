@@ -24,38 +24,38 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitleActivity(getString(R.string.setting));
-        netSet = findViewById(R.id.net_set);
+        netSet = (MineLineItemView) findViewById(R.id.net_set);
         netSet.setClickCallback(new MineLineItemView.ClickCallback() {
             @Override
             public void onMoreViewClick() {
                 netSet.swichOpenState();
             }
         });
-        clearCache = findViewById(R.id.cache_clear);
+        clearCache = (MineLineItemView) findViewById(R.id.cache_clear);
         clearCache.setOnClickListener(this);
-        thumbUpPush = findViewById(R.id.thumb_up_push);
+        thumbUpPush = (MineLineItemView) findViewById(R.id.thumb_up_push);
         thumbUpPush.setClickCallback(new MineLineItemView.ClickCallback() {
             @Override
             public void onMoreViewClick() {
                 thumbUpPush.swichOpenState();
             }
         });
-        commentPush = findViewById(R.id.comment_push);
+        commentPush = (MineLineItemView) findViewById(R.id.comment_push);
         commentPush.setClickCallback(new MineLineItemView.ClickCallback() {
             @Override
             public void onMoreViewClick() {
                 commentPush.swichOpenState();
             }
         });
-        giveScore = findViewById(R.id.give_score);
+        giveScore = (MineLineItemView) findViewById(R.id.give_score);
         giveScore.setOnClickListener(this);
-        advice = findViewById(R.id.advice);
+        advice = (MineLineItemView) findViewById(R.id.advice);
         advice.setOnClickListener(this);
-        curVersion = findViewById(R.id.current_version);
+        curVersion = (MineLineItemView) findViewById(R.id.current_version);
         curVersion.setOnClickListener(this);
-        userLicense = findViewById(R.id.user_license);
+        userLicense = (MineLineItemView) findViewById(R.id.user_license);
         userLicense.setOnClickListener(this);
-        versionRight = findViewById(R.id.version_right);
+        versionRight = (MineLineItemView) findViewById(R.id.version_right);
         versionRight.setOnClickListener(this);
     }
 

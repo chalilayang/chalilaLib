@@ -24,19 +24,19 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
     }
 
     private void init() {
-        userIconLine = findViewById(R.id.user_icon);
+        userIconLine = (MineLineItemView) findViewById(R.id.user_icon);
         userIconLine.setOnClickListener(this);
-        userGradeLine = findViewById(R.id.user_grade);
+        userGradeLine = (MineLineItemView) findViewById(R.id.user_grade);
         userGradeLine.setOnClickListener(this);
-        userNickNameLine = findViewById(R.id.user_nick_name);
+        userNickNameLine = (MineLineItemView) findViewById(R.id.user_nick_name);
         userNickNameLine.setOnClickListener(this);
-        userSexLine = findViewById(R.id.user_sex);
+        userSexLine = (MineLineItemView) findViewById(R.id.user_sex);
         userSexLine.setOnClickListener(this);
-        userBirthdayLine = findViewById(R.id.user_birthday);
+        userBirthdayLine = (MineLineItemView) findViewById(R.id.user_birthday);
         userBirthdayLine.setOnClickListener(this);
-        userBodyLine = findViewById(R.id.user_body_info);
+        userBodyLine = (MineLineItemView) findViewById(R.id.user_body_info);
         userBodyLine.setOnClickListener(this);
-        userSignatureLine = findViewById(R.id.user_signature);
+        userSignatureLine = (MineLineItemView) findViewById(R.id.user_signature);
         userSignatureLine.setOnClickListener(this);
     }
 

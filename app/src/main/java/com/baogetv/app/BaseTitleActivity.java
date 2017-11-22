@@ -15,9 +15,9 @@ public class BaseTitleActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getRootView());
-        titleActivity = findViewById(R.id.title);
-        rightTitle = findViewById(R.id.right_title);
-        backView = findViewById(R.id.back_icon);
+        titleActivity = (TextView) findViewById(R.id.title);
+        rightTitle = (TextView) findViewById(R.id.right_title);
+        backView = (ImageView) findViewById(R.id.back_icon);
         if (backView != null) {
             backView.setOnClickListener(new View.OnClickListener() {
                 @Override

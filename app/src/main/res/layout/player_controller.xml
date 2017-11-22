@@ -4,6 +4,48 @@
     android:id="@+id/controller_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <com.chalilayang.scaleview.ScaleRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_100">
+        <ImageView
+            android:id="@+id/full_screen_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_20"
+            android:src="@mipmap/back_icon"/>
+        <com.chalilayang.scaleview.ScaleTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/full_screen_back"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_28"/>
+        <ImageView
+            android:id="@+id/player_share"
+            android:layout_width="@dimen/size_36"
+            android:layout_height="@dimen/size_36"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size_40"
+            android:src="@mipmap/player_share"/>
+        <ImageView
+            android:id="@+id/player_thumb_up"
+            android:layout_width="@dimen/size_36"
+            android:layout_height="@dimen/size_36"
+            android:layout_toLeftOf="@+id/player_share"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size_40"
+            android:src="@mipmap/player_thumb_up"/>
+        <ImageView
+            android:id="@+id/player_shoot"
+            android:layout_width="@dimen/size_36"
+            android:layout_height="@dimen/size_36"
+            android:layout_toLeftOf="@+id/player_thumb_up"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size_40"
+            android:src="@mipmap/player_shoot"/>
+    </com.chalilayang.scaleview.ScaleRelativeLayout>
     <ImageView
         android:id="@+id/pause_btn"
         android:layout_width="wrap_content"

@@ -43,7 +43,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
 
     private void initView() {
         setContentView(R.layout.activity_home_page);
-        fragmentContainer = findViewById(R.id.fragment_container);
+        fragmentContainer = (FrameLayout) findViewById(R.id.fragment_container);
 
         homeDrawablePositive = getResources().getDrawable(R.mipmap.home_page_positive);
         int width = ScaleCalculator.getInstance(this).scaleWidth(48);

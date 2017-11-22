@@ -5,6 +5,9 @@ import android.support.annotation.DrawableRes;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 
+import com.baogetv.app.R;
+import com.baogetv.app.model.videodetail.customview.PlayerSeekBar;
+import com.chalilayang.scaleview.ScaleTextView;
 import com.xiao.nicevideoplayer.NiceVideoPlayerController;
 
 /**
@@ -13,13 +16,18 @@ import com.xiao.nicevideoplayer.NiceVideoPlayerController;
 
 public class PlayerController extends NiceVideoPlayerController {
 
+    private ImageView playBtn;
+    private ScaleTextView timeTv;
+    private PlayerSeekBar playerSeekBar;
+    private ImageView fullScreenBtn;
+
     public PlayerController(Context context) {
         super(context);
         init(context);
     }
 
     private void init(Context context) {
-        LayoutInflater.from(context).inflate(com.xiao.nicevideoplayer.R.layout.tx_video_palyer_controller, this, true);
+        LayoutInflater.from(context).inflate(R.layout.player_controller, this, true);
     }
 
     @Override

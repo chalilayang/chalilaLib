@@ -44,8 +44,8 @@ public class RegisterActivity extends BaseActivity
             }
         });
         stepOne = findViewById(R.id.register_step_one);
-        mobileNumView = findViewById(R.id.mobile_num_view);
-        verifyCodeView = findViewById(R.id.verify_code_view);
+        mobileNumView = (TitleInputView) findViewById(R.id.mobile_num_view);
+        verifyCodeView = (VerifyCodeInputView) findViewById(R.id.verify_code_view);
         verifyCodeView.setVerifyCallBack(this);
         stepComplete = findViewById(R.id.register_step_two);
         nextStep = findViewById(R.id.next_step_tv);
