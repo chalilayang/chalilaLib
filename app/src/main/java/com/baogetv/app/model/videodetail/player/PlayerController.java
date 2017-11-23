@@ -3,17 +3,23 @@ package com.baogetv.app.model.videodetail.player;
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.support.annotation.DrawableRes;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.baogetv.app.R;
+import com.baogetv.app.customview.CustomToastUtil;
 import com.baogetv.app.model.videodetail.customview.PlayerSeekBar;
+import com.baogetv.app.util.FileUtils;
+import com.baogetv.app.util.StorageManager;
 import com.chalilayang.scaleview.ScaleTextView;
 import com.xiao.nicevideoplayer.NiceUtil;
 import com.xiao.nicevideoplayer.NiceVideoPlayer;
 import com.xiao.nicevideoplayer.NiceVideoPlayerController;
+
+import java.io.File;
 
 /**
  * Created by chalilayang on 2017/11/22.
@@ -21,6 +27,7 @@ import com.xiao.nicevideoplayer.NiceVideoPlayerController;
 
 public class PlayerController extends NiceVideoPlayerController implements View.OnClickListener {
 
+    private static final String TAG = "PlayerController";
     private ImageView playBtn;
     private ScaleTextView timeTv;
     private ScaleTextView videoTitle;
@@ -51,6 +58,7 @@ public class PlayerController extends NiceVideoPlayerController implements View.
         heartBtn = (ImageView) findViewById(R.id.player_thumb_up);
         shootBtn = (ImageView) findViewById(R.id.player_shoot);
         shootBtn.setVisibility(GONE);
+        shootBtn.setOnClickListener(this);
         shareBtn.setVisibility(GONE);
         heartBtn.setVisibility(GONE);
 
@@ -104,6 +112,12 @@ public class PlayerController extends NiceVideoPlayerController implements View.
                 }
                 setControllerVisibility(true);
             }
+        } else if (v.getId() == R.id.player_shoot) {
+            if (!isTryingShoot) {
+                String path = StorageManager.getSavePath()
+                        + File.separator + StorageManager.generateFileName() +".png";
+                isTryingShoot = mNiceVideoPlayer.tryToShoot(path);
+            }
         } else if (v == this) {
             if (mNiceVideoPlayer.isPlaying()
                     || mNiceVideoPlayer.isPaused()
@@ -112,6 +126,26 @@ public class PlayerController extends NiceVideoPlayerController implements View.
                 setControllerVisibility(!controllerVisible);
             }
         }
+    }
+
+    private boolean isTryingShoot;
+
+    /**
+     * 非主线程
+     * @param filePath
+     */
+    @Override
+    public void onShootGot(String filePath) {
+        super.onShootGot(filePath);
+        final String mPath = filePath;
+        Log.i(TAG, "onShootGot: " + filePath);
+        post(new Runnable() {
+            @Override
+            public void run() {
+                CustomToastUtil.makeShort(getContext(), "已保存至相册：" + mPath);
+                FileUtils.scanFile(getContext(), mPath);
+            }
+        });
     }
 
     @Override

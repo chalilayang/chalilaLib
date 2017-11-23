@@ -107,6 +107,10 @@ public abstract class NiceVideoPlayerController
      */
     protected abstract void reset();
 
+    public void onShootGot(String filePath) {
+
+    }
+
     /**
      * 开启更新进度的计时器。
      */
