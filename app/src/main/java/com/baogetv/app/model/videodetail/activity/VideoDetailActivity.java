@@ -11,6 +11,7 @@ import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.fragment.PlayerFragment;
 import com.baogetv.app.model.videodetail.fragment.VideoDetailFragment;
 import com.baogetv.app.parcelables.PageItemData;
+import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,20 +34,6 @@ public class VideoDetailActivity extends BaseActivity {
     private void init() {
 
     }
-    /**
-     * 设置是否全屏
-     * @param enable
-     */
-    private void setFullScreen(boolean enable) {
-        WindowManager.LayoutParams lp = getWindow().getAttributes();
-        if (enable) {
-            lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        } else {
-            lp.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-        getWindow().setAttributes(lp);
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-    }
 
     private void showHomeFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -67,6 +54,12 @@ public class VideoDetailActivity extends BaseActivity {
             playerFragment = PlayerFragment.newInstance();
         }
         transaction.replace(R.id.video_player_fragment_container, playerFragment).commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (NiceVideoPlayerManager.instance().onBackPressd()) return;
+        super.onBackPressed();
     }
 
     @Override
