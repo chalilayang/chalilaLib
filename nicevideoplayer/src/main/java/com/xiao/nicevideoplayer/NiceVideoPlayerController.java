@@ -34,6 +34,7 @@ public abstract class NiceVideoPlayerController
     private float mGestureDownBrightness;
     private int mGestureDownVolume;
     private long mNewPosition;
+    protected boolean screenLocked;
 
     public NiceVideoPlayerController(Context context) {
         super(context);
