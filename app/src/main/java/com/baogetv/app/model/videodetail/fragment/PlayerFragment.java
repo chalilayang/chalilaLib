@@ -52,7 +52,7 @@ public class PlayerFragment extends BaseFragment {
         mNiceVideoPlayer = (NiceVideoPlayer) root.findViewById(R.id.player_surface);
         mNiceVideoPlayer.setPlayerType(NiceVideoPlayer.TYPE_NATIVE);
         mNiceVideoPlayer.setUp("http://videos.baoge.tv/Uploads/Download/2017-11-19/5a114d32969a5.mp4", null);
-        NiceVideoPlayerController controller = new TxVideoPlayerController(this.getActivity());
+        NiceVideoPlayerController controller = new PlayerController(this.getActivity());
         mNiceVideoPlayer.setController(controller);
     }
 

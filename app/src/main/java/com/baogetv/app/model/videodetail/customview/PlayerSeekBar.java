@@ -20,6 +20,7 @@ public class PlayerSeekBar extends View {
     private int startColor;
     private int endColor;
 
+    private float progress;
     public PlayerSeekBar(Context context) {
         this(context, null);
     }
@@ -49,6 +50,17 @@ public class PlayerSeekBar extends View {
                     startColor, endColor, Shader.TileMode.CLAMP);
             seekPaint.setShader(gradient);
         }
-        canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), seekPaint);
+        int right = (int) (canvas.getWidth() * progress / 100.0f);
+        canvas.drawRect(0, 0, right, canvas.getHeight(), seekPaint);
+    }
+
+    public void setProgress(int p) {
+        progress = p;
+        invalidate();
+    }
+
+    public void setSecondaryProgress(float p) {
+//        progress = p;
+//        invalidate();
     }
 }
