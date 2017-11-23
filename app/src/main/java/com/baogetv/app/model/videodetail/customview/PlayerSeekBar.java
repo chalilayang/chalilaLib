@@ -34,6 +34,7 @@ public class PlayerSeekBar extends View {
         seekPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         startColor = getResources().getColor(R.color.play_seek_bar_start);
         endColor =  getResources().getColor(R.color.play_seek_bar_end);
+        setBackgroundColor(getResources().getColor(R.color.white_40_percent));
     }
 
     /**

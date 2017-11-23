@@ -17,10 +17,6 @@ import com.xiao.nicevideoplayer.NiceUtil;
 import com.xiao.nicevideoplayer.NiceVideoPlayer;
 import com.xiao.nicevideoplayer.NiceVideoPlayerController;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 /**
  * Created by chalilayang on 2017/11/22.
  */
@@ -52,7 +48,7 @@ public class PlayerController extends NiceVideoPlayerController implements View.
         playBtn = (ImageView) findViewById(R.id.pause_btn);
         videoTitle = (ScaleTextView) findViewById(R.id.player_title);
         timeTv = (ScaleTextView) findViewById(R.id.player_time);
-        fullScreenBtn = (ImageView) findViewById(R.id.full_screen);
+        fullScreenBtn = (ImageView) findViewById(R.id.full_screen_btn);
         shareBtn = (ImageView) findViewById(R.id.player_share);
         heartBtn = (ImageView) findViewById(R.id.player_thumb_up);
         shootBtn = (ImageView) findViewById(R.id.player_shoot);
@@ -62,6 +58,7 @@ public class PlayerController extends NiceVideoPlayerController implements View.
         bottomGroup = findViewById(R.id.bottom_group);
 
         playBtn.setOnClickListener(this);
+        fullScreenBtn.setOnClickListener(this);
     }
 
     /**
@@ -78,6 +75,12 @@ public class PlayerController extends NiceVideoPlayerController implements View.
                 mNiceVideoPlayer.restart();
             } else if (mNiceVideoPlayer.isIdle()) {
                 mNiceVideoPlayer.start();
+            }
+        } else if (v.getId() == R.id.full_screen_btn) {
+            if (mNiceVideoPlayer.isFullScreen()) {
+                mNiceVideoPlayer.exitFullScreen();
+            } else {
+                mNiceVideoPlayer.enterFullScreen();
             }
         }
     }
@@ -106,10 +109,13 @@ public class PlayerController extends NiceVideoPlayerController implements View.
     protected void onPlayStateChanged(int playState) {
         switch (playState) {
             case NiceVideoPlayer.STATE_IDLE:
+                playBtn.setImageResource(R.mipmap.play_start);
                 break;
             case NiceVideoPlayer.STATE_PREPARING:
+                playBtn.setImageResource(R.mipmap.play_pause);
                 break;
             case NiceVideoPlayer.STATE_PREPARED:
+                playBtn.setImageResource(R.mipmap.play_pause);
                 startUpdateProgressTimer();
                 break;
             case NiceVideoPlayer.STATE_PLAYING:
@@ -117,17 +123,22 @@ public class PlayerController extends NiceVideoPlayerController implements View.
                 startDismissTopBottomTimer();
                 break;
             case NiceVideoPlayer.STATE_PAUSED:
+                playBtn.setImageResource(R.mipmap.play_start);
                 cancelDismissTopBottomTimer();
                 break;
             case NiceVideoPlayer.STATE_BUFFERING_PLAYING:
+                playBtn.setImageResource(R.mipmap.play_pause);
                 startDismissTopBottomTimer();
                 break;
             case NiceVideoPlayer.STATE_BUFFERING_PAUSED:
+                playBtn.setImageResource(R.mipmap.play_pause);
                 break;
             case NiceVideoPlayer.STATE_ERROR:
+                playBtn.setImageResource(R.mipmap.play_start);
                 cancelUpdateProgressTimer();
                 break;
             case NiceVideoPlayer.STATE_COMPLETED:
+                playBtn.setImageResource(R.mipmap.play_start);
                 cancelUpdateProgressTimer();
                 break;
         }
@@ -137,46 +148,16 @@ public class PlayerController extends NiceVideoPlayerController implements View.
     protected void onPlayModeChanged(int playMode) {
         switch (playMode) {
             case NiceVideoPlayer.MODE_NORMAL:
+                fullScreenBtn.setImageResource(R.mipmap.full_screen_icon);
                 break;
             case NiceVideoPlayer.MODE_FULL_SCREEN:
+                fullScreenBtn.setImageResource(R.mipmap.player_small_screen);
                 break;
             case NiceVideoPlayer.MODE_TINY_WINDOW:
+                fullScreenBtn.setImageResource(R.mipmap.full_screen_icon);
                 break;
         }
     }
-
-    /**
-     * 电池状态即电量变化广播接收器
-     */
-    private BroadcastReceiver mBatterReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS,
-                    BatteryManager.BATTERY_STATUS_UNKNOWN);
-//            if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
-//                // 充电中
-//                mBattery.setImageResource(R.drawable.battery_charging);
-//            } else if (status == BatteryManager.BATTERY_STATUS_FULL) {
-//                // 充电完成
-//                mBattery.setImageResource(R.drawable.battery_full);
-//            } else {
-//                int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
-//                int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 0);
-//                int percentage = (int) (((float) level / scale) * 100);
-//                if (percentage <= 10) {
-//                    mBattery.setImageResource(R.drawable.battery_10);
-//                } else if (percentage <= 20) {
-//                    mBattery.setImageResource(R.drawable.battery_20);
-//                } else if (percentage <= 50) {
-//                    mBattery.setImageResource(R.drawable.battery_50);
-//                } else if (percentage <= 80) {
-//                    mBattery.setImageResource(R.drawable.battery_80);
-//                } else if (percentage <= 100) {
-//                    mBattery.setImageResource(R.drawable.battery_100);
-//                }
-//            }
-        }
-    };
 
     @Override
     protected void reset() {
@@ -234,6 +215,7 @@ public class PlayerController extends NiceVideoPlayerController implements View.
     private void setTopBottomVisible(boolean visible) {
         topGroup.setVisibility(visible ? View.VISIBLE : View.GONE);
         bottomGroup.setVisibility(visible ? View.VISIBLE : View.GONE);
+        playBtn.setVisibility(visible ? View.VISIBLE : View.GONE);
         topBottomVisible = visible;
         if (visible) {
             if (!mNiceVideoPlayer.isPaused() && !mNiceVideoPlayer.isBufferingPaused()) {

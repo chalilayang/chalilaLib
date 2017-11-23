@@ -76,6 +76,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/size_34"/>
         <ImageView
+            android:id="@+id/full_screen_btn"
             android:layout_width="@dimen/size_32"
             android:layout_height="@dimen/size_32"
             android:layout_alignParentRight="true"
