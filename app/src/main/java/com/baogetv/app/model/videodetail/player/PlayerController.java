@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.baogetv.app.R;
 import com.baogetv.app.customview.CustomToastUtil;
+import com.baogetv.app.model.videodetail.customview.CustomSeekBar;
 import com.baogetv.app.model.videodetail.customview.PlayerSeekBar;
 import com.baogetv.app.util.FileUtils;
 import com.baogetv.app.util.StorageManager;
@@ -25,13 +26,14 @@ import java.io.File;
  * Created by chalilayang on 2017/11/22.
  */
 
-public class PlayerController extends NiceVideoPlayerController implements View.OnClickListener {
+public class PlayerController extends NiceVideoPlayerController
+        implements View.OnClickListener, CustomSeekBar.OnSeekUpdateListener {
 
     private static final String TAG = "PlayerController";
     private ImageView playBtn;
     private ScaleTextView timeTv;
     private ScaleTextView videoTitle;
-    private PlayerSeekBar playerSeekBar;
+    private CustomSeekBar playerSeekBar;
     private ImageView fullScreenBtn;
     private ImageView shareBtn;
     private ImageView heartBtn;
@@ -67,7 +69,8 @@ public class PlayerController extends NiceVideoPlayerController implements View.
         lockBtn.setImageResource(R.mipmap.player_unlock);
         lockBtn.setVisibility(GONE);
 
-        playerSeekBar = (PlayerSeekBar) findViewById(R.id.player_seek_bar);
+        playerSeekBar = (CustomSeekBar) findViewById(R.id.player_seek_bar);
+        playerSeekBar.setOnSeekUpdateListener(this);
         timeTv = (ScaleTextView) findViewById(R.id.player_time);
         fullScreenBtn = (ImageView) findViewById(R.id.full_screen_btn);
 
@@ -255,6 +258,14 @@ public class PlayerController extends NiceVideoPlayerController implements View.
         String pos = NiceUtil.formatTime(position);
         String dur = NiceUtil.formatTime(duration);
         timeTv.setText(String.format(timeFormat, pos, dur));
+    }
+
+    @Override
+    public void onSeekUpdate(int value, boolean fromUser) {
+        if (fromUser && mNiceVideoPlayer != null) {
+            long pos = value * mNiceVideoPlayer.getDuration() / playerSeekBar.getMax();
+            mNiceVideoPlayer.seekTo(pos);
+        }
     }
 
     @Override

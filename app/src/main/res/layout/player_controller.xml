@@ -84,10 +84,10 @@
             android:layout_marginBottom="@dimen/size_10"
             android:src="@mipmap/full_screen_icon"/>
     </com.chalilayang.scaleview.ScaleRelativeLayout>
-    <com.baogetv.app.model.videodetail.customview.PlayerSeekBar
+    <com.baogetv.app.model.videodetail.customview.CustomSeekBar
         android:id="@+id/player_seek_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_4"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"/>
     <ImageView
         android:id="@+id/player_lock"
