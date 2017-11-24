@@ -30,17 +30,21 @@ public class PlayerController extends NiceVideoPlayerController
         implements View.OnClickListener, CustomSeekBar.OnSeekUpdateListener {
 
     private static final String TAG = "PlayerController";
-    private ImageView playBtn;
-    private ScaleTextView timeTv;
+
     private ScaleTextView videoTitle;
-    private CustomSeekBar playerSeekBar;
-    private ImageView fullScreenBtn;
     private ImageView shareBtn;
     private ImageView heartBtn;
     private ImageView shootBtn;
+
+    private ImageView playBtn;
     private ImageView lockBtn;
+
+    private View fullScreenController;
+    private ScaleTextView timeTv;
+    private CustomSeekBar playerSeekBar;
+    private ImageView fullScreenBtn;
+
     private View topGroup;
-    private View bottomGroup;
 
     private View smallScreenController;
     private CustomSeekBar playerSeekBarSmall;
@@ -75,22 +79,27 @@ public class PlayerController extends NiceVideoPlayerController
         lockBtn.setImageResource(R.mipmap.player_unlock);
         lockBtn.setVisibility(GONE);
 
+        fullScreenController = findViewById(R.id.full_screen_controller);
+        fullScreenController.setVisibility(GONE);
         playerSeekBar = (CustomSeekBar) findViewById(R.id.player_seek_bar);
         playerSeekBar.setOnSeekUpdateListener(this);
         timeTv = (ScaleTextView) findViewById(R.id.player_time);
         fullScreenBtn = (ImageView) findViewById(R.id.full_screen_btn);
+        fullScreenBtn.setOnClickListener(this);
 
         topGroup = findViewById(R.id.top_group);
-        bottomGroup = findViewById(R.id.bottom_group);
+
         smallScreenController = findViewById(R.id.small_screen_controller);
+        smallScreenController.setVisibility(VISIBLE);
         playerSeekBarSmall = (CustomSeekBar) findViewById(R.id.player_seek_bar_small);
+        playerSeekBarSmall.setOnSeekUpdateListener(this);
         timeTvSmall = (ScaleTextView) findViewById(R.id.player_time_small);
         durationTvSmall = (ScaleTextView) findViewById(R.id.player_duration_small);
         fullScreenBtnSmall = (ImageView) findViewById(R.id.small_screen_btn);
+        fullScreenBtnSmall.setOnClickListener(this);
 
         setOnClickListener(this);
         playBtn.setOnClickListener(this);
-        fullScreenBtn.setOnClickListener(this);
         lockBtn.setOnClickListener(this);
     }
 
@@ -109,7 +118,7 @@ public class PlayerController extends NiceVideoPlayerController
             } else if (mNiceVideoPlayer.isIdle()) {
                 mNiceVideoPlayer.start();
             }
-        } else if (v.getId() == R.id.full_screen_btn) {
+        } else if (v.getId() == R.id.full_screen_btn || v.getId() == R.id.small_screen_btn) {
             if (mNiceVideoPlayer.isNormal() || mNiceVideoPlayer.isTinyWindow()) {
                 mNiceVideoPlayer.enterFullScreen();
             } else if (mNiceVideoPlayer.isFullScreen()) {
@@ -236,19 +245,25 @@ public class PlayerController extends NiceVideoPlayerController
         switch (playMode) {
             case NiceVideoPlayer.MODE_FULL_SCREEN:
                 fullScreenBtn.setImageResource(R.mipmap.player_small_screen);
+                fullScreenBtnSmall.setImageResource(R.mipmap.player_small_screen);
                 lockBtn.setVisibility(VISIBLE);
                 heartBtn.setVisibility(VISIBLE);
                 shareBtn.setVisibility(VISIBLE);
                 shootBtn.setVisibility(VISIBLE);
+                fullScreenController.setVisibility(VISIBLE);
+                smallScreenController.setVisibility(GONE);
                 break;
             case NiceVideoPlayer.MODE_NORMAL:
             case NiceVideoPlayer.MODE_TINY_WINDOW:
                 fullScreenBtn.setImageResource(R.mipmap.full_screen_icon);
+                fullScreenBtnSmall.setImageResource(R.mipmap.full_screen_icon);
                 screenLocked = false;
                 lockBtn.setVisibility(GONE);
                 heartBtn.setVisibility(GONE);
                 shareBtn.setVisibility(GONE);
                 shootBtn.setVisibility(GONE);
+                fullScreenController.setVisibility(GONE);
+                smallScreenController.setVisibility(VISIBLE);
                 break;
         }
     }
@@ -323,11 +338,18 @@ public class PlayerController extends NiceVideoPlayerController
         }
         if (!screenLocked) {
             topGroup.setVisibility(visible ? View.VISIBLE : View.GONE);
-            bottomGroup.setVisibility(visible ? View.VISIBLE : View.GONE);
+            if (mNiceVideoPlayer.isFullScreen()) {
+                fullScreenController.setVisibility(visible ? View.VISIBLE : View.GONE);
+                smallScreenController.setVisibility(GONE);
+            } else {
+                smallScreenController.setVisibility(visible ? View.VISIBLE : View.GONE);
+                fullScreenController.setVisibility(GONE);
+            }
             playBtn.setVisibility(visible ? View.VISIBLE : View.GONE);
         } else {
             topGroup.setVisibility(View.GONE);
-            bottomGroup.setVisibility(View.GONE);
+            smallScreenController.setVisibility(View.GONE);
+            fullScreenController.setVisibility(GONE);
             playBtn.setVisibility(View.GONE);
         }
         if (visible) {
