@@ -199,6 +199,7 @@ public class PlayerController extends NiceVideoPlayerController
     @Override
     public void setVideoDuration(long length) {
         timeTv.setText(NiceUtil.formatTime(length));
+        timeTvSmall.setText(NiceUtil.formatTime(length));
     }
 
     @Override
@@ -279,11 +280,15 @@ public class PlayerController extends NiceVideoPlayerController
         long duration = mNiceVideoPlayer.getDuration();
         int bufferPercentage = mNiceVideoPlayer.getBufferPercentage();
         playerSeekBar.setSecondaryProgress(bufferPercentage);
+        playerSeekBarSmall.setSecondaryProgress(bufferPercentage);
         int progress = (int) (100f * position / duration);
         playerSeekBar.setProgress(progress);
+        playerSeekBarSmall.setProgress(progress);
         String pos = NiceUtil.formatTime(position);
         String dur = NiceUtil.formatTime(duration);
         timeTv.setText(String.format(timeFormat, pos, dur));
+        timeTvSmall.setText(pos);
+        durationTvSmall.setText(dur);
     }
 
     @Override
@@ -292,6 +297,8 @@ public class PlayerController extends NiceVideoPlayerController
             long pos = value * mNiceVideoPlayer.getDuration() / playerSeekBar.getMax();
             mNiceVideoPlayer.seekTo(pos);
         }
+        playerSeekBar.setProgress(value);
+        playerSeekBarSmall.setProgress(value);
     }
 
     @Override
@@ -368,7 +375,7 @@ public class PlayerController extends NiceVideoPlayerController
     private void startDismissTopBottomTimer() {
         cancelDismissTopBottomTimer();
         if (mDismissTopBottomCountDownTimer == null) {
-            mDismissTopBottomCountDownTimer = new CountDownTimer(5000, 5000) {
+            mDismissTopBottomCountDownTimer = new CountDownTimer(6000, 6000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
 
