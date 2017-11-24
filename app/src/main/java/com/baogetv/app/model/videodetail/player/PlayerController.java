@@ -1,21 +1,25 @@
 package com.baogetv.app.model.videodetail.player;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.os.BatteryManager;
 import android.os.CountDownTimer;
 import android.support.annotation.DrawableRes;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.baogetv.app.R;
+import com.baogetv.app.customview.CustomToastUtil;
 import com.baogetv.app.model.videodetail.customview.PlayerSeekBar;
+import com.baogetv.app.util.FileUtils;
+import com.baogetv.app.util.StorageManager;
 import com.chalilayang.scaleview.ScaleTextView;
 import com.xiao.nicevideoplayer.NiceUtil;
 import com.xiao.nicevideoplayer.NiceVideoPlayer;
 import com.xiao.nicevideoplayer.NiceVideoPlayerController;
+
+import java.io.File;
 
 /**
  * Created by chalilayang on 2017/11/22.
@@ -23,6 +27,7 @@ import com.xiao.nicevideoplayer.NiceVideoPlayerController;
 
 public class PlayerController extends NiceVideoPlayerController implements View.OnClickListener {
 
+    private static final String TAG = "PlayerController";
     private ImageView playBtn;
     private ScaleTextView timeTv;
     private ScaleTextView videoTitle;
@@ -36,6 +41,7 @@ public class PlayerController extends NiceVideoPlayerController implements View.
     private View bottomGroup;
 
     private String timeFormat;
+
     public PlayerController(Context context) {
         super(context);
         init(context);
@@ -47,18 +53,31 @@ public class PlayerController extends NiceVideoPlayerController implements View.
                 R.layout.player_controller, this, true);
         playBtn = (ImageView) findViewById(R.id.pause_btn);
         videoTitle = (ScaleTextView) findViewById(R.id.player_title);
-        timeTv = (ScaleTextView) findViewById(R.id.player_time);
-        fullScreenBtn = (ImageView) findViewById(R.id.full_screen_btn);
+
         shareBtn = (ImageView) findViewById(R.id.player_share);
         heartBtn = (ImageView) findViewById(R.id.player_thumb_up);
         shootBtn = (ImageView) findViewById(R.id.player_shoot);
-        lockBtn = (ImageView) findViewById(R.id.pause_btn);
+        shootBtn.setVisibility(GONE);
+        shootBtn.setOnClickListener(this);
+        shareBtn.setVisibility(GONE);
+        heartBtn.setVisibility(GONE);
+
+        lockBtn = (ImageView) findViewById(R.id.player_lock);
+        screenLocked = false;
+        lockBtn.setImageResource(R.mipmap.player_unlock);
+        lockBtn.setVisibility(GONE);
+
         playerSeekBar = (PlayerSeekBar) findViewById(R.id.player_seek_bar);
+        timeTv = (ScaleTextView) findViewById(R.id.player_time);
+        fullScreenBtn = (ImageView) findViewById(R.id.full_screen_btn);
+
         topGroup = findViewById(R.id.top_group);
         bottomGroup = findViewById(R.id.bottom_group);
 
+        setOnClickListener(this);
         playBtn.setOnClickListener(this);
         fullScreenBtn.setOnClickListener(this);
+        lockBtn.setOnClickListener(this);
     }
 
     /**
@@ -77,11 +96,65 @@ public class PlayerController extends NiceVideoPlayerController implements View.
                 mNiceVideoPlayer.start();
             }
         } else if (v.getId() == R.id.full_screen_btn) {
-            if (mNiceVideoPlayer.isFullScreen()) {
-                mNiceVideoPlayer.exitFullScreen();
-            } else {
+            if (mNiceVideoPlayer.isNormal() || mNiceVideoPlayer.isTinyWindow()) {
                 mNiceVideoPlayer.enterFullScreen();
+            } else if (mNiceVideoPlayer.isFullScreen()) {
+                mNiceVideoPlayer.exitFullScreen();
             }
+        } else if (v.getId() == R.id.player_lock) {
+            if (mNiceVideoPlayer.isFullScreen()) {
+                if (screenLocked) {
+                    lockBtn.setImageResource(R.mipmap.player_unlock);
+                    screenLocked = false;
+                } else {
+                    lockBtn.setImageResource(R.mipmap.player_lock);
+                    screenLocked = true;
+                }
+                setControllerVisibility(true);
+            }
+        } else if (v.getId() == R.id.player_shoot) {
+            if (!isTryingShoot) {
+                String path = StorageManager.getSavePath()
+                        + File.separator + StorageManager.generateFileName() +".png";
+                isTryingShoot = mNiceVideoPlayer.tryToShoot(path);
+            }
+        } else if (v == this) {
+            if (mNiceVideoPlayer.isPlaying()
+                    || mNiceVideoPlayer.isPaused()
+                    || mNiceVideoPlayer.isBufferingPlaying()
+                    || mNiceVideoPlayer.isBufferingPaused()) {
+                setControllerVisibility(!controllerVisible);
+            }
+        }
+    }
+
+    private boolean isTryingShoot;
+
+    /**
+     * 非主线程
+     * @param filePath
+     */
+    @Override
+    public void onShootGot(String filePath) {
+        super.onShootGot(filePath);
+        final String mPath = filePath;
+        Log.i(TAG, "onShootGot: " + filePath);
+        post(new Runnable() {
+            @Override
+            public void run() {
+                CustomToastUtil.makeShort(getContext(), "已保存至相册：" + mPath);
+                FileUtils.scanFile(getContext(), mPath);
+            }
+        });
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if (screenLocked) {
+            lockBtn.setVisibility(VISIBLE);
+            return true;
+        } else {
+            return super.onTouch(v, event);
         }
     }
 
@@ -147,14 +220,21 @@ public class PlayerController extends NiceVideoPlayerController implements View.
     @Override
     protected void onPlayModeChanged(int playMode) {
         switch (playMode) {
-            case NiceVideoPlayer.MODE_NORMAL:
-                fullScreenBtn.setImageResource(R.mipmap.full_screen_icon);
-                break;
             case NiceVideoPlayer.MODE_FULL_SCREEN:
                 fullScreenBtn.setImageResource(R.mipmap.player_small_screen);
+                lockBtn.setVisibility(VISIBLE);
+                heartBtn.setVisibility(VISIBLE);
+                shareBtn.setVisibility(VISIBLE);
+                shootBtn.setVisibility(VISIBLE);
                 break;
+            case NiceVideoPlayer.MODE_NORMAL:
             case NiceVideoPlayer.MODE_TINY_WINDOW:
                 fullScreenBtn.setImageResource(R.mipmap.full_screen_icon);
+                screenLocked = false;
+                lockBtn.setVisibility(GONE);
+                heartBtn.setVisibility(GONE);
+                shareBtn.setVisibility(GONE);
+                shootBtn.setVisibility(GONE);
                 break;
         }
     }
@@ -212,11 +292,22 @@ public class PlayerController extends NiceVideoPlayerController implements View.
      *
      * @param visible true显示，false隐藏.
      */
-    private void setTopBottomVisible(boolean visible) {
-        topGroup.setVisibility(visible ? View.VISIBLE : View.GONE);
-        bottomGroup.setVisibility(visible ? View.VISIBLE : View.GONE);
-        playBtn.setVisibility(visible ? View.VISIBLE : View.GONE);
-        topBottomVisible = visible;
+    private void setControllerVisibility(boolean visible) {
+        controllerVisible = visible;
+        if (mNiceVideoPlayer.isFullScreen()) {
+            lockBtn.setVisibility(visible ? View.VISIBLE : View.GONE);
+        } else {
+            lockBtn.setVisibility(View.GONE);
+        }
+        if (!screenLocked) {
+            topGroup.setVisibility(visible ? View.VISIBLE : View.GONE);
+            bottomGroup.setVisibility(visible ? View.VISIBLE : View.GONE);
+            playBtn.setVisibility(visible ? View.VISIBLE : View.GONE);
+        } else {
+            topGroup.setVisibility(View.GONE);
+            bottomGroup.setVisibility(View.GONE);
+            playBtn.setVisibility(View.GONE);
+        }
         if (visible) {
             if (!mNiceVideoPlayer.isPaused() && !mNiceVideoPlayer.isBufferingPaused()) {
                 startDismissTopBottomTimer();
@@ -225,7 +316,7 @@ public class PlayerController extends NiceVideoPlayerController implements View.
             cancelDismissTopBottomTimer();
         }
     }
-    private boolean topBottomVisible;
+    private boolean controllerVisible;
     private CountDownTimer mDismissTopBottomCountDownTimer;
     /**
      * 开启top、bottom自动消失的timer
@@ -233,7 +324,7 @@ public class PlayerController extends NiceVideoPlayerController implements View.
     private void startDismissTopBottomTimer() {
         cancelDismissTopBottomTimer();
         if (mDismissTopBottomCountDownTimer == null) {
-            mDismissTopBottomCountDownTimer = new CountDownTimer(8000, 8000) {
+            mDismissTopBottomCountDownTimer = new CountDownTimer(5000, 5000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
 
@@ -241,7 +332,7 @@ public class PlayerController extends NiceVideoPlayerController implements View.
 
                 @Override
                 public void onFinish() {
-                    setTopBottomVisible(false);
+                    setControllerVisibility(false);
                 }
             };
         }

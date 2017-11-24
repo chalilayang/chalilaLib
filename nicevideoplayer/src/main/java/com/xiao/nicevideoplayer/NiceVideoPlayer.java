@@ -2,18 +2,24 @@ package com.xiao.nicevideoplayer;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Map;
 
 import tv.danmaku.ijk.media.player.AndroidMediaPlayer;
@@ -27,7 +33,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 public class NiceVideoPlayer extends FrameLayout
         implements INiceVideoPlayer,
         TextureView.SurfaceTextureListener {
-
+    private static final String TAG = "NiceVideoPlayer";
     /**
      * 播放错误
      **/
@@ -652,6 +658,46 @@ public class NiceVideoPlayer extends FrameLayout
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean tryToShoot(final String path) {
+        if (mTextureView != null) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (mTextureView != null) {
+                        Bitmap bm = mTextureView.getBitmap();
+                        if (bm != null) {
+                            OutputStream fos = null;
+                            File imageFile = new File(path);
+                            try {
+                                fos = new FileOutputStream(imageFile);
+                                bm.compress(Bitmap.CompressFormat.PNG, 100, fos);
+                                fos.flush();
+                                fos.close();
+                                if (mController != null) {
+                                    mController.onShootGot(path);
+                                }
+                            } catch (IOException e) {
+                                Log.i(TAG, "run: " + e);
+                            } finally {
+                                if (fos != null) {
+                                    try {
+                                        fos.close();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }).start();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

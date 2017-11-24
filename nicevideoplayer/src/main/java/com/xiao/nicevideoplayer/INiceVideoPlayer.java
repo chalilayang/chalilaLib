@@ -149,6 +149,13 @@ public interface INiceVideoPlayer {
     boolean exitFullScreen();
 
     /**
+     * 截取视频图
+     *
+     * @param path 保存路径
+     */
+    boolean tryToShoot(String path);
+
+    /**
      * 进入小窗口模式
      */
     void enterTinyWindow();

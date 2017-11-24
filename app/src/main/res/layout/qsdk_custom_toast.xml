@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chalilayang.scaleview.ScaleLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/custom_toast_bg">
+    <com.chalilayang.scaleview.ScaleTextView
+        android:id="@+id/toast_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginRight="@dimen/size_30"
+        android:layout_marginTop="@dimen/size_15"
+        android:layout_marginBottom="@dimen/size_15"
+        android:includeFontPadding="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_30"/>
+
+</com.chalilayang.scaleview.ScaleLinearLayout>

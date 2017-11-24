@@ -34,6 +34,7 @@ public abstract class NiceVideoPlayerController
     private float mGestureDownBrightness;
     private int mGestureDownVolume;
     private long mNewPosition;
+    protected boolean screenLocked;
 
     public NiceVideoPlayerController(Context context) {
         super(context);
@@ -105,6 +106,10 @@ public abstract class NiceVideoPlayerController
      * 重置控制器，将控制器恢复到初始状态。
      */
     protected abstract void reset();
+
+    public void onShootGot(String filePath) {
+
+    }
 
     /**
      * 开启更新进度的计时器。
