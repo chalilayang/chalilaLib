@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.baogetv.app.R;
 import com.baogetv.app.customview.CustomToastUtil;
 import com.baogetv.app.model.videodetail.customview.CustomSeekBar;
-import com.baogetv.app.model.videodetail.customview.PlayerSeekBar;
 import com.baogetv.app.util.FileUtils;
 import com.baogetv.app.util.StorageManager;
 import com.chalilayang.scaleview.ScaleTextView;
@@ -41,6 +41,12 @@ public class PlayerController extends NiceVideoPlayerController
     private ImageView lockBtn;
     private View topGroup;
     private View bottomGroup;
+
+    private View smallScreenController;
+    private CustomSeekBar playerSeekBarSmall;
+    private ScaleTextView timeTvSmall;
+    private ScaleTextView durationTvSmall;
+    private ImageView fullScreenBtnSmall;
 
     private String timeFormat;
 
@@ -76,6 +82,11 @@ public class PlayerController extends NiceVideoPlayerController
 
         topGroup = findViewById(R.id.top_group);
         bottomGroup = findViewById(R.id.bottom_group);
+        smallScreenController = findViewById(R.id.small_screen_controller);
+        playerSeekBarSmall = (CustomSeekBar) findViewById(R.id.player_seek_bar_small);
+        timeTvSmall = (ScaleTextView) findViewById(R.id.player_time_small);
+        durationTvSmall = (ScaleTextView) findViewById(R.id.player_duration_small);
+        fullScreenBtnSmall = (ImageView) findViewById(R.id.small_screen_btn);
 
         setOnClickListener(this);
         playBtn.setOnClickListener(this);

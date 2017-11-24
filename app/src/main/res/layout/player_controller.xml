@@ -60,6 +60,11 @@
         android:layout_alignParentBottom="true"
         android:scaleType="fitXY"
         android:src="@mipmap/player_bottom_bg"/>
+    <com.baogetv.app.model.videodetail.customview.CustomSeekBar
+        android:id="@+id/player_seek_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_group"/>
     <com.chalilayang.scaleview.ScaleRelativeLayout
         android:id="@+id/bottom_group"
         android:layout_width="match_parent"
@@ -84,11 +89,54 @@
             android:layout_marginBottom="@dimen/size_10"
             android:src="@mipmap/full_screen_icon"/>
     </com.chalilayang.scaleview.ScaleRelativeLayout>
-    <com.baogetv.app.model.videodetail.customview.CustomSeekBar
-        android:id="@+id/player_seek_bar"
+    <com.chalilayang.scaleview.ScaleRelativeLayout
+        android:id="@+id/small_screen_controller"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/small_screen_btn"
+            android:layout_width="@dimen/size_32"
+            android:layout_height="@dimen/size_32"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/size_30"
+            android:layout_marginLeft="@dimen/size_30"
+            android:src="@mipmap/full_screen_icon"/>
+        <com.chalilayang.scaleview.ScaleRelativeLayout
+            android:id="@+id/small_seek_bar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/small_screen_btn">
+            <com.chalilayang.scaleview.ScaleTextView
+                android:id="@+id/player_time_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="@dimen/size_10"
+                android:text="00:00"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_24"/>
+            <com.chalilayang.scaleview.ScaleTextView
+                android:id="@+id/player_duration_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/size_10"
+                android:text="00:00"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_24"/>
+            <com.baogetv.app.model.videodetail.customview.CustomSeekBar
+                android:id="@+id/player_seek_bar_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/player_time_small"
+                android:layout_toLeftOf="@+id/player_duration_small"
+                android:layout_centerVertical="true"/>
+        </com.chalilayang.scaleview.ScaleRelativeLayout>
+    </com.chalilayang.scaleview.ScaleRelativeLayout>
+
     <ImageView
         android:id="@+id/player_lock"
         android:layout_width="wrap_content"
