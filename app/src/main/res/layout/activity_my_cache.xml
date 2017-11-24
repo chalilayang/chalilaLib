@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.baogetv.app.model.usercenter.activity.CacheActivity">
+    tools:context="com.baogetv.app.BaseTitleActivity">
+
     <include
         android:id="@+id/title_container"
+        layout="@layout/base_title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        layout="@layout/base_title_layout"/>
-    <com.chalilayang.scaleview.ScaleFrameLayout
-        android:id="@+id/root_container"
+        android:layout_alignParentTop="true"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cache_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title_container"/>
+        android:layout_below="@+id/title_container"/>
 </com.chalilayang.scaleview.ScaleRelativeLayout>

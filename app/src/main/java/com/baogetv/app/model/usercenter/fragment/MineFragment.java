@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
 import com.baogetv.app.model.usercenter.LoginManager;
-import com.baogetv.app.model.usercenter.activity.CacheActivity;
+import com.baogetv.app.model.usercenter.activity.MyCacheActivity;
 import com.baogetv.app.model.usercenter.activity.MyCollectActivity;
 import com.baogetv.app.model.usercenter.activity.PlayHistoryActivity;
 import com.baogetv.app.model.usercenter.activity.ResponseActivity;
@@ -120,7 +120,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.my_cache:
-                intent = new Intent(this.getActivity(), CacheActivity.class);
+                intent = new Intent(this.getActivity(), MyCacheActivity.class);
                 startActivity(intent);
                 break;
             case R.id.my_collect:

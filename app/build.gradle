@@ -41,4 +41,8 @@ dependencies {
     compile project(':PushSDK')
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile project(':nicevideoplayer')
+
+    compile 'com.j256.ormlite:ormlite-android:5.0'
+    compile 'com.j256.ormlite:ormlite-core:5.0'
 }
+
