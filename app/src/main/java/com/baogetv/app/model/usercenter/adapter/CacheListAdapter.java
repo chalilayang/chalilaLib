@@ -44,9 +44,9 @@ public class CacheListAdapter extends RecyclerView.Adapter<CacheListAdapter.View
     public CacheListAdapter(Context context) {
         mContext = context;
         data = new ArrayList<>();
-        downloadManager = DownloadService.getDownloadManager(context.getApplicationContext());
+        downloadManager = DownloadService.getDownloadManager(mContext.getApplicationContext());
         try {
-            dbController = DBController.getInstance(context.getApplicationContext());
+            dbController = DBController.getInstance(mContext.getApplicationContext());
         } catch (SQLException e) {
             e.printStackTrace();
         }
