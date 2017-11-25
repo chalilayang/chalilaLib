@@ -13,6 +13,10 @@ public class PageItemData implements Parcelable {
     public static final int TYPE_RANK_VIDEO_WEEK = 1236;
     public static final int TYPE_RANK_VIDEO_MONTH = 1237;
 
+    public static final int TYPE_SEARCH_RELATIVE = 1238;
+    public static final int TYPE_SEARCH_PLAY_MOST = 1239;
+    public static final int TYPE_SEARCH_LATEST_PUBLISH = 1240;
+
     private final String title;
     private final int type;
 

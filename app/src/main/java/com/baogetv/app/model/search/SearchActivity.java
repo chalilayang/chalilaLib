@@ -20,6 +20,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.baogetv.app.apiinterface.SearchHotWordService;
+import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.net.CustomCallBack;
+import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.nex3z.flowlayout.FlowLayout;
 import com.baogetv.app.BaseActivity;
@@ -30,6 +34,8 @@ import com.baogetv.app.db.util.DaoManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
 
 public class SearchActivity extends BaseActivity implements View.OnClickListener {
 
@@ -42,27 +48,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private View historyClear;
     private TextView searchBtn;
     private SearchItemEntityDao entityDao;
-    /**
-     * 显示的文字
-     */
-    private String[] mDatas = new String[]{"QQ",
-            "视频",
-            "放开那三国",
-            "电子书",
-            "酒店",
-            "单机",
-            "小说",
-            "斗地主",
-            "优酷",
-            "网游",
-            "WIFI万能钥匙",
-            "播放器",
-            "捕鱼达人2",
-            "机票",
-            "游戏",
-            "熊出没之熊大快跑",
-            "美图秀秀",
-            "浏览器",};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,8 +114,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         int space = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(20);
         flowLayout.setChildSpacing(space);
         flowLayout.setRowSpacing(space);
-        addLabel();
-
+        getLables();
         historyClear = findViewById(R.id.search_history_clear);
         historyClear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,10 +127,6 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         searchHistoryView = (FlowLayout) findViewById(R.id.search_history_list);
         searchHistoryView.setChildSpacing(space);
         searchHistoryView.setRowSpacing(space);
-        List<String> list = new ArrayList<>();
-        for (int index = 0, count = mDatas.length; index < count; index ++) {
-            list.add(mDatas[index]);
-        }
         updateHistory();
     }
 
@@ -167,7 +147,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
-    private void addLabel() {
+    private void addLabel(List<String> mDatas) {
         int paddingLeft
                 = ScaleCalculator.getInstance(getApplicationContext()).scaleTextSize(30);
         int paddingTop
@@ -176,9 +156,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         int height = flowLayout.getMeasuredHeight();
         Log.i(TAG, "addLabel: " + height);
-        for (int i = 0; i < mDatas.length; i++) {
+        for (int index = 0, count = mDatas.size(); index < count; index ++) {
             final TextView view = new TextView(this);
-            view.setText(mDatas[i]);
+            view.setText(mDatas.get(index));
             view.setTextColor(getResources().getColor(R.color.search_label_text));
             view.setGravity(Gravity.CENTER);
             view.setIncludeFontPadding(false);
@@ -187,7 +167,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                     TypedValue.COMPLEX_UNIT_PX,
                     ScaleCalculator.getInstance(getApplicationContext()).scaleTextSize(26));
             view.setBackgroundResource(R.drawable.search_label_bg);
-            view.setTag(KEY, mDatas[i]);
+            view.setTag(KEY, mDatas.get(index));
             view.setOnClickListener(this);
             flowLayout.addView(view);
         }
@@ -245,6 +225,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         updateHistory();
         if (!TextUtils.isEmpty(content)) {
             Intent intent = new Intent(this, SearchResultActivity.class);
+            intent.putExtra(SearchResultActivity.KEY_SEARCH, content);
             startActivity(intent);
         }
     }
@@ -267,6 +248,25 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
             } else {
                 return source.subSequence(start, start + keep);
             }
+        }
+    }
+
+    private void getLables() {
+        SearchHotWordService listService
+                = RetrofitManager.getInstance().createReq(SearchHotWordService.class);
+        Call<ResponseBean<List<String>>> listBeanCall = listService.getHotWord();
+        if (listBeanCall != null) {
+            listBeanCall.enqueue(new CustomCallBack<List<String>>() {
+                @Override
+                public void onSuccess(List<String> data) {
+                    addLabel(data);
+                }
+
+                @Override
+                public void onFailed(String error) {
+
+                }
+            });
         }
     }
 }

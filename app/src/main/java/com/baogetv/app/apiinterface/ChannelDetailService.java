@@ -1,7 +1,7 @@
 package com.baogetv.app.apiinterface;
 
 import com.baogetv.app.bean.ChannelDetailBean;
-import com.baogetv.app.bean.VideoListBean;
+import com.baogetv.app.bean.ResponseBean;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -20,5 +20,5 @@ public interface ChannelDetailService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Channel/detail")
-    Call<ChannelDetailBean> getChannelDetail(@Field("id") String id);
+    Call<ResponseBean<ChannelDetailBean>> getChannelDetail(@Field("id") String id);
 }

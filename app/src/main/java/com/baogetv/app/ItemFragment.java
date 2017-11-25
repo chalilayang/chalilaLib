@@ -183,6 +183,35 @@ public class ItemFragment extends BaseItemFragment
                     }
                 });
             }
+        } else if (itemData.getType() == PageItemData.TYPE_SEARCH_RELATIVE
+                || itemData.getType() == PageItemData.TYPE_SEARCH_PLAY_MOST
+                || itemData.getType() == PageItemData.TYPE_SEARCH_LATEST_PUBLISH) {
+            VideoListService listService
+                    = RetrofitManager.getInstance().createReq(VideoListService.class);
+            Call<ResponseBean<List<VideoListBean>>> listBeanCall
+                    = listService.getVideoList(null, null, null, null, null);
+            if (listBeanCall != null) {
+                listBeanCall.enqueue(new CustomCallBack<List<VideoListBean>>() {
+                    @Override
+                    public void onSuccess(List<VideoListBean> listBeen) {
+                        iVideoDatas.clear();
+                        if (listBeen != null) {
+                            for (int index = 0, count = listBeen.size(); index < count; index++) {
+                                VideoListBean bean = listBeen.get(index);
+                                VideoListAdapter.IVideoData iVideoData
+                                        = BeanConvert.getIVideoData(bean);
+                                iVideoDatas.add(iVideoData);
+                            }
+                        }
+                        recyclerViewAdapter.update(iVideoDatas);
+                    }
+
+                    @Override
+                    public void onFailed(String error) {
+                        Log.i(TAG, "onFailure: " + error);
+                    }
+                });
+            }
         }
     }
 }

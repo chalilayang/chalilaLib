@@ -15,6 +15,10 @@
     <string name="channel">频道精选</string>
     <string name="video_count_format">%s个视频</string>
 
+    <string name="search_relative">相关度</string>
+    <string name="search_play_most">最热观看</string>
+    <string name="search_latest_publish">最新发布</string>
+
     <string name="player_time_format">%1$s/%2$s</string>
 
     <string name="cache">缓存</string>

@@ -1,7 +1,10 @@
 package com.baogetv.app.apiinterface;
 
 import com.baogetv.app.bean.ChannelListBean;
+import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoListBean;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -21,6 +24,6 @@ public interface ChannelListService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Channel/index")
-    Call<ChannelListBean> getChannelList(
+    Call<ResponseBean<List<ChannelListBean>>> getChannelList(
             @Field("name") String name, @Field("intro") String intro);
 }
