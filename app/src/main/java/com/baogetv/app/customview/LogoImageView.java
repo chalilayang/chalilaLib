@@ -20,6 +20,9 @@ public class LogoImageView extends AppCompatImageView {
     private Drawable chnLogo;
     private boolean chnLogoVisible;
 
+    private Drawable mengceng;
+    private boolean mengcengVisible;
+
     private int marginForCHNLogo;
 
     public LogoImageView(Context context) {
@@ -49,10 +52,19 @@ public class LogoImageView extends AppCompatImageView {
         }
     }
 
+    public void setMengCengVisible(boolean flag) {
+        if (flag != mengcengVisible) {
+            mengcengVisible = flag;
+            invalidate();
+        }
+    }
+
     private void init(Context context) {
         marginForCHNLogo = ScaleCalculator.getInstance(context).scaleWidth(30);
         proLogo = getResources().getDrawable(R.mipmap.pro_logo);
         chnLogo = getResources().getDrawable(R.mipmap.chinese_logo);
+        mengceng = getResources().getDrawable(R.mipmap.mengceng);
+        mengcengVisible = true;
     }
 
     @Override
@@ -60,6 +72,14 @@ public class LogoImageView extends AppCompatImageView {
         super.onDraw(canvas);
         int width = canvas.getWidth();
         int height = canvas.getHeight();
+        if (mengcengVisible && width > 0 && height > 0) {
+            int left = 0;
+            int top = 0;
+            int right = width;
+            int bottom = height;
+            mengceng.setBounds(left, top, right, bottom);
+            mengceng.draw(canvas);
+        }
         if (proLogoVisible && width > 0 && height > 0) {
             int left = width - proLogo.getIntrinsicWidth();
             int top = 0;

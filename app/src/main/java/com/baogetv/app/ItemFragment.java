@@ -16,6 +16,7 @@ import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
 import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageItemData;
+import com.chalilayang.customview.RecyclerViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +27,19 @@ import retrofit2.Response;
 
 
 public class ItemFragment extends BaseItemFragment
-        implements SwipeRefreshLayout.OnRefreshListener, ItemViewHolder.ItemClickListener<String>{
+        implements SwipeRefreshLayout.OnRefreshListener,
+        ItemViewHolder.ItemClickListener<VideoListAdapter.IVideoData>{
 
     private static final String TAG = "ItemFragment";
     private static final String PAGE_DATA = "PAGE_DATA";
     private PageItemData pageData;
+    private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
     private View contentView;
     private RecyclerView.LayoutManager layoutManager;
     private BaseItemAdapter recyclerViewAdapter;
     private List<VideoListAdapter.IVideoData> iVideoDatas;
+    private RecyclerViewDivider recyclerViewDivider;
 
     public ItemFragment() {
         iVideoDatas = new ArrayList<>();
@@ -73,14 +77,19 @@ public class ItemFragment extends BaseItemFragment
         if (contentView == null) {
             View view = inflater.inflate(R.layout.fragment_item_list, container, false);
             if (view instanceof RecyclerView) {
-                RecyclerView recyclerView = (RecyclerView) view;
+                recyclerView = (RecyclerView) view;
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(recyclerViewAdapter);
             } else if (view instanceof SwipeRefreshLayout ){
                 refreshLayout = (SwipeRefreshLayout) view;
-                RecyclerView child = refreshLayout.findViewById(R.id.list);
-                child.setLayoutManager(layoutManager);
-                child.setAdapter(recyclerViewAdapter);
+                recyclerView = refreshLayout.findViewById(R.id.list);
+                recyclerViewDivider
+                        = new RecyclerViewDivider(getActivity(),
+                        LinearLayoutManager.HORIZONTAL, 20,
+                        getResources().getColor(R.color.white));
+                recyclerView.addItemDecoration(recyclerViewDivider);
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(recyclerViewAdapter);
                 refreshLayout.setOnRefreshListener(this);
                 refreshLayout.setEnabled(false);
             }
@@ -96,7 +105,7 @@ public class ItemFragment extends BaseItemFragment
     }
 
     @Override
-    public void onItemClick(String data, int position) {
+    public void onItemClick(VideoListAdapter.IVideoData data, int position) {
         Log.i(TAG, "onItemClick: " + position);
         Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
         getActivity().startActivity(intent);
@@ -119,20 +128,25 @@ public class ItemFragment extends BaseItemFragment
                 @Override
                 public void onResponse(Call<VideoListBean> call, Response<VideoListBean> response) {
                     Log.i(TAG, "onResponse: ");
-                    VideoListBean bean = response.body();
-                    if (bean != null) {
-                        List<VideoListBean.DataBean> listBeen = bean.getData();
+                    VideoListBean reponseBean = response.body();
+                    if (reponseBean != null) {
+                        List<VideoListBean.DataBean> listBeen = reponseBean.getData();
                         iVideoDatas.clear();
                         if (listBeen != null) {
                             for (int index = 0, count = listBeen.size(); index < count; index ++) {
-                                VideoListAdapter.IVideoData data
-                                        = new VideoData(listBeen.get(index).getPic_url());
+                                VideoListBean.DataBean bean = listBeen.get(index);
+                                VideoListAdapter.IVideoData data = new VideoData(
+                                        bean.getPic_url(),
+                                        bean.getTitle(),
+                                        bean.getAdd_time(),
+                                        bean.getPlay(),
+                                        bean.getLength()
+                                );
                                 iVideoDatas.add(data);
                             }
                         }
                         recyclerViewAdapter.update(iVideoDatas);
                     }
-                    Log.i(TAG, "onResponse: " + bean.getUrl());
                 }
 
                 @Override
@@ -145,13 +159,41 @@ public class ItemFragment extends BaseItemFragment
 
     public class VideoData implements VideoListAdapter.IVideoData {
         private final String picUrl;
-        public VideoData(String pic) {
+        private final String title;
+        private final String publishTime;
+        private final String playCount;
+        private final String videoDuration;
+        public VideoData(String pic, String video_title, String publish_time, String count, String duration) {
             this.picUrl = pic;
+            this.title = video_title;
+            this.publishTime = publish_time;
+            this.playCount = count;
+            this.videoDuration = duration;
         }
 
         @Override
         public String getPicUrl() {
             return picUrl;
+        }
+
+        @Override
+        public String getTitle() {
+            return title;
+        }
+
+        @Override
+        public String getPublishTime() {
+            return publishTime;
+        }
+
+        @Override
+        public String getDuration() {
+            return videoDuration;
+        }
+
+        @Override
+        public String getPlayCount() {
+            return playCount;
         }
     }
 }

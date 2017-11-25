@@ -35,6 +35,7 @@ public abstract class ItemViewHolder<T>
         position = pos;
         bindData(mData, position);
     }
+
     public abstract void bindData(T data, int pos);
 
     public void setItemClick(ItemClickListener listener) {

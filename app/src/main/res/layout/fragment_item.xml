@@ -8,4 +8,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"/>
+    <com.chalilayang.scaleview.ScaleTextView
+        android:id="@+id/video_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/size_32"
+        android:textColor="@color/white"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/size_140"
+        android:layout_marginLeft="@dimen/size_40"/>
+    <com.chalilayang.scaleview.ScaleTextView
+        android:id="@+id/video_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/size_24"
+        android:textColor="@color/c5c5c5"
+        android:layout_below="@+id/video_title"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/size_30"
+        android:layout_marginLeft="@dimen/size_40"/>
+
+    <com.chalilayang.scaleview.ScaleTextView
+        android:id="@+id/video_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/size_24"
+        android:textColor="@color/white"
+        android:includeFontPadding="false"
+        android:drawablePadding="@dimen/size_10"
+        android:drawableLeft="@mipmap/clock_icon"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/size_30"
+        android:layout_marginBottom="@dimen/size_40"/>
 </RelativeLayout>
