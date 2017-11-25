@@ -44,6 +44,7 @@ public class RetrofitManager {
 
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(UrlConstance.BASE_URL)
+                .addConverterFactory(StringConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();

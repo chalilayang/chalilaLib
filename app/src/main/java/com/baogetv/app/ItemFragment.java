@@ -13,10 +13,12 @@ import android.view.ViewGroup;
 import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.apiinterface.VideoRankingListService;
 import com.baogetv.app.bean.BeanConvert;
+import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoListBean;
 import com.baogetv.app.bean.VideoRankListBean;
 import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
+import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageItemData;
 import com.chalilayang.customview.RecyclerViewDivider;
@@ -40,7 +42,7 @@ public class ItemFragment extends BaseItemFragment
     private SwipeRefreshLayout refreshLayout;
     private View contentView;
     private RecyclerView.LayoutManager layoutManager;
-    private BaseItemAdapter recyclerViewAdapter;
+    private VideoListAdapter recyclerViewAdapter;
     private List<VideoListAdapter.IVideoData> iVideoDatas;
     private RecyclerViewDivider recyclerViewDivider;
 
@@ -118,31 +120,26 @@ public class ItemFragment extends BaseItemFragment
         if (itemData.getType() == PageItemData.TYPE_ALL_VIDEO) {
             VideoListService listService
                     = RetrofitManager.getInstance().createReq(VideoListService.class);
-            Call<VideoListBean> listBeanCall = listService.getVideoList(null, null, null, null, null);
+            Call<ResponseBean<List<VideoListBean>>> listBeanCall
+                    = listService.getVideoList(null, null, null, null, null);
             if (listBeanCall != null) {
-                listBeanCall.enqueue(new Callback<VideoListBean>() {
+                listBeanCall.enqueue(new CustomCallBack<List<VideoListBean>>() {
                     @Override
-                    public void onResponse(Call<VideoListBean> call, Response<VideoListBean> response) {
-                        Log.i(TAG, "onResponse: ");
-                        VideoListBean reponseBean = response.body();
-                        if (reponseBean != null) {
-                            List<VideoListBean.DataBean> listBeen = reponseBean.getData();
-                            iVideoDatas.clear();
-                            if (listBeen != null) {
-                                for (int index = 0, count = listBeen.size(); index < count; index ++) {
-                                    VideoListBean.DataBean bean = listBeen.get(index);
-                                    VideoListAdapter.IVideoData iVideoData
-                                            = BeanConvert.getIVideoData(bean);
-                                    iVideoDatas.add(iVideoData);
-                                }
+                    public void onSuccess(List<VideoListBean> listBeen) {
+                        iVideoDatas.clear();
+                        if (listBeen != null) {
+                            for (int index = 0, count = listBeen.size(); index < count; index ++) {
+                                VideoListBean bean = listBeen.get(index);
+                                VideoListAdapter.IVideoData iVideoData
+                                        = BeanConvert.getIVideoData(bean);
+                                iVideoDatas.add(iVideoData);
                             }
-                            recyclerViewAdapter.update(iVideoDatas);
                         }
+                        recyclerViewAdapter.update(iVideoDatas);
                     }
-
                     @Override
-                    public void onFailure(Call<VideoListBean> call, Throwable t) {
-                        Log.i(TAG, "onFailure: " + t);
+                    public void onFailed(String error) {
+                        Log.i(TAG, "onFailure: " + error);
                     }
                 });
             }
@@ -151,7 +148,7 @@ public class ItemFragment extends BaseItemFragment
                 || itemData.getType() == PageItemData.TYPE_RANK_VIDEO_MONTH) {
             VideoRankingListService listService
                     = RetrofitManager.getInstance().createReq(VideoRankingListService.class);
-            Call<VideoRankListBean> listBeanCall = null;
+            Call<ResponseBean<List<VideoRankListBean>>> listBeanCall = null;
             switch (itemData.getType()) {
                 case PageItemData.TYPE_RANK_VIDEO:
                     listBeanCall = listService.getVideoList(0);
@@ -165,29 +162,24 @@ public class ItemFragment extends BaseItemFragment
 
             }
             if (listBeanCall != null) {
-                listBeanCall.enqueue(new Callback<VideoRankListBean>() {
+                listBeanCall.enqueue(new CustomCallBack<List<VideoRankListBean>>() {
                     @Override
-                    public void onResponse(Call<VideoRankListBean> call, Response<VideoRankListBean> response) {
-                        Log.i(TAG, "onResponse: ");
-                        VideoRankListBean reponseBean = response.body();
-                        if (reponseBean != null) {
-                            List<VideoRankListBean.DataBean> listBeen = reponseBean.getData();
-                            iVideoDatas.clear();
-                            if (listBeen != null) {
-                                for (int index = 0, count = listBeen.size(); index < count; index ++) {
-                                    VideoRankListBean.DataBean bean = listBeen.get(index);
-                                    VideoListAdapter.IVideoData iVideoData
-                                            = BeanConvert.getIVideoData(bean);
-                                    iVideoDatas.add(iVideoData);
-                                }
+                    public void onSuccess(List<VideoRankListBean> listBeen) {
+                        iVideoDatas.clear();
+                        if (listBeen != null) {
+                            for (int index = 0, count = listBeen.size(); index < count; index ++) {
+                                VideoRankListBean bean = listBeen.get(index);
+                                VideoListAdapter.IVideoData iVideoData
+                                        = BeanConvert.getIVideoData(bean);
+                                iVideoDatas.add(iVideoData);
                             }
-                            recyclerViewAdapter.update(iVideoDatas);
                         }
+                        recyclerViewAdapter.update(iVideoDatas);
                     }
 
                     @Override
-                    public void onFailure(Call<VideoRankListBean> call, Throwable t) {
-                        Log.i(TAG, "onFailure: " + t);
+                    public void onFailed(String error) {
+                        Log.i(TAG, "onFailure: " + error);
                     }
                 });
             }

@@ -9,4 +9,8 @@ public class ResponseBean<T> {
     private String msg;
     private String url;
     private T data;
+
+    public T getData() {
+        return data;
+    }
 }

@@ -7,7 +7,7 @@ import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
  */
 
 public class BeanConvert {
-    public static VideoListAdapter.IVideoData getIVideoData(VideoRankListBean.DataBean data) {
+    public static VideoListAdapter.IVideoData getIVideoData(VideoRankListBean data) {
         String picUrl = data.getPic_url();
         String title = data.getTitle();
         String publishTime = data.getAdd_time();
@@ -17,7 +17,7 @@ public class BeanConvert {
         return result;
     }
 
-    public static VideoListAdapter.IVideoData getIVideoData(VideoListBean.DataBean data) {
+    public static VideoListAdapter.IVideoData getIVideoData(VideoListBean data) {
         String picUrl = data.getPic_url();
         String title = data.getTitle();
         String publishTime = data.getAdd_time();

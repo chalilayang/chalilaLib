@@ -65,8 +65,6 @@ public class VideoListAdapter
             Glide.with(mContext)
                     .load(pic)
                     .crossFade()
-                    .skipMemoryCache(true)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(mContentView);
         }
     }

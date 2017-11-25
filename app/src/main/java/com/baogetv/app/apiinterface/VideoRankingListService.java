@@ -1,6 +1,9 @@
 package com.baogetv.app.apiinterface;
 
+import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoRankListBean;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -20,5 +23,5 @@ public interface VideoRankingListService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Video/ranking")
-    Call<VideoRankListBean> getVideoList(@Field("type") int type);
+    Call<ResponseBean<List<VideoRankListBean>>> getVideoList(@Field("type") int type);
 }
