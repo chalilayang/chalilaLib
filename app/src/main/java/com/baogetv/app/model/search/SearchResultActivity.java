@@ -43,7 +43,9 @@ public class SearchResultActivity extends BaseTitleActivity {
             list.add(pageItemData);
             pageItemData = new PageItemData(getString(R.string.search_latest_publish), PageItemData.TYPE_SEARCH_LATEST_PUBLISH);
             list.add(pageItemData);
-            searchResultFragment = PagerFragment.newInstance(new PageData(list));
+            PageData pageData = new PageData(list);
+            pageData.setTabStyle(1);
+            searchResultFragment = PagerFragment.newInstance(pageData);
         }
         transaction.replace(R.id.root_container, searchResultFragment).commit();
     }

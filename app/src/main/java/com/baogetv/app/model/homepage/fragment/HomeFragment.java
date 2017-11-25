@@ -72,7 +72,9 @@ public class HomeFragment extends PagerFragment {
             list.add(pageItemData);
             pageItemData = new PageItemData(getString(R.string.month_ranking), PageItemData.TYPE_RANK_VIDEO_MONTH);
             list.add(pageItemData);
-            return PagerFragment.newInstance(new PageData(list));
+            PageData pageData = new PageData(list);
+            pageData.setTabStyle(1);
+            return PagerFragment.newInstance(pageData);
         } else {
             return super.createFragment(pageIndex);
         }

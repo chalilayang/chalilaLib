@@ -11,6 +11,7 @@ import java.util.List;
  */
 
 public class PageData implements Parcelable {
+    private int tabStyle;
     private List<PageItemData> itemDataList;
 
     @Override
@@ -21,6 +22,7 @@ public class PageData implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeTypedList(this.itemDataList);
+        dest.writeInt(tabStyle);
     }
 
     public PageData(List<PageItemData> list) {
@@ -28,6 +30,14 @@ public class PageData implements Parcelable {
             itemDataList = new ArrayList<>();
             itemDataList.addAll(list);
         }
+    }
+
+    public void setTabStyle(int style) {
+        this.tabStyle = style;
+    }
+
+    public int getTabStyle() {
+        return tabStyle;
     }
 
     public List<PageItemData> getItemDataList() {
@@ -49,6 +59,7 @@ public class PageData implements Parcelable {
     }
     protected PageData(Parcel in) {
         this.itemDataList = in.createTypedArrayList(PageItemData.CREATOR);
+        this.tabStyle = in.readInt();
     }
 
     public static final Creator<PageData> CREATOR = new Creator<PageData>() {
