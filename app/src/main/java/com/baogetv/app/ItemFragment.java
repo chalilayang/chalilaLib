@@ -10,12 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.baogetv.app.apiinterface.VideoListService;
+import com.baogetv.app.bean.VideoListBean;
 import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
+import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageItemData;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ItemFragment extends BaseItemFragment
@@ -28,8 +35,10 @@ public class ItemFragment extends BaseItemFragment
     private View contentView;
     private RecyclerView.LayoutManager layoutManager;
     private BaseItemAdapter recyclerViewAdapter;
+    private List<VideoListAdapter.IVideoData> iVideoDatas;
 
     public ItemFragment() {
+        iVideoDatas = new ArrayList<>();
     }
 
     @Override
@@ -51,12 +60,9 @@ public class ItemFragment extends BaseItemFragment
         if (getArguments() != null) {
             pageData = getArguments().getParcelable(PAGE_DATA);
             layoutManager = new LinearLayoutManager(getActivity());
-            List<String> list = new ArrayList<>();
-            for (int index = 0; index < 10; index ++) {
-                list.add(index+"");
-            }
-            recyclerViewAdapter = new VideoListAdapter(list);
+            recyclerViewAdapter = new VideoListAdapter(getActivity());
             recyclerViewAdapter.setItemClick(this);
+            getVideoList(pageData);
         }
         Log.i(TAG, "onCreate: " + pageData.getTitle());
     }
@@ -76,6 +82,7 @@ public class ItemFragment extends BaseItemFragment
                 child.setLayoutManager(layoutManager);
                 child.setAdapter(recyclerViewAdapter);
                 refreshLayout.setOnRefreshListener(this);
+                refreshLayout.setEnabled(false);
             }
             contentView = view;
         }
@@ -93,5 +100,58 @@ public class ItemFragment extends BaseItemFragment
         Log.i(TAG, "onItemClick: " + position);
         Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
         getActivity().startActivity(intent);
+    }
+
+    public void getVideoList(PageItemData itemData) {
+        VideoListService listService
+                = RetrofitManager.getInstance().createReq(VideoListService.class);
+        Call<VideoListBean> listBeanCall = listService.getVideoList(null, null, null, null, null);
+        switch (itemData.getType()) {
+            case PageItemData.TYPE_ALL_VIDEO:
+                listBeanCall = listService.getVideoList(null, null, null, null, null);
+                break;
+            case PageItemData.TYPE_RANK_VIDEO:
+                listBeanCall = listService.getVideoList(null, null, null, null, null);
+                break;
+        }
+        if (listBeanCall != null) {
+            listBeanCall.enqueue(new Callback<VideoListBean>() {
+                @Override
+                public void onResponse(Call<VideoListBean> call, Response<VideoListBean> response) {
+                    Log.i(TAG, "onResponse: ");
+                    VideoListBean bean = response.body();
+                    if (bean != null) {
+                        List<VideoListBean.DataBean> listBeen = bean.getData();
+                        iVideoDatas.clear();
+                        if (listBeen != null) {
+                            for (int index = 0, count = listBeen.size(); index < count; index ++) {
+                                VideoListAdapter.IVideoData data
+                                        = new VideoData(listBeen.get(index).getPic_url());
+                                iVideoDatas.add(data);
+                            }
+                        }
+                        recyclerViewAdapter.update(iVideoDatas);
+                    }
+                    Log.i(TAG, "onResponse: " + bean.getUrl());
+                }
+
+                @Override
+                public void onFailure(Call<VideoListBean> call, Throwable t) {
+                    Log.i(TAG, "onFailure: " + t);
+                }
+            });
+        }
+    }
+
+    public class VideoData implements VideoListAdapter.IVideoData {
+        private final String picUrl;
+        public VideoData(String pic) {
+            this.picUrl = pic;
+        }
+
+        @Override
+        public String getPicUrl() {
+            return picUrl;
+        }
     }
 }

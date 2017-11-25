@@ -1,5 +1,6 @@
 package com.baogetv.app.model.videodetail.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,8 @@ import java.util.List;
 
 public class CommentListAdapter extends BaseItemAdapter<CommentData, CommentListAdapter.ViewHolder> {
 
-    public CommentListAdapter(List<CommentData> items) {
-        super(items);
+    public CommentListAdapter(Context context, List<CommentData> items) {
+        super(context, items);
     }
 
     @Override

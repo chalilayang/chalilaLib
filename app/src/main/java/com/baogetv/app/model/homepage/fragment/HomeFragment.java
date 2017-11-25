@@ -2,6 +2,7 @@ package com.baogetv.app.model.homepage.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,20 @@ import android.view.ViewGroup;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.PagerFragment;
 import com.baogetv.app.R;
+import com.baogetv.app.apiinterface.VideoListService;
+import com.baogetv.app.bean.VideoListBean;
 import com.baogetv.app.model.search.SearchActivity;
+import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageData;
 import com.baogetv.app.parcelables.PageItemData;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Created by chalilayang on 2017/11/7.
@@ -22,6 +31,7 @@ import java.util.List;
 
 public class HomeFragment extends PagerFragment {
 
+    private static final String TAG = "HomeFragment";
     private View searchBtn;
     public static HomeFragment newInstance(PageData data) {
         HomeFragment fragment = new HomeFragment();

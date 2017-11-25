@@ -1,5 +1,6 @@
 package com.baogetv.app;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -10,19 +11,22 @@ import java.util.List;
 public abstract class BaseItemAdapter<T, D extends ItemViewHolder<T>>
         extends RecyclerView.Adapter<D> implements ItemViewHolder.ItemClickListener<T> {
 
-    private final List<T> mValues;
-    private SoftReference<ItemViewHolder.ItemClickListener> mRef;
+    protected final List<T> mValues;
+    protected Context mContext;
+    protected SoftReference<ItemViewHolder.ItemClickListener> mRef;
     public void setItemClick(ItemViewHolder.ItemClickListener listener) {
         if (listener != null) {
             mRef = new SoftReference<ItemViewHolder.ItemClickListener>(listener);
         }
     }
-    public BaseItemAdapter(List<T> items) {
+    public BaseItemAdapter(Context context, List<T> items) {
+        mContext = context;
         mValues = new ArrayList<>();
         update(items);
     }
 
-    public BaseItemAdapter() {
+    public BaseItemAdapter(Context context) {
+        mContext = context;
         mValues = new ArrayList<>();
     }
 

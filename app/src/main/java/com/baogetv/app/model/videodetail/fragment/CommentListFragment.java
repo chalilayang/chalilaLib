@@ -78,7 +78,7 @@ public class CommentListFragment extends BaseItemFragment
             data.setReplyList(list1);
             list.add(data);
         }
-        recyclerViewAdapter = new CommentListAdapter(list);
+        recyclerViewAdapter = new CommentListAdapter(getActivity(), list);
         recyclerViewAdapter.setItemClick(this);
     }
 

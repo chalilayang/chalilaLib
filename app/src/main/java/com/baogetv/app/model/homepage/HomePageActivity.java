@@ -119,9 +119,9 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (homeFragment == null) {
             List<PageItemData> list = new ArrayList<>(2);
-            PageItemData pageItemData = new PageItemData(getString(R.string.all), 0);
+            PageItemData pageItemData = new PageItemData(getString(R.string.all), PageItemData.TYPE_ALL_VIDEO);
             list.add(pageItemData);
-            pageItemData = new PageItemData(getString(R.string.ranking), 0);
+            pageItemData = new PageItemData(getString(R.string.ranking), PageItemData.TYPE_RANK_VIDEO);
             list.add(pageItemData);
             homeFragment = HomeFragment.newInstance(new PageData(list));
         }

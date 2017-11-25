@@ -5,5 +5,5 @@ package com.baogetv.app.constant;
  */
 
 public class UrlConstance {
-    public static final String BASE_URL = "";
+    public static final String BASE_URL = "http://120.77.176.101/jianshen/";
 }

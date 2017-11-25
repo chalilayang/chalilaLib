@@ -8,6 +8,9 @@ import android.os.Parcelable;
  */
 
 public class PageItemData implements Parcelable {
+    public static final int TYPE_ALL_VIDEO = 1234;
+    public static final int TYPE_RANK_VIDEO = 1235;
+
     private final String title;
     private final int type;
 
@@ -26,7 +29,6 @@ public class PageItemData implements Parcelable {
         this.title = s;
         this.type = t;
     }
-
 
     protected PageItemData(Parcel in) {
         this.title = in.readString();
