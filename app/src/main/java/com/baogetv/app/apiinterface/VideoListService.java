@@ -14,7 +14,6 @@ import retrofit2.http.POST;
 public interface VideoListService {
 
     /** 表单提交要加 @FormUrlEncoded
-     * 登录
      * @param channel_id（频道ID）
      * @param tag_id：（标签ID）
      * @param keyword：（关键字（标题/简介模糊搜索））
