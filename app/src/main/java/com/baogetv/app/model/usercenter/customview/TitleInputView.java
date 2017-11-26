@@ -2,8 +2,11 @@ package com.baogetv.app.model.usercenter.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.DigitsKeyListener;
 import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.NumberKeyListener;
 import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -80,10 +83,13 @@ public class TitleInputView extends ScaleFrameLayout {
         inputEdit.setTextColor(getResources().getColor(R.color.white));
         inputEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         inputEdit.setCursorVisible(true);
-        inputEdit = findViewById(R.id.input_edit);
+        if (isMobileType) {
+            inputEdit.setKeyListener(DigitsKeyListener.getInstance());
+        }
         if(!inputPasswordType){
             inputEdit.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         }else{
+            inputEdit.setKeyListener(DigitsKeyListener.getInstance());
             inputEdit.setTransformationMethod(PasswordTransformationMethod.getInstance());
         }
         if (!TextUtils.isEmpty(hint)) {

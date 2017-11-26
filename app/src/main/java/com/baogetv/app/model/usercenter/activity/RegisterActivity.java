@@ -1,11 +1,14 @@
 package com.baogetv.app.model.usercenter.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
+import com.baogetv.app.customview.CustomToastUtil;
+import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.contracts.RegisterContract;
 import com.baogetv.app.model.usercenter.customview.TitleInputView;
 import com.baogetv.app.model.usercenter.customview.VerifyCodeInputView;
@@ -20,6 +23,9 @@ public class RegisterActivity extends BaseActivity
     private View stepComplete;
     private TitleInputView mobileNumView;
     private VerifyCodeInputView verifyCodeView;
+    private TitleInputView nickNameView;
+    private TitleInputView passwordView;
+    private TitleInputView passwordConfirmView;
     private View nextStep;
     private int currentStep;
 
@@ -47,19 +53,46 @@ public class RegisterActivity extends BaseActivity
         mobileNumView = (TitleInputView) findViewById(R.id.mobile_num_view);
         verifyCodeView = (VerifyCodeInputView) findViewById(R.id.verify_code_view);
         verifyCodeView.setVerifyCallBack(this);
-        stepComplete = findViewById(R.id.register_step_two);
         nextStep = findViewById(R.id.next_step_tv);
         nextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerPresenter.register("", "");
+                if (currentStep == 1) {
+                    String mobile = mobileNumView.getInputText();
+                    if (TextUtils.isEmpty(mobile)) {
+                        CustomToastUtil.makeShort(
+                                getApplicationContext(), getString(R.string.mobile_num_null));
+                        return;
+                    } else if (!LoginManager.isMobileNO(mobile)) {
+                        CustomToastUtil.makeShort(
+                                getApplicationContext(), getString(R.string.mobile_num_invalid));
+                        return;
+                    }
+                    String verifyNum = verifyCodeView.getInputText();
+                    if (!TextUtils.isEmpty(verifyNum)) {
+                        registerPresenter.nextStep();
+                    } else {
+                        CustomToastUtil.makeShort(
+                                getApplicationContext(), getString(R.string.verify_code_error));
+                    }
+                }
+            }
+        });
+        nickNameView = (TitleInputView) findViewById(R.id.nick_name_tv);
+        passwordView = (TitleInputView) findViewById(R.id.password_tv);
+        passwordConfirmView = (TitleInputView) findViewById(R.id.password_confirm_tv);
+        stepComplete = findViewById(R.id.register_step_two);
+        stepComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tryRegister();
             }
         });
     }
 
     @Override
     public void showStepOne() {
-        currentStep = 0;
+        currentStep = 1;
         if (stepOne != null) {
             stepOne.setVisibility(View.VISIBLE);
         }
@@ -70,7 +103,7 @@ public class RegisterActivity extends BaseActivity
 
     @Override
     public void showStepComplete() {
-        currentStep = 1;
+        currentStep = 2;
         if (stepOne != null) {
             stepOne.setVisibility(View.GONE);
         }
@@ -86,7 +119,14 @@ public class RegisterActivity extends BaseActivity
 
     @Override
     public void onFetchClick() {
-        registerPresenter.getVerifyNum("");
+        String mobile = mobileNumView.getInputText();
+        if (TextUtils.isEmpty(mobile)) {
+            CustomToastUtil.makeShort(getApplicationContext(), getString(R.string.mobile_num_null));
+        } else if (!LoginManager.isMobileNO(mobile)) {
+            CustomToastUtil.makeShort(getApplicationContext(), getString(R.string.mobile_num_invalid));
+        } else {
+            registerPresenter.getVerifyNum(mobile);
+        }
     }
 
     @Override
@@ -95,5 +135,48 @@ public class RegisterActivity extends BaseActivity
         if (cur == 0) {
             super.onBackPressed();
         }
+    }
+
+    private void tryRegister() {
+        String mobile = mobileNumView.getInputText();
+        String verifyNum = verifyCodeView.getInputText();
+        String nickName = nickNameView.getInputText();
+        String password = passwordView.getInputText();
+        String passConfirm = passwordConfirmView.getInputText();
+        if (TextUtils.isEmpty(mobile)) {
+            CustomToastUtil.makeShort(
+                    getApplicationContext(), getString(R.string.mobile_num_null));
+            return;
+        } else if (!LoginManager.isMobileNO(mobile)) {
+            CustomToastUtil.makeShort(
+                    getApplicationContext(), getString(R.string.mobile_num_invalid));
+            return;
+        }
+        if (TextUtils.isEmpty(verifyNum)) {
+            CustomToastUtil.makeShort(
+                    getApplicationContext(), getString(R.string.verify_code_error));
+            return;
+        }
+        if (TextUtils.isEmpty(nickName)) {
+            CustomToastUtil.makeShort(
+                    getApplicationContext(), getString(R.string.nick_name_null));
+            return;
+        }
+        if (TextUtils.isEmpty(password) || password.length() <= 6) {
+            CustomToastUtil.makeShort(
+                    getApplicationContext(), getString(R.string.password_too_short));
+            return;
+        }
+        if (!LoginManager.isPasswordValid(password)) {
+            CustomToastUtil.makeShort(
+                    getApplicationContext(), getString(R.string.password_invalid));
+            return;
+        }
+        if (!password.equals(passConfirm)) {
+            CustomToastUtil.makeShort(
+                    getApplicationContext(), getString(R.string.password_not_same));
+            return;
+        }
+        registerPresenter.register(mobile, verifyNum, password, nickName);
     }
 }

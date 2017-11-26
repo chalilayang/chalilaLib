@@ -84,6 +84,11 @@
     <string name="login_wechat">微信登录</string>
     <string name="change_mobile_num">更换绑定手机</string>
     <string name="other_login_method">其他登录方式</string>
+    <string name="mobile_num_null">手机号不能为空</string>
+    <string name="mobile_num_invalid">手机号不合法</string>
+    <string name="verify_code_error">验证码错误</string>
+    <string name="verify_code_get_failed">验证码获取失败</string>
+    <string name="nick_name_null">昵称不能为空</string>
 
     <string name="mobile_num">手机号</string>
     <string name="password">密码</string>
@@ -98,6 +103,9 @@
 
     <string name="less_than_ten_words">10个字以内</string>
     <string name="more_than_six_num_and_char">6位以上的字母和数字</string>
+    <string name="password_invalid">密码只能包含字母和数字</string>
+    <string name="password_too_short">密码过短</string>
+    <string name="password_not_same">两次输入密码不一致</string>
 
     <string name="next_step">下一步</string>
     <string name="complete">完成</string>

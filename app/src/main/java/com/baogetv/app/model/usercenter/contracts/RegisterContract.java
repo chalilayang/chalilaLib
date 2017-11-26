@@ -22,7 +22,8 @@ public interface RegisterContract {
     interface Presenter extends BasePresenter {
         void init(Context context, Intent intent);
         void getVerifyNum(String mobileNum);
-        void register(String mobileNum, String verifyCode);
+        void register(String mobileNum, String verifyCode, String password, String nick);
+        int nextStep();
         int previousStep();
     }
 }

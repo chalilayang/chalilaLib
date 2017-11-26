@@ -47,7 +47,6 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
-        sendSMS();
     }
 
     private void initView() {
@@ -151,23 +150,5 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
             mineFragment = MineFragment.newInstance();
         }
         transaction.replace(R.id.fragment_container, mineFragment).commit();
-    }
-
-    public void sendSMS() {
-        UserApiService listService
-                = RetrofitManager.getInstance().createReq(UserApiService.class);
-        Call<ResponseBean<List<Object>>> listBeanCall
-                = listService.sendMobileSMS("13821049089");
-        listBeanCall.enqueue(new CustomCallBack<List<Object>>() {
-            @Override
-            public void onSuccess(List<Object> data) {
-                Log.i(TAG, "onSuccess: ");
-            }
-
-            @Override
-            public void onFailed(String error) {
-                Log.i(TAG, "onFailed: ");
-            }
-        });
     }
 }
