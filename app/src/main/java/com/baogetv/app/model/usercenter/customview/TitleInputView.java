@@ -2,6 +2,7 @@ package com.baogetv.app.model.usercenter.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
@@ -18,7 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baogetv.app.R;
+import com.chalilayang.scaleview.ScaleCalculator;
 import com.chalilayang.scaleview.ScaleFrameLayout;
+
+import java.lang.ref.SoftReference;
 
 /**
  * Created by chalilayang on 2017/11/19.
@@ -78,6 +82,20 @@ public class TitleInputView extends ScaleFrameLayout {
             areaNum.setVisibility(VISIBLE);
             areaNum.setTextColor(getResources().getColor(R.color.white));
             areaNum.setTextSize(TypedValue.COMPLEX_UNIT_PX, 32);
+            Drawable drawable = getResources().getDrawable(R.mipmap.white_down_arrow);
+            int width = drawable.getIntrinsicWidth();
+            int height = drawable.getIntrinsicHeight();
+            drawable.setBounds(0, 0, width, height);
+            areaNum.setCompoundDrawables(null, null, drawable, null);
+            areaNum.setCompoundDrawablePadding(width);
+            areaNum.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mRef != null && mRef.get() != null) {
+                        mRef.get().onAreaClick();
+                    }
+                }
+            });
         }
         inputEdit = root.findViewById(R.id.input_edit);
         inputEdit.setTextColor(getResources().getColor(R.color.white));
@@ -123,5 +141,15 @@ public class TitleInputView extends ScaleFrameLayout {
         } else {
             return "";
         }
+    }
+
+    private SoftReference<OnAreaChooseCallback> mRef;
+    public void setOnAreaCallBack(OnAreaChooseCallback back) {
+        if (back != null) {
+            mRef = new SoftReference<OnAreaChooseCallback>(back);
+        }
+    }
+    public interface OnAreaChooseCallback {
+        void onAreaClick();
     }
 }

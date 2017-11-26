@@ -1,5 +1,6 @@
 package com.baogetv.app.model.usercenter.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,6 +14,8 @@ import com.baogetv.app.model.usercenter.contracts.RegisterContract;
 import com.baogetv.app.model.usercenter.customview.TitleInputView;
 import com.baogetv.app.model.usercenter.customview.VerifyCodeInputView;
 import com.baogetv.app.model.usercenter.present.RegisterPresenter;
+
+import static com.baogetv.app.model.usercenter.activity.AreaChooseActivity.REQUEST_CODE_AREA_CHOOSE;
 
 public class RegisterActivity extends BaseActivity
         implements RegisterContract.View, VerifyCodeInputView.VerifyCallBack {
@@ -51,6 +54,13 @@ public class RegisterActivity extends BaseActivity
         });
         stepOne = findViewById(R.id.register_step_one);
         mobileNumView = (TitleInputView) findViewById(R.id.mobile_num_view);
+        mobileNumView.setOnAreaCallBack(new TitleInputView.OnAreaChooseCallback() {
+            @Override
+            public void onAreaClick() {
+                Intent intent = new Intent(RegisterActivity.this, AreaChooseActivity.class);
+                RegisterActivity.this.startActivityForResult(intent, REQUEST_CODE_AREA_CHOOSE);
+            }
+        });
         verifyCodeView = (VerifyCodeInputView) findViewById(R.id.verify_code_view);
         verifyCodeView.setVerifyCallBack(this);
         nextStep = findViewById(R.id.next_step_tv);
