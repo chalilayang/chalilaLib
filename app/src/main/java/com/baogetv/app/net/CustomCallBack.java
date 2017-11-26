@@ -14,7 +14,7 @@ public abstract class CustomCallBack<T> implements Callback<ResponseBean<T>> {
     @Override
     public final void onResponse(Call<ResponseBean<T>> call, Response<ResponseBean<T>> response) {
         ResponseBean<T> responseBean = response.body();
-        if (responseBean != null) {
+        if (responseBean != null && responseBean.getStatus() != 1) {
             onSuccess(responseBean.getData());
         } else {
             onFailed("responseBean == null");

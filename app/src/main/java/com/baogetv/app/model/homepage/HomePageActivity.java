@@ -3,10 +3,15 @@ package com.baogetv.app.model.homepage;
 import android.app.FragmentTransaction;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.net.CustomCallBack;
+import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
@@ -19,8 +24,11 @@ import com.baogetv.app.parcelables.PageItemData;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+
 public class HomePageActivity extends BaseActivity implements View.OnClickListener {
 
+    private static final String TAG = "HomePageActivity";
     private FrameLayout fragmentContainer;
     private HomeFragment homeFragment;
     private ChannelListFragment channelListFragment;
@@ -39,6 +47,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initView();
+        sendSMS();
     }
 
     private void initView() {
@@ -142,5 +151,23 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
             mineFragment = MineFragment.newInstance();
         }
         transaction.replace(R.id.fragment_container, mineFragment).commit();
+    }
+
+    public void sendSMS() {
+        UserApiService listService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        Call<ResponseBean<List<Object>>> listBeanCall
+                = listService.sendMobileSMS("13821049089");
+        listBeanCall.enqueue(new CustomCallBack<List<Object>>() {
+            @Override
+            public void onSuccess(List<Object> data) {
+                Log.i(TAG, "onSuccess: ");
+            }
+
+            @Override
+            public void onFailed(String error) {
+                Log.i(TAG, "onFailed: ");
+            }
+        });
     }
 }

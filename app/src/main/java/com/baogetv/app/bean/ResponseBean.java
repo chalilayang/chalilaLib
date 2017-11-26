@@ -10,6 +10,18 @@ public class ResponseBean<T> {
     private String url;
     private T data;
 
+    public int getStatus() {
+        return status;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
     public T getData() {
         return data;
     }
