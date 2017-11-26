@@ -84,12 +84,12 @@ public class TitleInputView extends ScaleFrameLayout {
         inputEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         inputEdit.setCursorVisible(true);
         if (isMobileType) {
+            String digists = "0123456789";
+            inputEdit.setKeyListener(DigitsKeyListener.getInstance(digists));
             inputEdit.setKeyListener(DigitsKeyListener.getInstance());
-        }
-        if(!inputPasswordType){
-            inputEdit.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-        }else{
-            inputEdit.setKeyListener(DigitsKeyListener.getInstance());
+        } else if (inputPasswordType) {
+            String digists = "0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            inputEdit.setKeyListener(DigitsKeyListener.getInstance(digists));
             inputEdit.setTransformationMethod(PasswordTransformationMethod.getInstance());
         }
         if (!TextUtils.isEmpty(hint)) {

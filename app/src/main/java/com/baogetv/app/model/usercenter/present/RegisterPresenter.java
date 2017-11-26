@@ -95,7 +95,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
             public void onFailed(String error) {
                 Log.i(TAG, "onFailed: ");
                 CustomToastUtil.makeShort(
-                        mContext, mContext.getString(R.string.verify_code_get_failed));
+                        mContext, mContext.getString(R.string.verify_code_get_failed) + "：" + error);
             }
         });
     }
