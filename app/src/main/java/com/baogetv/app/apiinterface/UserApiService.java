@@ -1,8 +1,12 @@
 package com.baogetv.app.apiinterface;
 
+import com.baogetv.app.bean.GradeBean;
+import com.baogetv.app.bean.GradeDetailBean;
 import com.baogetv.app.bean.LoginBean;
 import com.baogetv.app.bean.RegisterBean;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.bean.ScoreSourceBean;
+import com.baogetv.app.bean.ScoreSourceDetailBean;
 import com.baogetv.app.bean.UserDetailBean;
 
 import java.util.List;
@@ -57,7 +61,7 @@ public interface UserApiService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Member/logout")
-    Call<ResponseBean<List<?>>> loginOut( @Field("token") String token);
+    Call<ResponseBean<List<Object>>> loginOut( @Field("token") String token);
 
     /**
      * 会员详情
@@ -103,7 +107,7 @@ public interface UserApiService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Member/setBinding")
-    Call<ResponseBean<List<?>>> resetMobile(
+    Call<ResponseBean<List<Object>>> resetMobile(
             @Field("token") String token,
             @Field("mobile") String mobile,
             @Field("verify_code") String verify_code);
@@ -118,7 +122,7 @@ public interface UserApiService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Member/editPassword")
-    Call<ResponseBean<List<?>>> editPassword(
+    Call<ResponseBean<List<Object>>> editPassword(
             @Field("token") String token,
             @Field("password") String password,
             @Field("new_password") String new_password);
@@ -136,13 +140,53 @@ public interface UserApiService {
      * @return
      */
     @FormUrlEncoded
-    @POST("index.php?s=/Member/editPassword")
-    Call<ResponseBean<List<?>>> editUserDetail(
+    @POST("index.php?s=/Member/edit")
+    Call<ResponseBean<List<Object>>> editUserDetail(
             @Field("pic") String pic,
             @Field("username") String username,
-            @Field("sex") String sex,
+            @Field("sex") int sex,
             @Field("birthday") String birthday,
             @Field("intro") String intro,
             @Field("height") String height,
             @Field("weight") String weight);
+
+    /**
+     * 等级列表
+     *
+     * @param name：
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Level/index")
+    Call<ResponseBean<List<GradeBean>>> getGradeList(@Field("name") String name);
+
+    /**
+     * 等级详情
+     *
+     * @param id：等级ID
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Level/detail")
+    Call<ResponseBean<GradeDetailBean>> getGradeDetail(@Field("id") int id);
+
+    /**
+     * 经验值来源列表
+     *
+     * @param title：经验值来源标题
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Scoresource/index")
+    Call<ResponseBean<List<ScoreSourceBean>>> getScoreSourceList(@Field("title") String title);
+
+    /**
+     * 经验值来源详情
+     *
+     * @param id：经验值来源ID
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Scoresource/detail")
+    Call<ResponseBean<ScoreSourceDetailBean>> getScoreSourceDetail(@Field("id") int id);
 }
