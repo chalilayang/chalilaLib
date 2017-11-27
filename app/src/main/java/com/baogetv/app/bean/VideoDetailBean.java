@@ -3,6 +3,7 @@ package com.baogetv.app.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -258,7 +259,11 @@ public class VideoDetailBean implements Parcelable {
     }
 
     public List<String> getTags() {
-        return tags;
+        List<String> result = new ArrayList<>();
+        if (tags != null) {
+            result.addAll(tags);
+        }
+        return result;
     }
 
     public void setTags(List<String> tags) {

@@ -17,6 +17,7 @@
         android:textColor="@color/reply_content"/>
 
     <com.chalilayang.scaleview.ScaleTextView
+        android:id="@+id/video_play_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/size_30"
@@ -27,6 +28,7 @@
         android:textColor="@color/reply_time"/>
 
     <com.chalilayang.scaleview.ScaleTextView
+        android:id="@+id/video_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_30"
@@ -48,7 +50,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/share_btn_icon_gray"
             android:drawablePadding="@dimen/size_10"
-            android:text="@string/cache"
+            android:text="0"
             android:textSize="@dimen/size_26"
             android:textColor="@color/reply_name"
             android:layout_gravity="center_vertical"/>
@@ -59,7 +61,7 @@
             android:layout_marginLeft="@dimen/size_30"
             android:drawableLeft="@mipmap/heart_btn_gray"
             android:drawablePadding="@dimen/size_10"
-            android:text="@string/cache"
+            android:text="0"
             android:textSize="@dimen/size_26"
             android:textColor="@color/reply_name"
             android:layout_gravity="center_vertical"/>
@@ -122,6 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <com.chalilayang.scaleview.ScaleTextView
+                    android:id="@+id/channel_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -130,6 +133,7 @@
                     android:text="@string/less_than_ten_words"
                     android:textColor="@color/reply_content"/>
                 <com.chalilayang.scaleview.ScaleTextView
+                    android:id="@+id/channel_update_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -139,6 +143,7 @@
                     android:textColor="@color/reply_time"/>
             </com.chalilayang.scaleview.ScaleRelativeLayout>
             <com.chalilayang.scaleview.ScaleTextView
+                android:id="@+id/channel_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"

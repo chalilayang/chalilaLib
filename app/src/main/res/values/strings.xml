@@ -11,6 +11,7 @@
     <string name="month_ranking">月排行</string>
     <string name="all_ranking">总排行</string>
     <string name="video_desc_format">%1$s次播放 %2$s发布</string>
+    <string name="play_count_format">%1$s次播放</string>
 
     <string name="channel">频道精选</string>
     <string name="video_count_format">%s个视频</string>

@@ -10,14 +10,18 @@ import android.view.ViewGroup;
 
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
+import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.model.usercenter.adapter.CollectListAdapter;
 import com.baogetv.app.model.usercenter.entity.VideoData;
 import com.baogetv.app.model.videodetail.adapter.VideoInfoListAdapter;
+import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.baogetv.app.PagerFragment.PAGE_DATA;
 
 /**
  * Created by chalilayang on 2017/11/20.
@@ -30,11 +34,12 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private VideoInfoListAdapter recyclerViewAdapter;
+    private VideoDetailData videoDetailData;
 
-    public static VideoInfoFragment newInstance() {
-        VideoInfoFragment fragment = new VideoInfoFragment();
+    public static VideoInfoFragment  newInstance(VideoDetailData data) {
+        VideoInfoFragment  fragment = new VideoInfoFragment ();
         Bundle args = new Bundle();
-//        args.putParcelable(PAGE_DATA, data);
+        args.putParcelable(PAGE_DATA, data);
         fragment.setArguments(args);
         return fragment;
     }
@@ -42,6 +47,9 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            videoDetailData = getArguments().getParcelable(PAGE_DATA);
+        }
     }
 
     @Override
@@ -56,6 +64,7 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
 
     public void init(View root) {
         refreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.video_list_container);
+        refreshLayout.setEnabled(false);
         recyclerView = (RecyclerView) root.findViewById(R.id.video_list);
         RecyclerViewDivider divider
                 = new RecyclerViewDivider(getActivity().getApplicationContext(),
@@ -67,6 +76,7 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
         recyclerView.addItemDecoration(divider);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerViewAdapter = new VideoInfoListAdapter(getActivity());
+        recyclerViewAdapter.setVideoInfo(videoDetailData);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
         refreshLayout.setOnRefreshListener(this);

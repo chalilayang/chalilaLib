@@ -26,7 +26,6 @@ import static com.baogetv.app.model.videodetail.activity.VideoDetailActivity.KEY
 public class PlayerFragment extends BaseFragment {
     private static final String TAG = "PlayerFragment";
     private View contentView;
-    private ImageView playPauseBtn;
     private VideoDetailBean videoDetailBean;
 
     private NiceVideoPlayer mNiceVideoPlayer;
