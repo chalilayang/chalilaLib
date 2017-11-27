@@ -62,15 +62,4 @@ public class PageData implements Parcelable {
         this.tabStyle = in.readInt();
     }
 
-    public static final Creator<PageData> CREATOR = new Creator<PageData>() {
-        @Override
-        public PageData createFromParcel(Parcel source) {
-            return new PageData(source);
-        }
-
-        @Override
-        public PageData[] newArray(int size) {
-            return new PageData[size];
-        }
-    };
 }

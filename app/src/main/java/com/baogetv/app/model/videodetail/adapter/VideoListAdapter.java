@@ -70,6 +70,7 @@ public class VideoListAdapter
     }
 
     public interface IVideoData {
+        String getVideoID();
         String getPicUrl();
         String getTitle();
         String getPublishTime();

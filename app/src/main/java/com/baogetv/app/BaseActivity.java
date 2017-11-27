@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.baogetv.app.customview.CustomToastUtil;
 import com.umeng.message.PushAgent;
 
 public class BaseActivity extends Activity {
@@ -81,7 +82,6 @@ public class BaseActivity extends Activity {
     }
 
     public void showShortToast(String msg) {
-
+        CustomToastUtil.makeShort(getApplicationContext(), msg);
     }
-
 }

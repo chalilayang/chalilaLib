@@ -2,40 +2,80 @@ package com.baogetv.app.model.videodetail.activity;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
+import com.baogetv.app.apiinterface.VideoListService;
+import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.bean.VideoDetailBean;
+import com.baogetv.app.customview.CustomToastUtil;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.fragment.PlayerFragment;
 import com.baogetv.app.model.videodetail.fragment.VideoDetailFragment;
+import com.baogetv.app.net.CustomCallBack;
+import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageItemData;
 import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+
 public class VideoDetailActivity extends BaseActivity {
 
+    public static final String KEY_VIDEO_ID = "KEY_VIDEO_ID";
+    public static final String KEY_VIDEO_DETAIL = "KEY_VIDEO_DETAIL";
     private VideoDetailFragment videoDetailFragment;
     private PlayerFragment playerFragment;
+    private VideoDetailBean videoDetailBean;
+    private String videoId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_video_detail);
-        init();
-        showPlayerFragment();
-        showHomeFragment();
+        videoId = getIntent().getStringExtra(KEY_VIDEO_ID);
+        initView();
+        initData();
     }
 
-    private void init() {
+    private void initView() {
 
     }
 
-    private void showHomeFragment() {
+    private void initData() {
+        VideoListService listService
+                = RetrofitManager.getInstance().createReq(VideoListService.class);
+        Call<ResponseBean<VideoDetailBean>> call = listService.getVideoDetail(videoId);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<VideoDetailBean>() {
+                @Override
+                public void onSuccess(VideoDetailBean data) {
+                    if (data != null) {
+                        videoDetailBean = data;
+                        showDetailFragment();
+                        showPlayerFragment();
+                    } else {
+                        showError();
+                    }
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    showError();
+                    showShortToast(error);
+                }
+            });
+        }
+    }
+
+    public void showError() {
+
+    }
+    private void showDetailFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (videoDetailFragment == null) {
             List<PageItemData> list = new ArrayList<>(2);
@@ -43,7 +83,8 @@ public class VideoDetailActivity extends BaseActivity {
             list.add(pageItemData);
             pageItemData = new PageItemData(getString(R.string.comment), 0);
             list.add(pageItemData);
-            videoDetailFragment = VideoDetailFragment.newInstance(new VideoDetailData(list));
+            videoDetailFragment
+                    = VideoDetailFragment.newInstance(new VideoDetailData(list, videoDetailBean));
         }
         transaction.replace(R.id.video_detail_fragment_container, videoDetailFragment).commit();
     }
@@ -51,15 +92,16 @@ public class VideoDetailActivity extends BaseActivity {
     private void showPlayerFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (playerFragment == null) {
-            playerFragment = PlayerFragment.newInstance();
+            playerFragment = PlayerFragment.newInstance(videoDetailBean);
         }
         transaction.replace(R.id.video_player_fragment_container, playerFragment).commit();
     }
 
     @Override
     public void onBackPressed() {
-        if (NiceVideoPlayerManager.instance().onBackPressd()) return;
-        super.onBackPressed();
+        if (!NiceVideoPlayerManager.instance().onBackPressd()) {
+            super.onBackPressed();
+        }
     }
 
     @Override

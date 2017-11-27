@@ -54,7 +54,7 @@ public interface VideoListService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Video/detail")
-    Call<ResponseBean<VideoDetailBean>> getVideoDetail(@Field("id") int id);
+    Call<ResponseBean<VideoDetailBean>> getVideoDetail(@Field("id") String id);
 
     /**
      * @return

@@ -8,12 +8,15 @@ import android.widget.ImageView;
 
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
+import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.model.videodetail.player.PlayerController;
 import com.bumptech.glide.Glide;
 import com.xiao.nicevideoplayer.NiceVideoPlayer;
 import com.xiao.nicevideoplayer.NiceVideoPlayerController;
 import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
 import com.xiao.nicevideoplayer.TxVideoPlayerController;
+
+import static com.baogetv.app.model.videodetail.activity.VideoDetailActivity.KEY_VIDEO_DETAIL;
 
 /**
  * Created by chalilayang on 2017/11/20.
@@ -25,10 +28,10 @@ public class PlayerFragment extends BaseFragment {
     private ImageView playPauseBtn;
 
     private NiceVideoPlayer mNiceVideoPlayer;
-    public static PlayerFragment newInstance() {
+    public static PlayerFragment newInstance(VideoDetailBean videoDetailBean) {
         PlayerFragment fragment = new PlayerFragment();
         Bundle args = new Bundle();
-//        args.putParcelable(PAGE_DATA, data);
+        args.putParcelable(KEY_VIDEO_DETAIL, videoDetailBean);
         fragment.setArguments(args);
         return fragment;
     }

@@ -12,12 +12,14 @@ public class VideoData implements VideoListAdapter.IVideoData {
     private final String publishTime;
     private final String playCount;
     private final String videoDuration;
-    public VideoData(String pic, String video_title, String publish_time, String count, String duration) {
+    private final String videoId;
+    public VideoData(String pic, String video_title, String publish_time, String count, String duration, String videoID) {
         this.picUrl = pic;
         this.title = video_title;
         this.publishTime = publish_time;
         this.playCount = count;
         this.videoDuration = duration;
+        this.videoId = videoID;
     }
 
     @Override
@@ -43,5 +45,10 @@ public class VideoData implements VideoListAdapter.IVideoData {
     @Override
     public String getPlayCount() {
         return playCount;
+    }
+
+    @Override
+    public String getVideoID() {
+        return videoId;
     }
 }

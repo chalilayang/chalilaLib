@@ -13,7 +13,8 @@ public class BeanConvert {
         String publishTime = data.getAdd_time();
         String playCount = data.getPlay_count();
         String duration = data.getLength();
-        VideoData result = new VideoData(picUrl, title, publishTime, playCount, duration);
+        String vid = data.getVideo_id();
+        VideoData result = new VideoData(picUrl, title, publishTime, playCount, duration, vid);
         return result;
     }
 
@@ -23,7 +24,8 @@ public class BeanConvert {
         String publishTime = data.getAdd_time();
         String playCount = data.getPlay();
         String duration = data.getLength();
-        VideoData result = new VideoData(picUrl, title, publishTime, playCount, duration);
+        String vid = data.getId();
+        VideoData result = new VideoData(picUrl, title, publishTime, playCount, duration, vid);
         return result;
     }
 }
