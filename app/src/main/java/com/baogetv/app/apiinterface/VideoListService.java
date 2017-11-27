@@ -2,6 +2,7 @@ package com.baogetv.app.apiinterface;
 
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoListBean;
+import com.baogetv.app.bean.VideoRankListBean;
 
 import java.util.List;
 
@@ -35,4 +36,13 @@ public interface VideoListService {
             @Field("keyword") String keyword,
             @Field("orderby") String orderby,
             @Field("ordertype") String ordertype);
+
+    /**
+     * 排行榜
+     * @param type 排行榜类型：0.总榜 1.周榜 2.月榜
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Video/ranking")
+    Call<ResponseBean<List<VideoRankListBean>>> getVideoList(@Field("type") int type);
 }

@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.baogetv.app.apiinterface.VideoListService;
-import com.baogetv.app.apiinterface.VideoRankingListService;
 import com.baogetv.app.bean.BeanConvert;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoListBean;
@@ -144,8 +143,8 @@ public class ItemFragment extends BaseItemFragment
         } else if (itemData.getType() == PageItemData.TYPE_RANK_VIDEO
                 || itemData.getType() == PageItemData.TYPE_RANK_VIDEO_WEEK
                 || itemData.getType() == PageItemData.TYPE_RANK_VIDEO_MONTH) {
-            VideoRankingListService listService
-                    = RetrofitManager.getInstance().createReq(VideoRankingListService.class);
+            VideoListService listService
+                    = RetrofitManager.getInstance().createReq(VideoListService.class);
             Call<ResponseBean<List<VideoRankListBean>>> listBeanCall = null;
             switch (itemData.getType()) {
                 case PageItemData.TYPE_RANK_VIDEO:

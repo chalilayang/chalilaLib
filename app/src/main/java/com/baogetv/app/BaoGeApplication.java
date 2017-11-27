@@ -3,6 +3,7 @@ package com.baogetv.app;
 import android.app.Application;
 import android.util.Log;
 
+import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.push.MyPushIntentService;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -34,6 +35,7 @@ public class BaoGeApplication extends Application {
             public void onSuccess(String deviceToken) {
                 //注册成功会返回device token
                 Log.i(TAG, "onSuccess: " + deviceToken);
+                LoginManager.putDeviceToken(getApplicationContext(), deviceToken);
             }
 
             @Override
