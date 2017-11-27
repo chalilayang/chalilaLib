@@ -1,7 +1,11 @@
 package com.baogetv.app.apiinterface;
 
+import com.baogetv.app.bean.AddItemBean;
+import com.baogetv.app.bean.CollectBean;
+import com.baogetv.app.bean.CommentListBean;
 import com.baogetv.app.bean.GradeBean;
 import com.baogetv.app.bean.GradeDetailBean;
+import com.baogetv.app.bean.HistoryBean;
 import com.baogetv.app.bean.LoginBean;
 import com.baogetv.app.bean.RegisterBean;
 import com.baogetv.app.bean.ResponseBean;
@@ -42,6 +46,7 @@ public interface UserApiService {
      * @param mobile：（手机号）
      * @param password：（密码）
      * @param verify_code：（手机验证码）
+     * @param username：（手机号）
      * @param device_token：（设备token）
      * @return
      */
@@ -51,6 +56,7 @@ public interface UserApiService {
             @Field("mobile") String mobile,
             @Field("password") String password,
             @Field("verify_code") String verify_code,
+            @Field("username") String username,
             @Field("device_token") String device_token);
 
     /**
@@ -189,4 +195,94 @@ public interface UserApiService {
     @FormUrlEncoded
     @POST("index.php?s=/Scoresource/detail")
     Call<ResponseBean<ScoreSourceDetailBean>> getScoreSourceDetail(@Field("id") int id);
+
+
+    /**
+     * 添加收藏
+     *
+     * @param token：（Token，登录凭证）
+     * @param video_id：（视频ID）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Collects/add")
+    Call<ResponseBean<AddItemBean>> addCollect(
+            @Field("token") String token, @Field("video_id") int video_id);
+
+    /**
+     * 取消收藏
+     *
+     * @param token：（Token，登录凭证）
+     * @param video_id：（视频ID）
+     * @param id：（收藏ID）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Collects/del")
+    Call<ResponseBean<Object>> deleteCollect(
+            @Field("token") String token,
+            @Field("video_id") int video_id,
+            @Field("id") int id);
+
+    /**
+     * 我的收藏
+     *
+     * @param token：（Token，登录凭证）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Collects/my")
+    Call<ResponseBean<List<CollectBean>>> getCollectList(
+            @Field("token") String token);
+
+
+    /**
+     * 添加播放记录
+     *
+     * @param token：（Token，登录凭证）
+     * @param video_id：（视频ID）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Play/add")
+    Call<ResponseBean<AddItemBean>> addHistory(
+            @Field("token") String token, @Field("video_id") int video_id);
+
+    /**
+     * 取消播放记录
+     *
+     * @param token：（Token，登录凭证）
+     * @param video_id：（视频ID）
+     * @param id：（收藏ID）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Play/del")
+    Call<ResponseBean<Object>> deleteHistory(
+            @Field("token") String token,
+            @Field("video_id") int video_id,
+            @Field("id") int id);
+
+    /**
+     * 我的播放记录
+     *
+     * @param token：（Token，登录凭证）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Play/my")
+    Call<ResponseBean<List<HistoryBean>>> getHistoryList(
+            @Field("token") String token);
+
+
+    /**
+     * 评论列表
+     *
+     * @param video_id：
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Comments/index")
+    Call<ResponseBean<List<CommentListBean>>> getCommentList(@Field("video_id") int video_id);
+
 }

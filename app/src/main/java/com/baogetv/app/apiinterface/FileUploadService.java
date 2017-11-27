@@ -21,7 +21,7 @@ public interface FileUploadService {
      * @return
      */
     @Multipart
-    @POST("/upload")
+    @POST("index.php?s=/File/uploadPicture")
     Call<ResponseBean<ImageUploadBean>>
     uploadImage(@Part("fileName") String description,
                 @Part("file\"; filename=\"image.png\"") RequestBody img);
