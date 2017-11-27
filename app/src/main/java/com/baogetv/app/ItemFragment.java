@@ -148,13 +148,13 @@ public class ItemFragment extends BaseItemFragment
             Call<ResponseBean<List<VideoRankListBean>>> listBeanCall = null;
             switch (itemData.getType()) {
                 case PageItemData.TYPE_RANK_VIDEO:
-                    listBeanCall = listService.getVideoList(0);
+                    listBeanCall = listService.getRankVideoList(0);
                     break;
                 case PageItemData.TYPE_RANK_VIDEO_WEEK:
-                    listBeanCall = listService.getVideoList(1);
+                    listBeanCall = listService.getRankVideoList(1);
                     break;
                 case PageItemData.TYPE_RANK_VIDEO_MONTH:
-                    listBeanCall = listService.getVideoList(2);
+                    listBeanCall = listService.getRankVideoList(2);
                     break;
 
             }

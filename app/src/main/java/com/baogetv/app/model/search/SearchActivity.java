@@ -20,7 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.baogetv.app.apiinterface.SearchHotWordService;
+import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
@@ -32,7 +32,6 @@ import com.baogetv.app.db.entity.SearchItemEntity;
 import com.baogetv.app.db.entity.SearchItemEntityDao;
 import com.baogetv.app.db.util.DaoManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -114,7 +113,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         int space = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(20);
         flowLayout.setChildSpacing(space);
         flowLayout.setRowSpacing(space);
-        getLables();
+        getLabels();
         historyClear = findViewById(R.id.search_history_clear);
         historyClear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,9 +250,9 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
-    private void getLables() {
-        SearchHotWordService listService
-                = RetrofitManager.getInstance().createReq(SearchHotWordService.class);
+    private void getLabels() {
+        VideoListService listService
+                = RetrofitManager.getInstance().createReq(VideoListService.class);
         Call<ResponseBean<List<String>>> listBeanCall = listService.getHotWord();
         if (listBeanCall != null) {
             listBeanCall.enqueue(new CustomCallBack<List<String>>() {

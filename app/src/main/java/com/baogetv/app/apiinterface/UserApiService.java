@@ -2,6 +2,7 @@ package com.baogetv.app.apiinterface;
 
 import com.baogetv.app.bean.AddItemBean;
 import com.baogetv.app.bean.CollectBean;
+import com.baogetv.app.bean.CommentBean;
 import com.baogetv.app.bean.CommentListBean;
 import com.baogetv.app.bean.GradeBean;
 import com.baogetv.app.bean.GradeDetailBean;
@@ -276,13 +277,51 @@ public interface UserApiService {
 
 
     /**
-     * 评论列表
+     * 添加评论
      *
-     * @param video_id：
+     * @param token：（Token，登录凭证）
+     * @param video_id：（视频ID）
+     * @param reply_id：（回复的评论ID）
+     * @param reply_user_id：（回复的用户ID）
+     * @param content：（评论内容）
      * @return
      */
     @FormUrlEncoded
-    @POST("index.php?s=/Comments/index")
-    Call<ResponseBean<List<CommentListBean>>> getCommentList(@Field("video_id") int video_id);
+    @POST("index.php?s=/Comments/add")
+    Call<ResponseBean<AddItemBean>> addComment(
+            @Field("token") String token,
+            @Field("video_id") int video_id,
+            @Field("reply_id") int reply_id,
+            @Field("reply_user_id") int reply_user_id,
+            @Field("content") String content
+    );
+
+    /**
+     * 删除评论
+     *
+     * @param token：（Token，登录凭证）
+     * @param video_id：（视频ID）
+     * @param id：（收藏ID）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Comments/del")
+    Call<ResponseBean<Object>> deleteComment(
+            @Field("token") String token,
+            @Field("video_id") int video_id,
+            @Field("id") int id);
+
+    /**
+     * 我的评论
+     *
+     * @param token：（Token，登录凭证）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Comments/my")
+    Call<ResponseBean<List<CommentBean>>> getMyCommentList(
+            @Field("token") String token,
+            @Field("video_id") int video_id,
+            @Field("id") int id);
 
 }

@@ -1,6 +1,7 @@
 package com.baogetv.app.apiinterface;
 
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.bean.VideoListBean;
 import com.baogetv.app.bean.VideoRankListBean;
 
@@ -44,5 +45,20 @@ public interface VideoListService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Video/ranking")
-    Call<ResponseBean<List<VideoRankListBean>>> getVideoList(@Field("type") int type);
+    Call<ResponseBean<List<VideoRankListBean>>> getRankVideoList(@Field("type") int type);
+
+    /**
+     * 视频详情
+     * @param id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Video/detail")
+    Call<ResponseBean<VideoDetailBean>> getVideoDetail(@Field("id") int id);
+
+    /**
+     * @return
+     */
+    @POST("index.php?s=/Video/hotsearchGet")
+    Call<ResponseBean<List<String>>> getHotWord();
 }
