@@ -2,6 +2,7 @@ package com.baogetv.app.model.videodetail.activity;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.baogetv.app.BaseActivity;
@@ -73,8 +74,12 @@ public class VideoDetailActivity extends BaseActivity {
     }
 
     public void showError() {
-
+        View error = findViewById(R.id.error_view);
+        if (error != null) {
+            error.setVisibility(View.VISIBLE);
+        }
     }
+
     private void showDetailFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (videoDetailFragment == null) {

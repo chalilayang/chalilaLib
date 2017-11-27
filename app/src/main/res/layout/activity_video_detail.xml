@@ -6,7 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.baogetv.app.model.videodetail.activity.VideoDetailActivity">
-
+    <ImageView
+        android:id="@+id/error_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/net_failed"
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
     <com.chalilayang.scaleview.ScaleFrameLayout
         android:id="@+id/video_player_fragment_container"
         android:layout_width="match_parent"
