@@ -4,6 +4,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
@@ -32,6 +33,8 @@ public class VideoDetailActivity extends BaseActivity {
     private PlayerFragment playerFragment;
     private VideoDetailBean videoDetailBean;
     private String videoId;
+    private EditText editText;
+    private View editContainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,9 @@ public class VideoDetailActivity extends BaseActivity {
     }
 
     private void initView() {
-
+        editText = (EditText) findViewById(R.id.comment_edit_text);
+        editContainer = findViewById(R.id.comment_edit_container);
+        editContainer.setVisibility(View.GONE);
     }
 
     private void initData() {

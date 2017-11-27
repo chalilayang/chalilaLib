@@ -27,6 +27,7 @@
         android:layout_marginTop="@dimen/video_player_height"/>
 
     <com.chalilayang.scaleview.ScaleRelativeLayout
+        android:id="@+id/comment_edit_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_98"
         android:layout_alignParentBottom="true"

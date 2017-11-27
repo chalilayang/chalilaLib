@@ -35,6 +35,47 @@
         android:text="@string/less_than_ten_words"
         android:textSize="@dimen/size_26"
         android:textColor="@color/reply_name"/>
+
+    <com.chalilayang.scaleview.ScaleLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/size_30"
+        android:layout_marginTop="@dimen/size_30">
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/video_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/share_btn_icon_gray"
+            android:drawablePadding="@dimen/size_10"
+            android:text="@string/cache"
+            android:textSize="@dimen/size_26"
+            android:textColor="@color/reply_name"
+            android:layout_gravity="center_vertical"/>
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/video_heart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_30"
+            android:drawableLeft="@mipmap/heart_btn_gray"
+            android:drawablePadding="@dimen/size_10"
+            android:text="@string/cache"
+            android:textSize="@dimen/size_26"
+            android:textColor="@color/reply_name"
+            android:layout_gravity="center_vertical"/>
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/video_cache"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_30"
+            android:drawableLeft="@mipmap/cache_btn_icon"
+            android:drawablePadding="@dimen/size_10"
+            android:text="@string/cache"
+            android:textSize="@dimen/size_26"
+            android:textColor="@color/reply_name"
+            android:layout_gravity="center_vertical"/>
+    </com.chalilayang.scaleview.ScaleLinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"

@@ -61,7 +61,8 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
                 = new RecyclerViewDivider(getActivity().getApplicationContext(),
                 LinearLayoutManager.HORIZONTAL, 1,
                 getResources().getColor(R.color.channel_list_divider));
-        int margin_30px = ScaleCalculator.getInstance(getActivity().getApplicationContext()).scaleWidth(30);
+        int margin_30px = ScaleCalculator.getInstance(
+                getActivity().getApplicationContext()).scaleWidth(30);
         divider.setMargin(margin_30px);
         recyclerView.addItemDecoration(divider);
         layoutManager = new LinearLayoutManager(getActivity());
