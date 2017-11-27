@@ -2,7 +2,6 @@ package com.baogetv.app.model.videodetail.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,9 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.baogetv.app.R;
+import com.baogetv.app.bean.ChannelDetailBean;
 import com.baogetv.app.bean.VideoDetailBean;
-import com.baogetv.app.model.usercenter.entity.VideoData;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
+import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.nex3z.flowlayout.FlowLayout;
 
@@ -23,7 +23,7 @@ import java.util.List;
 
 public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final List<VideoData> mValues;
+    private final List<VideoListAdapter.IVideoData> mValues;
     public static final int TYPE_NORMAL = 0;
     public static final int TYPE_HEAD = 1;
     private Context mContext;
@@ -34,6 +34,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
     private int margin_160px;
     private String videoCountFormat;
     private VideoDetailData videoDetailData;
+    private ChannelDetailBean channelDetailBean;
     private String playCountFormat;
 
     public VideoInfoListAdapter(Context context) {
@@ -50,9 +51,15 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public void setVideoInfo(VideoDetailData videoInfo) {
         videoDetailData = videoInfo;
+        notifyItemChanged(0);
     }
 
-    public void updateList(List<VideoData> list) {
+    public void setChannelDetailBean(ChannelDetailBean channelDetailBean) {
+        this.channelDetailBean = channelDetailBean;
+        notifyItemChanged(0);
+    }
+
+    public void updateList(List<VideoListAdapter.IVideoData> list) {
         mValues.clear();
         if (list != null && list.size() > 0) {
             mValues.addAll(list);
@@ -82,7 +89,6 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             normalViewHolder.mImageView.setImageResource(R.mipmap.user_default_icon);
             normalViewHolder.updateInfo();
         } else {
-            HeadViewHolder headViewHolder = (HeadViewHolder) holder;
             ((HeadViewHolder) holder).updateInfo();
         }
     }
@@ -103,7 +109,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
     public class HeadViewHolder extends RecyclerView.ViewHolder {
 
         private TextView title;
-        private TextView playCOunt;
+        private TextView playCount;
         private TextView desc;
 
         private TextView share;
@@ -120,7 +126,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             if (videoDetailData != null) {
                 VideoDetailBean bean = videoDetailData.videoDetailBean;
                 title.setText(bean.getTitle());
-                playCOunt.setText(String.format(playCountFormat, bean.getPlay()));
+                playCount.setText(String.format(playCountFormat, bean.getPlay()));
                 desc.setText(bean.getIntro());
                 share.setText(bean.getShares());
                 like.setText(bean.getLikes());
@@ -134,6 +140,12 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                         addLabel(labels);
                     }
                 }
+            }
+            if (channelDetailBean != null) {
+                channelTitle.setText(channelDetailBean.getName());
+                channelUpdate.setText(channelDetailBean.getUpdate_time());
+                channelDesc.setText(channelDetailBean.getIntro());
+                Glide.with(mContext).load(channelDetailBean.getPic_url()).into(channelImage);
             }
         }
 
@@ -161,7 +173,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         public HeadViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.video_name);
-            playCOunt = (TextView) view.findViewById(R.id.video_play_count);
+            playCount = (TextView) view.findViewById(R.id.video_play_count);
             desc = (TextView) view.findViewById(R.id.video_desc);
             share = (TextView) view.findViewById(R.id.video_share);
             like = (TextView) view.findViewById(R.id.video_heart);
@@ -182,11 +194,12 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         public final ImageView mImageView;
         public final TextView title;
         public final TextView updateTime;
-        public VideoData mItem;
+        public VideoListAdapter.IVideoData mItem;
 
         public void updateInfo() {
-            title.setText(mItem.videoTitle);
-            updateTime.setText(String.valueOf(mItem.updateTime));
+            title.setText(mItem.getTitle());
+            updateTime.setText(String.valueOf(mItem.getPublishTime()));
+            Glide.with(mContext).load(mItem.getPicUrl()).into(mImageView);
         }
 
         public ViewHolder(View view) {

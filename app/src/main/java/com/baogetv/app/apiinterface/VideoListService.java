@@ -1,5 +1,7 @@
 package com.baogetv.app.apiinterface;
 
+import com.baogetv.app.bean.ChannelDetailBean;
+import com.baogetv.app.bean.ChannelListBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.bean.VideoListBean;
@@ -61,4 +63,24 @@ public interface VideoListService {
      */
     @POST("index.php?s=/Video/hotsearchGet")
     Call<ResponseBean<List<String>>> getHotWord();
+
+    /**
+     * 频道详情
+     * @param id（频道ID）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Channel/detail")
+    Call<ResponseBean<ChannelDetailBean>> getChannelDetail(@Field("id") String id);
+
+    /**
+     * 频道列表
+     * @param name：（频道名称）
+     * @param intro：（频道简介）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Channel/index")
+    Call<ResponseBean<List<ChannelListBean>>> getChannelList(
+            @Field("name") String name, @Field("intro") String intro);
 }
