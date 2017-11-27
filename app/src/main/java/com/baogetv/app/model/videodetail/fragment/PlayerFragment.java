@@ -1,6 +1,7 @@
 package com.baogetv.app.model.videodetail.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +24,10 @@ import static com.baogetv.app.model.videodetail.activity.VideoDetailActivity.KEY
  */
 
 public class PlayerFragment extends BaseFragment {
-
+    private static final String TAG = "PlayerFragment";
     private View contentView;
     private ImageView playPauseBtn;
+    private VideoDetailBean videoDetailBean;
 
     private NiceVideoPlayer mNiceVideoPlayer;
     public static PlayerFragment newInstance(VideoDetailBean videoDetailBean) {
@@ -39,6 +41,9 @@ public class PlayerFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            videoDetailBean = getArguments().getParcelable(KEY_VIDEO_DETAIL);
+        }
     }
 
     @Override
@@ -54,9 +59,14 @@ public class PlayerFragment extends BaseFragment {
     public void init(View root) {
         mNiceVideoPlayer = (NiceVideoPlayer) root.findViewById(R.id.player_surface);
         mNiceVideoPlayer.setPlayerType(NiceVideoPlayer.TYPE_NATIVE);
-        mNiceVideoPlayer.setUp("http://videos.baoge.tv/Uploads/Download/2017-11-19/5a114d32969a5.mp4", null);
-        NiceVideoPlayerController controller = new PlayerController(this.getActivity());
-        mNiceVideoPlayer.setController(controller);
+        if (videoDetailBean != null) {
+            mNiceVideoPlayer.setUp(videoDetailBean.getFile_url(), null);
+            Log.i(TAG, "init: " + videoDetailBean.getFile_url());
+            NiceVideoPlayerController controller = new PlayerController(this.getActivity());
+            mNiceVideoPlayer.setController(controller);
+            controller.setTitle(videoDetailBean.getTitle());
+        }
+
     }
 
     public void release() {

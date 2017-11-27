@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.baogetv.app.R;
 import com.baogetv.app.customview.CustomToastUtil;
@@ -31,6 +30,7 @@ public class PlayerController extends NiceVideoPlayerController
 
     private static final String TAG = "PlayerController";
 
+    private ScaleTextView videoTitleSmall;
     private ScaleTextView videoTitle;
     private ImageView shareBtn;
     private ImageView heartBtn;
@@ -64,7 +64,8 @@ public class PlayerController extends NiceVideoPlayerController
         LayoutInflater.from(context).inflate(
                 R.layout.player_controller, this, true);
         playBtn = (ImageView) findViewById(R.id.pause_btn);
-        videoTitle = (ScaleTextView) findViewById(R.id.player_title);
+        videoTitleSmall = (ScaleTextView) findViewById(R.id.player_title_small);
+        videoTitle = (ScaleTextView) findViewById(R.id.player_title_fullscreen);
 
         shareBtn = (ImageView) findViewById(R.id.player_share);
         heartBtn = (ImageView) findViewById(R.id.player_thumb_up);
@@ -183,6 +184,7 @@ public class PlayerController extends NiceVideoPlayerController
 
     @Override
     public void setTitle(String title) {
+        videoTitleSmall.setText(title);
         videoTitle.setText(title);
     }
 
@@ -253,6 +255,8 @@ public class PlayerController extends NiceVideoPlayerController
                 shootBtn.setVisibility(VISIBLE);
                 fullScreenController.setVisibility(VISIBLE);
                 smallScreenController.setVisibility(GONE);
+                videoTitle.setVisibility(VISIBLE);
+                videoTitleSmall.setVisibility(GONE);
                 break;
             case NiceVideoPlayer.MODE_NORMAL:
             case NiceVideoPlayer.MODE_TINY_WINDOW:
@@ -265,6 +269,8 @@ public class PlayerController extends NiceVideoPlayerController
                 shootBtn.setVisibility(GONE);
                 fullScreenController.setVisibility(GONE);
                 smallScreenController.setVisibility(VISIBLE);
+                videoTitle.setVisibility(GONE);
+                videoTitleSmall.setVisibility(VISIBLE);
                 break;
         }
     }
