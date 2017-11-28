@@ -10,6 +10,7 @@ import com.baogetv.app.PagerFragment;
 import com.baogetv.app.R;
 import com.baogetv.app.parcelables.PageData;
 import com.baogetv.app.parcelables.PageItemData;
+import com.chalilayang.scaleview.ScaleCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class ChannelDetailActivity extends BaseActivity {
     private static final String KEY_CHANNEL_ID = "CHANNEL_ID";
     private PagerFragment searchResultFragment;
     private String channelId;
+    private int imageHeight;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,7 @@ public class ChannelDetailActivity extends BaseActivity {
     }
 
     private void init() {
+        imageHeight = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(420);
 
     }
 
