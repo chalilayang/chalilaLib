@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/size_190"
     android:orientation="horizontal">
-    <com.chalilayang.customview.CircleImageView
+    <com.baogetv.app.customview.LogoCircleImageView
         android:id="@+id/channel_item_icon"
         android:layout_width="@dimen/size_120"
         android:layout_height="@dimen/size_120"

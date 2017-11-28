@@ -68,7 +68,7 @@ public class ChannelListAdapter extends BaseItemAdapter<ChannelData, ChannelList
             updateTime.setText(String.valueOf(data.updateTime));
             videoCount.setText(String.format(videoCountFormat, data.videoCount));
             desc.setText(data.description);
-//            Glide.with(mContext).load(data.iConUrl).into(mContentView);
+            Glide.with(mContext).load(data.iConUrl).into(mContentView);
         }
     }
 }
