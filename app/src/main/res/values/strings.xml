@@ -15,6 +15,7 @@
 
     <string name="channel">频道精选</string>
     <string name="video_count_format">%s个视频</string>
+    <string name="channel_detail_info_format">%1$s 视频 | %2$s 收藏 | %3$s 分享</string>
 
     <string name="search_relative">相关度</string>
     <string name="search_play_most">最热观看</string>

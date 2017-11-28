@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.PagerFragment;
@@ -19,6 +20,7 @@ import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageData;
 import com.baogetv.app.parcelables.PageItemData;
+import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleCalculator;
 
 import java.util.ArrayList;
@@ -44,6 +46,10 @@ public class ChannelDetailActivity extends BaseActivity {
     private ImageView imageView;
     private View circleImageContainer;
     private ImageView circleImageView;
+    private TextView channelTitle;
+    private TextView channelInfo;
+    private TextView channelDesc;
+    private String infoFormat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +60,7 @@ public class ChannelDetailActivity extends BaseActivity {
     }
 
     private void init() {
+        infoFormat = getString(R.string.channel_detail_info_format);
         imageHeight = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(390);
         detailHeight = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(272);
         size_44px = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(44);
@@ -71,6 +78,15 @@ public class ChannelDetailActivity extends BaseActivity {
         circleImageView = (ImageView) findViewById(R.id.circle_image);
         circleImageView.getLayoutParams().width = size_180px;
         circleImageView.getLayoutParams().height = size_180px;
+
+        channelTitle = (TextView) findViewById(R.id.channel_title);
+        channelInfo = (TextView) findViewById(R.id.channel_info);
+        channelDesc = (TextView) findViewById(R.id.channel_desc);
+
+        View bottomDivider = findViewById(R.id.bottom_divider);
+        rlp = (RelativeLayout.LayoutParams) bottomDivider.getLayoutParams();
+        rlp.height = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(20);
+        rlp.topMargin = sumHeight - 2 * rlp.height;
     }
 
     private void showHomeFragment() {
@@ -90,6 +106,19 @@ public class ChannelDetailActivity extends BaseActivity {
         transaction.replace(R.id.fragment_container, searchResultFragment).commit();
     }
 
+    private void refreshInfo() {
+        if (detailBean != null) {
+            Glide.with(this).load(detailBean.getPic_url()).into(imageView);
+            Glide.with(this).load(detailBean.getPic_url()).into(circleImageView);
+            channelTitle.setText(detailBean.getName());
+            String info = String.format(
+                    infoFormat,
+                    detailBean.getCount(), detailBean.getCount(), detailBean.getCount());
+            channelInfo.setText(info);
+            channelDesc.setText(detailBean.getIntro());
+        }
+    }
+
     private void getChannelDetail(String channelId) {
         VideoListService listService
                 = RetrofitManager.getInstance().createReq(VideoListService.class);
@@ -99,6 +128,7 @@ public class ChannelDetailActivity extends BaseActivity {
                 @Override
                 public void onSuccess(ChannelDetailBean data) {
                     detailBean = data;
+                    refreshInfo();
                     if (detailBean != null) {
                         showHomeFragment();
                     }

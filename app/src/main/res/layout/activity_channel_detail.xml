@@ -12,7 +12,6 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_690"
-        android:fitsSystemWindows="true"
         android:background="@color/white">
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
@@ -28,6 +27,7 @@
                     android:id="@+id/image_view"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_330"
+                    android:scaleType="fitXY"
                     android:src="@color/reshape_red"/>
                 <com.chalilayang.scaleview.ScaleLinearLayout
                     android:id="@+id/circle_image_container"
@@ -42,7 +42,6 @@
                         android:id="@+id/circle_image"
                         android:layout_width="@dimen/size_180"
                         android:layout_height="@dimen/size_180"
-                        android:src="@mipmap/user_default_icon"
                         android:layout_gravity="center_vertical"/>
                     <com.chalilayang.scaleview.ScaleLinearLayout
                         android:layout_width="match_parent"
@@ -51,12 +50,14 @@
                         android:layout_marginLeft="@dimen/size_24"
                         android:layout_marginTop="@dimen/size_74">
                         <com.chalilayang.scaleview.ScaleTextView
+                            android:id="@+id/channel_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/all_ranking"
                             android:textSize="@dimen/size_30"
                             android:textColor="@color/reply_content"/>
                         <com.chalilayang.scaleview.ScaleTextView
+                            android:id="@+id/channel_info"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/size_20"
@@ -78,10 +79,9 @@
                     android:textColor="@color/reply_name"
                     android:maxLines="2"/>
                 <View
+                    android:id="@+id/bottom_divider"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_20"
-                    android:layout_below="@+id/channel_desc"
-                    android:layout_alignParentBottom="true"
                     android:background="@color/f5f5f5"/>
             </com.chalilayang.scaleview.ScaleRelativeLayout>
         </android.support.design.widget.CollapsingToolbarLayout>
