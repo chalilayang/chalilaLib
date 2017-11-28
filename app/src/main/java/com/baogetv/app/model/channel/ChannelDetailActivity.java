@@ -4,10 +4,16 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.PagerFragment;
 import com.baogetv.app.R;
+import com.baogetv.app.apiinterface.VideoListService;
+import com.baogetv.app.bean.ChannelDetailBean;
+import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.net.CustomCallBack;
+import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageData;
 import com.baogetv.app.parcelables.PageItemData;
 import com.chalilayang.scaleview.ScaleCalculator;
@@ -15,9 +21,14 @@ import com.chalilayang.scaleview.ScaleCalculator;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+
+import static com.baogetv.app.R.id.error;
+
 public class ChannelDetailActivity extends BaseActivity {
-    private static final String KEY_CHANNEL_ID = "CHANNEL_ID";
+    public static final String KEY_CHANNEL_ID = "CHANNEL_ID";
     private PagerFragment searchResultFragment;
+    private ChannelDetailBean detailBean;
     private String channelId;
     private int imageHeight;
     @Override
@@ -25,12 +36,12 @@ public class ChannelDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_detail);
         channelId = getIntent().getStringExtra(KEY_CHANNEL_ID);
-        showHomeFragment();
+        init();
+        getChannelDetail(channelId);
     }
 
     private void init() {
         imageHeight = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(420);
-
     }
 
     private void showHomeFragment() {
@@ -48,5 +59,27 @@ public class ChannelDetailActivity extends BaseActivity {
             searchResultFragment = PagerFragment.newInstance(pageData);
         }
         transaction.replace(R.id.fragment_container, searchResultFragment).commit();
+    }
+
+    private void getChannelDetail(String channelId) {
+        VideoListService listService
+                = RetrofitManager.getInstance().createReq(VideoListService.class);
+        Call<ResponseBean<ChannelDetailBean>> beanCall = listService.getChannelDetail(channelId);
+        if (beanCall != null) {
+            beanCall.enqueue(new CustomCallBack<ChannelDetailBean>() {
+                @Override
+                public void onSuccess(ChannelDetailBean data) {
+                    detailBean = data;
+                    if (detailBean != null) {
+                        showHomeFragment();
+                    }
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    showError();
+                }
+            });
+        }
     }
 }

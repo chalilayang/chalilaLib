@@ -8,9 +8,12 @@ public class ChannelData {
     public final String iConUrl;
     public final String channelTitle;
     public final int videoCount;
-    public final long updateTime;
+    public final String updateTime;
     public final String description;
-    public ChannelData(String url, String title, int count, long time, String desc) {
+    public String channelId;
+    public ChannelData(
+            String id, String url, String title, int count, String time, String desc) {
+        this.channelId = id;
         this.iConUrl = url;
         this.channelTitle = title;
         this.videoCount = count;

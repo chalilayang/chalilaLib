@@ -13,7 +13,11 @@ import android.view.ViewGroup;
 
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.apiinterface.VideoListService;
+import com.baogetv.app.bean.BeanConvert;
+import com.baogetv.app.bean.ChannelListBean;
+import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.model.channel.ChannelDetailActivity;
+import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.baogetv.app.BaseFragment;
@@ -23,6 +27,8 @@ import com.baogetv.app.model.channel.entity.ChannelData;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
 
 /**
  * Created by chalilayang on 2017/11/11.
@@ -37,12 +43,16 @@ public class ChannelListFragment extends BaseFragment
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private ChannelListAdapter recyclerViewAdapter;
+    private List<ChannelData> channelDataList;
 
     public static ChannelListFragment newInstance() {
         ChannelListFragment fragment = new ChannelListFragment();
         return fragment;
     }
 
+    public ChannelListFragment() {
+        channelDataList = new ArrayList<>();
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +64,9 @@ public class ChannelListFragment extends BaseFragment
         if (root == null) {
             root = inflater.inflate(R.layout.fragment_channel_list, container, false);
             init(root);
+            if (channelDataList.size() <= 0) {
+                getChannelList();
+            }
         }
         return root;
     }
@@ -70,11 +83,6 @@ public class ChannelListFragment extends BaseFragment
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerViewAdapter = new ChannelListAdapter(getActivity());
         recyclerViewAdapter.setItemClick(this);
-        List<ChannelData> datas = new ArrayList<>();
-        for (int index = 0; index < 10; index ++) {
-            datas.add(new ChannelData("", "" + index, 128, System.currentTimeMillis(), "精选"));
-        }
-        recyclerViewAdapter.update(datas);
         recyclerView = (RecyclerView) root.findViewById(R.id.channel_list);
         RecyclerViewDivider divider
                 = new RecyclerViewDivider(getActivity(),
@@ -89,12 +97,34 @@ public class ChannelListFragment extends BaseFragment
     @Override
     public void onItemClick(ChannelData data, int position) {
         Intent intent = new Intent(getActivity(), ChannelDetailActivity.class);
+        intent.putExtra(ChannelDetailActivity.KEY_CHANNEL_ID, data.channelId);
         getActivity().startActivity(intent);
     }
 
     private void getChannelList() {
         VideoListService listService
                 = RetrofitManager.getInstance().createReq(VideoListService.class);
+        Call<ResponseBean<List<ChannelListBean>>> beanCall = listService.getChannelList(null, null);
+        if (beanCall != null) {
+            beanCall.enqueue(new CustomCallBack<List<ChannelListBean>>() {
+                @Override
+                public void onSuccess(List<ChannelListBean> listBeen) {
+                    channelDataList.clear();
+                    if (listBeen != null) {
+                        for (int index = 0, count = listBeen.size(); index < count; index ++) {
+                            ChannelListBean bean = listBeen.get(index);
+                            ChannelData iVideoData
+                                    = BeanConvert.getChannelData(bean);
+                            channelDataList.add(iVideoData);
+                        }
+                    }
+                    recyclerViewAdapter.update(channelDataList);
+                }
+                @Override
+                public void onFailed(String error) {
+                }
+            });
+        }
     }
 
     @Override

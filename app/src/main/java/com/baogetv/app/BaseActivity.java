@@ -93,4 +93,11 @@ public class BaseActivity extends AppCompatActivity {
     public void showShortToast(String msg) {
         CustomToastUtil.makeShort(getApplicationContext(), msg);
     }
+
+    protected void showError() {
+        View view = findViewById(R.id.error_view);
+        if (view != null) {
+            view.setVisibility(View.VISIBLE);
+        }
+    }
 }
