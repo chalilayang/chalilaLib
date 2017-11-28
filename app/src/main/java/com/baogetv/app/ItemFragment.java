@@ -199,6 +199,8 @@ public class ItemFragment extends BaseItemFragment
                                 VideoListAdapter.IVideoData iVideoData
                                         = BeanConvert.getIVideoData(bean);
                                 iVideoDatas.add(iVideoData);
+                                iVideoDatas.add(iVideoData);
+                                iVideoDatas.add(iVideoData);
                             }
                         }
                         recyclerViewAdapter.update(iVideoDatas);

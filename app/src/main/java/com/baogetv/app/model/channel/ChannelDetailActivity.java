@@ -2,12 +2,10 @@ package com.baogetv.app.model.channel;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
+import com.baogetv.app.BaseActivity;
 import com.baogetv.app.PagerFragment;
 import com.baogetv.app.R;
 import com.baogetv.app.parcelables.PageData;
@@ -16,15 +14,20 @@ import com.baogetv.app.parcelables.PageItemData;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChannelDetailActivity extends AppCompatActivity {
+public class ChannelDetailActivity extends BaseActivity {
+    private static final String KEY_CHANNEL_ID = "CHANNEL_ID";
     private PagerFragment searchResultFragment;
+    private String channelId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        channelId = getIntent().getStringExtra(KEY_CHANNEL_ID);
         showHomeFragment();
+    }
+
+    private void init() {
+
     }
 
     private void showHomeFragment() {

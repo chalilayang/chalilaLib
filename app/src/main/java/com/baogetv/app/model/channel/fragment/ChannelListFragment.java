@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.baogetv.app.ItemViewHolder;
+import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.model.channel.ChannelDetailActivity;
+import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
@@ -88,6 +90,11 @@ public class ChannelListFragment extends BaseFragment
     public void onItemClick(ChannelData data, int position) {
         Intent intent = new Intent(getActivity(), ChannelDetailActivity.class);
         getActivity().startActivity(intent);
+    }
+
+    private void getChannelList() {
+        VideoListService listService
+                = RetrofitManager.getInstance().createReq(VideoListService.class);
     }
 
     @Override

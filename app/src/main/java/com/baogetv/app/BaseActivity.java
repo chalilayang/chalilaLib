@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -13,7 +14,7 @@ import android.view.WindowManager;
 import com.baogetv.app.customview.CustomToastUtil;
 import com.umeng.message.PushAgent;
 
-public class BaseActivity extends Activity {
+public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,15 @@ public class BaseActivity extends Activity {
 //        initState();
         setStatusBarColor(getResources().getColor(R.color.black));
 //        translucentStatusBar(this, true);
+        if (!useActionBar() && getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
     }
+
+    protected boolean useActionBar() {
+        return false;
+    }
+
     protected void initState() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //透明状态栏
