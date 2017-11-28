@@ -62,6 +62,7 @@
     <dimen name="size_92">92px</dimen>
     <dimen name="size_240">240px</dimen>
     <dimen name="size_330">330px</dimen>
+    <dimen name="size_346">346px</dimen>
     <dimen name="size_320">450px</dimen>
     <dimen name="size_480">480px</dimen>
     <dimen name="size_568">568px</dimen>

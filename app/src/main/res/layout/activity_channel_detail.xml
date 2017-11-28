@@ -25,25 +25,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <ImageView
+                    android:id="@+id/image_view"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/size_330"
                     android:src="@color/reshape_red"/>
                 <com.chalilayang.scaleview.ScaleLinearLayout
+                    android:id="@+id/circle_image_container"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/size_180"
                     android:layout_alignParentTop="true"
-                    android:layout_marginTop="@dimen/size_206"
+                    android:layout_marginTop="@dimen/size_346"
+                    android:layout_marginLeft="@dimen/size_30"
+                    android:layout_marginRight="@dimen/size_30"
                     android:orientation="horizontal">
                     <com.baogetv.app.customview.LogoCircleImageView
+                        android:id="@+id/circle_image"
                         android:layout_width="@dimen/size_180"
                         android:layout_height="@dimen/size_180"
                         android:src="@mipmap/user_default_icon"
                         android:layout_gravity="center_vertical"/>
                     <com.chalilayang.scaleview.ScaleLinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:layout_gravity="center_vertical">
+                        android:layout_marginLeft="@dimen/size_24"
+                        android:layout_marginTop="@dimen/size_74">
                         <com.chalilayang.scaleview.ScaleTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -53,11 +59,30 @@
                         <com.chalilayang.scaleview.ScaleTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size_20"
                             android:text="@string/all_ranking"
-                            android:textSize="@dimen/size_30"
-                            android:textColor="@color/reply_content"/>
+                            android:textSize="@dimen/size_24"
+                            android:textColor="@color/reply_time"/>
                     </com.chalilayang.scaleview.ScaleLinearLayout>
                 </com.chalilayang.scaleview.ScaleLinearLayout>
+                <com.chalilayang.scaleview.ScaleTextView
+                    android:id="@+id/channel_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/circle_image_container"
+                    android:layout_marginLeft="@dimen/size_30"
+                    android:layout_marginRight="@dimen/size_30"
+                    android:layout_marginTop="@dimen/size_26"
+                    android:text="@string/large_text"
+                    android:textSize="@dimen/size_26"
+                    android:textColor="@color/reply_name"
+                    android:maxLines="2"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_20"
+                    android:layout_below="@+id/channel_desc"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/f5f5f5"/>
             </com.chalilayang.scaleview.ScaleRelativeLayout>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

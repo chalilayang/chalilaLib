@@ -2,9 +2,12 @@ package com.baogetv.app.model.channel;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.PagerFragment;
@@ -21,6 +24,7 @@ import com.chalilayang.scaleview.ScaleCalculator;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 
 import static com.baogetv.app.R.id.error;
@@ -31,6 +35,15 @@ public class ChannelDetailActivity extends BaseActivity {
     private ChannelDetailBean detailBean;
     private String channelId;
     private int imageHeight;
+    private int detailHeight;
+    private int size_44px;
+    private int size_180px;
+    private int sumHeight;
+
+    private AppBarLayout appBarLayout;
+    private ImageView imageView;
+    private View circleImageContainer;
+    private ImageView circleImageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +54,23 @@ public class ChannelDetailActivity extends BaseActivity {
     }
 
     private void init() {
-        imageHeight = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(420);
+        imageHeight = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(390);
+        detailHeight = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(272);
+        size_44px = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(44);
+        size_180px = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(180);
+        sumHeight = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(682);
+        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+        appBarLayout.getLayoutParams().height = sumHeight;
+        imageView = (ImageView) findViewById(R.id.image_view);
+        imageView.getLayoutParams().height = imageHeight;
+        circleImageContainer = findViewById(R.id.circle_image_container);
+        RelativeLayout.LayoutParams rlp
+                = (RelativeLayout.LayoutParams) circleImageContainer.getLayoutParams();
+        rlp.height = size_180px;
+        rlp.topMargin = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(346);
+        circleImageView = (ImageView) findViewById(R.id.circle_image);
+        circleImageView.getLayoutParams().width = size_180px;
+        circleImageView.getLayoutParams().height = size_180px;
     }
 
     private void showHomeFragment() {
