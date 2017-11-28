@@ -17,8 +17,25 @@ public class PageItemData implements Parcelable {
     public static final int TYPE_SEARCH_PLAY_MOST = 1239;
     public static final int TYPE_SEARCH_LATEST_PUBLISH = 1240;
 
+    public static final int TYPE_CHANNEL_HOT = 1241;
+    public static final int TYPE_CHANNEL_DATE = 1242;
+
     private final String title;
     private final int type;
+
+    public PageItemData(String s, int t) {
+        this.title = s;
+        this.type = t;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getType() {
+        return type;
+    }
+
 
     @Override
     public int describeContents() {
@@ -29,11 +46,6 @@ public class PageItemData implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.title);
         dest.writeInt(this.type);
-    }
-
-    public PageItemData(String s, int t) {
-        this.title = s;
-        this.type = t;
     }
 
     protected PageItemData(Parcel in) {
@@ -52,12 +64,4 @@ public class PageItemData implements Parcelable {
             return new PageItemData[size];
         }
     };
-
-    public String getTitle() {
-        return title;
-    }
-
-    public int getType() {
-        return type;
-    }
 }

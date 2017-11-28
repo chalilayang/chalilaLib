@@ -3,8 +3,6 @@ package com.baogetv.app.model.channel;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,6 +14,7 @@ import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.bean.ChannelDetailBean;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.model.channel.entity.ChannelItemData;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageData;
@@ -26,14 +25,11 @@ import com.chalilayang.scaleview.ScaleCalculator;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
-
-import static com.baogetv.app.R.id.error;
 
 public class ChannelDetailActivity extends BaseActivity {
     public static final String KEY_CHANNEL_ID = "CHANNEL_ID";
-    private PagerFragment searchResultFragment;
+    private PagerFragment channelFragment;
     private ChannelDetailBean detailBean;
     private String channelId;
     private int imageHeight;
@@ -91,19 +87,18 @@ public class ChannelDetailActivity extends BaseActivity {
 
     private void showHomeFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        if (searchResultFragment == null) {
+        if (channelFragment == null) {
             List<PageItemData> list = new ArrayList<>(2);
-            PageItemData pageItemData = new PageItemData(getString(R.string.search_relative), PageItemData.TYPE_SEARCH_RELATIVE);
+            PageItemData pageItemData = new ChannelItemData(
+                    getString(R.string.channel_hot), PageItemData.TYPE_CHANNEL_HOT, channelId);
             list.add(pageItemData);
-            pageItemData = new PageItemData(getString(R.string.search_play_most), PageItemData.TYPE_SEARCH_PLAY_MOST);
-            list.add(pageItemData);
-            pageItemData = new PageItemData(getString(R.string.search_latest_publish), PageItemData.TYPE_SEARCH_LATEST_PUBLISH);
+            pageItemData = new ChannelItemData(
+                    getString(R.string.channel_time), PageItemData.TYPE_CHANNEL_DATE, channelId);
             list.add(pageItemData);
             PageData pageData = new PageData(list);
-            pageData.setTabStyle(1);
-            searchResultFragment = PagerFragment.newInstance(pageData);
+            channelFragment = PagerFragment.newInstance(pageData);
         }
-        transaction.replace(R.id.fragment_container, searchResultFragment).commit();
+        transaction.replace(R.id.fragment_container, channelFragment).commit();
     }
 
     private void refreshInfo() {

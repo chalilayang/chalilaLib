@@ -15,6 +15,7 @@ import com.baogetv.app.bean.BeanConvert;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoListBean;
 import com.baogetv.app.bean.VideoRankListBean;
+import com.baogetv.app.model.channel.entity.ChannelItemData;
 import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
 import com.baogetv.app.net.CustomCallBack;
@@ -200,6 +201,47 @@ public class ItemFragment extends BaseItemFragment
                                         = BeanConvert.getIVideoData(bean);
                                 iVideoDatas.add(iVideoData);
                                 iVideoDatas.add(iVideoData);
+                                iVideoDatas.add(iVideoData);
+                            }
+                        }
+                        recyclerViewAdapter.update(iVideoDatas);
+                    }
+
+                    @Override
+                    public void onFailed(String error) {
+                        Log.i(TAG, "onFailure: " + error);
+                    }
+                });
+            }
+        } else if (itemData.getType() == PageItemData.TYPE_CHANNEL_HOT
+                || itemData.getType() == PageItemData.TYPE_CHANNEL_DATE) {
+            if (!(pageData instanceof ChannelItemData)) {
+                return;
+            }
+            ChannelItemData channelItemData = (ChannelItemData) pageData;
+            VideoListService listService
+                    = RetrofitManager.getInstance().createReq(VideoListService.class);
+            Call<ResponseBean<List<VideoListBean>>> listBeanCall = null;
+            switch (itemData.getType()) {
+                case PageItemData.TYPE_CHANNEL_HOT:
+                    listBeanCall = listService.getVideoList(
+                            channelItemData.getChannelId(), null, null, "1", null);
+                    break;
+                case PageItemData.TYPE_CHANNEL_DATE:
+                    listBeanCall = listService.getVideoList(
+                            channelItemData.getChannelId(), null, null, "2", null);
+                    break;
+            }
+            if (listBeanCall != null) {
+                listBeanCall.enqueue(new CustomCallBack<List<VideoListBean>>() {
+                    @Override
+                    public void onSuccess(List<VideoListBean> listBeen) {
+                        iVideoDatas.clear();
+                        if (listBeen != null) {
+                            for (int index = 0, count = listBeen.size(); index < count; index ++) {
+                                VideoListBean bean = listBeen.get(index);
+                                VideoListAdapter.IVideoData iVideoData
+                                        = BeanConvert.getIVideoData(bean);
                                 iVideoDatas.add(iVideoData);
                             }
                         }
