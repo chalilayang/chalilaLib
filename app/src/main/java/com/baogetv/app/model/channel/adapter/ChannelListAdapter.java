@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.baogetv.app.BaseItemAdapter;
 import com.baogetv.app.ItemViewHolder;
+import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.baogetv.app.R;
 import com.baogetv.app.model.channel.entity.ChannelData;
@@ -67,6 +68,7 @@ public class ChannelListAdapter extends BaseItemAdapter<ChannelData, ChannelList
             updateTime.setText(String.valueOf(data.updateTime));
             videoCount.setText(String.format(videoCountFormat, data.videoCount));
             desc.setText(data.description);
+//            Glide.with(mContext).load(data.iConUrl).into(mContentView);
         }
     }
 }
