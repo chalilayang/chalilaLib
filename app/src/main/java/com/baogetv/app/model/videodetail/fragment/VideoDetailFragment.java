@@ -15,12 +15,22 @@ import com.baogetv.app.model.videodetail.entity.VideoDetailData;
  */
 
 public class VideoDetailFragment extends PagerFragment {
+
+    private VideoDetailData videoDetailData;
     public static VideoDetailFragment newInstance(VideoDetailData data) {
         VideoDetailFragment fragment = new VideoDetailFragment();
         Bundle args = new Bundle();
         args.putParcelable(PAGE_DATA, data);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            videoDetailData = getArguments().getParcelable(PAGE_DATA);
+        }
     }
 
     @Override
@@ -41,7 +51,7 @@ public class VideoDetailFragment extends PagerFragment {
         if (pageIndex == 1) {
             return CommentListFragment.newInstance();
         } else {
-            return VideoInfoFragment.newInstance();
+            return VideoInfoFragment.newInstance(videoDetailData);
         }
     }
 }

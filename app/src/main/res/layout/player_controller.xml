@@ -17,11 +17,21 @@
             android:layout_marginLeft="@dimen/size_20"
             android:src="@mipmap/back_icon_white"/>
         <com.chalilayang.scaleview.ScaleTextView
-            android:id="@+id/player_title"
+            android:id="@+id/player_title_fullscreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/full_screen_back"
+            android:layout_centerVertical="true"
             android:textColor="@color/white"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/size_30"
+            android:textSize="@dimen/size_28"/>
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/player_title_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
             android:textSize="@dimen/size_28"/>
         <ImageView
             android:id="@+id/player_share"

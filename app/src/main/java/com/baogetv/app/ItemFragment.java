@@ -110,6 +110,7 @@ public class ItemFragment extends BaseItemFragment
     public void onItemClick(VideoListAdapter.IVideoData data, int position) {
         Log.i(TAG, "onItemClick: " + position);
         Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
+        intent.putExtra(VideoDetailActivity.KEY_VIDEO_ID, data.getVideoID());
         getActivity().startActivity(intent);
     }
 

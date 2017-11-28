@@ -1,12 +1,16 @@
 package com.baogetv.app.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by chalilayang on 2017/11/27.
  */
 
-public class VideoDetailBean {
+public class VideoDetailBean implements Parcelable {
 
     /**
      * id : 1
@@ -60,7 +64,7 @@ public class VideoDetailBean {
     private String pic;
     private String file;
     private String channel_pic;
-    private List<?> tags;
+    private List<String> tags;
 
     public String getId() {
         return id;
@@ -254,11 +258,93 @@ public class VideoDetailBean {
         this.channel_pic = channel_pic;
     }
 
-    public List<?> getTags() {
-        return tags;
+    public List<String> getTags() {
+        List<String> result = new ArrayList<>();
+        if (tags != null) {
+            result.addAll(tags);
+        }
+        return result;
     }
 
-    public void setTags(List<?> tags) {
+    public void setTags(List<String> tags) {
         this.tags = tags;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.title);
+        dest.writeString(this.intro);
+        dest.writeString(this.pic_url);
+        dest.writeString(this.file_url);
+        dest.writeString(this.length);
+        dest.writeString(this.is_cnword);
+        dest.writeString(this.is_commend);
+        dest.writeString(this.collects);
+        dest.writeString(this.likes);
+        dest.writeString(this.shares);
+        dest.writeString(this.caches);
+        dest.writeString(this.play);
+        dest.writeString(this.comments);
+        dest.writeString(this.add_time);
+        dest.writeString(this.update_time);
+        dest.writeString(this.lastplay_time);
+        dest.writeString(this.channel_id);
+        dest.writeString(this.channel_name);
+        dest.writeString(this.channel_pic_url);
+        dest.writeString(this.channel_update_time);
+        dest.writeString(this.pic);
+        dest.writeString(this.file);
+        dest.writeString(this.channel_pic);
+        dest.writeStringList(this.tags);
+    }
+
+    public VideoDetailBean() {
+    }
+
+    protected VideoDetailBean(Parcel in) {
+        this.id = in.readString();
+        this.title = in.readString();
+        this.intro = in.readString();
+        this.pic_url = in.readString();
+        this.file_url = in.readString();
+        this.length = in.readString();
+        this.is_cnword = in.readString();
+        this.is_commend = in.readString();
+        this.collects = in.readString();
+        this.likes = in.readString();
+        this.shares = in.readString();
+        this.caches = in.readString();
+        this.play = in.readString();
+        this.comments = in.readString();
+        this.add_time = in.readString();
+        this.update_time = in.readString();
+        this.lastplay_time = in.readString();
+        this.channel_id = in.readString();
+        this.channel_name = in.readString();
+        this.channel_pic_url = in.readString();
+        this.channel_update_time = in.readString();
+        this.pic = in.readString();
+        this.file = in.readString();
+        this.channel_pic = in.readString();
+        this.tags = in.createStringArrayList();
+    }
+
+    public static final Creator<VideoDetailBean> CREATOR = new Creator<VideoDetailBean>() {
+        @Override
+        public VideoDetailBean createFromParcel(Parcel source) {
+            return new VideoDetailBean(source);
+        }
+
+        @Override
+        public VideoDetailBean[] newArray(int size) {
+            return new VideoDetailBean[size];
+        }
+    };
 }
