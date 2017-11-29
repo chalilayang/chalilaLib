@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
+import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.RegisterBean;
+import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.activity.LoginActivity;
 import com.baogetv.app.model.usercenter.activity.MyCacheActivity;
@@ -25,6 +29,11 @@ import com.baogetv.app.model.usercenter.activity.VideoLoginActivity;
 import com.baogetv.app.model.usercenter.customview.MineBodyInfoView;
 import com.baogetv.app.model.usercenter.customview.MineLineItemView;
 import com.baogetv.app.model.usercenter.customview.UpgradeProgress;
+import com.baogetv.app.net.CustomCallBack;
+import com.baogetv.app.net.RetrofitManager;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,6 +55,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private MineLineItemView thumbUpItemView;
     private MineLineItemView systemNotifyItemView;
     private MineLineItemView settingItemView;
+
+    private UserDetailBean detailBean;
     public static MineFragment newInstance() {
         MineFragment fragment = new MineFragment();
         return fragment;
@@ -160,6 +171,45 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 intent = new Intent(this.getActivity(), SettingActivity.class);
                 startActivity(intent);
                 break;
+        }
+    }
+
+    public void updateInfo() {
+
+    }
+
+    public void freshUserInfo(RegisterBean bean) {
+        if (getActivity() != null) {
+            if (bean != null) {
+//                detailBean = data;
+                updateInfo();
+                hasLoginView.setVisibility(View.VISIBLE);
+            } else {
+                String token = LoginManager.getUserToken(getActivity());
+                fetchUserInfo(token);
+            }
+        }
+    }
+
+    private void fetchUserInfo(String token) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        Call<ResponseBean<UserDetailBean>> call
+                = userApiService.getUserDetail(token);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<UserDetailBean>() {
+                @Override
+                public void onSuccess(UserDetailBean data) {
+                    detailBean = data;
+                    updateInfo();
+                    hasLoginView.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onFailed(String error) {
+
+                }
+            });
         }
     }
 }

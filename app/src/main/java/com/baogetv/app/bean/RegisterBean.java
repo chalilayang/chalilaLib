@@ -1,10 +1,13 @@
 package com.baogetv.app.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by chalilayang on 2017/11/26.
  */
 
-public class RegisterBean {
+public class RegisterBean implements Parcelable {
 
     /**
      * user_id : 1
@@ -239,4 +242,78 @@ public class RegisterBean {
     public void setToken(String token) {
         this.token = token;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.user_id);
+        dest.writeString(this.openid);
+        dest.writeString(this.username);
+        dest.writeString(this.mobile);
+        dest.writeString(this.sex);
+        dest.writeString(this.birthday);
+        dest.writeString(this.intro);
+        dest.writeString(this.height);
+        dest.writeString(this.weight);
+        dest.writeString(this.bfr);
+        dest.writeString(this.pic_url);
+        dest.writeString(this.score);
+        dest.writeString(this.level_id);
+        dest.writeString(this.level_time);
+        dest.writeString(this.is_sure);
+        dest.writeString(this.dumb_time);
+        dest.writeString(this.login);
+        dest.writeString(this.reg_ip);
+        dest.writeString(this.reg_time);
+        dest.writeString(this.last_login_ip);
+        dest.writeString(this.last_login_time);
+        dest.writeString(this.status);
+        dest.writeString(this.token);
+    }
+
+    public RegisterBean() {
+    }
+
+    protected RegisterBean(Parcel in) {
+        this.user_id = in.readString();
+        this.openid = in.readString();
+        this.username = in.readString();
+        this.mobile = in.readString();
+        this.sex = in.readString();
+        this.birthday = in.readString();
+        this.intro = in.readString();
+        this.height = in.readString();
+        this.weight = in.readString();
+        this.bfr = in.readString();
+        this.pic_url = in.readString();
+        this.score = in.readString();
+        this.level_id = in.readString();
+        this.level_time = in.readString();
+        this.is_sure = in.readString();
+        this.dumb_time = in.readString();
+        this.login = in.readString();
+        this.reg_ip = in.readString();
+        this.reg_time = in.readString();
+        this.last_login_ip = in.readString();
+        this.last_login_time = in.readString();
+        this.status = in.readString();
+        this.token = in.readString();
+    }
+
+    public static final Parcelable.Creator<RegisterBean> CREATOR = new Parcelable.Creator<RegisterBean>() {
+        @Override
+        public RegisterBean createFromParcel(Parcel source) {
+            return new RegisterBean(source);
+        }
+
+        @Override
+        public RegisterBean[] newArray(int size) {
+            return new RegisterBean[size];
+        }
+    };
 }

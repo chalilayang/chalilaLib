@@ -8,6 +8,7 @@ import android.view.WindowManager;
 
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
+import com.baogetv.app.bean.RegisterBean;
 import com.baogetv.app.customview.CustomToastUtil;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.contracts.RegisterContract;
@@ -21,7 +22,7 @@ public class RegisterActivity extends BaseActivity
         implements RegisterContract.View, VerifyCodeInputView.VerifyCallBack {
 
     private RegisterPresenter registerPresenter;
-
+    public static final String KEY_REGISTER_BEAN = "REGISTER_BEAN";
     private View stepOne;
     private View stepComplete;
     private TitleInputView mobileNumView;
@@ -187,6 +188,29 @@ public class RegisterActivity extends BaseActivity
                     getApplicationContext(), getString(R.string.password_not_same));
             return;
         }
-        registerPresenter.register(mobile, verifyNum, password, nickName);
+        if (registerPresenter.register(mobile, verifyNum, password, nickName)) {
+            stepComplete.setAlpha(0.4f);
+            stepComplete.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void showTip(String msg) {
+        showShortToast(msg);
+    }
+
+    @Override
+    public void registerFailed(String msg) {
+        stepComplete.setAlpha(1f);
+        stepComplete.setEnabled(true);
+        showTip(msg);
+    }
+
+    @Override
+    public void showSuccess(RegisterBean bean) {
+        Intent intent = new Intent();
+        intent.putExtra(KEY_REGISTER_BEAN, bean);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

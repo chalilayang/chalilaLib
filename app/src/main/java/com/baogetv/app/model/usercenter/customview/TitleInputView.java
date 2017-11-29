@@ -82,20 +82,20 @@ public class TitleInputView extends ScaleFrameLayout {
             areaNum.setVisibility(VISIBLE);
             areaNum.setTextColor(getResources().getColor(R.color.white));
             areaNum.setTextSize(TypedValue.COMPLEX_UNIT_PX, 32);
-            Drawable drawable = getResources().getDrawable(R.mipmap.white_down_arrow);
-            int width = drawable.getIntrinsicWidth();
-            int height = drawable.getIntrinsicHeight();
-            drawable.setBounds(0, 0, width, height);
-            areaNum.setCompoundDrawables(null, null, drawable, null);
-            areaNum.setCompoundDrawablePadding(width);
-            areaNum.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mRef != null && mRef.get() != null) {
-                        mRef.get().onAreaClick();
-                    }
-                }
-            });
+//            Drawable drawable = getResources().getDrawable(R.mipmap.white_down_arrow);
+//            int width = drawable.getIntrinsicWidth();
+//            int height = drawable.getIntrinsicHeight();
+//            drawable.setBounds(0, 0, width, height);
+//            areaNum.setCompoundDrawables(null, null, drawable, null);
+//            areaNum.setCompoundDrawablePadding(width);
+//            areaNum.setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    if (mRef != null && mRef.get() != null) {
+//                        mRef.get().onAreaClick();
+//                    }
+//                }
+//            });
         }
         inputEdit = root.findViewById(R.id.input_edit);
         inputEdit.setTextColor(getResources().getColor(R.color.white));

@@ -1,6 +1,7 @@
 package com.baogetv.app.model.homepage;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +10,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.RegisterBean;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.scaleview.ScaleCalculator;
@@ -25,6 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
+import static com.baogetv.app.model.usercenter.activity.RegisterActivity.KEY_REGISTER_BEAN;
 
 public class HomePageActivity extends BaseActivity implements View.OnClickListener {
 
@@ -150,5 +157,26 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
             mineFragment = MineFragment.newInstance();
         }
         transaction.replace(R.id.fragment_container, mineFragment).commit();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_LOGIN_ACTIVITY) {
+            if (resultCode == RESULT_OK) {
+                RegisterBean registerBean = data.getParcelableExtra(KEY_REGISTER_BEAN);
+                if (mineFragment != null && mineFragment.isVisible()) {
+                    mineFragment.freshUserInfo(registerBean);
+                }
+            }
+        } else if (requestCode == REQUEST_CODE_REGISTER_ACTIVITY) {
+            if (resultCode == RESULT_OK) {
+                RegisterBean registerBean = data.getParcelableExtra(KEY_REGISTER_BEAN);
+                if (mineFragment != null && mineFragment.isVisible()) {
+                    mineFragment.freshUserInfo(registerBean);
+                }
+            }
+        }
     }
 }

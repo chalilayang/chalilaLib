@@ -6,10 +6,8 @@ import android.util.Log;
 
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
-import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.bean.RegisterBean;
 import com.baogetv.app.bean.ResponseBean;
-import com.baogetv.app.bean.VideoListBean;
 import com.baogetv.app.customview.CustomToastUtil;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.contracts.RegisterContract;
@@ -19,6 +17,8 @@ import com.baogetv.app.net.RetrofitManager;
 import java.util.List;
 
 import retrofit2.Call;
+
+import static com.baogetv.app.model.usercenter.activity.RegisterActivity.KEY_REGISTER_BEAN;
 
 /**
  * Created by chalilayang on 2017/11/19.
@@ -46,18 +46,33 @@ public class RegisterPresenter implements RegisterContract.Presenter {
     }
 
     @Override
-    public void register(String mobileNum, String verifyCode, String password, String nick) {
+    public boolean register(String mobileNum, String verifyCode, String password, String nick) {
         UserApiService listService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
-        String token = LoginManager.getKeyDeviceToken(mContext);
-        Log.i(TAG, "register: " + mobileNum + " " + verifyCode + " " + password + " " + nick);
-//        Call<ResponseBean<RegisterBean>> beanCall
-//                = listService.register(mobileNum, );
-//        if (listBeanCall != null) {
-//
-//        }
-        registerView.showStepComplete();
-        currentStep = 2;
+        String token = LoginManager.getDeviceToken(mContext);
+        Log.i(TAG, "register: " + mobileNum + " " + verifyCode + " " + password + " " + nick + " " + token);
+        Call<ResponseBean<RegisterBean>> beanCall
+                = listService.register(mobileNum, password, verifyCode, nick, token);
+        if (beanCall != null) {
+            beanCall.enqueue(new CustomCallBack<RegisterBean>() {
+                @Override
+                public void onSuccess(RegisterBean data) {
+                    if (data != null) {
+                        LoginManager.putUserToken(mContext, data.getToken());
+                    } else {
+                        registerView.registerFailed("RegisterBean null");
+                    }
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    registerView.registerFailed("RegisterBean null");
+                }
+            });
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

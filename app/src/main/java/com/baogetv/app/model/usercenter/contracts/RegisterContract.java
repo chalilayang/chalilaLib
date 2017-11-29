@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.baogetv.app.BasePresenter;
 import com.baogetv.app.BaseView;
+import com.baogetv.app.bean.RegisterBean;
 
 
 /**
@@ -17,12 +18,15 @@ public interface RegisterContract {
         void showStepOne();
         void showStepComplete();
         void startVerifyCountDown();
+        void showTip(String msg);
+        void showSuccess(RegisterBean bean);
+        void registerFailed(String msg);
     }
 
     interface Presenter extends BasePresenter {
         void init(Context context, Intent intent);
         void getVerifyNum(String mobileNum);
-        void register(String mobileNum, String verifyCode, String password, String nick);
+        boolean register(String mobileNum, String verifyCode, String password, String nick);
         int nextStep();
         int previousStep();
     }

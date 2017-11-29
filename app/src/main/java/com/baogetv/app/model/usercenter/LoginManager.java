@@ -3,10 +3,13 @@ package com.baogetv.app.model.usercenter;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.baogetv.app.bean.RegisterBean;
 import com.chalilayang.util.SPUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.baogetv.app.model.usercenter.activity.RegisterActivity.KEY_REGISTER_BEAN;
 
 /**
  * Created by chalilayang on 2017/11/12.
@@ -14,6 +17,7 @@ import java.util.regex.Pattern;
 
 public class LoginManager {
     private static final String KEY_DEVICE_TOKEN = "DEVICE_TOKEN";
+    private static final String KEY_USER_TOKEN = "USER_TOKEN";
 
     public static boolean hasLogin() {
         return false;
@@ -23,8 +27,16 @@ public class LoginManager {
         SPUtils.put(context, KEY_DEVICE_TOKEN, token);
     }
 
-    public static String getKeyDeviceToken(Context context) {
+    public static String getDeviceToken(Context context) {
         return (String) SPUtils.get(context, KEY_DEVICE_TOKEN, "");
+    }
+
+    public static void putUserToken(Context context, String token) {
+        SPUtils.put(context, KEY_USER_TOKEN, token);
+    }
+
+    public static String getUserToken(Context context) {
+        return (String) SPUtils.get(context, KEY_USER_TOKEN, "");
     }
 
     public static boolean isMobileNO(String mobiles) {
