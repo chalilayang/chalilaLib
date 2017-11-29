@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
 import com.baogetv.app.model.usercenter.LoginManager;
+import com.baogetv.app.model.usercenter.activity.LoginActivity;
 import com.baogetv.app.model.usercenter.activity.MyCacheActivity;
 import com.baogetv.app.model.usercenter.activity.MyCollectActivity;
 import com.baogetv.app.model.usercenter.activity.PlayHistoryActivity;
+import com.baogetv.app.model.usercenter.activity.RegisterActivity;
 import com.baogetv.app.model.usercenter.activity.ResponseActivity;
 import com.baogetv.app.model.usercenter.activity.SettingActivity;
 import com.baogetv.app.model.usercenter.activity.SystemNotifyAcitvity;
@@ -32,6 +34,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private View contentView;
     private View hasLoginView;
     private View notLoginView;
+    private View loginBtn;
+    private View registerBtn;
     private MineBodyInfoView mineBodyInfoView;
     private UpgradeProgress upgradeProgress;
     private MineLineItemView userGradeItemView;
@@ -71,10 +75,19 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             }
         });
         notLoginView = view.findViewById(R.id.no_login_view);
-        notLoginView.setOnClickListener(new View.OnClickListener() {
+        loginBtn = view.findViewById(R.id.login_btn);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), VideoLoginActivity.class);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+        registerBtn = view.findViewById(R.id.register_btn);
+        registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), RegisterActivity.class);
                 startActivity(intent);
             }
         });

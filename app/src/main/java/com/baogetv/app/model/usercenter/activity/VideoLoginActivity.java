@@ -7,6 +7,7 @@ import android.view.WindowManager;
 
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
+import com.baogetv.app.model.homepage.HomePageActivity;
 
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
@@ -47,5 +48,31 @@ public class VideoLoginActivity extends BaseActivity {
                 }
             });
         }
+        findViewById(R.id.skip_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startHomeActivity();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_LOGIN_ACTIVITY) {
+            if (resultCode == RESULT_OK) {
+                startHomeActivity();
+            }
+        } else if (requestCode == REQUEST_CODE_REGISTER_ACTIVITY) {
+            if (resultCode == RESULT_OK) {
+                startHomeActivity();
+            }
+        }
+    }
+
+    private void startHomeActivity() {
+        Intent intent = new Intent(VideoLoginActivity.this, HomePageActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

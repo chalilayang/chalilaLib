@@ -73,6 +73,7 @@
                         android:gravity="center"
                         android:layout_marginTop="@dimen/size_70">
                         <com.chalilayang.scaleview.ScaleTextView
+                            android:id="@+id/register_btn"
                             android:layout_width="@dimen/size_180"
                             android:layout_height="@dimen/register_btn_bg_height"
                             android:text="@string/register"
@@ -80,6 +81,7 @@
                             android:gravity="center"
                             android:background="@drawable/register_bg"/>
                         <com.chalilayang.scaleview.ScaleTextView
+                            android:id="@+id/login_btn"
                             android:layout_width="@dimen/size_180"
                             android:layout_height="@dimen/register_btn_bg_height"
                             android:layout_marginLeft="@dimen/size_70"

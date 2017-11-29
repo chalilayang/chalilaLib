@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.baogetv.app.downloader.DownloadService;
 import com.baogetv.app.downloader.config.Config;
 import com.baogetv.app.model.homepage.HomePageActivity;
+import com.baogetv.app.model.usercenter.activity.VideoLoginActivity;
 
 public class SplashActivity extends Activity {
 
@@ -31,7 +32,7 @@ public class SplashActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        Intent intent = new Intent(this, HomePageActivity.class);
+        Intent intent = new Intent(this, VideoLoginActivity.class);
         startActivity(intent);
         finish();
     }

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">豹哥健身</string>
-    <string name="title_activity_home_page">HomePageActivity</string>
+    <string name="skip">跳过</string>
+    <string name="title_activity_home_page">首页</string>
     <string name="title_home">首页</string>
     <string name="title_channel">频道</string>
     <string name="title_user_center">我的</string>
