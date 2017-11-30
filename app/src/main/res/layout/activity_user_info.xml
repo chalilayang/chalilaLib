@@ -104,9 +104,8 @@
     <com.baogetv.app.customview.SlidingRelativeLayout
         android:id="@+id/floating_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_320"
+        android:layout_height="@dimen/size_480"
         android:layout_alignParentBottom="true"
-        android:background="@color/black"
         android:gravity="bottom"
         android:visibility="visible">
     </com.baogetv.app.customview.SlidingRelativeLayout>
