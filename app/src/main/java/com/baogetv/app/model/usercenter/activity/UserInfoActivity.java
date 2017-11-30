@@ -13,8 +13,11 @@ import com.baogetv.app.R;
 import com.baogetv.app.model.usercenter.ImageSelectEvent;
 import com.baogetv.app.model.usercenter.customview.MineLineItemView;
 import com.baogetv.app.model.usercenter.fragment.ImageGetFragment;
+import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.Subscribe;
+
+import java.io.File;
 
 public class UserInfoActivity extends BaseTitleActivity implements View.OnClickListener {
 
@@ -59,7 +62,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         int id = view.getId();
         switch (id) {
             case R.id.user_icon:
-                showOrHideImageSelectFragment();
+                showOrHideImageSelectFragment(true);
                 break;
             case R.id.user_grade:
                 break;
@@ -76,24 +79,24 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         }
     }
 
-    private void showOrHideImageSelectFragment() {
-        if (imageSelectFragment != null && imageSelectFragment.isAdded()) {
-            FragmentManager manager = getFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-            transaction.remove(imageSelectFragment);
-            transaction.commit();
-            curFloatingFragment = null;
-        } else {
+    private void showOrHideImageSelectFragment(boolean flag) {
+        if (flag) {
             if (imageSelectFragment == null) {
                 imageSelectFragment = ImageGetFragment.newInstance();
             }
             FragmentManager manager = getFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             transaction.replace(R.id.floating_fragment_container, imageSelectFragment);
-            transaction.commit();
+            transaction.commitAllowingStateLoss();
             curFloatingFragment = imageSelectFragment;
+        } else {
+            if (imageSelectFragment != null && imageSelectFragment.isAdded()) {
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.remove(imageSelectFragment);
+                transaction.commitAllowingStateLoss();
+                curFloatingFragment = null;
+            }
         }
     }
 
@@ -103,7 +106,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
             transaction.remove(curFloatingFragment);
-            transaction.commit();
+            transaction.commitAllowingStateLoss();
             curFloatingFragment = null;
         }
     }
@@ -136,6 +139,11 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
     @Subscribe
     public void onImageEvent(ImageSelectEvent event) {
         Log.i(TAG, "onImageEvent: " + event.img);
+        showOrHideImageSelectFragment(false);
+        Glide.with(this)
+                .fromFile()
+                .load(new File(event.img))
+                .into(userIconLine.getRightImageView());
     }
 
     @Override
