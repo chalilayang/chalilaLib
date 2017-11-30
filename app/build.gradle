@@ -46,5 +46,6 @@ dependencies {
     //权限管理
     compile 'com.yanzhenjie:permission:1.0.6'
     compile project(':gallerypick')
+    compile project(':WheelPicker')
 }
 

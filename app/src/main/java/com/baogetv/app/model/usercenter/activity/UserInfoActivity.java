@@ -12,6 +12,7 @@ import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.model.usercenter.ImageSelectEvent;
 import com.baogetv.app.model.usercenter.customview.MineLineItemView;
+import com.baogetv.app.model.usercenter.fragment.DatePickFragment;
 import com.baogetv.app.model.usercenter.fragment.ImageGetFragment;
 import com.bumptech.glide.Glide;
 
@@ -32,6 +33,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
 
     private BaseFragment curFloatingFragment;
     private ImageGetFragment imageSelectFragment;
+    private DatePickFragment datePickFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
             case R.id.user_sex:
                 break;
             case R.id.user_birthday:
+                showOrHideDatePickFragment(true);
                 break;
             case R.id.user_body_info:
                 break;
@@ -100,11 +103,31 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         }
     }
 
+    private void showOrHideDatePickFragment(boolean flag) {
+        if (flag) {
+            if (datePickFragment == null) {
+                datePickFragment = DatePickFragment.newInstance();
+            }
+            FragmentManager manager = getFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.floating_fragment_container, datePickFragment);
+            transaction.commitAllowingStateLoss();
+            curFloatingFragment = datePickFragment;
+        } else {
+            if (datePickFragment != null && datePickFragment.isAdded()) {
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.remove(datePickFragment);
+                transaction.commitAllowingStateLoss();
+                curFloatingFragment = null;
+            }
+        }
+    }
+
     private void hideFloatingView() {
         if (curFloatingFragment != null) {
             FragmentManager manager = getFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
             transaction.remove(curFloatingFragment);
             transaction.commitAllowingStateLoss();
             curFloatingFragment = null;

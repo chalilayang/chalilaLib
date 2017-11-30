@@ -6,6 +6,9 @@
     <string name="title_channel">频道</string>
     <string name="title_user_center">我的</string>
 
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+
     <string name="all">全部</string>
     <string name="ranking">排行榜</string>
     <string name="week_ranking">周排行</string>

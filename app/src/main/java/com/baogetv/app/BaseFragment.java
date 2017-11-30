@@ -15,7 +15,7 @@ import org.greenrobot.eventbus.EventBus;
  */
 
 public class BaseFragment extends Fragment {
-    private Activity mActivity;
+    protected Activity mActivity;
     public boolean useEventBus() {
         return false;
     }
