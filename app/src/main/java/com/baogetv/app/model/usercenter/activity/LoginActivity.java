@@ -24,7 +24,7 @@ import retrofit2.Call;
 
 public class LoginActivity extends BaseActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
-    public static final String KEY_LOGIN_BEAN = "LOGIN_BEAN";
+    public static final String KEY_LOGIN_BEAN = "KEY_LOGIN_BEAN";
     private TitleInputView mobileNumView;
     private PasswordInputView passwordView;
     private View loginBtn;

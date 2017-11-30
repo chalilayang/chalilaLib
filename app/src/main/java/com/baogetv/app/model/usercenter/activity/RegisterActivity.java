@@ -22,7 +22,7 @@ public class RegisterActivity extends BaseActivity
         implements RegisterContract.View, VerifyCodeInputView.VerifyCallBack {
 
     private RegisterPresenter registerPresenter;
-    public static final String KEY_REGISTER_BEAN = "REGISTER_BEAN";
+    public static final String KEY_REGISTER_BEAN = "KEY_REGISTER_BEAN";
     private View stepOne;
     private View stepComplete;
     private TitleInputView mobileNumView;
