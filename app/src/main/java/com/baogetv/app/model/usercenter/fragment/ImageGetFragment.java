@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
 import com.baogetv.app.model.usercenter.GlideImageLoader;
-import com.baogetv.app.model.usercenter.ImageSelectEvent;
+import com.baogetv.app.model.usercenter.event.ImageSelectEvent;
 import com.yancy.gallerypick.config.GalleryConfig;
 import com.yancy.gallerypick.config.GalleryPick;
 import com.yancy.gallerypick.inter.IHandlerCallBack;

@@ -10,7 +10,8 @@ import android.view.View;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
-import com.baogetv.app.model.usercenter.ImageSelectEvent;
+import com.baogetv.app.model.usercenter.event.DateSelectEvent;
+import com.baogetv.app.model.usercenter.event.ImageSelectEvent;
 import com.baogetv.app.model.usercenter.customview.MineLineItemView;
 import com.baogetv.app.model.usercenter.fragment.DatePickFragment;
 import com.baogetv.app.model.usercenter.fragment.ImageGetFragment;
@@ -106,7 +107,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
     private void showOrHideDatePickFragment(boolean flag) {
         if (flag) {
             if (datePickFragment == null) {
-                datePickFragment = DatePickFragment.newInstance();
+                datePickFragment = DatePickFragment.newInstance(null);
             }
             FragmentManager manager = getFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
@@ -142,6 +143,12 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 .fromFile()
                 .load(new File(event.img))
                 .into(userIconLine.getRightImageView());
+    }
+
+    @Subscribe
+    public void onDateEvent(DateSelectEvent event) {
+        showOrHideDatePickFragment(false);
+        showShortToast(event.year + " " + event.month + " " + event.day);
     }
 
     @Override
