@@ -51,4 +51,60 @@ public class BeanConvert {
         ChannelData result = new ChannelData(cid, picUrl, title, playCount, publishTime, desc);
         return result;
     }
+
+    public static UserDetailBean getUserDetailBean(RegisterBean bean) {
+        UserDetailBean userDetailBean = new UserDetailBean();
+        userDetailBean.setUser_id(bean.getUser_id());
+        userDetailBean.setOpenid(bean.getOpenid());
+        userDetailBean.setUsername(bean.getUsername());
+        userDetailBean.setMobile(bean.getMobile());
+        userDetailBean.setSex(bean.getSex());
+        userDetailBean.setBirthday(bean.getBirthday());
+        userDetailBean.setIntro(bean.getIntro());
+        userDetailBean.setHeight(bean.getHeight());
+        userDetailBean.setWeight(bean.getWeight());
+        userDetailBean.setBfr(bean.getBfr());
+        userDetailBean.setPic_url(bean.getPic_url());
+        userDetailBean.setScore(bean.getScore());
+        userDetailBean.setLevel_id(bean.getLevel_id());
+        userDetailBean.setPic_url(bean.getPic_url());
+        userDetailBean.setLevel_time(bean.getLevel_time());
+        userDetailBean.setIs_sure(bean.getIs_sure());
+        userDetailBean.setDumb_time(bean.getDumb_time());
+        userDetailBean.setLogin(bean.getLogin());
+        userDetailBean.setReg_ip(bean.getReg_ip());
+        userDetailBean.setReg_time(bean.getReg_time());
+        userDetailBean.setLast_login_time(bean.getLast_login_time());
+        userDetailBean.setLast_login_ip(bean.getLast_login_ip());
+        userDetailBean.setStatus(bean.getStatus());
+        return userDetailBean;
+    }
+
+    public static UserDetailBean getUserDetailBean(LoginBean bean) {
+        UserDetailBean userDetailBean = new UserDetailBean();
+        userDetailBean.setUser_id(bean.getUser_id());
+        userDetailBean.setOpenid(bean.getOpenid());
+        userDetailBean.setUsername(bean.getUsername());
+        userDetailBean.setMobile(bean.getMobile());
+        userDetailBean.setSex(bean.getSex());
+        userDetailBean.setBirthday(bean.getBirthday());
+        userDetailBean.setIntro(bean.getIntro());
+        userDetailBean.setHeight(bean.getHeight());
+        userDetailBean.setWeight(bean.getWeight());
+        userDetailBean.setBfr(bean.getBfr());
+        userDetailBean.setPic_url(bean.getPic_url());
+        userDetailBean.setScore(bean.getScore());
+        userDetailBean.setLevel_id(bean.getLevel_id());
+        userDetailBean.setPic_url(bean.getPic_url());
+        userDetailBean.setLevel_time(bean.getLevel_time());
+        userDetailBean.setIs_sure(bean.getIs_sure());
+        userDetailBean.setDumb_time(bean.getDumb_time());
+        userDetailBean.setLogin(bean.getLogin());
+        userDetailBean.setReg_ip(bean.getReg_ip());
+        userDetailBean.setReg_time(bean.getReg_time());
+        userDetailBean.setLast_login_time(bean.getLast_login_time());
+        userDetailBean.setLast_login_ip(bean.getLast_login_ip());
+        userDetailBean.setStatus(bean.getStatus());
+        return userDetailBean;
+    }
 }
