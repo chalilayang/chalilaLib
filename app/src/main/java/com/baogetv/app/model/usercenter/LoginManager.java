@@ -19,8 +19,13 @@ public class LoginManager {
     private static final String KEY_DEVICE_TOKEN = "DEVICE_TOKEN";
     private static final String KEY_USER_TOKEN = "USER_TOKEN";
 
-    public static boolean hasLogin() {
-        return false;
+    public static boolean hasLogin(Context context) {
+        String token = getUserToken(context);
+        if (!TextUtils.isEmpty(token)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static void putDeviceToken(Context context, String token) {
