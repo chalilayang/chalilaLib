@@ -10,6 +10,7 @@ import android.view.View;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
+import com.baogetv.app.model.usercenter.event.BodyInfoSelectEvent;
 import com.baogetv.app.model.usercenter.event.DateSelectEvent;
 import com.baogetv.app.model.usercenter.event.ImageSelectEvent;
 import com.baogetv.app.model.usercenter.customview.MineLineItemView;
@@ -203,6 +204,12 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
     public void onSexEvent(SexSelectEvent event) {
         showOrHideSexFragment(false);
         showShortToast(event.sex+"");
+    }
+
+    @Subscribe
+    public void onBodyFatEvent(BodyInfoSelectEvent event) {
+        showOrHideBodyFragment(false);
+        showShortToast(event.height+"" + event.weight + " " + event.bodyFat);
     }
 
     @Override

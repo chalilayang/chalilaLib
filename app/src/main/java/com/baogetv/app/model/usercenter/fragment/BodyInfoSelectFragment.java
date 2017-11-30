@@ -11,6 +11,7 @@ import com.aigestudio.wheelpicker.WheelPicker;
 import com.aigestudio.wheelpicker.widgets.WheelDatePicker;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
+import com.baogetv.app.model.usercenter.event.BodyInfoSelectEvent;
 import com.baogetv.app.model.usercenter.event.DateSelectEvent;
 import com.chalilayang.scaleview.ScaleCalculator;
 
@@ -22,7 +23,7 @@ import java.util.List;
 public class BodyInfoSelectFragment extends BaseFragment implements WheelPicker.OnItemSelectedListener {
 
     private static final String TAG = BodyInfoSelectFragment.class.getSimpleName();
-    private static final String KEY_DATE_INFO = "DATE_INFO";
+    private static final String KEY_BODY_INFO = "BODY_INFO";
     private View confirmBtn;
     private View cancelBtn;
     private WheelDatePicker wheelDatePicker;
@@ -40,43 +41,40 @@ public class BodyInfoSelectFragment extends BaseFragment implements WheelPicker.
     private int month;
     private int day;
 
-    private DateSelectEvent selectEvent;
-    public static BodyInfoSelectFragment newInstance(DateSelectEvent event) {
+    private BodyInfoSelectEvent selectEvent;
+    public static BodyInfoSelectFragment newInstance(BodyInfoSelectEvent event) {
         BodyInfoSelectFragment fragment = new BodyInfoSelectFragment();
         Bundle args = new Bundle();
-        args.putParcelable(KEY_DATE_INFO, event);
+        args.putParcelable(KEY_BODY_INFO, event);
         fragment.setArguments(args);
         return fragment;
     }
 
     private void init() {
         yearList = new ArrayList<>();
-        for (int index = 1900; index < 2500; index ++) {
-            yearList.add(String.valueOf(index));
+        for (int index = 0; index < 300; index ++) {
+            yearList.add(String.valueOf(index)+"cm");
         }
-        if (selectEvent != null && !TextUtils.isEmpty(selectEvent.year)) {
-            int y = Integer.parseInt(selectEvent.year);
-            year = y - Integer.parseInt(yearList.get(0));
+        if (selectEvent != null) {
+            year = selectEvent.height;
         } else {
-            year = yearList.size() - 1;
+            year = 180;
         }
         monthList = new ArrayList<>();
-        for (int index = 1; index <= 12; index ++) {
-            monthList.add(String.valueOf(index));
+        for (int index = 0; index <= 400; index ++) {
+            monthList.add(String.valueOf(index) +"kg");
         }
-        if (selectEvent != null && !TextUtils.isEmpty(selectEvent.month)) {
-            int y = Integer.parseInt(selectEvent.month);
-            month = y - Integer.parseInt(monthList.get(0));
+        if (selectEvent != null) {
+            month = selectEvent.weight;
         } else {
-            month = 0;
+            month = 60;
         }
         dayList = new ArrayList<>();
-        for (int index = 1; index <= 31; index ++) {
-            dayList.add(String.valueOf(index));
+        for (int index = 0; index <= 100; index ++) {
+            dayList.add(String.valueOf(index) + "%");
         }
-        if (selectEvent != null && !TextUtils.isEmpty(selectEvent.day)) {
-            int y = Integer.parseInt(selectEvent.day);
-            day = y - Integer.parseInt(dayList.get(0));
+        if (selectEvent != null) {
+            day = selectEvent.bodyFat;
         } else {
             day = 0;
         }
@@ -86,7 +84,7 @@ public class BodyInfoSelectFragment extends BaseFragment implements WheelPicker.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            selectEvent = getArguments().getParcelable(KEY_DATE_INFO);
+            selectEvent = getArguments().getParcelable(KEY_BODY_INFO);
         }
         init();
     }
@@ -107,8 +105,8 @@ public class BodyInfoSelectFragment extends BaseFragment implements WheelPicker.
             @Override
             public void onClick(View view) {
                 EventBus.getDefault().post(
-                        new DateSelectEvent(
-                                yearList.get(year), monthList.get(month), dayList.get(day)));
+                        new BodyInfoSelectEvent(
+                                year,month, day));
             }
         });
         cancelBtn = view.findViewById(R.id.cancel_btn);
@@ -116,7 +114,8 @@ public class BodyInfoSelectFragment extends BaseFragment implements WheelPicker.
             @Override
             public void onClick(View view) {
                 if (selectEvent == null) {
-                    EventBus.getDefault().post(new DateSelectEvent(null, null, null));
+                    EventBus.getDefault().post(new BodyInfoSelectEvent(
+                            year,month, day));
                 } else {
                     EventBus.getDefault().post(selectEvent);
                 }
@@ -164,6 +163,5 @@ public class BodyInfoSelectFragment extends BaseFragment implements WheelPicker.
         } else if (picker == dayPicker) {
             day = position;
         }
-        Log.i(TAG, "onItemSelected: " + yearList.get(year) + " " + monthList.get(month) + " " + dayList.get(day));
     }
 }
