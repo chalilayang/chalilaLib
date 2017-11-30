@@ -1,0 +1,54 @@
+<com.chalilayang.scaleview.ScaleRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.baogetv.app.model.usercenter.fragment.ImageGetFragment">
+
+    <com.chalilayang.scaleview.ScaleLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/cancel_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/size_36"
+        android:layout_marginRight="@dimen/size_36"
+        android:layout_marginBottom="@dimen/size_36"
+        android:background="@drawable/round_corner_rec"
+        android:divider="@color/channel_list_divider"
+        android:orientation="vertical">
+        <com.chalilayang.scaleview.ScaleTextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_92"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/size_36"
+            android:text="@string/camera"
+            android:gravity="center"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/channel_list_divider"/>
+        <com.chalilayang.scaleview.ScaleTextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_92"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/size_36"
+            android:text="@string/choose_from_album"
+            android:gravity="center"/>
+    </com.chalilayang.scaleview.ScaleLinearLayout>
+
+
+    <com.chalilayang.scaleview.ScaleTextView
+        android:id="@+id/cancel_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_92"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/size_36"
+        android:text="@string/search_cancel"
+        android:gravity="center"
+        android:background="@drawable/round_corner_rec"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/size_36"
+        android:layout_marginRight="@dimen/size_36"
+        android:layout_marginBottom="@dimen/size_36"
+        android:layout_alignParentBottom="true"/>
+</com.chalilayang.scaleview.ScaleRelativeLayout>

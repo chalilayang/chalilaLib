@@ -70,16 +70,61 @@
             android:textColor="@color/white"
             android:textSize="@dimen/size_30"/>
 
-        <com.chalilayang.scaleview.ScaleTextView
-            android:id="@+id/wechat_login_tv"
+        <com.chalilayang.scaleview.ScaleLinearLayout
+            android:id="@+id/other_login_method_tv"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/video_login_btn_bg_height"
-            android:layout_marginTop="@dimen/size_50"
-            android:background="@drawable/video_login_white_bg"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_36"
             android:gravity="center"
-            android:text="@string/login_wechat"
-            android:textColor="@color/white"
-            android:textSize="@dimen/size_30"/>
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="@dimen/size_60"
+                android:layout_height="@dimen/size_2"
+                android:background="@color/white"
+                android:alpha="0.7"/>
+            <com.chalilayang.scaleview.ScaleTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.7"
+                android:layout_marginLeft="@dimen/size_12"
+                android:text="@string/other_login_method"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_24"/>
+            <View
+                android:layout_width="@dimen/size_60"
+                android:layout_height="@dimen/size_2"
+                android:background="@color/white"
+                android:layout_marginLeft="@dimen/size_12"
+                android:alpha="0.7"/>
+        </com.chalilayang.scaleview.ScaleLinearLayout>
+
+        <com.chalilayang.scaleview.ScaleLinearLayout
+            android:id="@+id/third_login_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_36"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_weixin"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_110"
+                android:src="@mipmap/ic_qq"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_110"
+                android:src="@mipmap/ic_weibo"/>
+        </com.chalilayang.scaleview.ScaleLinearLayout>
 
     </com.chalilayang.scaleview.ScaleLinearLayout>
 </com.chalilayang.scaleview.ScaleRelativeLayout>

@@ -73,5 +73,5 @@
 
     <dimen name="video_player_height">422px</dimen>
     <dimen name="qsdk_toast_bg_corner_radius">60px</dimen>
-
+    <dimen name="bg_corner_radius">10dp</dimen>
 </resources>

@@ -83,6 +83,8 @@
     <string name="user_birthday">出生年月</string>
     <string name="user_body_info">身体数据</string>
     <string name="user_signature">个性签名</string>
+    <string name="camera">拍照</string>
+    <string name="choose_from_album">从相册选择</string>
 
     <string name="register">注册</string>
     <string name="login">登录</string>

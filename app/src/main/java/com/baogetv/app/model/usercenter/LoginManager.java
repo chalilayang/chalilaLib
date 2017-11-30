@@ -27,7 +27,7 @@ public class LoginManager {
     private static final String KEY_USER_TOKEN = "USER_TOKEN";
 
     public static boolean hasLogin(Context context) {
-        String token = getUserToken(context);
+        String token = getDeviceToken(context);
         if (!TextUtils.isEmpty(token)) {
             return true;
         } else {

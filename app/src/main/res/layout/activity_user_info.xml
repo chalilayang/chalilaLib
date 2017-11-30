@@ -101,7 +101,13 @@
             android:layout_height="match_parent"
             android:background="@color/channel_list_divider"/>
     </com.chalilayang.scaleview.ScaleLinearLayout>
-    <FrameLayout
+    <com.baogetv.app.customview.SlidingRelativeLayout
+        android:id="@+id/floating_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></FrameLayout>
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/transparent"
+        android:gravity="bottom"
+        android:visibility="visible">
+    </com.baogetv.app.customview.SlidingRelativeLayout>
 </com.chalilayang.scaleview.ScaleRelativeLayout>

@@ -35,9 +35,6 @@ import com.baogetv.app.net.RetrofitManager;
 
 import retrofit2.Call;
 
-import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
-import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
-
 /**
  * A simple {@link Fragment} subclass.
  */

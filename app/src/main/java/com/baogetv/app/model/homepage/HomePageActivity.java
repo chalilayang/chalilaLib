@@ -4,18 +4,12 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.LoginBean;
 import com.baogetv.app.bean.RegisterBean;
-import com.baogetv.app.bean.ResponseBean;
-import com.baogetv.app.model.usercenter.LoginManager;
-import com.baogetv.app.net.CustomCallBack;
-import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
@@ -27,8 +21,6 @@ import com.baogetv.app.parcelables.PageItemData;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
 
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;

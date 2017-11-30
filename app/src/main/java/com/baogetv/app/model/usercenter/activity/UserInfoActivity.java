@@ -1,11 +1,15 @@
 package com.baogetv.app.model.usercenter.activity;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
+import android.app.FragmentTransaction;
 import android.view.View;
 
+import com.baogetv.app.BaseFragment;
 import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.model.usercenter.customview.MineLineItemView;
+import com.baogetv.app.model.usercenter.fragment.ImageGetFragment;
 
 public class UserInfoActivity extends BaseTitleActivity implements View.OnClickListener {
 
@@ -16,6 +20,10 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
     private MineLineItemView userBirthdayLine;
     private MineLineItemView userBodyLine;
     private MineLineItemView userSignatureLine;
+
+    private BaseFragment curFloatingFragment;
+    private ImageGetFragment imageSelectFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +53,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         int id = view.getId();
         switch (id) {
             case R.id.user_icon:
+                showOrHideImageSelectFragment();
                 break;
             case R.id.user_grade:
                 break;
@@ -58,6 +67,48 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 break;
             case R.id.user_signature:
                 break;
+        }
+    }
+
+    private void showOrHideImageSelectFragment() {
+        if (imageSelectFragment != null && imageSelectFragment.isAdded()) {
+            FragmentManager manager = getFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+            transaction.remove(imageSelectFragment);
+            transaction.commit();
+            curFloatingFragment = null;
+        } else {
+            if (imageSelectFragment == null) {
+                imageSelectFragment = ImageGetFragment.newInstance();
+            }
+            FragmentManager manager = getFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            transaction.replace(R.id.floating_fragment_container, imageSelectFragment);
+            transaction.commit();
+            curFloatingFragment = imageSelectFragment;
+        }
+    }
+
+    private void hideFloatingView() {
+        if (curFloatingFragment != null) {
+            FragmentManager manager = getFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+            transaction.remove(curFloatingFragment);
+            transaction.commit();
+            curFloatingFragment = null;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (curFloatingFragment != null) {
+            hideFloatingView();
+            curFloatingFragment = null;
+        } else {
+            super.onBackPressed();
         }
     }
 
