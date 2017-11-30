@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.BeanConvert;
+import com.baogetv.app.bean.LoginBean;
 import com.baogetv.app.bean.RegisterBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.UserDetailBean;
@@ -32,6 +34,9 @@ import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 
 import retrofit2.Call;
+
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,16 +93,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+                LoginManager.startLogin(getActivity());
             }
         });
         registerBtn = view.findViewById(R.id.register_btn);
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), RegisterActivity.class);
-                startActivity(intent);
+                LoginManager.startRegister(getActivity());
             }
         });
         if (LoginManager.hasLogin(getActivity())) {
@@ -179,7 +182,20 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void freshUserInfo(RegisterBean bean) {
         if (getActivity() != null) {
             if (bean != null) {
-//                detailBean = data;
+                detailBean = BeanConvert.getUserDetailBean(bean);
+                updateInfo();
+                hasLoginView.setVisibility(View.VISIBLE);
+            } else {
+                String token = LoginManager.getUserToken(getActivity());
+                fetchUserInfo(token);
+            }
+        }
+    }
+
+    public void freshUserInfo(LoginBean bean) {
+        if (getActivity() != null) {
+            if (bean != null) {
+                detailBean = BeanConvert.getUserDetailBean(bean);
                 updateInfo();
                 hasLoginView.setVisibility(View.VISIBLE);
             } else {

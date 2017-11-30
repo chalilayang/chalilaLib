@@ -94,6 +94,7 @@
     <string name="verify_code_error">验证码错误</string>
     <string name="verify_code_get_failed">验证码获取失败</string>
     <string name="nick_name_null">昵称不能为空</string>
+    <string name="is_login_ing">登录中，请稍后</string>
 
     <string name="mobile_num">手机号</string>
     <string name="password">密码</string>

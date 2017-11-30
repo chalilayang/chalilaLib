@@ -1,14 +1,21 @@
 package com.baogetv.app.model.usercenter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 
 import com.baogetv.app.bean.RegisterBean;
+import com.baogetv.app.model.usercenter.activity.LoginActivity;
+import com.baogetv.app.model.usercenter.activity.RegisterActivity;
+import com.baogetv.app.model.usercenter.activity.VideoLoginActivity;
 import com.chalilayang.util.SPUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
 import static com.baogetv.app.model.usercenter.activity.RegisterActivity.KEY_REGISTER_BEAN;
 
 /**
@@ -26,6 +33,16 @@ public class LoginManager {
         } else {
             return false;
         }
+    }
+
+    public static void startLogin(Activity activity) {
+        Intent intent = new Intent(activity, LoginActivity.class);
+        activity.startActivityForResult(intent, REQUEST_CODE_LOGIN_ACTIVITY);
+    }
+
+    public static void startRegister(Activity activity) {
+        Intent intent = new Intent(activity, RegisterActivity.class);
+        activity.startActivityForResult(intent, REQUEST_CODE_REGISTER_ACTIVITY);
     }
 
     public static void putDeviceToken(Context context, String token) {

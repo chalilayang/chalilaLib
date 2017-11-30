@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.LoginBean;
 import com.baogetv.app.bean.RegisterBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.model.usercenter.LoginManager;
@@ -31,6 +32,7 @@ import retrofit2.Call;
 
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
+import static com.baogetv.app.model.usercenter.activity.LoginActivity.KEY_LOGIN_BEAN;
 import static com.baogetv.app.model.usercenter.activity.RegisterActivity.KEY_REGISTER_BEAN;
 
 public class HomePageActivity extends BaseActivity implements View.OnClickListener {
@@ -165,9 +167,9 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_LOGIN_ACTIVITY) {
             if (resultCode == RESULT_OK) {
-                RegisterBean registerBean = data.getParcelableExtra(KEY_REGISTER_BEAN);
+                LoginBean loginBean = data.getParcelableExtra(KEY_LOGIN_BEAN);
                 if (mineFragment != null && mineFragment.isVisible()) {
-                    mineFragment.freshUserInfo(registerBean);
+                    mineFragment.freshUserInfo(loginBean);
                 }
             }
         } else if (requestCode == REQUEST_CODE_REGISTER_ACTIVITY) {

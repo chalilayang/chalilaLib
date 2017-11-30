@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.model.homepage.HomePageActivity;
+import com.baogetv.app.model.usercenter.LoginManager;
 
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
@@ -33,8 +34,7 @@ public class VideoLoginActivity extends BaseActivity {
             loginBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(VideoLoginActivity.this, LoginActivity.class);
-                    startActivityForResult(intent, REQUEST_CODE_LOGIN_ACTIVITY);
+                    LoginManager.startLogin(VideoLoginActivity.this);
                 }
             });
         }
@@ -43,8 +43,7 @@ public class VideoLoginActivity extends BaseActivity {
             registerBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(VideoLoginActivity.this, RegisterActivity.class);
-                    startActivityForResult(intent, REQUEST_CODE_REGISTER_ACTIVITY);
+                    LoginManager.startRegister(VideoLoginActivity.this);
                 }
             });
         }

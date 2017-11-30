@@ -47,18 +47,20 @@
         android:orientation="vertical"
         android:layout_below="@+id/title_container">
         <com.baogetv.app.model.usercenter.customview.TitleInputView
+            android:id="@+id/mobile_num_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:input_title="@string/mobile_num"
             app:mobile_type="true"/>
         <com.baogetv.app.model.usercenter.customview.PasswordInputView
+            android:id="@+id/password_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_30"
             android:focusableInTouchMode="true"/>
 
         <com.chalilayang.scaleview.ScaleTextView
-            android:id="@+id/register_tv"
+            android:id="@+id/login_tv"
             android:layout_width="match_parent"
             android:layout_height="@dimen/video_login_btn_bg_height"
             android:background="@drawable/video_login_red_bg"
@@ -69,7 +71,7 @@
             android:textSize="@dimen/size_30"/>
 
         <com.chalilayang.scaleview.ScaleTextView
-            android:id="@+id/login_tv"
+            android:id="@+id/wechat_login_tv"
             android:layout_width="match_parent"
             android:layout_height="@dimen/video_login_btn_bg_height"
             android:layout_marginTop="@dimen/size_50"
