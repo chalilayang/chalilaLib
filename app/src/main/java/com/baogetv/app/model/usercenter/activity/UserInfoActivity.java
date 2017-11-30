@@ -111,6 +111,20 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         }
     }
 
+    @Subscribe
+    public void onImageEvent(ImageSelectEvent event) {
+        Log.i(TAG, "onImageEvent: " + event.img);
+        showOrHideImageSelectFragment(false);
+        Glide.with(this)
+                .fromFile()
+                .load(new File(event.img))
+                .into(userIconLine.getRightImageView());
+    }
+
+    @Override
+    protected int getRootView() {
+        return R.layout.activity_user_info;
+    }
     @Override
     public void onBackPressed() {
         if (curFloatingFragment != null) {
@@ -134,20 +148,5 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 }
             }
         }
-    }
-
-    @Subscribe
-    public void onImageEvent(ImageSelectEvent event) {
-        Log.i(TAG, "onImageEvent: " + event.img);
-        showOrHideImageSelectFragment(false);
-        Glide.with(this)
-                .fromFile()
-                .load(new File(event.img))
-                .into(userIconLine.getRightImageView());
-    }
-
-    @Override
-    protected int getRootView() {
-        return R.layout.activity_user_info;
     }
 }
