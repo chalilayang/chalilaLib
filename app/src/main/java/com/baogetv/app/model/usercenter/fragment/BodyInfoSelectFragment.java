@@ -19,12 +19,13 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatePickFragment extends BaseFragment implements WheelPicker.OnItemSelectedListener {
+public class BodyInfoSelectFragment extends BaseFragment implements WheelPicker.OnItemSelectedListener {
 
-    private static final String TAG = DatePickFragment.class.getSimpleName();
+    private static final String TAG = BodyInfoSelectFragment.class.getSimpleName();
     private static final String KEY_DATE_INFO = "DATE_INFO";
     private View confirmBtn;
     private View cancelBtn;
+    private WheelDatePicker wheelDatePicker;
     private View root;
 
     private WheelPicker yearPicker;
@@ -40,8 +41,8 @@ public class DatePickFragment extends BaseFragment implements WheelPicker.OnItem
     private int day;
 
     private DateSelectEvent selectEvent;
-    public static DatePickFragment newInstance(DateSelectEvent event) {
-        DatePickFragment fragment = new DatePickFragment();
+    public static BodyInfoSelectFragment newInstance(DateSelectEvent event) {
+        BodyInfoSelectFragment fragment = new BodyInfoSelectFragment();
         Bundle args = new Bundle();
         args.putParcelable(KEY_DATE_INFO, event);
         fragment.setArguments(args);

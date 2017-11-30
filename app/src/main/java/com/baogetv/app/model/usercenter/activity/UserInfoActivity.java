@@ -13,8 +13,11 @@ import com.baogetv.app.R;
 import com.baogetv.app.model.usercenter.event.DateSelectEvent;
 import com.baogetv.app.model.usercenter.event.ImageSelectEvent;
 import com.baogetv.app.model.usercenter.customview.MineLineItemView;
+import com.baogetv.app.model.usercenter.event.SexSelectEvent;
+import com.baogetv.app.model.usercenter.fragment.BodyInfoSelectFragment;
 import com.baogetv.app.model.usercenter.fragment.DatePickFragment;
 import com.baogetv.app.model.usercenter.fragment.ImageGetFragment;
+import com.baogetv.app.model.usercenter.fragment.SexSelectFragment;
 import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -35,7 +38,8 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
     private BaseFragment curFloatingFragment;
     private ImageGetFragment imageSelectFragment;
     private DatePickFragment datePickFragment;
-
+    private SexSelectFragment sexSelectFragment;
+    private BodyInfoSelectFragment bodyInfoSelectFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,11 +76,13 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
             case R.id.user_nick_name:
                 break;
             case R.id.user_sex:
+                showOrHideSexFragment(true);
                 break;
             case R.id.user_birthday:
                 showOrHideDatePickFragment(true);
                 break;
             case R.id.user_body_info:
+                showOrHideBodyFragment(true);
                 break;
             case R.id.user_signature:
                 break;
@@ -125,6 +131,48 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         }
     }
 
+    private void showOrHideSexFragment(boolean flag) {
+        if (flag) {
+            if (sexSelectFragment == null) {
+                sexSelectFragment = SexSelectFragment.newInstance(null);
+            }
+            FragmentManager manager = getFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.floating_fragment_container, sexSelectFragment);
+            transaction.commitAllowingStateLoss();
+            curFloatingFragment = sexSelectFragment;
+        } else {
+            if (sexSelectFragment != null && sexSelectFragment.isAdded()) {
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.remove(sexSelectFragment);
+                transaction.commitAllowingStateLoss();
+                curFloatingFragment = null;
+            }
+        }
+    }
+
+    private void showOrHideBodyFragment(boolean flag) {
+        if (flag) {
+            if (bodyInfoSelectFragment == null) {
+                bodyInfoSelectFragment = BodyInfoSelectFragment.newInstance(null);
+            }
+            FragmentManager manager = getFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.replace(R.id.floating_fragment_container, bodyInfoSelectFragment);
+            transaction.commitAllowingStateLoss();
+            curFloatingFragment = bodyInfoSelectFragment;
+        } else {
+            if (bodyInfoSelectFragment != null && bodyInfoSelectFragment.isAdded()) {
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                transaction.remove(bodyInfoSelectFragment);
+                transaction.commitAllowingStateLoss();
+                curFloatingFragment = null;
+            }
+        }
+    }
+
     private void hideFloatingView() {
         if (curFloatingFragment != null) {
             FragmentManager manager = getFragmentManager();
@@ -149,6 +197,12 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
     public void onDateEvent(DateSelectEvent event) {
         showOrHideDatePickFragment(false);
         showShortToast(event.year + " " + event.month + " " + event.day);
+    }
+
+    @Subscribe
+    public void onSexEvent(SexSelectEvent event) {
+        showOrHideSexFragment(false);
+        showShortToast(event.sex+"");
     }
 
     @Override

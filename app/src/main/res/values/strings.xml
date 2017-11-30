@@ -83,6 +83,8 @@
     <string name="user_grade">用户等级</string>
     <string name="nick_name">昵称</string>
     <string name="user_sex">性别</string>
+    <string name="sex_men">男</string>
+    <string name="sex_women">女</string>
     <string name="user_birthday">出生年月</string>
     <string name="user_body_info">身体数据</string>
     <string name="user_signature">个性签名</string>
