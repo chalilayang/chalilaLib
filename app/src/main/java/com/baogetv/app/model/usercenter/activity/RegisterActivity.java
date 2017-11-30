@@ -31,6 +31,7 @@ public class RegisterActivity extends BaseActivity
     private TitleInputView passwordView;
     private TitleInputView passwordConfirmView;
     private View nextStep;
+    private View completeBtn;
     private int currentStep;
 
     @Override
@@ -93,7 +94,8 @@ public class RegisterActivity extends BaseActivity
         passwordView = (TitleInputView) findViewById(R.id.password_tv);
         passwordConfirmView = (TitleInputView) findViewById(R.id.password_confirm_tv);
         stepComplete = findViewById(R.id.register_step_two);
-        stepComplete.setOnClickListener(new View.OnClickListener() {
+        completeBtn = findViewById(R.id.complete_tv);
+        completeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 tryRegister();

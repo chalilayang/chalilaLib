@@ -59,11 +59,11 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                 public void onSuccess(RegisterBean data) {
                     if (data != null) {
                         LoginManager.putUserToken(mContext, data.getToken());
+                        registerView.showSuccess(data);
                     } else {
                         registerView.registerFailed("RegisterBean null");
                     }
                 }
-
                 @Override
                 public void onFailed(String error) {
                     registerView.registerFailed("RegisterBean null");

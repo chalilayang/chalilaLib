@@ -25,7 +25,6 @@ import com.baogetv.app.model.usercenter.activity.SystemNotifyAcitvity;
 import com.baogetv.app.model.usercenter.activity.ThumbUpActivity;
 import com.baogetv.app.model.usercenter.activity.UserGradeDescActivity;
 import com.baogetv.app.model.usercenter.activity.UserInfoActivity;
-import com.baogetv.app.model.usercenter.activity.VideoLoginActivity;
 import com.baogetv.app.model.usercenter.customview.MineBodyInfoView;
 import com.baogetv.app.model.usercenter.customview.MineLineItemView;
 import com.baogetv.app.model.usercenter.customview.UpgradeProgress;
@@ -33,7 +32,6 @@ import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 
 import retrofit2.Call;
-import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -102,7 +100,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
             }
         });
-        if (LoginManager.hasLogin()) {
+        if (LoginManager.hasLogin(getActivity())) {
             hasLoginView.setVisibility(View.VISIBLE);
             notLoginView.setVisibility(View.GONE);
         } else {
