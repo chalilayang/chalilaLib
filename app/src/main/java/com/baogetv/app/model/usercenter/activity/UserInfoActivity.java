@@ -1,18 +1,24 @@
 package com.baogetv.app.model.usercenter.activity;
 
 import android.app.FragmentManager;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.app.FragmentTransaction;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
-
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
+import com.baogetv.app.model.usercenter.ImageSelectEvent;
 import com.baogetv.app.model.usercenter.customview.MineLineItemView;
 import com.baogetv.app.model.usercenter.fragment.ImageGetFragment;
 
+import org.greenrobot.eventbus.Subscribe;
+
 public class UserInfoActivity extends BaseTitleActivity implements View.OnClickListener {
 
+    private static final String TAG = UserInfoActivity.class.getSimpleName();
     private MineLineItemView userIconLine;
     private MineLineItemView userGradeLine;
     private MineLineItemView userNickNameLine;
@@ -110,6 +116,26 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         } else {
             super.onBackPressed();
         }
+    }
+    public boolean useEventBus() {
+        return true;
+    }
+    public static final int PERMISSIONS_REQUEST_READ_CONTACTS = 8;
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (imageSelectFragment != null) {
+                    imageSelectFragment.onRequestPermissionsSuccess();
+                }
+            }
+        }
+    }
+
+    @Subscribe
+    public void onImageEvent(ImageSelectEvent event) {
+        Log.i(TAG, "onImageEvent: " + event.img);
     }
 
     @Override

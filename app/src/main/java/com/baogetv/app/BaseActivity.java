@@ -14,6 +14,8 @@ import android.view.WindowManager;
 import com.baogetv.app.customview.CustomToastUtil;
 import com.umeng.message.PushAgent;
 
+import org.greenrobot.eventbus.EventBus;
+
 public class BaseActivity extends AppCompatActivity {
 
     @Override
@@ -31,7 +33,24 @@ public class BaseActivity extends AppCompatActivity {
     protected boolean useActionBar() {
         return false;
     }
+    public boolean useEventBus() {
+        return false;
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (useEventBus()) {
+            EventBus.getDefault().register(this);
+        }
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (useEventBus()) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
     protected void initState() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //透明状态栏

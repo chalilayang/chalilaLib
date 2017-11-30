@@ -17,6 +17,7 @@
         android:divider="@color/channel_list_divider"
         android:orientation="vertical">
         <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/camera_btn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_92"
             android:textColor="@color/blue"
@@ -28,6 +29,7 @@
             android:layout_height="@dimen/size_1"
             android:background="@color/channel_list_divider"/>
         <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/choose_btn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_92"
             android:textColor="@color/blue"
