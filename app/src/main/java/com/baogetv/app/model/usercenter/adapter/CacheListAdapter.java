@@ -19,10 +19,8 @@ import com.baogetv.app.downloader.DownloadService;
 import com.baogetv.app.downloader.callback.DownloadManager;
 import com.baogetv.app.downloader.domain.DownloadInfo;
 import com.baogetv.app.model.usercenter.MyDownloadListener;
-import com.baogetv.app.model.usercenter.entity.VideoData;
 import com.baogetv.app.util.FileUtil;
 import com.bumptech.glide.Glide;
-import com.chalilayang.scaleview.ScaleCalculator;
 
 import java.io.File;
 import java.lang.ref.SoftReference;

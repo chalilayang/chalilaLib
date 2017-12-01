@@ -209,7 +209,7 @@ public interface UserApiService {
     @FormUrlEncoded
     @POST("index.php?s=/Collects/add")
     Call<ResponseBean<AddItemBean>> addCollect(
-            @Field("token") String token, @Field("video_id") int video_id);
+            @Field("token") String token, @Field("video_id") String video_id);
 
     /**
      * 取消收藏
@@ -248,7 +248,7 @@ public interface UserApiService {
     @FormUrlEncoded
     @POST("index.php?s=/Play/add")
     Call<ResponseBean<AddItemBean>> addHistory(
-            @Field("token") String token, @Field("video_id") int video_id);
+            @Field("token") String token, @Field("video_id") String video_id);
 
     /**
      * 取消播放记录

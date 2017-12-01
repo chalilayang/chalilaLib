@@ -12,12 +12,15 @@ import android.widget.ImageView;
 import com.baogetv.app.R;
 import com.baogetv.app.customview.CustomToastUtil;
 import com.baogetv.app.model.videodetail.customview.CustomSeekBar;
+import com.baogetv.app.model.videodetail.event.AddCollectEvent;
 import com.baogetv.app.util.FileUtils;
 import com.baogetv.app.util.StorageManager;
 import com.chalilayang.scaleview.ScaleTextView;
 import com.xiao.nicevideoplayer.NiceUtil;
 import com.xiao.nicevideoplayer.NiceVideoPlayer;
 import com.xiao.nicevideoplayer.NiceVideoPlayerController;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 
@@ -68,12 +71,14 @@ public class PlayerController extends NiceVideoPlayerController
         videoTitle = (ScaleTextView) findViewById(R.id.player_title_fullscreen);
 
         shareBtn = (ImageView) findViewById(R.id.player_share);
-        heartBtn = (ImageView) findViewById(R.id.player_thumb_up);
+        heartBtn = (ImageView) findViewById(R.id.player_add_collect);
         shootBtn = (ImageView) findViewById(R.id.player_shoot);
         shootBtn.setVisibility(GONE);
         shootBtn.setOnClickListener(this);
         shareBtn.setVisibility(GONE);
+        shareBtn.setOnClickListener(this);
         heartBtn.setVisibility(GONE);
+        heartBtn.setOnClickListener(this);
 
         lockBtn = (ImageView) findViewById(R.id.player_lock);
         screenLocked = false;
@@ -139,9 +144,11 @@ public class PlayerController extends NiceVideoPlayerController
         } else if (v.getId() == R.id.player_shoot) {
             if (!isTryingShoot) {
                 String path = StorageManager.getSavePath()
-                        + File.separator + StorageManager.generateFileName() +".png";
+                        + File.separator + StorageManager.generateFileName() + ".png";
                 isTryingShoot = mNiceVideoPlayer.tryToShoot(path);
             }
+        } else if (v.getId() == R.id.player_add_collect) {
+            EventBus.getDefault().post(new AddCollectEvent());
         } else if (v == this) {
             if (mNiceVideoPlayer.isPlaying()
                     || mNiceVideoPlayer.isPaused()

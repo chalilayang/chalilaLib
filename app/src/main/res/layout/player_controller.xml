@@ -42,7 +42,7 @@
             android:layout_marginRight="@dimen/size_40"
             android:src="@mipmap/player_share"/>
         <ImageView
-            android:id="@+id/player_thumb_up"
+            android:id="@+id/player_add_collect"
             android:layout_width="@dimen/size_36"
             android:layout_height="@dimen/size_36"
             android:layout_toLeftOf="@+id/player_share"
@@ -53,7 +53,7 @@
             android:id="@+id/player_shoot"
             android:layout_width="@dimen/size_36"
             android:layout_height="@dimen/size_36"
-            android:layout_toLeftOf="@+id/player_thumb_up"
+            android:layout_toLeftOf="@+id/player_add_collect"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/size_40"
             android:src="@mipmap/player_shoot"/>

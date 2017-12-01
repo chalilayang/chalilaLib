@@ -65,7 +65,6 @@ public class PlayerFragment extends BaseFragment {
             mNiceVideoPlayer.setController(controller);
             controller.setTitle(videoDetailBean.getTitle());
         }
-
     }
 
     public void release() {

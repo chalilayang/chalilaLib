@@ -174,8 +174,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             mineBodyInfoView.setBodyWeight(weight);
             int bodyFat = 0;
             try {
-                float fbodyFat = Float.parseFloat(detailBean.getBfr());
-                bodyFat = Math.min((int) fbodyFat * 100, 100);
+                float fBodyFat = Float.parseFloat(detailBean.getBfr());
+                bodyFat = Math.min((int) fBodyFat * 100, 100);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }

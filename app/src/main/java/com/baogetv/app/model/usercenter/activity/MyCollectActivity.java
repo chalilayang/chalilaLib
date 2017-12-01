@@ -6,15 +6,21 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.CollectBean;
+import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.model.usercenter.LoginManager;
+import com.baogetv.app.net.CustomCallBack;
+import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.model.usercenter.adapter.CollectListAdapter;
-import com.baogetv.app.model.usercenter.entity.VideoData;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
 
 
 public class MyCollectActivity extends BaseTitleActivity
@@ -31,6 +37,7 @@ public class MyCollectActivity extends BaseTitleActivity
         setTitleActivity(getString(R.string.user_collect));
         setRightTitle(getString(R.string.all_delete));
         init();
+        getCollectList();
     }
 
     @Override
@@ -53,14 +60,27 @@ public class MyCollectActivity extends BaseTitleActivity
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
         refreshLayout.setOnRefreshListener(this);
-
-        List<VideoData> datas = new ArrayList<>();
-        for (int index = 0; index < 10; index ++) {
-            datas.add(new VideoData("", "" + index, System.currentTimeMillis()));
-        }
-        recyclerViewAdapter.updateChannelList(datas);
     }
 
+    private void getCollectList() {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(getApplicationContext());
+        Call<ResponseBean<List<CollectBean>>> call = userApiService.getCollectList(token);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<List<CollectBean>>() {
+                @Override
+                public void onSuccess(List<CollectBean> data) {
+                    recyclerViewAdapter.update(data);
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    showShortToast(error);
+                }
+            });
+        }
+    }
     @Override
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");
