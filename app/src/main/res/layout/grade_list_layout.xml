@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chalilayang.scaleview.ScaleLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/list_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <com.chalilayang.scaleview.ScaleLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_80"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/reshape_red">
+        <com.chalilayang.scaleview.ScaleTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/grade"
+            android:textSize="@dimen/size_36"
+            android:textColor="@color/white"/>
+        <com.chalilayang.scaleview.ScaleTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/LOGO"
+            android:textSize="@dimen/size_36"
+            android:textColor="@color/white"/>
+        <com.chalilayang.scaleview.ScaleTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/xun_zhang"
+            android:textSize="@dimen/size_36"
+            android:textColor="@color/white"/>
+        <com.chalilayang.scaleview.ScaleTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/experience"
+            android:textSize="@dimen/size_36"
+            android:textColor="@color/white"/>
+    </com.chalilayang.scaleview.ScaleLinearLayout>
+</com.chalilayang.scaleview.ScaleLinearLayout>

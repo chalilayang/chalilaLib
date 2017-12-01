@@ -34,10 +34,11 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/size_40"
                 android:layout_marginTop="@dimen/size_54"/>
-            <com.chalilayang.scaleview.ScaleLinearLayout
+            <com.baogetv.app.model.usercenter.customview.GradeListView
+                android:id="@+id/grade_list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"></com.chalilayang.scaleview.ScaleLinearLayout>
+                android:layout_below="@+id/user_grade_progress"/>
         </com.chalilayang.scaleview.ScaleRelativeLayout>
     </ScrollView>
 </com.chalilayang.scaleview.ScaleRelativeLayout>
