@@ -1,6 +1,5 @@
 package com.baogetv.app;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,13 +16,11 @@ import com.baogetv.app.model.usercenter.activity.VideoLoginActivity;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 
-import java.util.logging.LogManager;
-
 import retrofit2.Call;
 
 import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

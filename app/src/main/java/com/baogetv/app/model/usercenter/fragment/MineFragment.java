@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ import retrofit2.Call;
  */
 public class MineFragment extends BaseFragment implements View.OnClickListener {
 
+    private static final String TAG = "MineFragment";
     private static final String KEY_USER_DETAIL = "USER_DETAIL";
     private View contentView;
     private View hasLoginView;
@@ -128,11 +130,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         gradeIcon = view.findViewById(R.id.user_grade_icon);
         gradeDesc = view.findViewById(R.id.user_grade_desc);
         mineBodyInfoView = view.findViewById(R.id.body_info_view);
-        mineBodyInfoView.setHeight(170);
-        mineBodyInfoView.setBodyWeight(60);
-        mineBodyInfoView.setBodyFat(20);
         upgradeProgress = view.findViewById(R.id.user_grade_progress);
-        upgradeProgress.setUpGradeProgress(30);
 
         userGradeItemView = view.findViewById(R.id.user_grade);
         userGradeItemView.setOnClickListener(this);
@@ -150,6 +148,46 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         systemNotifyItemView.setOnClickListener(this);
         settingItemView = view.findViewById(R.id.setting);
         settingItemView.setOnClickListener(this);
+    }
+
+    public void updateInfo() {
+        if (detailBean != null) {
+            Log.i(TAG, "updateInfo: " + detailBean.getPic_url());
+            Glide.with(this).load(detailBean.getPic_url())
+                    .placeholder(R.mipmap.user_default_icon).into(userIcon);
+            Glide.with(this).load(detailBean.getLevel_pic_url()).into(gradeIcon);
+            userName.setText(detailBean.getUsername());
+            gradeDesc.setText(detailBean.getLevel_name());
+            int height = 0;
+            try {
+                height = Integer.parseInt(detailBean.getHeight());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            mineBodyInfoView.setHeight(height);
+            int weight = 0;
+            try {
+                weight = Integer.parseInt(detailBean.getWeight());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            mineBodyInfoView.setBodyWeight(weight);
+            int bodyFat = 0;
+            try {
+                float fbodyFat = Float.parseFloat(detailBean.getBfr());
+                bodyFat = Math.min((int) fbodyFat * 100, 100);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            mineBodyInfoView.setBodyFat(bodyFat);
+            int score = 0;
+            try {
+                score = Integer.parseInt(detailBean.getScore());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            upgradeProgress.setUpGradeProgress(score);
+        }
     }
 
     @Override
@@ -189,15 +227,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 intent = new Intent(this.getActivity(), SettingActivity.class);
                 startActivity(intent);
                 break;
-        }
-    }
-
-    public void updateInfo() {
-        if (detailBean != null) {
-            Glide.with(this).load(detailBean.getPic_url()).into(userIcon);
-            Glide.with(this).load(detailBean.getLevel_pic_url()).into(gradeIcon);
-            userName.setText(detailBean.getUsername());
-            gradeDesc.setText(detailBean.getLevel_name());
         }
     }
 

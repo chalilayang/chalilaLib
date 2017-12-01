@@ -42,11 +42,17 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     private Drawable channelDrawableNormal;
     private Drawable userCenterDrawablePositive;
     private Drawable userCenterDrawableNormal;
+    private UserDetailBean userDetailBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initData();
         initView();
+    }
+
+    private void initData() {
+        userDetailBean = getIntent().getParcelableExtra(KEY_USER_DETAIL_BEAN);
     }
 
     private void initView() {
@@ -147,7 +153,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     private void showUserCenterFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (mineFragment == null) {
-            mineFragment = MineFragment.newInstance(null);
+            mineFragment = MineFragment.newInstance(userDetailBean);
         }
         transaction.replace(R.id.fragment_container, mineFragment).commit();
     }
