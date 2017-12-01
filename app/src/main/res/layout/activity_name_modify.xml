@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chalilayang.scaleview.ScaleRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/channel_list_divider"
+    tools:context="com.baogetv.app.BaseTitleActivity">
+
+    <include
+        android:id="@+id/title_container"
+        layout="@layout/base_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <com.chalilayang.scaleview.ScaleLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_container"
+        android:orientation="vertical">
+        <com.chalilayang.scaleview.ScaleTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_30"
+            android:layout_marginLeft="@dimen/size_30"
+            android:text="@string/nick_name"
+            android:textColor="@color/reply_name"
+            android:textSize="@dimen/size_28"/>
+        <com.chalilayang.scaleview.ScaleLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_92"
+            android:layout_marginTop="@dimen/size_20"
+            android:background="@color/white">
+            <com.chalilayang.scaleview.ScaleEditText
+                android:id="@+id/name_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size_30"
+                android:hint="@string/less_than_ten_num"
+                android:gravity="center|left"
+                android:cursorVisible="true"
+                android:textSize="@dimen/size_26"
+                android:textColor="@color/send_edit_text_color"
+                android:maxLines="1"
+                android:textCursorDrawable="@drawable/edit_text_cursor"
+                android:background="@color/transparent"/>
+        </com.chalilayang.scaleview.ScaleLinearLayout>
+
+        <com.chalilayang.scaleview.ScaleTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_30"
+            android:layout_marginLeft="@dimen/size_30"
+            android:text="@string/simple_introduce"
+            android:textColor="@color/reply_name"
+            android:textSize="@dimen/size_28"/>
+
+        <com.chalilayang.scaleview.ScaleLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_380"
+            android:layout_marginTop="@dimen/size_20"
+            android:background="@color/white"
+            android:paddingTop="@dimen/size_10"
+            android:paddingBottom="@dimen/size_10">
+            <com.chalilayang.scaleview.ScaleEditText
+                android:id="@+id/intro_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size_30"
+                android:hint="@string/user_intro_hint"
+                android:textSize="@dimen/size_26"
+                android:textColor="@color/send_edit_text_color"
+                android:gravity="left|top"
+                android:cursorVisible="true"
+                android:textCursorDrawable="@drawable/edit_text_cursor"
+                android:background="@color/transparent"/>
+        </com.chalilayang.scaleview.ScaleLinearLayout>
+    </com.chalilayang.scaleview.ScaleLinearLayout>
+
+
+    <com.chalilayang.scaleview.ScaleTextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_92"
+        android:text="@string/nick_name"
+        android:textColor="@color/white"
+        android:textSize="@dimen/size_36"
+        android:gravity="center"
+        android:background="@color/reshape_red"
+        android:layout_alignParentBottom="true"/>
+</com.chalilayang.scaleview.ScaleRelativeLayout>

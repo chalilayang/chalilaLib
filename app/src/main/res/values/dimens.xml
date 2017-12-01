@@ -66,6 +66,7 @@
     <dimen name="size_346">346px</dimen>
     <dimen name="size_320">320px</dimen>
     <dimen name="size_360">360px</dimen>
+    <dimen name="size_380">380px</dimen>
     <dimen name="size_480">480px</dimen>
     <dimen name="size_568">568px</dimen>
     <dimen name="size_690">690px</dimen>

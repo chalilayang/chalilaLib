@@ -32,8 +32,9 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepaths" />
+                android:resource="@xml/filepaths"/>
         </provider>
+
         <activity
             android:name=".SplashActivity"
             android:label="@string/app_name"
@@ -142,6 +143,8 @@
             android:name=".model.channel.ChannelDetailActivity"
             android:label="@string/title_activity_channel_detail"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".model.usercenter.activity.NameModifyActivity">
         </activity>
     </application>
 

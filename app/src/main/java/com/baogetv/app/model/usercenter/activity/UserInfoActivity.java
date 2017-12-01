@@ -1,6 +1,7 @@
 package com.baogetv.app.model.usercenter.activity;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.app.FragmentTransaction;
@@ -75,6 +76,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
             case R.id.user_grade:
                 break;
             case R.id.user_nick_name:
+                startNameIntroActivity();
                 break;
             case R.id.user_sex:
                 showOrHideSexFragment(true);
@@ -172,6 +174,11 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 curFloatingFragment = null;
             }
         }
+    }
+
+    private void startNameIntroActivity() {
+        Intent intent = new Intent(this, NameModifyActivity.class);
+        startActivityForResult(intent, NameModifyActivity.REQUEST_CODE_NAME_MODIFY);
     }
 
     private void hideFloatingView() {
