@@ -10,8 +10,8 @@ import android.view.WindowManager;
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
-import com.baogetv.app.bean.LoginBean;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.customview.PasswordInputView;
 import com.baogetv.app.model.usercenter.customview.TitleInputView;
@@ -86,13 +86,13 @@ public class LoginActivity extends BaseActivity {
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getDeviceToken(getApplicationContext());
         Log.i(TAG, "register: " + mobile + " " + password);
-        Call<ResponseBean<LoginBean>> beanCall
+        Call<ResponseBean<UserDetailBean>> beanCall
                 = listService.login(mobile, password, token);
         if (beanCall != null) {
             isLogining = true;
-            beanCall.enqueue(new CustomCallBack<LoginBean>() {
+            beanCall.enqueue(new CustomCallBack<UserDetailBean>() {
                 @Override
-                public void onSuccess(LoginBean data) {
+                public void onSuccess(UserDetailBean data) {
                     isLogining = false;
                     if (data != null) {
                         LoginManager.putUserToken(getApplicationContext(), data.getToken());
@@ -110,7 +110,7 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private void loginSuccess(LoginBean bean) {
+    private void loginSuccess(UserDetailBean bean) {
         Intent intent = new Intent();
         intent.putExtra(KEY_LOGIN_BEAN, bean);
         setResult(RESULT_OK, intent);

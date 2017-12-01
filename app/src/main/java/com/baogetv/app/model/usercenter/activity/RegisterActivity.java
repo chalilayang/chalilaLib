@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
-import com.baogetv.app.bean.RegisterBean;
+import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.customview.CustomToastUtil;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.contracts.RegisterContract;
@@ -209,7 +209,7 @@ public class RegisterActivity extends BaseActivity
     }
 
     @Override
-    public void showSuccess(RegisterBean bean) {
+    public void showSuccess(UserDetailBean bean) {
         Intent intent = new Intent();
         intent.putExtra(KEY_REGISTER_BEAN, bean);
         setResult(RESULT_OK, intent);

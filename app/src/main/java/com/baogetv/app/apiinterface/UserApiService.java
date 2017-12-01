@@ -5,12 +5,9 @@ import com.baogetv.app.bean.AdvertisingListBean;
 import com.baogetv.app.bean.AdviceBean;
 import com.baogetv.app.bean.CollectBean;
 import com.baogetv.app.bean.CommentBean;
-import com.baogetv.app.bean.CommentListBean;
 import com.baogetv.app.bean.GradeBean;
 import com.baogetv.app.bean.GradeDetailBean;
 import com.baogetv.app.bean.HistoryBean;
-import com.baogetv.app.bean.LoginBean;
-import com.baogetv.app.bean.RegisterBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.ScoreSourceBean;
 import com.baogetv.app.bean.ScoreSourceDetailBean;
@@ -38,7 +35,7 @@ public interface UserApiService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Member/login")
-    Call<ResponseBean<LoginBean>> login(
+    Call<ResponseBean<UserDetailBean>> login(
             @Field("username") String username,
             @Field("password") String password,
             @Field("device_token") String device_token);
@@ -55,7 +52,7 @@ public interface UserApiService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Member/register")
-    Call<ResponseBean<RegisterBean>> register(
+    Call<ResponseBean<UserDetailBean>> register(
             @Field("mobile") String mobile,
             @Field("password") String password,
             @Field("verify_code") String verify_code,

@@ -6,8 +6,8 @@ import android.util.Log;
 
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
-import com.baogetv.app.bean.RegisterBean;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.customview.CustomToastUtil;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.contracts.RegisterContract;
@@ -17,8 +17,6 @@ import com.baogetv.app.net.RetrofitManager;
 import java.util.List;
 
 import retrofit2.Call;
-
-import static com.baogetv.app.model.usercenter.activity.RegisterActivity.KEY_REGISTER_BEAN;
 
 /**
  * Created by chalilayang on 2017/11/19.
@@ -51,12 +49,12 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getDeviceToken(mContext);
         Log.i(TAG, "register: " + mobileNum + " " + verifyCode + " " + password + " " + nick + " " + token);
-        Call<ResponseBean<RegisterBean>> beanCall
+        Call<ResponseBean<UserDetailBean>> beanCall
                 = listService.register(mobileNum, password, verifyCode, nick, token);
         if (beanCall != null) {
-            beanCall.enqueue(new CustomCallBack<RegisterBean>() {
+            beanCall.enqueue(new CustomCallBack<UserDetailBean>() {
                 @Override
-                public void onSuccess(RegisterBean data) {
+                public void onSuccess(UserDetailBean data) {
                     if (data != null) {
                         LoginManager.putUserToken(mContext, data.getToken());
                         registerView.showSuccess(data);

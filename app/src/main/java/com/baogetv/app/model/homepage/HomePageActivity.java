@@ -8,8 +8,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.baogetv.app.bean.LoginBean;
-import com.baogetv.app.bean.RegisterBean;
+import com.baogetv.app.bean.UserDetailBean;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
@@ -159,14 +158,14 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_LOGIN_ACTIVITY) {
             if (resultCode == RESULT_OK) {
-                LoginBean loginBean = data.getParcelableExtra(KEY_LOGIN_BEAN);
+                UserDetailBean loginBean = data.getParcelableExtra(KEY_LOGIN_BEAN);
                 if (mineFragment != null && mineFragment.isVisible()) {
                     mineFragment.freshUserInfo(loginBean);
                 }
             }
         } else if (requestCode == REQUEST_CODE_REGISTER_ACTIVITY) {
             if (resultCode == RESULT_OK) {
-                RegisterBean registerBean = data.getParcelableExtra(KEY_REGISTER_BEAN);
+                UserDetailBean registerBean = data.getParcelableExtra(KEY_REGISTER_BEAN);
                 if (mineFragment != null && mineFragment.isVisible()) {
                     mineFragment.freshUserInfo(registerBean);
                 }

@@ -10,17 +10,12 @@ import android.view.ViewGroup;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
-import com.baogetv.app.bean.BeanConvert;
-import com.baogetv.app.bean.LoginBean;
-import com.baogetv.app.bean.RegisterBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.model.usercenter.LoginManager;
-import com.baogetv.app.model.usercenter.activity.LoginActivity;
 import com.baogetv.app.model.usercenter.activity.MyCacheActivity;
 import com.baogetv.app.model.usercenter.activity.MyCollectActivity;
 import com.baogetv.app.model.usercenter.activity.PlayHistoryActivity;
-import com.baogetv.app.model.usercenter.activity.RegisterActivity;
 import com.baogetv.app.model.usercenter.activity.ResponseActivity;
 import com.baogetv.app.model.usercenter.activity.SettingActivity;
 import com.baogetv.app.model.usercenter.activity.SystemNotifyAcitvity;
@@ -176,23 +171,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     }
 
-    public void freshUserInfo(RegisterBean bean) {
+    public void freshUserInfo(UserDetailBean bean) {
         if (getActivity() != null) {
             if (bean != null) {
-                detailBean = BeanConvert.getUserDetailBean(bean);
-                updateInfo();
-                hasLoginView.setVisibility(View.VISIBLE);
-            } else {
-                String token = LoginManager.getUserToken(getActivity());
-                fetchUserInfo(token);
-            }
-        }
-    }
-
-    public void freshUserInfo(LoginBean bean) {
-        if (getActivity() != null) {
-            if (bean != null) {
-                detailBean = BeanConvert.getUserDetailBean(bean);
+                detailBean = bean;
                 updateInfo();
                 hasLoginView.setVisibility(View.VISIBLE);
             } else {
