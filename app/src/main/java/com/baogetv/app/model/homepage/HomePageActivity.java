@@ -21,14 +21,14 @@ import com.baogetv.app.parcelables.PageItemData;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
-import static com.baogetv.app.model.usercenter.activity.LoginActivity.KEY_LOGIN_BEAN;
-import static com.baogetv.app.model.usercenter.activity.RegisterActivity.KEY_REGISTER_BEAN;
 
 public class HomePageActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "HomePageActivity";
+    public static final String KEY_USER_DETAIL = "USER_DETAIL";
     private FrameLayout fragmentContainer;
     private HomeFragment homeFragment;
     private ChannelListFragment channelListFragment;
@@ -147,7 +147,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     private void showUserCenterFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (mineFragment == null) {
-            mineFragment = MineFragment.newInstance();
+            mineFragment = MineFragment.newInstance(null);
         }
         transaction.replace(R.id.fragment_container, mineFragment).commit();
     }
@@ -158,14 +158,14 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_LOGIN_ACTIVITY) {
             if (resultCode == RESULT_OK) {
-                UserDetailBean loginBean = data.getParcelableExtra(KEY_LOGIN_BEAN);
+                UserDetailBean loginBean = data.getParcelableExtra(KEY_USER_DETAIL_BEAN);
                 if (mineFragment != null && mineFragment.isVisible()) {
                     mineFragment.freshUserInfo(loginBean);
                 }
             }
         } else if (requestCode == REQUEST_CODE_REGISTER_ACTIVITY) {
             if (resultCode == RESULT_OK) {
-                UserDetailBean registerBean = data.getParcelableExtra(KEY_REGISTER_BEAN);
+                UserDetailBean registerBean = data.getParcelableExtra(KEY_USER_DETAIL_BEAN);
                 if (mineFragment != null && mineFragment.isVisible()) {
                     mineFragment.freshUserInfo(registerBean);
                 }

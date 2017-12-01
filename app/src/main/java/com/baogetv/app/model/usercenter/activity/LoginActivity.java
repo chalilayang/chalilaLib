@@ -20,16 +20,17 @@ import com.baogetv.app.net.RetrofitManager;
 
 import retrofit2.Call;
 
+import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
+
 public class LoginActivity extends BaseActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
-    public static final String KEY_LOGIN_BEAN = "KEY_LOGIN_BEAN";
     private TitleInputView mobileNumView;
     private PasswordInputView passwordView;
     private View loginBtn;
     private View wechatBtn;
     private View sinaBtn;
     private View qqBtn;
-    private boolean isLogining;
+    private boolean isFetchingResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void tryLogin() {
-        if (isLogining) {
+        if (isFetchingResult) {
             showShortToast(getString(R.string.is_login_ing));
             return;
         }
@@ -89,11 +90,11 @@ public class LoginActivity extends BaseActivity {
         Call<ResponseBean<UserDetailBean>> beanCall
                 = listService.login(mobile, password, token);
         if (beanCall != null) {
-            isLogining = true;
+            isFetchingResult = true;
             beanCall.enqueue(new CustomCallBack<UserDetailBean>() {
                 @Override
                 public void onSuccess(UserDetailBean data) {
-                    isLogining = false;
+                    isFetchingResult = false;
                     if (data != null) {
                         LoginManager.putUserToken(getApplicationContext(), data.getToken());
                         loginSuccess(data);
@@ -103,7 +104,7 @@ public class LoginActivity extends BaseActivity {
                 }
                 @Override
                 public void onFailed(String error) {
-                    isLogining = false;
+                    isFetchingResult = false;
                     loginFailed("Login fail " + error);
                 }
             });
@@ -112,7 +113,7 @@ public class LoginActivity extends BaseActivity {
 
     private void loginSuccess(UserDetailBean bean) {
         Intent intent = new Intent();
-        intent.putExtra(KEY_LOGIN_BEAN, bean);
+        intent.putExtra(KEY_USER_DETAIL_BEAN, bean);
         setResult(RESULT_OK, intent);
         finish();
     }

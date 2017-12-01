@@ -16,13 +16,13 @@ import com.baogetv.app.model.usercenter.customview.TitleInputView;
 import com.baogetv.app.model.usercenter.customview.VerifyCodeInputView;
 import com.baogetv.app.model.usercenter.present.RegisterPresenter;
 
+import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
 import static com.baogetv.app.model.usercenter.activity.AreaChooseActivity.REQUEST_CODE_AREA_CHOOSE;
 
 public class RegisterActivity extends BaseActivity
         implements RegisterContract.View, VerifyCodeInputView.VerifyCallBack {
 
     private RegisterPresenter registerPresenter;
-    public static final String KEY_REGISTER_BEAN = "KEY_REGISTER_BEAN";
     private View stepOne;
     private View stepComplete;
     private TitleInputView mobileNumView;
@@ -211,7 +211,7 @@ public class RegisterActivity extends BaseActivity
     @Override
     public void showSuccess(UserDetailBean bean) {
         Intent intent = new Intent();
-        intent.putExtra(KEY_REGISTER_BEAN, bean);
+        intent.putExtra(KEY_USER_DETAIL_BEAN, bean);
         setResult(RESULT_OK, intent);
         finish();
     }

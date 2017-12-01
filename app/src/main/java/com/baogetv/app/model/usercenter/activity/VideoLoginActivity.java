@@ -7,9 +7,11 @@ import android.view.WindowManager;
 
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
+import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.model.homepage.HomePageActivity;
 import com.baogetv.app.model.usercenter.LoginManager;
 
+import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
 
@@ -50,7 +52,7 @@ public class VideoLoginActivity extends BaseActivity {
         findViewById(R.id.skip_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startHomeActivity();
+                startHomeActivity(null);
             }
         });
     }
@@ -60,17 +62,22 @@ public class VideoLoginActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_LOGIN_ACTIVITY) {
             if (resultCode == RESULT_OK) {
-                startHomeActivity();
+                UserDetailBean bean = data.getParcelableExtra(KEY_USER_DETAIL_BEAN);
+                startHomeActivity(bean);
             }
         } else if (requestCode == REQUEST_CODE_REGISTER_ACTIVITY) {
             if (resultCode == RESULT_OK) {
-                startHomeActivity();
+                UserDetailBean bean = data.getParcelableExtra(KEY_USER_DETAIL_BEAN);
+                startHomeActivity(bean);
             }
         }
     }
 
-    private void startHomeActivity() {
-        Intent intent = new Intent(VideoLoginActivity.this, HomePageActivity.class);
+    private void startHomeActivity(UserDetailBean bean) {
+        Intent intent = new Intent(this, HomePageActivity.class);
+        if (bean != null) {
+            intent.putExtra(KEY_USER_DETAIL_BEAN, bean);
+        }
         startActivity(intent);
         finish();
     }

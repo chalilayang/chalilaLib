@@ -3,6 +3,8 @@ package com.baogetv.app.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
+
 /**
  * Created by chalilayang on 2017/11/26.
  */
