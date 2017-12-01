@@ -1,5 +1,6 @@
 package com.baogetv.app.model.usercenter.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -61,6 +62,12 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.advice:
+                Intent intent = new Intent(this, AdviceActivity.class);
+                startActivity(intent);
+                break;
+        }
 
     }
 

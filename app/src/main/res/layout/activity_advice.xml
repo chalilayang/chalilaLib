@@ -23,27 +23,42 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_30"
             android:layout_marginLeft="@dimen/size_30"
-            android:text="@string/nick_name"
+            android:text="@string/advice_type"
             android:textColor="@color/reply_name"
             android:textSize="@dimen/size_28"/>
         <com.chalilayang.scaleview.ScaleLinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_92"
+            android:layout_height="@dimen/size_100"
             android:layout_marginTop="@dimen/size_20"
-            android:background="@color/white">
-            <com.chalilayang.scaleview.ScaleEditText
-                android:id="@+id/name_edit"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <com.chalilayang.scaleview.ScaleTextView
+                android:id="@+id/advice_type"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_70"
                 android:layout_marginLeft="@dimen/size_30"
-                android:hint="@string/less_than_ten_num"
-                android:gravity="center|left"
-                android:cursorVisible="true"
-                android:textSize="@dimen/size_26"
-                android:textColor="@color/send_edit_text_color"
-                android:maxLines="1"
-                android:textCursorDrawable="@drawable/edit_text_cursor"
-                android:background="@color/transparent"/>
+                android:padding="@dimen/size_10"
+                android:text="@string/advice"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_30"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:background="@color/reshape_red"
+                android:layout_alignParentBottom="true"/>
+
+            <com.chalilayang.scaleview.ScaleTextView
+                android:id="@+id/bug_type"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_70"
+                android:layout_marginLeft="@dimen/size_30"
+                android:padding="@dimen/size_10"
+                android:layout_gravity="center_vertical"
+                android:text="@string/advice_bug"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_30"
+                android:gravity="center"
+                android:background="@color/reshape_red"
+                android:layout_alignParentBottom="true"/>
         </com.chalilayang.scaleview.ScaleLinearLayout>
 
         <com.chalilayang.scaleview.ScaleTextView
@@ -51,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_30"
             android:layout_marginLeft="@dimen/size_30"
-            android:text="@string/simple_introduce"
+            android:text="@string/advice_desc"
             android:textColor="@color/reply_name"
             android:textSize="@dimen/size_28"/>
 
@@ -67,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/size_30"
-                android:hint="@string/user_intro_hint"
+                android:hint="@string/please_input_advice_desc"
                 android:textSize="@dimen/size_26"
                 android:textColor="@color/send_edit_text_color"
                 android:gravity="left|top"
@@ -82,7 +97,7 @@
         android:id="@+id/save_btn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_92"
-        android:text="@string/nick_name"
+        android:text="@string/upload_advice"
         android:textColor="@color/white"
         android:textSize="@dimen/size_36"
         android:gravity="center"

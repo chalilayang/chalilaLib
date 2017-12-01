@@ -144,7 +144,13 @@
             android:label="@string/title_activity_channel_detail"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".model.usercenter.activity.NameModifyActivity">
+        <activity
+            android:name=".model.usercenter.activity.NameModifyActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".model.usercenter.activity.AdviceActivity"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

@@ -144,6 +144,7 @@ public interface UserApiService {
      * @param intro：（个人简介）
      * @param height：（身高：176）
      * @param weight：（体重：60）
+     * @param token：（Token，登录凭证）
      * @return
      */
     @FormUrlEncoded
@@ -151,11 +152,12 @@ public interface UserApiService {
     Call<ResponseBean<List<Object>>> editUserDetail(
             @Field("pic") String pic,
             @Field("username") String username,
-            @Field("sex") int sex,
+            @Field("sex") String sex,
             @Field("birthday") String birthday,
             @Field("intro") String intro,
             @Field("height") String height,
-            @Field("weight") String weight);
+            @Field("weight") String weight,
+            @Field("token") String token);
 
     /**
      * 等级列表
