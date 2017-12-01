@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.AdviceBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.net.CustomCallBack;
@@ -25,6 +26,7 @@ public class AdviceActivity extends BaseTitleActivity {
     private TextView bugBtn;
     private EditText introEdit;
     private View save;
+    private int adType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,7 @@ public class AdviceActivity extends BaseTitleActivity {
                 adviceBtn.setTextColor(getResources().getColor(R.color.white));
                 bugBtn.setBackgroundResource(R.color.search_label_bg);
                 bugBtn.setTextColor(getResources().getColor(R.color.black_90_percent));
+                adType = 1;
             }
         });
         bugBtn = (TextView) findViewById(R.id.bug_type);
@@ -51,12 +54,14 @@ public class AdviceActivity extends BaseTitleActivity {
                 bugBtn.setTextColor(getResources().getColor(R.color.white));
                 adviceBtn.setBackgroundResource(R.color.search_label_bg);
                 adviceBtn.setTextColor(getResources().getColor(R.color.black_90_percent));
+                adType = 2;
             }
         });
         adviceBtn.setBackgroundResource(R.color.reshape_red);
         adviceBtn.setTextColor(getResources().getColor(R.color.white));
         bugBtn.setBackgroundResource(R.color.search_label_bg);
         bugBtn.setTextColor(getResources().getColor(R.color.black_90_percent));
+        adType = 1;
         introEdit = (EditText) findViewById(R.id.intro_edit);
         save = findViewById(R.id.save_btn);
         save.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +72,7 @@ public class AdviceActivity extends BaseTitleActivity {
                     showShortToast(getString(R.string.intro_null));
                     return;
                 }
+                upload(adType+"", intro);
             }
         });
     }
@@ -75,18 +81,16 @@ public class AdviceActivity extends BaseTitleActivity {
         return R.layout.activity_advice;
     }
 
-    private void modifyUserInfo(String name, String intro) {
+    private void upload(String type, String intro) {
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getUserToken(getApplicationContext());
-        Call<ResponseBean<List<Object>>> call = userApiService.editUserDetail(
-                null, name, null, null, intro, null, null, token);
+        Call<ResponseBean<AdviceBean>> call = userApiService.uploadAdvice(token, type, intro);
         if (call != null) {
-            call.enqueue(new CustomCallBack<List<Object>>() {
+            call.enqueue(new CustomCallBack<AdviceBean>() {
                 @Override
-                public void onSuccess(List<Object> data) {
+                public void onSuccess(AdviceBean data) {
                     showShortToast("success");
-
                 }
 
                 @Override

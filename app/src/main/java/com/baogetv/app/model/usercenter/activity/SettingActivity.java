@@ -65,7 +65,7 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.advice:
                 Intent intent = new Intent(this, AdviceActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, AdviceActivity.REQUEST_CODE_ADVICE);
                 break;
         }
 

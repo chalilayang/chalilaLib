@@ -1,6 +1,8 @@
 package com.baogetv.app.apiinterface;
 
 import com.baogetv.app.bean.AddItemBean;
+import com.baogetv.app.bean.AdvertisingListBean;
+import com.baogetv.app.bean.AdviceBean;
 import com.baogetv.app.bean.CollectBean;
 import com.baogetv.app.bean.CommentBean;
 import com.baogetv.app.bean.CommentListBean;
@@ -326,4 +328,32 @@ public interface UserApiService {
             @Field("video_id") int video_id,
             @Field("id") int id);
 
+
+    /**
+     * 广告列表
+     *
+     * @param title：（广告标题）
+     * @param type_id：（广告类型ID：1.引导页 2.启动广告 3.文字广告）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Adv/index")
+    Call<ResponseBean<List<AdvertisingListBean>>> getAdvertisingList(
+            @Field("title") String title,
+            @Field("type_id") int type_id);
+
+    /**
+     * 反馈意见
+     *
+     * @param token：（Token，登录凭证）
+     * @param type_id：（类型ID：1.反馈意见 2.功能bug）
+     * @param content：（举报内容）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Feedback/add")
+    Call<ResponseBean<AdviceBean>> uploadAdvice(
+            @Field("token") String token,
+            @Field("type_id") String type_id,
+            @Field("content") String content);
 }
