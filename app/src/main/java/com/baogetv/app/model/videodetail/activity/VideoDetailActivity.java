@@ -181,9 +181,18 @@ public class VideoDetailActivity extends BaseActivity {
     }
 
     @Override
+    protected boolean useActionBar() {
+        return false;
+    }
+
+    @Override
     public void onBackPressed() {
         if (!NiceVideoPlayerManager.instance().onBackPressd()) {
             super.onBackPressed();
+        } else {
+            if (!useActionBar() && getSupportActionBar() != null) {
+                getSupportActionBar().hide();
+            }
         }
     }
 
