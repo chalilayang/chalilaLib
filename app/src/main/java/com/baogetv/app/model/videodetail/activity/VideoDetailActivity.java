@@ -164,7 +164,7 @@ public class VideoDetailActivity extends BaseActivity {
             call.enqueue(new CustomCallBack<AddItemBean>() {
                 @Override
                 public void onSuccess(AddItemBean data) {
-                    showShortToast("add collect success");
+                    showShortToast("已收藏");
                 }
 
                 @Override

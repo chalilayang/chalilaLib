@@ -82,7 +82,7 @@
         android:id="@+id/save_btn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_92"
-        android:text="@string/nick_name"
+        android:text="@string/save_modify"
         android:textColor="@color/white"
         android:textSize="@dimen/size_36"
         android:gravity="center"

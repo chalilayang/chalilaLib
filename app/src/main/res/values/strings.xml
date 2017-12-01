@@ -92,6 +92,7 @@
     <string name="experience">所需经验</string>
     <string name="nick_name">昵称</string>
     <string name="user_sex">性别</string>
+    <string name="secret">保密</string>
     <string name="sex_men">男</string>
     <string name="sex_women">女</string>
     <string name="user_birthday">出生年月</string>
@@ -102,6 +103,7 @@
     <string name="name_and_intro">昵称和自我介绍</string>
     <string name="less_than_ten_num">10个汉字以内</string>
     <string name="user_intro_hint">20个汉字以内的一句话简介</string>
+    <string name="save_modify">保存</string>
     <string name="register">注册</string>
     <string name="login">登录</string>
     <string name="login_wechat">微信登录</string>

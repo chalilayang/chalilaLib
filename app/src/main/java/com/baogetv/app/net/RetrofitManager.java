@@ -1,5 +1,7 @@
 package com.baogetv.app.net;
 
+import android.util.Log;
+
 import com.baogetv.app.constant.AppConstance;
 import com.baogetv.app.constant.UrlConstance;
 
@@ -30,7 +32,13 @@ public class RetrofitManager {
     }
 
     private void initRetrofit() {
-        HttpLoggingInterceptor LoginInterceptor = new HttpLoggingInterceptor();
+        HttpLoggingInterceptor LoginInterceptor
+                = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                Log.i("chalilayang","OkHttp====Message:"+message);
+            }
+        });
         LoginInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         if (AppConstance.DEBUG) {

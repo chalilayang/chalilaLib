@@ -57,7 +57,7 @@ public class DatePickFragment extends BaseFragment implements WheelPicker.OnItem
             int y = Integer.parseInt(selectEvent.year);
             year = y - Integer.parseInt(yearList.get(0));
         } else {
-            year = yearList.size() - 1;
+            year = 2020 - 1900;
         }
         monthList = new ArrayList<>();
         for (int index = 1; index <= 12; index ++) {

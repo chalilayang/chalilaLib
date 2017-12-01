@@ -46,6 +46,7 @@ public class SexSelectFragment extends BaseFragment implements WheelPicker.OnIte
 
     private void init() {
         sexList = new ArrayList<>();
+        sexList.add(getString(R.string.secret));
         sexList.add(getString(R.string.sex_men));
         sexList.add(getString(R.string.sex_women));
         if (selectEvent != null) {
