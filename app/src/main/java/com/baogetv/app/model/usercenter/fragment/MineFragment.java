@@ -2,10 +2,13 @@ package com.baogetv.app.model.usercenter.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
@@ -27,6 +30,7 @@ import com.baogetv.app.model.usercenter.customview.MineLineItemView;
 import com.baogetv.app.model.usercenter.customview.UpgradeProgress;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
+import com.bumptech.glide.Glide;
 
 import retrofit2.Call;
 
@@ -35,11 +39,16 @@ import retrofit2.Call;
  */
 public class MineFragment extends BaseFragment implements View.OnClickListener {
 
+    private static final String KEY_USER_DETAIL = "USER_DETAIL";
     private View contentView;
     private View hasLoginView;
     private View notLoginView;
     private View loginBtn;
     private View registerBtn;
+    private ImageView userIcon;
+    private TextView userName;
+    private ImageView gradeIcon;
+    private TextView gradeDesc;
     private MineBodyInfoView mineBodyInfoView;
     private UpgradeProgress upgradeProgress;
     private MineLineItemView userGradeItemView;
@@ -52,12 +61,23 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private MineLineItemView settingItemView;
 
     private UserDetailBean detailBean;
-    public static MineFragment newInstance() {
+    public static MineFragment newInstance(UserDetailBean bean) {
         MineFragment fragment = new MineFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(KEY_USER_DETAIL, bean);
+        fragment.setArguments(bundle);
         return fragment;
     }
     public MineFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            detailBean = getArguments().getParcelable(KEY_USER_DETAIL);
+        }
     }
 
     @Override
@@ -67,6 +87,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             View view = inflater.inflate(R.layout.fragment_mine, container, false);
             init(view);
             contentView = view;
+            updateInfo();
         }
         return contentView;
     }
@@ -102,6 +123,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             hasLoginView.setVisibility(View.GONE);
             notLoginView.setVisibility(View.VISIBLE);
         }
+        userName = view.findViewById(R.id.mine_name);
+        userIcon = view.findViewById(R.id.mine_icon);
+        gradeIcon = view.findViewById(R.id.user_grade_icon);
+        gradeDesc = view.findViewById(R.id.user_grade_desc);
         mineBodyInfoView = view.findViewById(R.id.body_info_view);
         mineBodyInfoView.setHeight(170);
         mineBodyInfoView.setBodyWeight(60);
@@ -168,7 +193,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
     public void updateInfo() {
-
+        if (detailBean != null) {
+            Glide.with(this).load(detailBean.getPic_url()).into(userIcon);
+            Glide.with(this).load(detailBean.getLevel_pic_url()).into(gradeIcon);
+            userName.setText(detailBean.getUsername());
+            gradeDesc.setText(detailBean.getLevel_name());
+        }
     }
 
     public void freshUserInfo(UserDetailBean bean) {
@@ -200,7 +230,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
                 @Override
                 public void onFailed(String error) {
-
+                    showShortToast(error);
                 }
             });
         }
