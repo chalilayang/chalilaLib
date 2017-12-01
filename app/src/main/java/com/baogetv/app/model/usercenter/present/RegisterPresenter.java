@@ -61,12 +61,13 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                         LoginManager.putUserToken(mContext, data.getToken());
                         registerView.showSuccess(data);
                     } else {
-                        registerView.registerFailed("RegisterBean null");
+                        registerView.registerFailed("RegisterBean failed null ");
                     }
                 }
                 @Override
                 public void onFailed(String error) {
-                    registerView.registerFailed("RegisterBean null");
+                    Log.i(TAG, "onFailed: " + error);
+                    registerView.registerFailed("RegisterBean failed " + error);
                 }
             });
             return true;
