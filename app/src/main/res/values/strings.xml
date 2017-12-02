@@ -83,6 +83,7 @@
     <string name="video_introduce">视频功能声明</string>
     <string name="user_license">用户协议</string>
     <string name="version_right">版权声明</string>
+    <string name="login_out">退出当前账号</string>
 
     <string name="user_icon">头像</string>
     <string name="user_grade">用户等级</string>

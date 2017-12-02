@@ -54,6 +54,10 @@ public class LoginManager {
         SPUtils.put(context, KEY_USER_TOKEN, token);
     }
 
+    public static void cleanUserToken(Context context) {
+        SPUtils.put(context, KEY_USER_TOKEN, "");
+    }
+
     public static String getUserToken(Context context) {
         return (String) SPUtils.get(context, KEY_USER_TOKEN, "");
     }

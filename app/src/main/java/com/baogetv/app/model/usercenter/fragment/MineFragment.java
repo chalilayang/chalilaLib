@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.UserDetailBean;
+import com.baogetv.app.constant.AppConstance;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.activity.MyCacheActivity;
 import com.baogetv.app.model.usercenter.activity.MyCollectActivity;
@@ -34,6 +36,8 @@ import com.baogetv.app.net.RetrofitManager;
 import com.bumptech.glide.Glide;
 
 import retrofit2.Call;
+
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_SETTING_ACTIVITY;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -151,6 +155,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
     public void updateInfo() {
+        if (LoginManager.hasLogin(getActivity())) {
+            hasLoginView.setVisibility(View.VISIBLE);
+            notLoginView.setVisibility(View.GONE);
+        } else {
+            hasLoginView.setVisibility(View.GONE);
+            notLoginView.setVisibility(View.VISIBLE);
+        }
         if (detailBean != null) {
             Log.i(TAG, "updateInfo: " + detailBean.getPic_url());
             Glide.with(this).load(detailBean.getPic_url())
@@ -194,39 +205,43 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View view) {
         int id = view.getId();
         Intent intent = null;
-        switch (id) {
-            case R.id.user_grade:
-                intent = new Intent(this.getActivity(), UserGradeDescActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.my_cache:
-                intent = new Intent(this.getActivity(), MyCacheActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.my_collect:
-                intent = new Intent(this.getActivity(), MyCollectActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.play_history:
-                intent = new Intent(this.getActivity(), PlayHistoryActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.response:
-                intent = new Intent(this.getActivity(), ResponseActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.thumb_up:
-                intent = new Intent(this.getActivity(), ThumbUpActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.system_notify:
-                intent = new Intent(this.getActivity(), SystemNotifyAcitvity.class);
-                startActivity(intent);
-                break;
-            case R.id.setting:
-                intent = new Intent(this.getActivity(), SettingActivity.class);
-                startActivity(intent);
-                break;
+        if (!LoginManager.hasLogin(mActivity)) {
+            LoginManager.startLogin(mActivity);
+        } else {
+            switch (id) {
+                case R.id.user_grade:
+                    intent = new Intent(this.getActivity(), UserGradeDescActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.my_cache:
+                    intent = new Intent(this.getActivity(), MyCacheActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.my_collect:
+                    intent = new Intent(this.getActivity(), MyCollectActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.play_history:
+                    intent = new Intent(this.getActivity(), PlayHistoryActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.response:
+                    intent = new Intent(this.getActivity(), ResponseActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.thumb_up:
+                    intent = new Intent(this.getActivity(), ThumbUpActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.system_notify:
+                    intent = new Intent(this.getActivity(), SystemNotifyAcitvity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.setting:
+                    intent = new Intent(mActivity, SettingActivity.class);
+                    mActivity.startActivityForResult(intent, REQUEST_CODE_SETTING_ACTIVITY);
+                    break;
+            }
         }
     }
 
@@ -237,8 +252,18 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 updateInfo();
                 hasLoginView.setVisibility(View.VISIBLE);
             } else {
-                String token = LoginManager.getUserToken(getActivity());
-                fetchUserInfo(token);
+                if (LoginManager.hasLogin(getActivity())) {
+                    String token = LoginManager.getUserToken(getActivity());
+                    if (TextUtils.isEmpty(token)) {
+                        detailBean = null;
+                        updateInfo();
+                    } else {
+                        fetchUserInfo(token);
+                    }
+                } else {
+                    detailBean = null;
+                    updateInfo();
+                }
             }
         }
     }

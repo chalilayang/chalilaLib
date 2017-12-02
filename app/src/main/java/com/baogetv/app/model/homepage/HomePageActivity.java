@@ -24,6 +24,7 @@ import java.util.List;
 import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_SETTING_ACTIVITY;
 
 public class HomePageActivity extends BaseActivity implements View.OnClickListener {
 
@@ -161,7 +162,6 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_LOGIN_ACTIVITY) {
             if (resultCode == RESULT_OK) {
                 UserDetailBean loginBean = data.getParcelableExtra(KEY_USER_DETAIL_BEAN);
@@ -174,6 +174,12 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
                 UserDetailBean registerBean = data.getParcelableExtra(KEY_USER_DETAIL_BEAN);
                 if (mineFragment != null && mineFragment.isVisible()) {
                     mineFragment.freshUserInfo(registerBean);
+                }
+            }
+        } else if (requestCode == REQUEST_CODE_SETTING_ACTIVITY) {
+            if (resultCode == RESULT_OK) {
+                if (mineFragment != null && mineFragment.isVisible()) {
+                    mineFragment.freshUserInfo(null);
                 }
             }
         }

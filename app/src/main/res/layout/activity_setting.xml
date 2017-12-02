@@ -143,6 +143,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_110"
                 app:title="@string/version_right"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_40"
+                android:background="@color/channel_list_divider"/>
+
+            <com.chalilayang.scaleview.ScaleTextView
+                android:id="@+id/login_out"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_92"
+                android:text="@string/login_out"
+                android:textColor="@color/reshape_red"
+                android:textSize="@dimen/size_36"
+                android:gravity="center"
+                android:background="@color/white"
+                android:layout_alignParentBottom="true"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_40"
+                android:background="@color/channel_list_divider"/>
         </com.chalilayang.scaleview.ScaleLinearLayout>
     </ScrollView>
 
