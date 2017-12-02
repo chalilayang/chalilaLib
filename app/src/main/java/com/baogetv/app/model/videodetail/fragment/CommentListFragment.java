@@ -1,6 +1,5 @@
 package com.baogetv.app.model.videodetail.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,8 +14,8 @@ import com.baogetv.app.BaseItemFragment;
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
 import com.baogetv.app.model.usercenter.entity.UserData;
-import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.CommentListAdapter;
+import com.baogetv.app.model.videodetail.customview.CommentView;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
 import com.chalilayang.customview.RecyclerViewDivider;
@@ -27,7 +26,8 @@ import java.util.List;
 
 
 public class CommentListFragment extends BaseItemFragment
-        implements SwipeRefreshLayout.OnRefreshListener, ItemViewHolder.ItemClickListener<CommentData>{
+        implements SwipeRefreshLayout.OnRefreshListener,
+        ItemViewHolder.ItemClickListener<CommentData>, CommentView.OnCommentListener {
 
     private static final String TAG = "CommentListFragment";
     private static final String PAGE_DATA = "PAGE_DATA";
@@ -35,7 +35,7 @@ public class CommentListFragment extends BaseItemFragment
     private SwipeRefreshLayout refreshLayout;
     private View contentView;
     private RecyclerView.LayoutManager layoutManager;
-    private BaseItemAdapter recyclerViewAdapter;
+    private CommentListAdapter recyclerViewAdapter;
 
     public CommentListFragment() {
     }
@@ -70,7 +70,7 @@ public class CommentListFragment extends BaseItemFragment
             ReplyData replyData = new ReplyData();
             replyData.setReplyer(replyer);
             replyData.setReplyTo(replyer);
-            replyData.setContent("饿哦日女偶俄如女儿地方女偶儿女偶😈👹👺💀💤💩🤡╮(￣▽￣)╭🀂🀂😁😀尔女人额如厕我软编");
+            replyData.setContent("饿哦日女偶俄如女儿地方女偶儿女偶尔女人额如厕我软编");
             List<ReplyData> list1 = new ArrayList<>();
             for (int i = 0, count = index % 5; i < count; i ++) {
                 list1.add(replyData);
@@ -80,6 +80,7 @@ public class CommentListFragment extends BaseItemFragment
         }
         recyclerViewAdapter = new CommentListAdapter(getActivity(), list);
         recyclerViewAdapter.setItemClick(this);
+        recyclerViewAdapter.setOnCommentListener(this);
     }
 
     @Override
@@ -112,7 +113,40 @@ public class CommentListFragment extends BaseItemFragment
     @Override
     public void onItemClick(CommentData data, int position) {
         Log.i(TAG, "onItemClick: " + position);
-        Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
-        getActivity().startActivity(intent);
+    }
+
+    @Override
+    public void onIconClick(CommentData data) {
+        Log.i(TAG, "onIconClick: ");
+    }
+
+    @Override
+    public void onThumbUp(CommentData data) {
+        Log.i(TAG, "onThumbUp: ");
+    }
+
+    @Override
+    public void onJuBaoClick(CommentData data) {
+        Log.i(TAG, "onJuBaoClick: ");
+    }
+
+    @Override
+    public void onReplyerClick(ReplyData data) {
+        Log.i(TAG, "onReplyerClick: ");
+    }
+
+    @Override
+    public void onReplyToClick(ReplyData data) {
+        Log.i(TAG, "onReplyToClick: ");
+    }
+
+    @Override
+    public void onReplyClick(ReplyData data) {
+        Log.i(TAG, "onReplyClick: ");
+    }
+
+    @Override
+    public void onMoreComment(CommentData data) {
+        Log.i(TAG, "onMoreComment: ");
     }
 }

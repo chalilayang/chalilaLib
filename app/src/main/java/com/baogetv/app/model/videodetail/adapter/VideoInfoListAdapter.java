@@ -130,9 +130,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 desc.setText(bean.getIntro());
                 share.setText(bean.getShares());
                 like.setText(bean.getLikes());
-                List<String> labels = bean.getTags();
-                labels.add("ddd");
-                labels.add("地方的的");
+                List<VideoDetailBean.TagsBean> labels = bean.getTags();
                 flowLayout.removeAllViews();
                 if (labels != null) {
                     int count = labels.size();
@@ -149,7 +147,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             }
         }
 
-        private void addLabel(List<String> mData) {
+        private void addLabel(List<VideoDetailBean.TagsBean> mData) {
             int paddingLeft
                     = ScaleCalculator.getInstance(mContext).scaleTextSize(10);
             int paddingTop
@@ -158,7 +156,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             for (int index = 0, count = mData.size(); index < count; index ++) {
                 final TextView view = new TextView(mContext);
-                view.setText(mData.get(index));
+                view.setText(mData.get(index).getName());
                 view.setTextColor(mContext.getResources().getColor(R.color.search_label_text));
                 view.setGravity(Gravity.CENTER);
                 view.setIncludeFontPadding(false);
@@ -170,6 +168,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 flowLayout.addView(view);
             }
         }
+
         public HeadViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.video_name);

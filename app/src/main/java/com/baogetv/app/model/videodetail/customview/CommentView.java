@@ -18,13 +18,17 @@ import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleFrameLayout;
 import com.chalilayang.scaleview.ScaleTextView;
 
+import org.w3c.dom.Text;
+
+import java.lang.ref.SoftReference;
 import java.util.List;
 
 /**
  * Created by chalilayang on 2017/11/21.
  */
 
-public class CommentView extends ScaleFrameLayout implements ReplyView.OnReplyClickListener {
+public class CommentView extends ScaleFrameLayout
+        implements ReplyView.OnReplyClickListener {
 
     private static final String TAG = "CommentView";
     private CommentData commentData;
@@ -36,6 +40,10 @@ public class CommentView extends ScaleFrameLayout implements ReplyView.OnReplyCl
     private TextView commentContent;
     private LinearLayout replyContainer;
     private TextView moreReplyBtn;
+
+    private View reportBtn;
+    private TextView commentCount;
+    private View zan;
 
     private String moreReplyFormat;
 
@@ -64,16 +72,49 @@ public class CommentView extends ScaleFrameLayout implements ReplyView.OnReplyCl
         moreReplyBtn = new ScaleTextView(context);
         moreReplyBtn.setTextSize(TypedValue.COMPLEX_UNIT_PX, 28);
         moreReplyBtn.setTextColor(getResources().getColor(R.color.video_detail_name_link));
+
+        reportBtn = root.findViewById(R.id.report_comment);
+        commentCount = root.findViewById(R.id.comment_icon);
+        zan = root.findViewById(R.id.comment_thumb_up);
     }
 
-    public void setCommentData(CommentData data) {
+    public void setCommentData(final CommentData data) {
         commentData = data;
         replyContainer.setVisibility(GONE);
         replyContainer.removeAllViews();
+        reportBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mRef != null && mRef.get() != null) {
+                    mRef.get().onJuBaoClick(data);
+                }
+            }
+        });
+        if (data.getReplyList() != null) {
+            commentCount.setText(data.getReplyList().size()+"");
+        } else {
+            commentCount.setText(0+"");
+        }
+        zan.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mRef != null && mRef.get() != null) {
+                    mRef.get().onThumbUp(data);
+                }
+            }
+        });
         if (commentData != null) {
             Glide.with(getContext()).load(data.getOwner()
                             .getIconUrl()).error(R.mipmap.user_default_icon).into(userLogoImage);
             userLogoImage.setLogo(data.getOwner().getGrage());
+            userLogoImage.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mRef != null && mRef.get() != null) {
+                        mRef.get().onIconClick(commentData);
+                    }
+                }
+            });
             userName.setText(data.getOwner().getNickName());
             userDesc.setText(data.getOwner().getDesc());
             commentContent.setText(data.getContent());
@@ -86,6 +127,14 @@ public class CommentView extends ScaleFrameLayout implements ReplyView.OnReplyCl
                     for (int index = 0; index < count; index ++) {
                         if (index == 3) {
                             moreReplyBtn.setText(String.format(moreReplyFormat, count));
+                            moreReplyBtn.setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (mRef != null && mRef.get() != null) {
+                                        mRef.get().onMoreComment(commentData);
+                                    }
+                                }
+                            });
                             replyContainer.addView(moreReplyBtn, index);
                             break;
                         }
@@ -103,15 +152,38 @@ public class CommentView extends ScaleFrameLayout implements ReplyView.OnReplyCl
     @Override
     public void onReplyerClick(ReplyData data) {
         Log.i(TAG, "onReplyerClick: ");
+        if (mRef != null && mRef.get() != null) {
+            mRef.get().onReplyerClick(data);
+        }
     }
 
     @Override
     public void onReplyToClick(ReplyData data) {
         Log.i(TAG, "onReplyToClick: ");
+        if (mRef != null && mRef.get() != null) {
+            mRef.get().onReplyToClick(data);
+        }
     }
 
     @Override
     public void onReplyClick(ReplyData data) {
         Log.i(TAG, "onReplyClick: ");
+        if (mRef != null && mRef.get() != null) {
+            mRef.get().onReplyClick(data);
+        }
+    }
+
+    private SoftReference<OnCommentListener> mRef;
+    public void setOnCommentListener(OnCommentListener listener) {
+        if (listener != null) {
+            mRef = new SoftReference<OnCommentListener>(listener);
+        }
+    }
+
+    public interface OnCommentListener extends ReplyView.OnReplyClickListener {
+        void onIconClick(CommentData data);
+        void onThumbUp(CommentData data);
+        void onJuBaoClick(CommentData data);
+        void onMoreComment(CommentData data);
     }
 }
