@@ -20,6 +20,7 @@ import com.baogetv.app.downloader.callback.DownloadManager;
 import com.baogetv.app.downloader.domain.DownloadInfo;
 import com.baogetv.app.model.usercenter.MyDownloadListener;
 import com.baogetv.app.util.FileUtil;
+import com.baogetv.app.util.StorageManager;
 import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleCalculator;
 
@@ -236,7 +237,6 @@ public class MyCacheAdapter
 
         private void refresh() {
             if (downloadInfo == null) {
-                title.setText("");
                 progressBar.setProgress(0);
                 startBtn.setText("Download");
                 stateTv.setText("not downloadInfo");
@@ -276,7 +276,6 @@ public class MyCacheAdapter
                         stateTv.setText(downloadingStr);
                         break;
                     case STATUS_COMPLETED:
-                        startBtn.setVisibility(View.INVISIBLE);
                         try {
                             progressBar.setProgress((int) (downloadInfo.getProgress() * 100.0 /
                                     downloadInfo.getSize()));

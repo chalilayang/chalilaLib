@@ -83,7 +83,7 @@ public class MyCacheActivity extends BaseTitleActivity {
             }
         }
         for (int index = 0, count = downloadingList.size(); index < count; index ++) {
-            DownloadInfo info = downloadedList.get(index);
+            DownloadInfo info = downloadingList.get(index);
             try {
                 MyBusinessInfLocal local = dbController.findMyDownloadInfoById(info.getId());
                 myBusinessInfos.add(new MyBusinessInfo(local.getName(), local.getIcon(), local.getUrl()));
