@@ -262,8 +262,8 @@ public interface UserApiService {
     @POST("index.php?s=/Play/del")
     Call<ResponseBean<List<Object>>> deleteHistory(
             @Field("token") String token,
-            @Field("video_id") int video_id,
-            @Field("id") int id);
+            @Field("video_id") String video_id,
+            @Field("id") String id);
 
     /**
      * 我的播放记录

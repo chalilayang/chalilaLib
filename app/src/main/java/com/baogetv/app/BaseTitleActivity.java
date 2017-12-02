@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-public class BaseTitleActivity extends BaseActivity {
+public class BaseTitleActivity extends BaseActivity  {
 
     protected TextView titleActivity;
     protected TextView rightTitle;
@@ -17,6 +17,14 @@ public class BaseTitleActivity extends BaseActivity {
         setContentView(getRootView());
         titleActivity = (TextView) findViewById(R.id.title);
         rightTitle = (TextView) findViewById(R.id.right_title);
+        if (rightTitle!= null) {
+            rightTitle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onRightClick();
+                }
+            });
+        }
         backView = (ImageView) findViewById(R.id.back_icon);
         if (backView != null) {
             backView.setOnClickListener(new View.OnClickListener() {
@@ -26,6 +34,10 @@ public class BaseTitleActivity extends BaseActivity {
                 }
             });
         }
+
+    }
+
+    public void onRightClick() {
 
     }
 

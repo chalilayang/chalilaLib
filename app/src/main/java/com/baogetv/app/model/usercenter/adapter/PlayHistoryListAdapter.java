@@ -9,15 +9,15 @@ import android.widget.TextView;
 
 import com.baogetv.app.BaseItemAdapter;
 import com.baogetv.app.ItemViewHolder;
-import com.baogetv.app.bean.CollectBean;
-import com.chalilayang.scaleview.ScaleCalculator;
 import com.baogetv.app.R;
+import com.baogetv.app.bean.HistoryBean;
+import com.chalilayang.scaleview.ScaleCalculator;
 
 import java.lang.ref.SoftReference;
 
-public class CollectListAdapter
-        extends BaseItemAdapter<CollectBean, CollectListAdapter.ViewHolder>
-        implements ItemViewHolder.ItemDeleteListener<CollectBean> {
+public class PlayHistoryListAdapter
+        extends BaseItemAdapter<HistoryBean, PlayHistoryListAdapter.ViewHolder>
+        implements ItemViewHolder.ItemDeleteListener<HistoryBean> {
 
     private int margin_8px;
     private int margin_15px;
@@ -25,14 +25,14 @@ public class CollectListAdapter
     private int margin_30px;
     private int margin_160px;
     private String videoCountFormat;
-    protected SoftReference<ItemViewHolder.ItemDeleteListener<CollectBean>> mDeleteRef;
-    public void setItemDeleteListener(ItemViewHolder.ItemDeleteListener<CollectBean> listener) {
+    protected SoftReference<ItemViewHolder.ItemDeleteListener<HistoryBean>> mDeleteRef;
+    public void setItemDeleteListener(ItemViewHolder.ItemDeleteListener<HistoryBean> listener) {
         if (listener != null) {
             mDeleteRef = new SoftReference<>(listener);
         }
     }
 
-    public CollectListAdapter(Context context) {
+    public PlayHistoryListAdapter(Context context) {
         super(context);
         margin_8px = ScaleCalculator.getInstance(mContext).scaleWidth(8);
         margin_15px = ScaleCalculator.getInstance(mContext).scaleWidth(15);
@@ -53,7 +53,7 @@ public class CollectListAdapter
     }
 
     @Override
-    public void onDelete(CollectBean data, int pos) {
+    public void onDelete(HistoryBean data, int pos) {
         if (mDeleteRef != null && mDeleteRef.get() != null) {
             mDeleteRef.get().onDelete(data, pos);
         }
@@ -71,7 +71,7 @@ public class CollectListAdapter
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends ItemViewHolder<CollectBean> {
+    public class ViewHolder extends ItemViewHolder<HistoryBean> {
         public final View mView;
         public final View contentRoot;
         public final ImageView mImageView;
@@ -80,7 +80,7 @@ public class CollectListAdapter
         public final TextView deleteBtn;
         protected SoftReference<ItemDeleteListener> mDeleteRef;
         @Override
-        public void bindData(CollectBean data, int pos) {
+        public void bindData(HistoryBean data, int pos) {
             title.setText(data.getTitle());
             updateTime.setText(data.getAdd_time());
         }
@@ -99,7 +99,7 @@ public class CollectListAdapter
             deleteBtn.setOnClickListener(this);
         }
 
-        public void setItemDeleteListener(ItemDeleteListener<CollectBean> listener) {
+        public void setItemDeleteListener(ItemDeleteListener<HistoryBean> listener) {
             if (listener != null) {
                 mDeleteRef = new SoftReference<ItemDeleteListener>(listener);
             }

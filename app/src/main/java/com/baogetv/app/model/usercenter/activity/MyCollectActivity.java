@@ -43,6 +43,11 @@ public class MyCollectActivity extends BaseTitleActivity
     }
 
     @Override
+    public void onRightClick() {
+        delete(null, 0);
+    }
+
+    @Override
     protected int getRootView() {
         return R.layout.activity_my_collect;
     }
@@ -64,6 +69,7 @@ public class MyCollectActivity extends BaseTitleActivity
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
         refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setEnabled(false);
     }
 
     private void getCollectList() {
@@ -101,19 +107,29 @@ public class MyCollectActivity extends BaseTitleActivity
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getUserToken(getApplicationContext());
+        String videoId = null;
+        String id = null;
+        if (data != null) {
+            videoId = data.getVideo_id();
+            id = data.getId();
+        }
         Call<ResponseBean<List<Object>>> call
-                = userApiService.deleteCollect(token, data.getVideo_id(), data.getId());
+                = userApiService.deleteCollect(token, videoId, id);
         if (call != null) {
             call.enqueue(new CustomCallBack<List<Object>>() {
                 @Override
                 public void onSuccess(List<Object> data) {
                     Log.i(TAG, "onSuccess: ");
-                    recyclerViewAdapter.deleteItem(pos);
+                    if (data == null) {
+                        recyclerViewAdapter.deleteAllItem();
+                    } else {
+                        recyclerViewAdapter.deleteItem(pos);
+                    }
                 }
 
                 @Override
                 public void onFailed(String error) {
-
+                    showShortToast(error);
                 }
             });
         }
