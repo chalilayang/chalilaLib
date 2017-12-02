@@ -105,7 +105,7 @@ public class ReplyView extends ScaleLinearLayout {
         addView(bottomContainer, llp);
     }
 
-    public void setReply(ReplyData data) {
+    public void setReply(final ReplyData data) {
         if (data != null) {
             contentTv.setMovementMethod(LinkMovementMethod.getInstance());
             contentTv.setHighlightColor(Color.TRANSPARENT);
@@ -129,6 +129,9 @@ public class ReplyView extends ScaleLinearLayout {
                     @Override
                     public void onClick (final View widget) {
                         Log.i(TAG, "onClick: ");
+                        if (mRef != null && mRef.get() != null) {
+                            mRef.get().onReplyerClick(data);
+                        }
                     }
                 }, start, nameEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 start = nameEnd;
@@ -148,7 +151,9 @@ public class ReplyView extends ScaleLinearLayout {
 
                     @Override
                     public void onClick (final View widget) {
-
+                        if (mRef != null && mRef.get() != null) {
+                            mRef.get().onReplyToClick(data);
+                        }
                     }
                 }, start, nameEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 start = nameEnd;
@@ -163,7 +168,9 @@ public class ReplyView extends ScaleLinearLayout {
 
                     @Override
                     public void onClick (final View widget) {
-
+                        if (mRef != null && mRef.get() != null) {
+                            mRef.get().onReplyClick(data);
+                        }
                     }
                 }, start, nameEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 contentTv.setText(spanString);
@@ -171,15 +178,15 @@ public class ReplyView extends ScaleLinearLayout {
         }
     }
 
-    private SoftReference<OnCommentClickListener> mRef;
-    public void setCommentClickListener(OnCommentClickListener listener) {
+    private SoftReference<OnReplyClickListener> mRef;
+    public void setReplyClickListener(OnReplyClickListener listener) {
         if (listener != null) {
-            mRef = new SoftReference<OnCommentClickListener>(listener);
+            mRef = new SoftReference<OnReplyClickListener>(listener);
         }
     }
-    public interface OnCommentClickListener {
-        void onReplyerClick(CommentData data);
-        void onReplyToClick(CommentData data);
-        void onReplyClick(CommentData data);
+    public interface OnReplyClickListener {
+        void onReplyerClick(ReplyData data);
+        void onReplyToClick(ReplyData data);
+        void onReplyClick(ReplyData data);
     }
 }

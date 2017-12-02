@@ -38,6 +38,7 @@
     <string name="send_edit_hint">\&#064;说点什么</string>
     <string name="more_reply_format">查看全部%d条评论</string>
     <string name="zan_your_comment">赞了你的评论</string>
+    <string name="xx_response_you_in">在%s中回复了你</string>
 
 
     <string name="mine">我的</string>

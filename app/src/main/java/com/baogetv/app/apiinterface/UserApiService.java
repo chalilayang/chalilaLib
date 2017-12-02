@@ -9,6 +9,7 @@ import com.baogetv.app.bean.GradeBean;
 import com.baogetv.app.bean.GradeDetailBean;
 import com.baogetv.app.bean.HistoryBean;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.bean.ResponseMeBean;
 import com.baogetv.app.bean.ScoreSourceBean;
 import com.baogetv.app.bean.ScoreSourceDetailBean;
 import com.baogetv.app.bean.UserDetailBean;
@@ -335,6 +336,16 @@ public interface UserApiService {
     @FormUrlEncoded
     @POST("index.php?s=/Likes/fromMe")
     Call<ResponseBean<List<ZanMeBean>>> getZanMeList(@Field("token") String token);
+
+    /**
+     * 回复333333333333333333333我的
+     *
+     * @param token：（Token，登录凭证）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Likes/fromMe")
+    Call<ResponseBean<List<ResponseMeBean>>> getResponseMeList(@Field("token") String token);
 
     /**
      * 广告列表

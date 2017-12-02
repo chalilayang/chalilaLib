@@ -23,7 +23,7 @@ import java.util.List;
  * Created by chalilayang on 2017/11/21.
  */
 
-public class CommentView extends ScaleFrameLayout {
+public class CommentView extends ScaleFrameLayout implements ReplyView.OnReplyClickListener {
 
     private CommentData commentData;
 
@@ -90,10 +90,26 @@ public class CommentView extends ScaleFrameLayout {
                         ReplyData replyData = replyDataList.get(index);
                         ReplyView replyView = new ReplyView(getContext());
                         replyView.setReply(replyData);
-                        replyContainer.addView(replyView, index);
+//                        replyView.
+//                        replyContainer.addView(replyView, index);
                     }
                 }
             }
         }
+    }
+
+    @Override
+    public void onReplyerClick(ReplyData data) {
+
+    }
+
+    @Override
+    public void onReplyToClick(ReplyData data) {
+
+    }
+
+    @Override
+    public void onReplyClick(ReplyData data) {
+
     }
 }
