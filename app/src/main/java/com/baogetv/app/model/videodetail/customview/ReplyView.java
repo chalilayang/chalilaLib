@@ -184,6 +184,7 @@ public class ReplyView extends ScaleLinearLayout {
             mRef = new SoftReference<OnReplyClickListener>(listener);
         }
     }
+
     public interface OnReplyClickListener {
         void onReplyerClick(ReplyData data);
         void onReplyToClick(ReplyData data);

@@ -5,17 +5,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
 import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.model.videodetail.player.PlayerController;
-import com.bumptech.glide.Glide;
 import com.xiao.nicevideoplayer.NiceVideoPlayer;
 import com.xiao.nicevideoplayer.NiceVideoPlayerController;
 import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
-import com.xiao.nicevideoplayer.TxVideoPlayerController;
 
 import static com.baogetv.app.model.videodetail.activity.VideoDetailActivity.KEY_VIDEO_DETAIL;
 

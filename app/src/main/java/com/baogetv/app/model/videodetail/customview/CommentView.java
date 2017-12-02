@@ -2,6 +2,7 @@ package com.baogetv.app.model.videodetail.customview;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import java.util.List;
 
 public class CommentView extends ScaleFrameLayout implements ReplyView.OnReplyClickListener {
 
+    private static final String TAG = "CommentView";
     private CommentData commentData;
 
     private LogoCircleImageView userLogoImage;
@@ -89,9 +91,9 @@ public class CommentView extends ScaleFrameLayout implements ReplyView.OnReplyCl
                         }
                         ReplyData replyData = replyDataList.get(index);
                         ReplyView replyView = new ReplyView(getContext());
+                        replyView.setReplyClickListener(this);
                         replyView.setReply(replyData);
-//                        replyView.
-//                        replyContainer.addView(replyView, index);
+                        replyContainer.addView(replyView, index);
                     }
                 }
             }
@@ -100,16 +102,16 @@ public class CommentView extends ScaleFrameLayout implements ReplyView.OnReplyCl
 
     @Override
     public void onReplyerClick(ReplyData data) {
-
+        Log.i(TAG, "onReplyerClick: ");
     }
 
     @Override
     public void onReplyToClick(ReplyData data) {
-
+        Log.i(TAG, "onReplyToClick: ");
     }
 
     @Override
     public void onReplyClick(ReplyData data) {
-
+        Log.i(TAG, "onReplyClick: ");
     }
 }
