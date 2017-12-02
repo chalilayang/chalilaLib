@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chalilayang.scaleview.ScaleRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.baogetv.app.customview.LogoCircleImageView
+        android:id="@+id/comment_user_icon"
+        android:layout_width="@dimen/size_92"
+        android:layout_height="@dimen/size_92"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@mipmap/user_default_icon"/>
+
+    <com.chalilayang.scaleview.ScaleLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/size_20"
+        android:layout_toRightOf="@+id/comment_user_icon"
+        android:orientation="vertical">
+
+        <com.chalilayang.scaleview.ScaleRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.chalilayang.scaleview.ScaleTextView
+                android:id="@+id/comment_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/reshape_red"
+                android:textSize="@dimen/size_34"/>
+
+            <com.chalilayang.scaleview.ScaleTextView
+                android:id="@+id/comment_name_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20"
+                android:background="@drawable/search_label_bg"
+                android:layout_toRightOf="@+id/comment_name"
+                android:layout_centerVertical="true"
+                android:paddingLeft="@dimen/size_10"
+                android:paddingRight="@dimen/size_10"
+                android:textSize="@dimen/size_24"/>
+
+            <com.chalilayang.scaleview.ScaleTextView
+                android:id="@+id/comment_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/reply_time"
+                android:textSize="@dimen/size_24"/>
+        </com.chalilayang.scaleview.ScaleRelativeLayout>
+
+        <com.chalilayang.scaleview.ScaleTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_26"
+            android:text="@string/zan_your_comment"
+            android:textColor="@color/reply_content"
+            android:textSize="@dimen/size_28"/>
+
+        <com.chalilayang.scaleview.ScaleLinearLayout
+            android:id="@+id/comment_reply_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_30"
+            android:background="@color/replay_container_bg"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/size_30"
+            android:paddingLeft="@dimen/size_20"
+            android:paddingRight="@dimen/size_20"
+            android:paddingTop="@dimen/size_30">
+
+            <com.chalilayang.scaleview.ScaleTextView
+                android:id="@+id/comment_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/zan_your_comment"
+                android:textColor="@color/reply_content"
+                android:textSize="@dimen/size_28"/>
+        </com.chalilayang.scaleview.ScaleLinearLayout>
+    </com.chalilayang.scaleview.ScaleLinearLayout>
+</com.chalilayang.scaleview.ScaleRelativeLayout>

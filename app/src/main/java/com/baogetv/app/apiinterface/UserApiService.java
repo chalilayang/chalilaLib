@@ -12,6 +12,7 @@ import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.ScoreSourceBean;
 import com.baogetv.app.bean.ScoreSourceDetailBean;
 import com.baogetv.app.bean.UserDetailBean;
+import com.baogetv.app.bean.ZanMeBean;
 
 import java.util.List;
 
@@ -325,6 +326,15 @@ public interface UserApiService {
             @Field("video_id") int video_id,
             @Field("id") int id);
 
+    /**
+     * 赞我的
+     *
+     * @param token：（Token，登录凭证）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Likes/fromMe")
+    Call<ResponseBean<List<ZanMeBean>>> getZanMeList(@Field("token") String token);
 
     /**
      * 广告列表
