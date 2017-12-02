@@ -47,8 +47,8 @@ public class StorageManager {
 
     public static File getDownloadFolder() {
         File result = null;
-        String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
-        File file1 = new File(dir + File.separator + "豹哥健身");
+        String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera";
+        File file1 = new File(dir + File.separator + "baogetv");
         result = file1;
         if (!result.exists()) {
             result.mkdirs();
@@ -77,26 +77,28 @@ public class StorageManager {
     }
 
     /**
-     * get directory path for saving video file
+     * 获取文件保存路径
+     *
      * @return
      */
-    public static String getShootPicSavePath() {
-        File dir = getDownloadFolder();
-        if (dir == null) {
-            return null;
-        } else {
-            if (!dir.exists()) {
-                dir.mkdirs();
+    public static synchronized File getDownloadFile(String filename) {
+        File file = null;
+        if (!TextUtils.isEmpty(filename)) {
+            File fileFolder = getDownloadFolder();
+            if (fileFolder != null) {
+                file = new File(fileFolder, filename);
             }
-            return dir.getAbsolutePath() + File.separator + "shoot";
+        } else {
+            Log.d(TAG, "StorageEngine.getDownloadFile()  forderName or fileName is empty!");
         }
+        return file;
     }
 
     /**
      * get directory path for saving video file
      * @return
      */
-    public static String getCacheVideoPath() {
+    public static String getSavePath() {
         File dir = getDownloadFolder();
         if (dir == null) {
             return null;
@@ -104,7 +106,7 @@ public class StorageManager {
             if (!dir.exists()) {
                 dir.mkdirs();
             }
-            return dir.getAbsolutePath() + File.separator + "video";
+            return dir.getAbsolutePath();
         }
     }
 
@@ -120,7 +122,7 @@ public class StorageManager {
         if (TextUtils.isEmpty(vid)) {
             return false;
         }
-        String dirPath = getShootPicSavePath();
+        String dirPath = getSavePath();
         if (TextUtils.isEmpty(dirPath)) {
             return false;
         }
@@ -145,7 +147,7 @@ public class StorageManager {
         if (TextUtils.isEmpty(vid)) {
             return null;
         }
-        String dirPath = getShootPicSavePath();
+        String dirPath = getSavePath();
         if (TextUtils.isEmpty(dirPath)) {
             return null;
         }

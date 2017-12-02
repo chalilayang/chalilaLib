@@ -20,6 +20,7 @@ import com.baogetv.app.downloader.callback.DownloadManager;
 import com.baogetv.app.downloader.domain.DownloadInfo;
 import com.baogetv.app.model.usercenter.MyDownloadListener;
 import com.baogetv.app.util.FileUtil;
+import com.baogetv.app.util.StorageManager;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
@@ -141,12 +142,8 @@ public class CacheListAdapter extends RecyclerView.Adapter<CacheListAdapter.View
                                 break;
                         }
                     } else {
-                        File d = new File(Environment.getExternalStorageDirectory()
-                                .getAbsolutePath(), "d");
-                        if (!d.exists()) {
-                            d.mkdirs();
-                        }
-                        String path = d.getAbsolutePath().concat("/").concat(data.getName());
+                        String path = StorageManager.getDownloadFile(
+                                StorageManager.generateFileName()).getAbsolutePath();
                         downloadInfo = new DownloadInfo.Builder().setUrl(data.getUrl())
                                 .setPath(path)
                                 .build();

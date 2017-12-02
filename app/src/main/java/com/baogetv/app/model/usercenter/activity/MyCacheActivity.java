@@ -27,7 +27,7 @@ public class MyCacheActivity extends BaseTitleActivity {
     private static final String TAG = "MyCollectActivity";
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private MyCacheAdapter recyclerViewAdapter;
+    private CacheListAdapter recyclerViewAdapter;
     private DownloadManager downloadManager;
     private DBController dbController;
 
@@ -59,10 +59,10 @@ public class MyCacheActivity extends BaseTitleActivity {
         divider.setMargin(margin_30px);
         recyclerView.addItemDecoration(divider);
         layoutManager = new LinearLayoutManager(this);
-        recyclerViewAdapter = new MyCacheAdapter(this);
+        recyclerViewAdapter = new CacheListAdapter(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerViewAdapter.update(getDownloadListData());
+        recyclerViewAdapter.updateCacheList(getDownloadListData());
     }
 
     private List<MyBusinessInfo> getDownloadListData() {

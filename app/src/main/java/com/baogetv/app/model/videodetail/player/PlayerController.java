@@ -143,7 +143,7 @@ public class PlayerController extends NiceVideoPlayerController
             }
         } else if (v.getId() == R.id.player_shoot) {
             if (!isTryingShoot) {
-                String path = StorageManager.getShootPicSavePath()
+                String path = StorageManager.getSavePath()
                         + File.separator + StorageManager.generateFileName() + ".png";
                 isTryingShoot = mNiceVideoPlayer.tryToShoot(path);
             }
@@ -170,6 +170,7 @@ public class PlayerController extends NiceVideoPlayerController
         super.onShootGot(filePath);
         final String mPath = filePath;
         Log.i(TAG, "onShootGot: " + filePath);
+        isTryingShoot = false;
         post(new Runnable() {
             @Override
             public void run() {
