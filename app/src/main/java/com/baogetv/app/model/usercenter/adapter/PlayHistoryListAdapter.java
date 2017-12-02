@@ -11,6 +11,7 @@ import com.baogetv.app.BaseItemAdapter;
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
 import com.baogetv.app.bean.HistoryBean;
+import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleCalculator;
 
 import java.lang.ref.SoftReference;
@@ -83,6 +84,7 @@ public class PlayHistoryListAdapter
         public void bindData(HistoryBean data, int pos) {
             title.setText(data.getTitle());
             updateTime.setText(data.getAdd_time());
+            Glide.with(mContext).load(data.getPic_url()).crossFade().into(mImageView);
         }
 
         public ViewHolder(View view) {

@@ -17,7 +17,7 @@
             android:id="@+id/video_item_icon"
             android:layout_width="@dimen/size_256"
             android:layout_height="@dimen/size_135"
-            android:background="@color/black"
+            android:background="@color/transparent"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"/>
         <com.chalilayang.scaleview.ScaleLinearLayout
