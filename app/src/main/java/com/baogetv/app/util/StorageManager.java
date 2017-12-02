@@ -47,7 +47,7 @@ public class StorageManager {
 
     public static File getDownloadFolder() {
         File result = null;
-        String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera";
+        String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
         File file1 = new File(dir + File.separator + "豹哥健身");
         result = file1;
         if (!result.exists()) {
@@ -77,65 +77,10 @@ public class StorageManager {
     }
 
     /**
-     * 获取文件保存路径
-     *
-     * @return
-     */
-    public static synchronized File getDownloadFile(String filename) {
-        File file = null;
-        if (!TextUtils.isEmpty(filename)) {
-            File fileFolder = getDownloadFolder();
-            if (fileFolder != null) {
-                file = new File(fileFolder, filename);
-            }
-        } else {
-            Log.d(TAG, "StorageEngine.getDownloadFile()  forderName or fileName is empty!");
-        }
-        return file;
-    }
-
-    public static String getTempDir() {
-        File dir = new File(getDownloadFolder(), "temp");
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        return dir.getAbsolutePath();
-    }
-    public static File getTempFileDir() {
-        File dir = new File(getDownloadFolder(), "temp");
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        return dir;
-    }
-
-    public static String getTempRecordDir() {
-        File dir = new File(getDownloadFolder(), "record");
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        return dir.getAbsolutePath();
-    }
-    public static File getTempRecordFileDir() {
-        File dir = new File(getDownloadFolder(), "record");
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        return dir;
-    }
-    public static String getLogDir() {
-        File dir = new File(getDownloadFolder(), "logs");
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        return dir.getAbsolutePath();
-    }
-
-    /**
      * get directory path for saving video file
      * @return
      */
-    public static String getSavePath() {
+    public static String getShootPicSavePath() {
         File dir = getDownloadFolder();
         if (dir == null) {
             return null;
@@ -143,7 +88,23 @@ public class StorageManager {
             if (!dir.exists()) {
                 dir.mkdirs();
             }
-            return dir.getAbsolutePath();
+            return dir.getAbsolutePath() + File.separator + "shoot";
+        }
+    }
+
+    /**
+     * get directory path for saving video file
+     * @return
+     */
+    public static String getCacheVideoPath() {
+        File dir = getDownloadFolder();
+        if (dir == null) {
+            return null;
+        } else {
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            return dir.getAbsolutePath() + File.separator + "video";
         }
     }
 
@@ -159,7 +120,7 @@ public class StorageManager {
         if (TextUtils.isEmpty(vid)) {
             return false;
         }
-        String dirPath = getSavePath();
+        String dirPath = getShootPicSavePath();
         if (TextUtils.isEmpty(dirPath)) {
             return false;
         }
@@ -184,7 +145,7 @@ public class StorageManager {
         if (TextUtils.isEmpty(vid)) {
             return null;
         }
-        String dirPath = getSavePath();
+        String dirPath = getShootPicSavePath();
         if (TextUtils.isEmpty(dirPath)) {
             return null;
         }

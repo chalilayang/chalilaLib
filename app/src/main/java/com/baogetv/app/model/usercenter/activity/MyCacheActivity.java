@@ -8,6 +8,7 @@ import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.db.domain.MyBusinessInfo;
 import com.baogetv.app.model.usercenter.adapter.CacheListAdapter;
+import com.baogetv.app.model.usercenter.adapter.MyCacheAdapter;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
 
@@ -19,7 +20,7 @@ public class MyCacheActivity extends BaseTitleActivity {
     private static final String TAG = "MyCollectActivity";
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private CacheListAdapter recyclerViewAdapter;
+    private MyCacheAdapter recyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +44,9 @@ public class MyCacheActivity extends BaseTitleActivity {
         divider.setMargin(margin_30px);
         recyclerView.addItemDecoration(divider);
         layoutManager = new LinearLayoutManager(this);
-        recyclerViewAdapter = new CacheListAdapter(this);
+        recyclerViewAdapter = new MyCacheAdapter(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
-
         recyclerViewAdapter.updateCacheList(getDownloadListData());
     }
 
