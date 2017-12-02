@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.CollectBean;
 import com.baogetv.app.bean.ResponseBean;
@@ -24,7 +25,8 @@ import retrofit2.Call;
 
 
 public class MyCollectActivity extends BaseTitleActivity
-        implements SwipeRefreshLayout.OnRefreshListener {
+        implements SwipeRefreshLayout.OnRefreshListener,
+        ItemViewHolder.ItemClickListener<CollectBean>, ItemViewHolder.ItemDeleteListener<CollectBean> {
     private static final String TAG = "MyCollectActivity";
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -57,6 +59,8 @@ public class MyCollectActivity extends BaseTitleActivity
         recyclerView.addItemDecoration(divider);
         layoutManager = new LinearLayoutManager(this);
         recyclerViewAdapter = new CollectListAdapter(this);
+        recyclerViewAdapter.setItemClick(this);
+        recyclerViewAdapter.setItemDeleteListener(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
         refreshLayout.setOnRefreshListener(this);
@@ -81,6 +85,40 @@ public class MyCollectActivity extends BaseTitleActivity
             });
         }
     }
+
+    @Override
+    public void onItemClick(CollectBean data, int position) {
+        Log.i(TAG, "onItemClick: ");
+    }
+
+    @Override
+    public void onDelete(CollectBean data, int pos) {
+        Log.i(TAG, "onDelete: " + pos);
+        delete(data, pos);
+    }
+
+    private void delete(final CollectBean data, final int pos) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(getApplicationContext());
+        Call<ResponseBean<List<Object>>> call
+                = userApiService.deleteCollect(token, data.getVideo_id(), data.getId());
+        if (call != null) {
+            call.enqueue(new CustomCallBack<List<Object>>() {
+                @Override
+                public void onSuccess(List<Object> data) {
+                    Log.i(TAG, "onSuccess: ");
+                    recyclerViewAdapter.deleteItem(pos);
+                }
+
+                @Override
+                public void onFailed(String error) {
+
+                }
+            });
+        }
+    }
+
     @Override
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");

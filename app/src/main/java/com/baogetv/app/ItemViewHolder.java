@@ -15,6 +15,7 @@ public abstract class ItemViewHolder<T>
     protected int position;
     protected View root;
     private SoftReference<ItemClickListener> mRef;
+
     public ItemViewHolder(View itemView) {
         super(itemView);
         root = itemView;
@@ -25,7 +26,7 @@ public abstract class ItemViewHolder<T>
 
     @Override
     public void onClick(View view) {
-        if (mRef != null && mRef.get() != null) {
+        if (mRef != null && mRef.get() != null && view == root) {
             mRef.get().onItemClick(mData, position);
         }
     }
@@ -46,5 +47,9 @@ public abstract class ItemViewHolder<T>
 
     public interface ItemClickListener<T> {
         void onItemClick(T data, int position);
+    }
+
+    public interface ItemDeleteListener<T> {
+        void onDelete(T data, int pos);
     }
 }

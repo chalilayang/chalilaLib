@@ -221,10 +221,10 @@ public interface UserApiService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Collects/del")
-    Call<ResponseBean<Object>> deleteCollect(
+    Call<ResponseBean<List<Object>>> deleteCollect(
             @Field("token") String token,
-            @Field("video_id") int video_id,
-            @Field("id") int id);
+            @Field("video_id") String video_id,
+            @Field("id") String id);
 
     /**
      * 我的收藏
@@ -260,7 +260,7 @@ public interface UserApiService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Play/del")
-    Call<ResponseBean<Object>> deleteHistory(
+    Call<ResponseBean<List<Object>>> deleteHistory(
             @Field("token") String token,
             @Field("video_id") int video_id,
             @Field("id") int id);
@@ -307,7 +307,7 @@ public interface UserApiService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Comments/del")
-    Call<ResponseBean<Object>> deleteComment(
+    Call<ResponseBean<List<Object>>> deleteComment(
             @Field("token") String token,
             @Field("video_id") int video_id,
             @Field("id") int id);

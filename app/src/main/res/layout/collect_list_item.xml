@@ -2,10 +2,11 @@
 <com.chalilayang.customview.SwipeMenuLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipe_menu"
     android:layout_width="match_parent"
     android:layout_height="@dimen/size_190"
     app:swipeEnable="true"
-    app:ios="false"
+    app:ios="true"
     app:leftSwipe="true">
     <com.chalilayang.scaleview.ScaleRelativeLayout
         android:id="@+id/item_content_view"

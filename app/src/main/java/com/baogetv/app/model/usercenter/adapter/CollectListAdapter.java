@@ -13,7 +13,11 @@ import com.baogetv.app.bean.CollectBean;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.baogetv.app.R;
 
-public class CollectListAdapter extends BaseItemAdapter<CollectBean, CollectListAdapter.ViewHolder> {
+import java.lang.ref.SoftReference;
+
+public class CollectListAdapter
+        extends BaseItemAdapter<CollectBean, CollectListAdapter.ViewHolder>
+        implements ItemViewHolder.ItemDeleteListener<CollectBean> {
 
     private int margin_8px;
     private int margin_15px;
@@ -21,6 +25,12 @@ public class CollectListAdapter extends BaseItemAdapter<CollectBean, CollectList
     private int margin_30px;
     private int margin_160px;
     private String videoCountFormat;
+    protected SoftReference<ItemViewHolder.ItemDeleteListener<CollectBean>> mDeleteRef;
+    public void setItemDeleteListener(ItemViewHolder.ItemDeleteListener<CollectBean> listener) {
+        if (listener != null) {
+            mDeleteRef = new SoftReference<>(listener);
+        }
+    }
 
     public CollectListAdapter(Context context) {
         super(context);
@@ -37,7 +47,23 @@ public class CollectListAdapter extends BaseItemAdapter<CollectBean, CollectList
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.collect_list_item, parent, false);
         view.getLayoutParams().height = ScaleCalculator.getInstance(mContext).scaleHeight(200);
-        return new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view);
+        holder.setItemDeleteListener(this);
+        return holder;
+    }
+
+    @Override
+    public void onDelete(CollectBean data, int pos) {
+        if (mDeleteRef != null && mDeleteRef.get() != null) {
+            mDeleteRef.get().onDelete(data, pos);
+        }
+    }
+
+    public void deleteItem(int pos) {
+        if (pos >= 0 && pos < getItemCount()) {
+            mValues.remove(pos);
+            notifyItemChanged(pos);
+        }
     }
 
     public class ViewHolder extends ItemViewHolder<CollectBean> {
@@ -47,7 +73,7 @@ public class CollectListAdapter extends BaseItemAdapter<CollectBean, CollectList
         public final TextView title;
         public final TextView updateTime;
         public final TextView deleteBtn;
-
+        protected SoftReference<ItemDeleteListener> mDeleteRef;
         @Override
         public void bindData(CollectBean data, int pos) {
             title.setText(data.getTitle());
@@ -58,12 +84,30 @@ public class CollectListAdapter extends BaseItemAdapter<CollectBean, CollectList
             super(view);
             mView = view;
             contentRoot = view.findViewById(R.id.item_content_view);
+            contentRoot.setOnClickListener(this);
             contentRoot.setPadding(margin_30px, 0, 0, 0);
             mImageView = (ImageView) view.findViewById(R.id.video_item_icon);
             title = (TextView) view.findViewById(R.id.video_title);
             updateTime = (TextView) view.findViewById(R.id.video_time);
             deleteBtn = (TextView) view.findViewById(R.id.btn_delete);
             deleteBtn.getLayoutParams().width = margin_160px;
+            deleteBtn.setOnClickListener(this);
+        }
+
+        public void setItemDeleteListener(ItemDeleteListener<CollectBean> listener) {
+            if (listener != null) {
+                mDeleteRef = new SoftReference<ItemDeleteListener>(listener);
+            }
+        }
+
+        @Override
+        public void onClick(View view) {
+            super.onClick(view);
+            if (mRef != null && mRef.get() != null && view == contentRoot) {
+                mRef.get().onItemClick(mData, position);
+            } else if (view == deleteBtn && mDeleteRef != null && mDeleteRef.get() != null) {
+                mDeleteRef.get().onDelete(mData, position);
+            }
         }
     }
 }
