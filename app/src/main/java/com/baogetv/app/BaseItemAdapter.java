@@ -59,6 +59,13 @@ public abstract class BaseItemAdapter<T, D extends ItemViewHolder<T>>
         }
     }
 
+    public List<T> getDataList() {
+        List<T> list = new ArrayList<>();
+        if (mValues != null) {
+            list.addAll(mValues);
+        }
+        return list;
+    }
     @Override
     public int getItemCount() {
         return mValues.size();

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.baogetv.app.BaseTitleActivity;
@@ -108,24 +109,26 @@ public class PlayHistoryActivity extends BaseTitleActivity
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getUserToken(getApplicationContext());
-        String videoId = null;
-        String id = null;
+        String id = "";
         if (data != null) {
-            videoId = data.getVideo_id();
             id = data.getId();
+        } else {
+            List<HistoryBean> list = recyclerViewAdapter.getDataList();
+            for (int index = 0, count = list.size(); index < count; index ++) {
+                id = id + "," + list.get(index).getId();
+            }
+        }
+        if (TextUtils.isEmpty(id)) {
+            return;
         }
         Call<ResponseBean<List<Object>>> call
-                = userApiService.deleteCollect(token, videoId, id);
+                = userApiService.deleteHistory(token, id);
         if (call != null) {
             call.enqueue(new CustomCallBack<List<Object>>() {
                 @Override
                 public void onSuccess(List<Object> data) {
                     Log.i(TAG, "onSuccess: ");
-                    if (data == null) {
-                        recyclerViewAdapter.deleteAllItem();
-                    } else {
-                        recyclerViewAdapter.deleteItem(pos);
-                    }
+                    getHistoryList();
                 }
 
                 @Override

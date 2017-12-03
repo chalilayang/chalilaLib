@@ -264,7 +264,6 @@ public interface UserApiService {
      * 取消播放记录
      *
      * @param token：（Token，登录凭证）
-     * @param video_id：（视频ID）
      * @param id：（收藏ID）
      * @return
      */
@@ -272,7 +271,6 @@ public interface UserApiService {
     @POST("index.php?s=/Play/del")
     Call<ResponseBean<List<Object>>> deleteHistory(
             @Field("token") String token,
-            @Field("video_id") String video_id,
             @Field("id") String id);
 
     /**
