@@ -18,15 +18,20 @@ import com.baogetv.app.bean.ChannelDetailBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.bean.VideoListBean;
+import com.baogetv.app.downloader.domain.DownloadInfo;
 import com.baogetv.app.model.channel.ChannelDetailActivity;
 import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.VideoInfoListAdapter;
 import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
+import com.baogetv.app.model.videodetail.event.AddCollectEvent;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
+import com.baogetv.app.util.CacheUtil;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,6 +130,7 @@ public class VideoInfoFragment extends BaseFragment
                 @Override
                 public void onFailed(String error) {
                     Log.i(TAG, "onFailed: ");
+                    showShortToast(error);
                 }
             });
         }
@@ -153,7 +159,7 @@ public class VideoInfoFragment extends BaseFragment
 
                 @Override
                 public void onFailed(String error) {
-
+                    showShortToast(error);
                 }
             });
         }
@@ -173,6 +179,32 @@ public class VideoInfoFragment extends BaseFragment
         Intent intent = new Intent(mActivity, VideoDetailActivity.class);
         intent.putExtra(VideoDetailActivity.KEY_VIDEO_ID, vid);
         mActivity.startActivity(intent);
+    }
+
+    @Override
+    public void onCacheClick(VideoDetailBean bean) {
+        Log.i(TAG, "onCacheClick: ");
+        DownloadInfo downloadInfo = CacheUtil.getDownloadInfo(mActivity, bean.getFile_url());
+        if (downloadInfo == null) {
+            if (CacheUtil.cacheVideo(mActivity.getApplicationContext(), bean)) {
+                showShortToast("已添加至缓存列表");
+            } else {
+                showShortToast("缓存失败");
+            }
+        } else {
+            showShortToast("已在缓存中");
+        }
+    }
+
+    @Override
+    public void onShareClick(VideoDetailBean bean) {
+        Log.i(TAG, "onShareClick: ");
+    }
+
+    @Override
+    public void onCollectClick(VideoDetailBean bean) {
+        Log.i(TAG, "onCollectClick: ");
+        EventBus.getDefault().post(new AddCollectEvent());
     }
 
     /**

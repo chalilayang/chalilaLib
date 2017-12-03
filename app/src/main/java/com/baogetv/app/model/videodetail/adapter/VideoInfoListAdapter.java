@@ -176,8 +176,32 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             playCount = (TextView) view.findViewById(R.id.video_play_count);
             desc = (TextView) view.findViewById(R.id.video_desc);
             share = (TextView) view.findViewById(R.id.video_share);
+            share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mRef != null && mRef.get() != null) {
+                        mRef.get().onShareClick(videoDetailData.videoDetailBean);
+                    }
+                }
+            });
             like = (TextView) view.findViewById(R.id.video_heart);
+            like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mRef != null && mRef.get() != null) {
+                        mRef.get().onCollectClick(videoDetailData.videoDetailBean);
+                    }
+                }
+            });
             cache = (TextView) view.findViewById(R.id.video_cache);
+            cache.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mRef != null && mRef.get() != null) {
+                        mRef.get().onCacheClick(videoDetailData.videoDetailBean);
+                    }
+                }
+            });
             flowLayout = (FlowLayout) view.findViewById(R.id.video_info_label_layout);
             int space = ScaleCalculator.getInstance(mContext).scaleWidth(20);
             flowLayout.setChildSpacing(space);
@@ -236,6 +260,9 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
     public interface OnClickCallBack {
         void onChannelClick(ChannelDetailBean bean);
+        void onCacheClick(VideoDetailBean bean);
+        void onShareClick(VideoDetailBean bean);
+        void onCollectClick(VideoDetailBean bean);
         void onVideoClick(String vid);
     }
 }
