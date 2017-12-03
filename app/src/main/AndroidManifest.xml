@@ -168,6 +168,8 @@
         </activity>
         <activity android:name=".model.usercenter.activity.MemberDetailActivity">
         </activity>
+        <activity android:name=".model.usercenter.activity.VideoPlayerActivity">
+        </activity>
     </application>
 
 </manifest>
