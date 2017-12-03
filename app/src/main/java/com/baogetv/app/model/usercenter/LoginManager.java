@@ -7,12 +7,16 @@ import android.text.TextUtils;
 
 import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.model.usercenter.activity.LoginActivity;
+import com.baogetv.app.model.usercenter.activity.MobileChangeActivity;
 import com.baogetv.app.model.usercenter.activity.RegisterActivity;
 import com.chalilayang.util.SPUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_CHANGE_MOBILE_ACTIVITY;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_CHANGE_PASSWORD_ACTIVITY;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_FIND_PASSWORD_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
 
@@ -23,6 +27,7 @@ import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVI
 public class LoginManager {
     private static final String KEY_DEVICE_TOKEN = "DEVICE_TOKEN";
     private static final String KEY_USER_TOKEN = "USER_TOKEN";
+    private static final String KEY_USER_ID = "USER_ID";
 
     public static UserDetailBean detailBean;
     public static boolean hasLogin(Context context) {
@@ -44,6 +49,21 @@ public class LoginManager {
         activity.startActivityForResult(intent, REQUEST_CODE_REGISTER_ACTIVITY);
     }
 
+    public static void startChangeMobile(Activity activity) {
+        Intent intent = new Intent(activity, MobileChangeActivity.class);
+        activity.startActivityForResult(intent, REQUEST_CODE_CHANGE_MOBILE_ACTIVITY);
+    }
+
+    public static void startChangePassword(Activity activity) {
+        Intent intent = new Intent(activity, MobileChangeActivity.class);
+        activity.startActivityForResult(intent, REQUEST_CODE_CHANGE_PASSWORD_ACTIVITY);
+    }
+
+    public static void startFindPassword(Activity activity) {
+        Intent intent = new Intent(activity, MobileChangeActivity.class);
+        activity.startActivityForResult(intent, REQUEST_CODE_FIND_PASSWORD_ACTIVITY);
+    }
+
     public static void putDeviceToken(Context context, String token) {
         SPUtils.put(context, KEY_DEVICE_TOKEN, token);
     }
@@ -56,14 +76,24 @@ public class LoginManager {
         SPUtils.put(context, KEY_USER_TOKEN, token);
     }
 
+    public static String getUserToken(Context context) {
+        return (String) SPUtils.get(context, KEY_USER_TOKEN, "");
+    }
+
+    public static void putUserID(Context context, String uid) {
+        SPUtils.put(context, KEY_USER_ID, uid);
+    }
+
+    public static String getUserID(Context context) {
+        return (String) SPUtils.get(context, KEY_USER_ID, "");
+    }
+
     public static void cleanUserToken(Context context) {
         detailBean = null;
         SPUtils.put(context, KEY_USER_TOKEN, "");
     }
 
-    public static String getUserToken(Context context) {
-        return (String) SPUtils.get(context, KEY_USER_TOKEN, "");
-    }
+
 
     public static boolean isMobileNO(String mobiles) {
         //"[1]"代表第1位为数字1，"[358]"代表第二位可以为3、5、8中的一个，"\\d{9}"代表后面是可以是0～9的数字，有9位。

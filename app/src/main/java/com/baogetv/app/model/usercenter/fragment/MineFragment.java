@@ -133,6 +133,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
         userName = view.findViewById(R.id.mine_name);
         userIcon = view.findViewById(R.id.mine_icon);
+        view.findViewById(R.id.change_mobile_num).setOnClickListener(this);
         gradeIcon = view.findViewById(R.id.user_grade_icon);
         gradeDesc = view.findViewById(R.id.user_grade_desc);
         mineBodyInfoView = view.findViewById(R.id.body_info_view);
@@ -251,6 +252,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 case R.id.setting:
                     intent = new Intent(mActivity, SettingActivity.class);
                     mActivity.startActivityForResult(intent, REQUEST_CODE_SETTING_ACTIVITY);
+                    break;
+                case R.id.change_mobile_num:
+                    LoginManager.startChangeMobile(mActivity);
                     break;
             }
         }

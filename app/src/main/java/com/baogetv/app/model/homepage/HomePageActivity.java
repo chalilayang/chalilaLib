@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_CHANGE_MOBILE_ACTIVITY;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_CHANGE_PASSWORD_ACTIVITY;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_FIND_PASSWORD_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_SETTING_ACTIVITY;
@@ -176,7 +179,10 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
                     mineFragment.freshUserInfo(registerBean);
                 }
             }
-        } else if (requestCode == REQUEST_CODE_SETTING_ACTIVITY) {
+        } else if (requestCode == REQUEST_CODE_SETTING_ACTIVITY
+                || requestCode == REQUEST_CODE_CHANGE_MOBILE_ACTIVITY
+                || requestCode == REQUEST_CODE_CHANGE_PASSWORD_ACTIVITY
+                || requestCode == REQUEST_CODE_FIND_PASSWORD_ACTIVITY) {
             if (resultCode == RESULT_OK) {
                 if (mineFragment != null && mineFragment.isVisible()) {
                     mineFragment.freshUserInfo(null);

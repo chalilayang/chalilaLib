@@ -57,6 +57,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                 public void onSuccess(UserDetailBean data) {
                     if (data != null) {
                         LoginManager.putUserToken(mContext, data.getToken());
+                        LoginManager.putUserID(mContext, data.getUser_id());
                         registerView.showSuccess(data);
                     } else {
                         registerView.registerFailed("RegisterBean failed null ");

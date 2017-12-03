@@ -97,6 +97,7 @@ public class LoginActivity extends BaseActivity {
                     isFetchingResult = false;
                     if (data != null) {
                         LoginManager.putUserToken(getApplicationContext(), data.getToken());
+                        LoginManager.putUserID(getApplicationContext(), data.getUser_id());
                         loginSuccess(data);
                     } else {
                         loginFailed("LoginBean null");

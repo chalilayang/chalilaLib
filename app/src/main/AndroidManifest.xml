@@ -158,6 +158,10 @@
             android:name=".model.videodetail.activity.CommentDetailActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".model.usercenter.activity.MobileChangeActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
