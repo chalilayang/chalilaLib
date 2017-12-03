@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chalilayang.scaleview.ScaleRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/round_corner_rec">
+    <com.chalilayang.scaleview.ScaleLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <com.chalilayang.scaleview.ScaleTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/comment_report"
+            android:textSize="@dimen/size_48"
+            android:textColor="@color/black"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/report_list"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_240"
+            android:layout_marginTop="@dimen/size_30"
+            android:layout_marginLeft="@dimen/size_30"
+            android:layout_marginRight="@dimen/size_30"/>
+    </com.chalilayang.scaleview.ScaleLinearLayout>
+
+    <com.chalilayang.scaleview.ScaleTextView
+        android:id="@+id/complete_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/size_30"
+        android:text="@string/report_upload"
+        android:textSize="@dimen/size_48"
+        android:textColor="@color/black"/>
+</com.chalilayang.scaleview.ScaleRelativeLayout>

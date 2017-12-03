@@ -1,5 +1,6 @@
 package com.baogetv.app.model.videodetail.fragment;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -105,6 +106,15 @@ public class CommentListFragment extends BaseItemFragment
         return contentView;
     }
 
+    private CommentReportFragment fragment;
+    private void showFragment(CommentData commentData) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        if (fragment == null) {
+            fragment = CommentReportFragment.newInstance(commentData);
+        }
+        transaction.replace(R.id.floating_fragment_container, fragment).commit();
+    }
+
     @Override
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");
@@ -128,6 +138,7 @@ public class CommentListFragment extends BaseItemFragment
     @Override
     public void onJuBaoClick(CommentData data) {
         Log.i(TAG, "onJuBaoClick: ");
+        showFragment(data);
     }
 
     @Override

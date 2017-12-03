@@ -18,4 +18,12 @@
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"/>
     </android.support.v4.widget.SwipeRefreshLayout>
+    <com.chalilayang.scaleview.ScaleFrameLayout
+        android:id="@+id/floating_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_480"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:visibility="visible">
+    </com.chalilayang.scaleview.ScaleFrameLayout>
 </com.chalilayang.scaleview.ScaleRelativeLayout>

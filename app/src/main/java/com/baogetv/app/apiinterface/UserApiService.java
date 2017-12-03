@@ -8,6 +8,7 @@ import com.baogetv.app.bean.CommentBean;
 import com.baogetv.app.bean.GradeBean;
 import com.baogetv.app.bean.GradeDetailBean;
 import com.baogetv.app.bean.HistoryBean;
+import com.baogetv.app.bean.ReportTypeBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.ResponseMeBean;
 import com.baogetv.app.bean.ScoreSourceBean;
@@ -374,4 +375,31 @@ public interface UserApiService {
             @Field("token") String token,
             @Field("type_id") String type_id,
             @Field("content") String content);
+
+    /**
+     * 举报
+     *
+     * @param token：（Token，登录凭证）
+     * @param type_id：（举报类型：1.广告 2.暴力言论）
+     * @param content：（举报内容）
+     * @param video_id：（举报视频ID）
+     * @param be_user_id：（被举报用户ID）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Accusation/add")
+    Call<ResponseBean<AddItemBean>> uploadReport(
+            @Field("token") String token,
+            @Field("type_id") String type_id,
+            @Field("content") String content,
+            @Field("video_id") String video_id,
+            @Field("be_user_id") String be_user_id);
+
+    /**
+     * 举报类型
+     *
+     * @return
+     */
+    @POST("index.php?s=/Accusation/type")
+    Call<ResponseBean<List<ReportTypeBean>>> getReportTypeList();
 }

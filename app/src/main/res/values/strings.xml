@@ -39,7 +39,12 @@
     <string name="more_reply_format">查看全部%d条评论</string>
     <string name="zan_your_comment">赞了你的评论</string>
     <string name="xx_response_you_in">在%s中回复了你</string>
-
+    <string name="comment_report">举报</string>
+    <string name="report_type_adv">广告</string>
+    <string name="report_type_harass">骚扰</string>
+    <string name="report_type_violence">暴力言论</string>
+    <string name="report_type_no_relation">不相关评论</string>
+    <string name="report_upload">完成</string>
 
     <string name="mine">我的</string>
     <string name="height">身高</string>
