@@ -1,6 +1,7 @@
 package com.baogetv.app.util;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.db.DBController;
@@ -50,11 +51,14 @@ public class CacheUtil {
 
     public static boolean cacheVideo(Context context, VideoDetailBean bean) {
         boolean result = false;
+        if (TextUtils.isEmpty(bean.getFile_url())) {
+            return result;
+        }
         DBController dbController;
         try {
             dbController = DBController.getInstance(context);
             String path = StorageManager.getDownloadFile(
-                    StorageManager.generateFileName()).getAbsolutePath();
+                    StorageManager.generateFileName() + ".mp4").getAbsolutePath();
             DownloadInfo.Builder builder = new DownloadInfo.Builder();
             builder.setUrl(bean.getFile_url()).setPath(path);
             DownloadInfo downloadInfo = builder.build();
