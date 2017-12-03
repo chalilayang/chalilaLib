@@ -18,6 +18,7 @@ public class CommentData implements Parcelable {
     private long time;
     private List<ReplyData> replyList;
 
+
     public UserData getOwner() {
         return owner;
     }

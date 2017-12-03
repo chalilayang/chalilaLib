@@ -49,7 +49,7 @@ public class VideoDetailFragment extends PagerFragment {
     @Override
     public BaseFragment createFragment(int pageIndex) {
         if (pageIndex == 1) {
-            return CommentListFragment.newInstance();
+            return CommentListFragment.newInstance(videoDetailData);
         } else {
             return VideoInfoFragment.newInstance(videoDetailData);
         }

@@ -1,7 +1,5 @@
 package com.baogetv.app.bean;
 
-import java.util.List;
-
 /**
  * Created by chalilayang on 2017/11/27.
  */

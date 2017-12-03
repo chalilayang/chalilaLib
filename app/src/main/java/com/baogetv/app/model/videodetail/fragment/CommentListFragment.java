@@ -14,12 +14,19 @@ import com.baogetv.app.BaseItemAdapter;
 import com.baogetv.app.BaseItemFragment;
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
+import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.CommentListBean;
+import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.model.usercenter.entity.UserData;
 import com.baogetv.app.model.usercenter.event.ReportEvent;
 import com.baogetv.app.model.videodetail.adapter.CommentListAdapter;
 import com.baogetv.app.model.videodetail.customview.CommentView;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
+import com.baogetv.app.model.videodetail.entity.VideoDetailData;
+import com.baogetv.app.net.CustomCallBack;
+import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
 
@@ -27,6 +34,10 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+
+import static com.baogetv.app.PagerFragment.PAGE_DATA;
 
 
 public class CommentListFragment extends BaseItemFragment
@@ -37,9 +48,11 @@ public class CommentListFragment extends BaseItemFragment
     private static final String PAGE_DATA = "PAGE_DATA";
     private List<CommentData> commentDataList;
     private SwipeRefreshLayout refreshLayout;
+    private RecyclerView recyclerView;
     private View contentView;
     private RecyclerView.LayoutManager layoutManager;
     private CommentListAdapter recyclerViewAdapter;
+    private VideoDetailData videoDetailData;
 
     public CommentListFragment() {
     }
@@ -49,40 +62,22 @@ public class CommentListFragment extends BaseItemFragment
         return getString(R.string.comment);
     }
 
-    public static CommentListFragment newInstance() {
+    public static CommentListFragment newInstance(VideoDetailData data) {
         CommentListFragment fragment = new CommentListFragment();
-//        Bundle args = new Bundle();
-//        args.putParcelable(PAGE_DATA, data);
-//        fragment.setArguments(args);
+        Bundle args = new Bundle();
+        args.putParcelable(PAGE_DATA, data);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        layoutManager = new LinearLayoutManager(getActivity());
-        List<CommentData> list = new ArrayList<>();
-        for (int index = 0; index < 10; index ++) {
-            CommentData data = new CommentData();
-            UserData replyer = new UserData();
-            replyer.setNickName("防腐层");
-            replyer.setDesc("ddddd");
-            replyer.setGrage(index);
-            data.setOwner(replyer);
-            data.setContent("瓦尔特VRTV让他 ");
-            data.setTime(System.currentTimeMillis());
-            ReplyData replyData = new ReplyData();
-            replyData.setReplyer(replyer);
-            replyData.setReplyTo(replyer);
-            replyData.setContent("饿哦日女偶俄如女儿地方女偶儿女偶尔女人额如厕我软编");
-            List<ReplyData> list1 = new ArrayList<>();
-            for (int i = 0, count = index % 5; i < count; i ++) {
-                list1.add(replyData);
-            }
-            data.setReplyList(list1);
-            list.add(data);
+        if (getArguments() != null) {
+            videoDetailData = getArguments().getParcelable(PAGE_DATA);
         }
-        recyclerViewAdapter = new CommentListAdapter(getActivity(), list);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerViewAdapter = new CommentListAdapter(getActivity());
         recyclerViewAdapter.setItemClick(this);
         recyclerViewAdapter.setOnCommentListener(this);
     }
@@ -99,12 +94,13 @@ public class CommentListFragment extends BaseItemFragment
             int margin_30px = ScaleCalculator.getInstance(getActivity()).scaleWidth(30);
             divider.setMargin(margin_30px);
             refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl);
-            RecyclerView child = refreshLayout.findViewById(R.id.list);
-            child.setLayoutManager(layoutManager);
-            child.addItemDecoration(divider);
-            child.setAdapter(recyclerViewAdapter);
+            recyclerView = refreshLayout.findViewById(R.id.list);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.addItemDecoration(divider);
+            recyclerView.setAdapter(recyclerViewAdapter);
             refreshLayout.setOnRefreshListener(this);
             contentView = view;
+            getCommentList(videoDetailData);
         }
         return contentView;
     }
@@ -118,6 +114,46 @@ public class CommentListFragment extends BaseItemFragment
         transaction.replace(R.id.floating_fragment_container, fragment).commit();
     }
 
+    public void getCommentList(VideoDetailData videoDetailData) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        Call<ResponseBean<List<CommentListBean>>> call
+                = userApiService.getCommentList(videoDetailData.videoId);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<List<CommentListBean>>() {
+                @Override
+                public void onSuccess(List<CommentListBean> bean) {
+                    List<CommentData> list = new ArrayList<>();
+                    for (int index = 0; index < 10; index ++) {
+                        CommentData data = new CommentData();
+                        UserData replyer = new UserData();
+                        replyer.setNickName("防腐层");
+                        replyer.setDesc("ddddd");
+                        replyer.setGrage(index);
+                        data.setOwner(replyer);
+                        data.setContent("瓦尔特VRTV让他 ");
+                        data.setTime(System.currentTimeMillis());
+                        ReplyData replyData = new ReplyData();
+                        replyData.setReplyer(replyer);
+                        replyData.setReplyTo(replyer);
+                        replyData.setContent("饿哦日女偶俄如女儿地方女偶儿女偶尔女人额如厕我软编");
+                        List<ReplyData> list1 = new ArrayList<>();
+                        for (int i = 0, count = index % 5; i < count; i ++) {
+                            list1.add(replyData);
+                        }
+                        data.setReplyList(list1);
+                        list.add(data);
+                    }
+                    recyclerViewAdapter.update(list);
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    showShortToast(error);
+                }
+            });
+        }
+    }
     @Subscribe
     public void handleReportEvent(ReportEvent event) {
         if (fragment != null && fragment.isAdded()) {

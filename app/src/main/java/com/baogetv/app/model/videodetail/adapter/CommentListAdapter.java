@@ -19,8 +19,8 @@ import java.util.List;
 public class CommentListAdapter
         extends BaseItemAdapter<CommentData, CommentListAdapter.ViewHolder> implements CommentView.OnCommentListener {
 
-    public CommentListAdapter(Context context, List<CommentData> items) {
-        super(context, items);
+    public CommentListAdapter(Context context) {
+        super(context);
     }
 
     @Override

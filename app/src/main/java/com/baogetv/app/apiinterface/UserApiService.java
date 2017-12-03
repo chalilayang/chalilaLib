@@ -5,6 +5,7 @@ import com.baogetv.app.bean.AdvertisingListBean;
 import com.baogetv.app.bean.AdviceBean;
 import com.baogetv.app.bean.CollectBean;
 import com.baogetv.app.bean.CommentBean;
+import com.baogetv.app.bean.CommentListBean;
 import com.baogetv.app.bean.GradeBean;
 import com.baogetv.app.bean.GradeDetailBean;
 import com.baogetv.app.bean.HistoryBean;
@@ -279,6 +280,18 @@ public interface UserApiService {
     Call<ResponseBean<List<HistoryBean>>> getHistoryList(
             @Field("token") String token);
 
+
+    /**
+     * 评论列表
+     *
+     * @param video_id：（视频ID）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Comments/index")
+    Call<ResponseBean<List<CommentListBean>>> getCommentList(
+            @Field("video_id") int video_id
+    );
 
     /**
      * 添加评论
