@@ -21,8 +21,9 @@ import com.baogetv.app.net.RetrofitManager;
 import retrofit2.Call;
 
 import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_FIND_PASSWORD_ACTIVITY;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements PasswordInputView.OnForgetClickListener {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private TitleInputView mobileNumView;
     private PasswordInputView passwordView;
@@ -52,6 +53,7 @@ public class LoginActivity extends BaseActivity {
         });
         mobileNumView = (TitleInputView) findViewById(R.id.mobile_num_view);
         passwordView = (PasswordInputView) findViewById(R.id.password_tv);
+        passwordView.setForgetListener(this);
         loginBtn = findViewById(R.id.login_tv);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +114,11 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onForgetClick() {
+        LoginManager.startFindPassword(this);
+    }
+
     private void loginSuccess(UserDetailBean bean) {
         Intent intent = new Intent();
         intent.putExtra(KEY_USER_DETAIL_BEAN, bean);
@@ -121,5 +128,15 @@ public class LoginActivity extends BaseActivity {
 
     private void loginFailed(String msg) {
         showShortToast(msg);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_FIND_PASSWORD_ACTIVITY) {
+            if (resultCode == RESULT_OK) {
+                showShortToast("请用新密码进行登录");
+            }
+        }
     }
 }

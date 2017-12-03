@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.baogetv.app.bean.UserDetailBean;
+import com.baogetv.app.model.usercenter.activity.FindPasswordActivity;
 import com.baogetv.app.model.usercenter.activity.LoginActivity;
 import com.baogetv.app.model.usercenter.activity.MobileChangeActivity;
 import com.baogetv.app.model.usercenter.activity.RegisterActivity;
@@ -60,7 +61,7 @@ public class LoginManager {
     }
 
     public static void startFindPassword(Activity activity) {
-        Intent intent = new Intent(activity, MobileChangeActivity.class);
+        Intent intent = new Intent(activity, FindPasswordActivity.class);
         activity.startActivityForResult(intent, REQUEST_CODE_FIND_PASSWORD_ACTIVITY);
     }
 

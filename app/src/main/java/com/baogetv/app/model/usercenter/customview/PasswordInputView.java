@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.baogetv.app.R;
 import com.chalilayang.scaleview.ScaleFrameLayout;
 
+import java.lang.ref.SoftReference;
+
 /**
  * Created by chalilayang on 2017/11/19.
  */
@@ -60,6 +62,14 @@ public class PasswordInputView extends ScaleFrameLayout {
                 }
             }
         });
+        findViewById(R.id.forget_password).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mRef != null && mRef.get() != null) {
+                    mRef.get().onForgetClick();
+                }
+            }
+        });
         inputEdit.clearFocus();
     }
 
@@ -69,5 +79,15 @@ public class PasswordInputView extends ScaleFrameLayout {
         } else {
             return "";
         }
+    }
+
+    private SoftReference<OnForgetClickListener> mRef;
+    public void setForgetListener(OnForgetClickListener listener) {
+        if (listener != null) {
+            mRef = new SoftReference<OnForgetClickListener>(listener);
+        }
+    }
+    public interface OnForgetClickListener {
+        void onForgetClick();
     }
 }

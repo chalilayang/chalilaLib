@@ -32,8 +32,6 @@ import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_SETTING_ACTIVIT
 public class HomePageActivity extends BaseActivity implements View.OnClickListener {
 
     private static final String TAG = "HomePageActivity";
-    public static final String KEY_USER_DETAIL = "USER_DETAIL";
-    private FrameLayout fragmentContainer;
     private HomeFragment homeFragment;
     private ChannelListFragment channelListFragment;
     private MineFragment mineFragment;
@@ -61,8 +59,6 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
 
     private void initView() {
         setContentView(R.layout.activity_home_page);
-        fragmentContainer = (FrameLayout) findViewById(R.id.fragment_container);
-
         homeDrawablePositive = getResources().getDrawable(R.mipmap.home_page_positive);
         int width = ScaleCalculator.getInstance(this).scaleWidth(48);
         int height = (int) (homeDrawablePositive.getIntrinsicHeight()

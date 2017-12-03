@@ -128,7 +128,7 @@
 
     <string name="mobile_num">手机号</string>
     <string name="password">密码</string>
-    <string name="forget_password">忘记密码</string>
+    <string name="forget_password">忘记密码?</string>
     <string name="confirm_password">确认密码</string>
     <string name="please_input_password">请输入密码</string>
     <string name="input_password_again">再次输入密码</string>
