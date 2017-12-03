@@ -7,17 +7,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.aigestudio.wheelpicker.WheelPicker;
-import com.aigestudio.wheelpicker.widgets.WheelDatePicker;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
-import com.baogetv.app.model.usercenter.event.DateSelectEvent;
+import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.event.SexSelectEvent;
+import com.baogetv.app.net.CustomCallBack;
+import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.scaleview.ScaleCalculator;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
 
 public class SexSelectFragment extends BaseFragment implements WheelPicker.OnItemSelectedListener {
 
@@ -33,7 +38,7 @@ public class SexSelectFragment extends BaseFragment implements WheelPicker.OnIte
 
     private List<String> sexList;
 
-    private int sex;
+    private int sexType;
 
     private SexSelectEvent selectEvent;
     public static SexSelectFragment newInstance(SexSelectEvent event) {
@@ -50,9 +55,9 @@ public class SexSelectFragment extends BaseFragment implements WheelPicker.OnIte
         sexList.add(getString(R.string.sex_men));
         sexList.add(getString(R.string.sex_women));
         if (selectEvent != null) {
-            sex = selectEvent.sex;
+            sexType = selectEvent.sex;
         } else {
-            sex = 0;
+            sexType = 0;
         }
     }
 
@@ -80,7 +85,7 @@ public class SexSelectFragment extends BaseFragment implements WheelPicker.OnIte
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventBus.getDefault().post(new SexSelectEvent(sex));
+                modifyUserInfo(String.valueOf(sexType));
             }
         });
         cancelBtn = view.findViewById(R.id.cancel_btn);
@@ -104,7 +109,7 @@ public class SexSelectFragment extends BaseFragment implements WheelPicker.OnIte
         monthPicker.post(new Runnable() {
             @Override
             public void run() {
-                monthPicker.setSelectedItemPosition(sex);
+                monthPicker.setSelectedItemPosition(sexType);
             }
         });
         dayPicker = (WheelPicker) view.findViewById(R.id.day_picker);
@@ -113,6 +118,30 @@ public class SexSelectFragment extends BaseFragment implements WheelPicker.OnIte
 
     @Override
     public void onItemSelected(WheelPicker picker, Object data, int position) {
-        sex = position;
+        sexType = position;
+    }
+
+    private void modifyUserInfo(final String sex) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(mActivity);
+        Call<ResponseBean<List<Object>>> call = userApiService.editUserDetail(
+                null, null, sex, null, null, null, null, null, null, null, token);
+        if (call != null) {
+            Log.i(TAG, "modifyUserInfo: call.enqueue");
+            call.enqueue(new CustomCallBack<List<Object>>() {
+                @Override
+                public void onSuccess(List<Object> data) {
+                    Log.i(TAG, "onSuccess: ");
+                    showShortToast("success");
+                    EventBus.getDefault().post(new SexSelectEvent(sexType));
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    showShortToast(error);
+                }
+            });
+        }
     }
 }

@@ -210,7 +210,6 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
     @Subscribe
     public void onSexEvent(SexSelectEvent event) {
         showOrHideSexFragment(false);
-        showShortToast(event.sex+"");
     }
 
     @Subscribe

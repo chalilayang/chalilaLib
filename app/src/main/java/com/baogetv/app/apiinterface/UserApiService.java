@@ -148,6 +148,9 @@ public interface UserApiService {
      * @param height：（身高：176）
      * @param weight：（体重：60）
      * @param token：（Token，登录凭证）
+     * @param bfr：（体脂率：20）
+     * @param is_push_comments：（是否接收评论推送）
+     * @param is_push_likes：（是否接收点赞推送）
      * @return
      */
     @FormUrlEncoded
@@ -160,6 +163,9 @@ public interface UserApiService {
             @Field("intro") String intro,
             @Field("height") String height,
             @Field("weight") String weight,
+            @Field("bfr") String bfr,
+            @Field("is_push_comments") Boolean is_push_comments,
+            @Field("is_push_likes") Boolean is_push_likes,
             @Field("token") String token);
 
     /**

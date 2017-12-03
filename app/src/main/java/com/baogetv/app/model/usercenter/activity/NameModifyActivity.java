@@ -61,7 +61,7 @@ public class NameModifyActivity extends BaseTitleActivity {
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getUserToken(getApplicationContext());
         Call<ResponseBean<List<Object>>> call = userApiService.editUserDetail(
-                null, name, null, null, intro, null, null, token);
+                null, name, null, null, intro, null, null, null, null, null, token);
         if (call != null) {
             call.enqueue(new CustomCallBack<List<Object>>() {
                 @Override
