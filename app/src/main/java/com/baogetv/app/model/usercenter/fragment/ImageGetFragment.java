@@ -137,58 +137,10 @@ public class ImageGetFragment extends BaseFragment implements IHandlerCallBack {
     public void onSuccess(List<String> photoList) {
         Log.i(TAG, "onSuccess: ");
         if (photoList != null && photoList.size() > 0) {
-            uploadFile(photoList.get(0));
+            EventBus.getDefault().post(new ImageSelectEvent(photoList.get(0)));
         }
     }
 
-    private void uploadFile(final String filePath) {
-        File file = new File(filePath);
-        RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part imageBodyPart = MultipartBody.Part.createFormData("pic", file.getName(), imageBody);
-        FileUploadService fileUploadService
-                = RetrofitManager.getInstance().createReq(FileUploadService.class);
-        Call<ResponseBean<ImageUploadBean>> call
-                = fileUploadService.uploadImage(imageBodyPart);
-        if (call != null) {
-            call.enqueue(new CustomCallBack<ImageUploadBean>() {
-                @Override
-                public void onSuccess(ImageUploadBean data) {
-                    Log.i(TAG, "onSuccess: ");
-                    showShortToast("图片上传success");
-                    modifyUserInfo(data.getId());
-                }
-
-                @Override
-                public void onFailed(String error) {
-                    showShortToast(error);
-                }
-            });
-        }
-    }
-
-    private void modifyUserInfo(final String pic) {
-        UserApiService userApiService
-                = RetrofitManager.getInstance().createReq(UserApiService.class);
-        String token = LoginManager.getUserToken(mActivity);
-        Call<ResponseBean<List<Object>>> call = userApiService.editUserDetail(
-                pic, null, null, null, null, null, null, null, null, null, token);
-        if (call != null) {
-            Log.i(TAG, "modifyUserInfo: call.enqueue");
-            call.enqueue(new CustomCallBack<List<Object>>() {
-                @Override
-                public void onSuccess(List<Object> data) {
-                    Log.i(TAG, "onSuccess: ");
-                    showShortToast("头像修改success");
-                    EventBus.getDefault().post(new ImageSelectEvent(""));
-                }
-
-                @Override
-                public void onFailed(String error) {
-                    showShortToast(error);
-                }
-            });
-        }
-    }
     @Override
     public void onCancel() {
         Log.i(TAG, "onCancel: ");

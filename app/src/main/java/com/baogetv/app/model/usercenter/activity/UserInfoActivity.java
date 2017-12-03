@@ -11,7 +11,9 @@ import android.view.View;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
+import com.baogetv.app.apiinterface.FileUploadService;
 import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.ImageUploadBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.model.usercenter.LoginManager;
@@ -29,10 +31,15 @@ import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.util.TimeUtil;
 import com.bumptech.glide.Glide;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
+import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 
 import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
@@ -226,16 +233,67 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         }
     }
 
+    private void uploadFile(final String filePath) {
+        File file = new File(filePath);
+        RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part imageBodyPart = MultipartBody.Part.createFormData("pic", file.getName(), imageBody);
+        FileUploadService fileUploadService
+                = RetrofitManager.getInstance().createReq(FileUploadService.class);
+        Call<ResponseBean<ImageUploadBean>> call
+                = fileUploadService.uploadImage(imageBodyPart);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<ImageUploadBean>() {
+                @Override
+                public void onSuccess(ImageUploadBean data) {
+                    Log.i(TAG, "onSuccess: ");
+                    showShortToast("图片上传success");
+                    modifyUserInfo(data.getId());
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    showShortToast(error);
+                }
+            });
+        }
+    }
+
+    private void modifyUserInfo(final String pic) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(getApplicationContext());
+        Call<ResponseBean<List<Object>>> call = userApiService.editUserDetail(
+                pic, null, null, null, null, null, null, null, null, null, token);
+        if (call != null) {
+            Log.i(TAG, "modifyUserInfo: call.enqueue");
+            call.enqueue(new CustomCallBack<List<Object>>() {
+                @Override
+                public void onSuccess(List<Object> data) {
+                    Log.i(TAG, "onSuccess: ");
+                    showShortToast("头像修改success");
+                    hideLoadingDialog();
+                    fetchUserInfo();
+                    setResult(RESULT_OK);
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    showShortToast(error);
+                }
+            });
+        }
+    }
+
     @Subscribe
     public void onImageEvent(ImageSelectEvent event) {
         Log.i(TAG, "onImageEvent: " + event.img);
         showOrHideImageSelectFragment(false);
+        showLoadingDialog("uploading", "上传成功");
+        uploadFile(event.img);
         Glide.with(this)
                 .fromFile()
                 .load(new File(event.img))
                 .into(userIconLine.getRightImageView());
-        fetchUserInfo();
-        setResult(RESULT_OK);
     }
 
     @Subscribe

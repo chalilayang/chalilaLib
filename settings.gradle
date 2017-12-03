@@ -1,1 +1,1 @@
-include ':chalilalib', ':app', ':PushSDK', ':nicevideoplayer', ':gallerypick', ':WheelPicker'
+include ':chalilalib', ':app', ':PushSDK', ':nicevideoplayer', ':gallerypick', ':WheelPicker', ':LoadingDialog'

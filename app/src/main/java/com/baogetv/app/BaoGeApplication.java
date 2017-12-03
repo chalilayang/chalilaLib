@@ -7,6 +7,8 @@ import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.push.MyPushIntentService;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
+import com.xiasuhuei321.loadingdialog.manager.StyleManager;
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 /**
  * Created by chalilayang on 2017/10/19.
@@ -45,5 +47,8 @@ public class BaoGeApplication extends Application {
             }
         });
         mPushAgent.setPushIntentServiceClass(MyPushIntentService.class);
+        StyleManager s = new StyleManager();
+        s.Anim(false).repeatTime(0).contentSize(-1).intercept(true);
+        LoadingDialog.initStyle(s);
     }
 }

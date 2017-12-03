@@ -13,6 +13,7 @@ import android.view.WindowManager;
 
 import com.baogetv.app.customview.CustomToastUtil;
 import com.umeng.message.PushAgent;
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -110,6 +111,34 @@ public class BaseActivity extends AppCompatActivity {
         View view = findViewById(R.id.error_view);
         if (view != null) {
             view.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private LoadingDialog loadingDialog;
+    public void showLoadingDialog(String msg, String success) {
+        if (loadingDialog != null) {
+            loadingDialog.close();
+        }
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.setLoadingText(msg)
+                .setSuccessText(success)//显示加载成功时的文字
+                //.setFailedText("加载失败")
+//                .setInterceptBack(intercept_back_event)
+//                .setLoadSpeed(speed)
+//                .setRepeatCount(repeatTime)
+//                .setDrawColor(color)
+                .show();
+    }
+
+    public void hideLoadingDialog() {
+        if (loadingDialog != null) {
+            loadingDialog.close();
+        }
+    }
+
+    public void loadSuccess() {
+        if (loadingDialog != null) {
+            loadingDialog.loadSuccess();
         }
     }
 }
