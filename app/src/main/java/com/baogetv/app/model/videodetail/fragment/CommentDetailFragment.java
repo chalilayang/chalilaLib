@@ -1,7 +1,6 @@
 package com.baogetv.app.model.videodetail.fragment;
 
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.baogetv.app.BaseItemFragment;
+import com.baogetv.app.BaseFragment;
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
@@ -19,9 +18,7 @@ import com.baogetv.app.bean.AddItemBean;
 import com.baogetv.app.bean.CommentListBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.model.usercenter.LoginManager;
-import com.baogetv.app.model.usercenter.entity.UserData;
 import com.baogetv.app.model.usercenter.event.ReportEvent;
-import com.baogetv.app.model.videodetail.activity.CommentDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.CommentListAdapter;
 import com.baogetv.app.model.videodetail.customview.CommentView;
 import com.baogetv.app.model.videodetail.entity.CommentData;
@@ -43,12 +40,13 @@ import retrofit2.Call;
 import static com.baogetv.app.model.videodetail.activity.CommentDetailActivity.KEY_COMMENT_DATA;
 
 
-public class CommentListFragment extends BaseItemFragment
+public class CommentDetailFragment extends BaseFragment
         implements SwipeRefreshLayout.OnRefreshListener,
         ItemViewHolder.ItemClickListener<CommentData>, CommentView.OnCommentListener {
 
     private static final String TAG = "CommentListFragment";
     private static final String PAGE_DATA = "PAGE_DATA";
+    private CommentData commentData;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private View contentView;
@@ -56,18 +54,14 @@ public class CommentListFragment extends BaseItemFragment
     private CommentListAdapter recyclerViewAdapter;
     private VideoDetailData videoDetailData;
 
-    public CommentListFragment() {
+    public CommentDetailFragment() {
     }
 
-    @Override
-    public String getTitle() {
-        return getString(R.string.comment);
-    }
-
-    public static CommentListFragment newInstance(VideoDetailData data) {
-        CommentListFragment fragment = new CommentListFragment();
+    public static CommentDetailFragment newInstance(VideoDetailData data, CommentData commentData) {
+        CommentDetailFragment fragment = new CommentDetailFragment();
         Bundle args = new Bundle();
         args.putParcelable(PAGE_DATA, data);
+        args.putParcelable(KEY_COMMENT_DATA, commentData);
         fragment.setArguments(args);
         return fragment;
     }
@@ -77,6 +71,7 @@ public class CommentListFragment extends BaseItemFragment
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             videoDetailData = getArguments().getParcelable(PAGE_DATA);
+            commentData = getArguments().getParcelable(KEY_COMMENT_DATA);
         }
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerViewAdapter = new CommentListAdapter(getActivity());
@@ -187,11 +182,6 @@ public class CommentListFragment extends BaseItemFragment
     @Override
     public void onItemClick(CommentData data, int position) {
         Log.i(TAG, "onItemClick: " + position);
-        Log.i(TAG, "onMoreComment: ");
-        Intent intent = new Intent(mActivity, CommentDetailActivity.class);
-        intent.putExtra(PAGE_DATA, videoDetailData);
-        intent.putExtra(KEY_COMMENT_DATA, data);
-        mActivity.startActivity(intent);
     }
 
     @Override
@@ -228,10 +218,6 @@ public class CommentListFragment extends BaseItemFragment
     @Override
     public void onMoreComment(CommentData data) {
         Log.i(TAG, "onMoreComment: ");
-        Intent intent = new Intent(mActivity, CommentDetailActivity.class);
-        intent.putExtra(PAGE_DATA, videoDetailData);
-        intent.putExtra(KEY_COMMENT_DATA, data);
-        mActivity.startActivity(intent);
     }
 
     private void addComment(String content, String vid, String reply_id, String replay_user_id) {
@@ -254,30 +240,5 @@ public class CommentListFragment extends BaseItemFragment
                 }
             });
         }
-    }
-
-    private List<CommentData> initFalseData() {
-        List<CommentData> list = new ArrayList<>();
-        for (int index = 0; index < 10; index ++) {
-            CommentData data = new CommentData();
-            UserData replyer = new UserData();
-            replyer.setNickName("防腐层");
-            replyer.setDesc("ddddd");
-            replyer.setGrage(index);
-            data.setOwner(replyer);
-            data.setContent("瓦尔特VRTV让他 ");
-            data.setTime(System.currentTimeMillis());
-            ReplyData replyData = new ReplyData();
-            replyData.setReplyer(replyer);
-            replyData.setReplyTo(replyer);
-            replyData.setContent("饿哦日女偶俄如女儿地方女偶儿女偶尔女人额如厕我软编");
-            List<ReplyData> list1 = new ArrayList<>();
-            for (int i = 0, count = index % 5; i < count; i ++) {
-                list1.add(replyData);
-            }
-            data.setReplyList(list1);
-            list.add(data);
-        }
-        return list;
     }
 }

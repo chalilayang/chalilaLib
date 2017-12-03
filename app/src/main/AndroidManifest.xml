@@ -154,6 +154,10 @@
             android:name=".model.usercenter.activity.AdviceActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".model.videodetail.activity.CommentDetailActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

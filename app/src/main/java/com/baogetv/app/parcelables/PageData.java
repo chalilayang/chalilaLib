@@ -14,17 +14,6 @@ public class PageData implements Parcelable {
     private int tabStyle;
     private List<PageItemData> itemDataList;
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(this.itemDataList);
-        dest.writeInt(tabStyle);
-    }
-
     public PageData(List<PageItemData> list) {
         if (list != null && list.size() > 0) {
             itemDataList = new ArrayList<>();
@@ -57,9 +46,22 @@ public class PageData implements Parcelable {
             return 0;
         }
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.tabStyle);
+        dest.writeTypedList(this.itemDataList);
+    }
+
     protected PageData(Parcel in) {
-        this.itemDataList = in.createTypedArrayList(PageItemData.CREATOR);
         this.tabStyle = in.readInt();
+        this.itemDataList = in.createTypedArrayList(PageItemData.CREATOR);
     }
 
 }

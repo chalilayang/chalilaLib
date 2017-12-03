@@ -278,7 +278,7 @@ public class VideoDetailBean implements Parcelable {
         this.tags = tags;
     }
 
-    public static class TagsBean {
+    public static class TagsBean implements Parcelable {
         /**
          * id : 3
          * name : 标签356
@@ -302,6 +302,38 @@ public class VideoDetailBean implements Parcelable {
         public void setName(String name) {
             this.name = name;
         }
+
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeString(this.name);
+        }
+
+        public TagsBean() {
+        }
+
+        protected TagsBean(Parcel in) {
+            this.id = in.readString();
+            this.name = in.readString();
+        }
+
+        public static final Creator<TagsBean> CREATOR = new Creator<TagsBean>() {
+            @Override
+            public TagsBean createFromParcel(Parcel source) {
+                return new TagsBean(source);
+            }
+
+            @Override
+            public TagsBean[] newArray(int size) {
+                return new TagsBean[size];
+            }
+        };
     }
 
 

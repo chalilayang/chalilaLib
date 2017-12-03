@@ -13,13 +13,14 @@ import java.util.List;
  * Created by chalilayang on 2017/11/20.
  */
 
-public class VideoDetailData extends PageData {
+public class VideoDetailData extends PageData implements Parcelable {
     public VideoDetailBean videoDetailBean;
 
     public VideoDetailData(List<PageItemData> list, VideoDetailBean bean) {
         super(list);
         videoDetailBean = bean;
     }
+
 
     @Override
     public int describeContents() {
