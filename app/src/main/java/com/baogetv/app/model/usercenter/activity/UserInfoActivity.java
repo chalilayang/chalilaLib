@@ -11,6 +11,10 @@ import android.view.View;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
+import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.bean.UserDetailBean;
+import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.event.BodyInfoSelectEvent;
 import com.baogetv.app.model.usercenter.event.DateSelectEvent;
 import com.baogetv.app.model.usercenter.event.ImageSelectEvent;
@@ -20,11 +24,19 @@ import com.baogetv.app.model.usercenter.fragment.BodyInfoSelectFragment;
 import com.baogetv.app.model.usercenter.fragment.DatePickFragment;
 import com.baogetv.app.model.usercenter.fragment.ImageGetFragment;
 import com.baogetv.app.model.usercenter.fragment.SexSelectFragment;
+import com.baogetv.app.net.CustomCallBack;
+import com.baogetv.app.net.RetrofitManager;
+import com.baogetv.app.util.TimeUtil;
 import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
+
+import retrofit2.Call;
+
+import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
+import static com.baogetv.app.model.usercenter.activity.NameModifyActivity.REQUEST_CODE_NAME_MODIFY;
 
 public class UserInfoActivity extends BaseTitleActivity implements View.OnClickListener {
 
@@ -42,10 +54,12 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
     private DatePickFragment datePickFragment;
     private SexSelectFragment sexSelectFragment;
     private BodyInfoSelectFragment bodyInfoSelectFragment;
+    private UserDetailBean userDetailBean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitleActivity(getString(R.string.user_info));
+        userDetailBean = getIntent().getParcelableExtra(KEY_USER_DETAIL_BEAN);
         init();
     }
 
@@ -116,7 +130,17 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
     private void showOrHideDatePickFragment(boolean flag) {
         if (flag) {
             if (datePickFragment == null) {
-                datePickFragment = DatePickFragment.newInstance(null);
+                String year = TimeUtil.getYear(userDetailBean.getBirthday());
+                String month = TimeUtil.getMonth(userDetailBean.getBirthday());
+                String day = TimeUtil.getDay(userDetailBean.getBirthday());
+                DateSelectEvent event = new DateSelectEvent(year, month, day);
+                datePickFragment = DatePickFragment.newInstance(event);
+            } else {
+                String year = TimeUtil.getYear(userDetailBean.getBirthday());
+                String month = TimeUtil.getMonth(userDetailBean.getBirthday());
+                String day = TimeUtil.getDay(userDetailBean.getBirthday());
+                DateSelectEvent event = new DateSelectEvent(year, month, day);
+                datePickFragment.setSelectEvent(event);
             }
             FragmentManager manager = getFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
@@ -137,6 +161,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
     private void showOrHideSexFragment(boolean flag) {
         if (flag) {
             if (sexSelectFragment == null) {
+
                 sexSelectFragment = SexSelectFragment.newInstance(null);
             }
             FragmentManager manager = getFragmentManager();
@@ -158,7 +183,17 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
     private void showOrHideBodyFragment(boolean flag) {
         if (flag) {
             if (bodyInfoSelectFragment == null) {
-                bodyInfoSelectFragment = BodyInfoSelectFragment.newInstance(null);
+                int height = Integer.parseInt(userDetailBean.getHeight());
+                int weight = Integer.parseInt(userDetailBean.getWeight());
+                int bodyFat = Integer.parseInt(userDetailBean.getBfr());
+                BodyInfoSelectEvent event = new BodyInfoSelectEvent(height, weight, bodyFat);
+                bodyInfoSelectFragment = BodyInfoSelectFragment.newInstance(event);
+            } else {
+                int height = Integer.parseInt(userDetailBean.getHeight());
+                int weight = Integer.parseInt(userDetailBean.getWeight());
+                int bodyFat = Integer.parseInt(userDetailBean.getBfr());
+                BodyInfoSelectEvent event = new BodyInfoSelectEvent(height, weight, bodyFat);
+                bodyInfoSelectFragment.setEvent(event);
             }
             FragmentManager manager = getFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
@@ -178,7 +213,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
 
     private void startNameIntroActivity() {
         Intent intent = new Intent(this, NameModifyActivity.class);
-        startActivityForResult(intent, NameModifyActivity.REQUEST_CODE_NAME_MODIFY);
+        startActivityForResult(intent, REQUEST_CODE_NAME_MODIFY);
     }
 
     private void hideFloatingView() {
@@ -199,23 +234,29 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 .fromFile()
                 .load(new File(event.img))
                 .into(userIconLine.getRightImageView());
+        fetchUserInfo();
+        setResult(RESULT_OK);
     }
 
     @Subscribe
     public void onDateEvent(DateSelectEvent event) {
         showOrHideDatePickFragment(false);
-        showShortToast(event.year + " " + event.month + " " + event.day);
+        fetchUserInfo();
+        setResult(RESULT_OK);
     }
 
     @Subscribe
     public void onSexEvent(SexSelectEvent event) {
         showOrHideSexFragment(false);
+        fetchUserInfo();
+        setResult(RESULT_OK);
     }
 
     @Subscribe
     public void onBodyFatEvent(BodyInfoSelectEvent event) {
         showOrHideBodyFragment(false);
-        showShortToast(event.height+"" + event.weight + " " + event.bodyFat);
+        fetchUserInfo();
+        setResult(RESULT_OK);
     }
 
     @Override
@@ -243,6 +284,38 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 if (imageSelectFragment != null) {
                     imageSelectFragment.onRequestPermissionsSuccess();
                 }
+            }
+        }
+    }
+
+    private void fetchUserInfo() {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(getApplicationContext());
+        Call<ResponseBean<UserDetailBean>> call
+                = userApiService.getUserDetail(token);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<UserDetailBean>() {
+                @Override
+                public void onSuccess(UserDetailBean data) {
+                    userDetailBean = data;
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    showShortToast(error);
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_NAME_MODIFY) {
+            if (resultCode == RESULT_OK) {
+                fetchUserInfo();
+                setResult(RESULT_OK);
             }
         }
     }

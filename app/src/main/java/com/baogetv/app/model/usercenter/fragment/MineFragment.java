@@ -38,7 +38,9 @@ import com.bumptech.glide.Glide;
 
 import retrofit2.Call;
 
+import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_SETTING_ACTIVITY;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_USER_INFO_ACTIVITY;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -105,8 +107,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         hasLoginView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), UserInfoActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(mActivity, UserInfoActivity.class);
+                intent.putExtra(KEY_USER_DETAIL_BEAN, detailBean);
+                mActivity.startActivityForResult(intent, REQUEST_CODE_USER_INFO_ACTIVITY);
             }
         });
         notLoginView = view.findViewById(R.id.no_login_view);

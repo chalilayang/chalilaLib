@@ -11,13 +11,21 @@ import com.aigestudio.wheelpicker.WheelPicker;
 import com.aigestudio.wheelpicker.widgets.WheelDatePicker;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
+import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.event.DateSelectEvent;
+import com.baogetv.app.model.usercenter.event.SexSelectEvent;
+import com.baogetv.app.net.CustomCallBack;
+import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.scaleview.ScaleCalculator;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
 
 public class DatePickFragment extends BaseFragment implements WheelPicker.OnItemSelectedListener {
 
@@ -46,6 +54,12 @@ public class DatePickFragment extends BaseFragment implements WheelPicker.OnItem
         args.putParcelable(KEY_DATE_INFO, event);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void setSelectEvent(DateSelectEvent event) {
+        Bundle args = new Bundle();
+        args.putParcelable(KEY_DATE_INFO, event);
+        setArguments(args);
     }
 
     private void init() {
@@ -79,6 +93,7 @@ public class DatePickFragment extends BaseFragment implements WheelPicker.OnItem
         } else {
             day = 0;
         }
+        Log.i(TAG, "init: " + year+ " "+month + " "+day);
     }
 
     @Override
@@ -86,6 +101,7 @@ public class DatePickFragment extends BaseFragment implements WheelPicker.OnItem
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             selectEvent = getArguments().getParcelable(KEY_DATE_INFO);
+            Log.i(TAG, "onCreate: " + selectEvent.year + selectEvent.month + selectEvent.day);
         }
         init();
     }
@@ -93,21 +109,22 @@ public class DatePickFragment extends BaseFragment implements WheelPicker.OnItem
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (root == null) {
-            root = inflater.inflate(R.layout.fragment_date_pick, container, false);
-            initView(root);
-        }
+        root = inflater.inflate(R.layout.fragment_date_pick, container, false);
+        initView(root);
         return root;
     }
 
     private void initView(View view) {
+        Log.i(TAG, "initView: ");
         confirmBtn = view.findViewById(R.id.confirm_btn);
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventBus.getDefault().post(
-                        new DateSelectEvent(
-                                yearList.get(year), monthList.get(month), dayList.get(day)));
+                Log.i(TAG, "onClick: " + yearList.get(year) + " " + monthList.get(month) + " " +dayList.get(day));
+                String yearStr = yearList.get(year);
+                String monthStr = monthList.get(month);
+                String dayStr = dayList.get(day);
+                modifyUserInfo(yearStr, monthStr, dayStr);
             }
         });
         cancelBtn = view.findViewById(R.id.cancel_btn);
@@ -164,5 +181,30 @@ public class DatePickFragment extends BaseFragment implements WheelPicker.OnItem
             day = position;
         }
         Log.i(TAG, "onItemSelected: " + yearList.get(year) + " " + monthList.get(month) + " " + dayList.get(day));
+    }
+
+    private void modifyUserInfo(final String year, final String month, final String day) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(mActivity);
+        String date = year + "-" + month + "-" + day;
+        Call<ResponseBean<List<Object>>> call = userApiService.editUserDetail(
+                null, null, null, date, null, null, null, null, null, null, token);
+        if (call != null) {
+            Log.i(TAG, "modifyUserInfo: call.enqueue");
+            call.enqueue(new CustomCallBack<List<Object>>() {
+                @Override
+                public void onSuccess(List<Object> data) {
+                    Log.i(TAG, "onSuccess: ");
+                    showShortToast("success");
+                    EventBus.getDefault().post(new DateSelectEvent(year, month, day));
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    showShortToast(error);
+                }
+            });
+        }
     }
 }

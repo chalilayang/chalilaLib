@@ -11,14 +11,21 @@ import com.aigestudio.wheelpicker.WheelPicker;
 import com.aigestudio.wheelpicker.widgets.WheelDatePicker;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
+import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.event.BodyInfoSelectEvent;
 import com.baogetv.app.model.usercenter.event.DateSelectEvent;
+import com.baogetv.app.net.CustomCallBack;
+import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.scaleview.ScaleCalculator;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
 
 public class BodyInfoSelectFragment extends BaseFragment implements WheelPicker.OnItemSelectedListener {
 
@@ -48,6 +55,12 @@ public class BodyInfoSelectFragment extends BaseFragment implements WheelPicker.
         args.putParcelable(KEY_BODY_INFO, event);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void setEvent(BodyInfoSelectEvent event) {
+        Bundle args = new Bundle();
+        args.putParcelable(KEY_BODY_INFO, event);
+        setArguments(args);
     }
 
     private void init() {
@@ -92,10 +105,8 @@ public class BodyInfoSelectFragment extends BaseFragment implements WheelPicker.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (root == null) {
-            root = inflater.inflate(R.layout.fragment_date_pick, container, false);
-            initView(root);
-        }
+        root = inflater.inflate(R.layout.fragment_date_pick, container, false);
+        initView(root);
         return root;
     }
 
@@ -104,9 +115,7 @@ public class BodyInfoSelectFragment extends BaseFragment implements WheelPicker.
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventBus.getDefault().post(
-                        new BodyInfoSelectEvent(
-                                year,month, day));
+                modifyUserInfo(year+"", month+"", day+"");
             }
         });
         cancelBtn = view.findViewById(R.id.cancel_btn);
@@ -162,6 +171,32 @@ public class BodyInfoSelectFragment extends BaseFragment implements WheelPicker.
             month = position;
         } else if (picker == dayPicker) {
             day = position;
+        }
+    }
+
+    private void modifyUserInfo(final String height, final String weight, final String bodyFat) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(mActivity);
+        String date = height + "-" + weight + "-" + bodyFat;
+        Call<ResponseBean<List<Object>>> call = userApiService.editUserDetail(
+                null, null, null, null, null, height, weight, bodyFat, null, null, token);
+        if (call != null) {
+            Log.i(TAG, "modifyUserInfo: call.enqueue");
+            call.enqueue(new CustomCallBack<List<Object>>() {
+                @Override
+                public void onSuccess(List<Object> data) {
+                    Log.i(TAG, "onSuccess: ");
+                    showShortToast("success");
+                    EventBus.getDefault().post(new BodyInfoSelectEvent(
+                            Integer.parseInt(height), Integer.parseInt(weight), Integer.parseInt(bodyFat)));
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    showShortToast(error);
+                }
+            });
         }
     }
 }

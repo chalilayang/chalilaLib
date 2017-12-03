@@ -28,6 +28,7 @@ import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_FIND_PASSWORD_A
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_SETTING_ACTIVITY;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_USER_INFO_ACTIVITY;
 
 public class HomePageActivity extends BaseActivity implements View.OnClickListener {
 
@@ -178,7 +179,8 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         } else if (requestCode == REQUEST_CODE_SETTING_ACTIVITY
                 || requestCode == REQUEST_CODE_CHANGE_MOBILE_ACTIVITY
                 || requestCode == REQUEST_CODE_CHANGE_PASSWORD_ACTIVITY
-                || requestCode == REQUEST_CODE_FIND_PASSWORD_ACTIVITY) {
+                || requestCode == REQUEST_CODE_FIND_PASSWORD_ACTIVITY
+                || requestCode == REQUEST_CODE_USER_INFO_ACTIVITY) {
             if (resultCode == RESULT_OK) {
                 if (mineFragment != null && mineFragment.isVisible()) {
                     mineFragment.freshUserInfo(null);
