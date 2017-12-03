@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.nex3z.flowlayout.FlowLayout;
 
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -185,6 +186,14 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             channelTitle = (TextView) view.findViewById(R.id.channel_title);
             channelUpdate = (TextView) view.findViewById(R.id.channel_update_time);
             channelDesc = (TextView) view.findViewById(R.id.channel_desc);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mRef != null && mRef.get() != null) {
+                        mRef.get().onChannelClick(channelDetailBean);
+                    }
+                }
+            });
         }
     }
 
@@ -207,6 +216,26 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             mImageView = (ImageView) view.findViewById(R.id.video_item_icon);
             title = (TextView) view.findViewById(R.id.video_title);
             updateTime = (TextView) view.findViewById(R.id.video_time);
+            mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mRef != null && mRef.get() != null) {
+                        mRef.get().onVideoClick(mItem.getVideoID());
+                    }
+                }
+            });
         }
+    }
+
+
+    private SoftReference<OnClickCallBack> mRef;
+    public void setOnClickListener(OnClickCallBack listener) {
+        if (listener != null) {
+            mRef = new SoftReference<OnClickCallBack>(listener);
+        }
+    }
+    public interface OnClickCallBack {
+        void onChannelClick(ChannelDetailBean bean);
+        void onVideoClick(String vid);
     }
 }

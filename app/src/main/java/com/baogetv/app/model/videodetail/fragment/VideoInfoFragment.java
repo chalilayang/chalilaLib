@@ -1,5 +1,6 @@
 package com.baogetv.app.model.videodetail.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +16,10 @@ import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.bean.BeanConvert;
 import com.baogetv.app.bean.ChannelDetailBean;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.bean.VideoListBean;
+import com.baogetv.app.model.channel.ChannelDetailActivity;
+import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.VideoInfoListAdapter;
 import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
@@ -35,7 +39,8 @@ import static com.baogetv.app.PagerFragment.PAGE_DATA;
  * Created by chalilayang on 2017/11/20.
  */
 
-public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class VideoInfoFragment extends BaseFragment 
+        implements SwipeRefreshLayout.OnRefreshListener, VideoInfoListAdapter.OnClickCallBack {
 
     private static final String TAG = "VideoInfoFragment";
     private View contentView;
@@ -91,6 +96,7 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerViewAdapter = new VideoInfoListAdapter(getActivity());
         recyclerViewAdapter.setVideoInfo(videoDetailData);
+        recyclerViewAdapter.setOnClickListener(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
         refreshLayout.setOnRefreshListener(this);
@@ -151,6 +157,22 @@ public class VideoInfoFragment extends BaseFragment implements SwipeRefreshLayou
                 }
             });
         }
+    }
+
+    @Override
+    public void onChannelClick(ChannelDetailBean bean) {
+        Log.i(TAG, "onChannelClick: ");
+        Intent intent = new Intent(getActivity(), ChannelDetailActivity.class);
+        intent.putExtra(ChannelDetailActivity.KEY_CHANNEL_ID, bean.getId());
+        mActivity.startActivity(intent);
+    }
+
+    @Override
+    public void onVideoClick(String vid) {
+        Log.i(TAG, "onVideoClick: ");
+        Intent intent = new Intent(mActivity, VideoDetailActivity.class);
+        intent.putExtra(VideoDetailActivity.KEY_VIDEO_ID, vid);
+        mActivity.startActivity(intent);
     }
 
     /**
