@@ -2,6 +2,7 @@ package com.baogetv.app.model.videodetail.activity;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,6 +21,7 @@ import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
 import com.baogetv.app.model.videodetail.event.AddHistoryEvent;
+import com.baogetv.app.model.videodetail.event.InputSendEvent;
 import com.baogetv.app.model.videodetail.event.PageSelectEvent;
 import com.baogetv.app.model.videodetail.fragment.PlayerFragment;
 import com.baogetv.app.model.videodetail.fragment.VideoDetailFragment;
@@ -28,6 +30,7 @@ import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageItemData;
 import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -45,6 +48,7 @@ public class VideoDetailActivity extends BaseActivity {
     private VideoDetailBean videoDetailBean;
     private String videoId;
     private EditText editText;
+    private View sendBtn;
     private View editContainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,18 @@ public class VideoDetailActivity extends BaseActivity {
 
     private void initView() {
         editText = (EditText) findViewById(R.id.comment_edit_text);
+        sendBtn = findViewById(R.id.comment_send_btn);
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String content = editText.getText().toString();
+                if (TextUtils.isEmpty(content)) {
+                    showShortToast("评论不能为空");
+                } else {
+                    EventBus.getDefault().post(new InputSendEvent(content));
+                }
+            }
+        });
         editContainer = findViewById(R.id.comment_edit_container);
         editContainer.setVisibility(View.GONE);
     }

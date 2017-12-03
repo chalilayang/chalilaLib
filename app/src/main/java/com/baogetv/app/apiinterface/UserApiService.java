@@ -290,7 +290,7 @@ public interface UserApiService {
     @FormUrlEncoded
     @POST("index.php?s=/Comments/index")
     Call<ResponseBean<List<CommentListBean>>> getCommentList(
-            @Field("video_id") int video_id
+            @Field("video_id") String video_id
     );
 
     /**
@@ -307,9 +307,9 @@ public interface UserApiService {
     @POST("index.php?s=/Comments/add")
     Call<ResponseBean<AddItemBean>> addComment(
             @Field("token") String token,
-            @Field("video_id") int video_id,
-            @Field("reply_id") int reply_id,
-            @Field("reply_user_id") int reply_user_id,
+            @Field("video_id") String video_id,
+            @Field("reply_id") String reply_id,
+            @Field("reply_user_id") String reply_user_id,
             @Field("content") String content
     );
 

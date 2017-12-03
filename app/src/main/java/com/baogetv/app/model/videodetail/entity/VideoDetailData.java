@@ -14,7 +14,6 @@ import java.util.List;
  */
 
 public class VideoDetailData extends PageData {
-    public int videoId;
     public VideoDetailBean videoDetailBean;
 
     public VideoDetailData(List<PageItemData> list, VideoDetailBean bean) {
@@ -30,13 +29,11 @@ public class VideoDetailData extends PageData {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
-        dest.writeInt(this.videoId);
         dest.writeParcelable(this.videoDetailBean, flags);
     }
 
     protected VideoDetailData(Parcel in) {
         super(in);
-        this.videoId = in.readInt();
         this.videoDetailBean = in.readParcelable(VideoDetailBean.class.getClassLoader());
     }
 

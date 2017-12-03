@@ -10,14 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.baogetv.app.BaseItemAdapter;
 import com.baogetv.app.BaseItemFragment;
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.AddItemBean;
 import com.baogetv.app.bean.CommentListBean;
 import com.baogetv.app.bean.ResponseBean;
-import com.baogetv.app.bean.VideoDetailBean;
+import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.entity.UserData;
 import com.baogetv.app.model.usercenter.event.ReportEvent;
 import com.baogetv.app.model.videodetail.adapter.CommentListAdapter;
@@ -25,6 +25,7 @@ import com.baogetv.app.model.videodetail.customview.CommentView;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
+import com.baogetv.app.model.videodetail.event.InputSendEvent;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.customview.RecyclerViewDivider;
@@ -36,8 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
-
-import static com.baogetv.app.PagerFragment.PAGE_DATA;
 
 
 public class CommentListFragment extends BaseItemFragment
@@ -119,8 +118,7 @@ public class CommentListFragment extends BaseItemFragment
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         Call<ResponseBean<List<CommentListBean>>> call
-                = userApiService.getCommentList(2);
-        Log.i(TAG, "getCommentList: " + videoDetailData.videoId);
+                = userApiService.getCommentList(videoDetailData.videoDetailBean.getId());
         if (call != null) {
             call.enqueue(new CustomCallBack<List<CommentListBean>>() {
                 @Override
@@ -155,37 +153,22 @@ public class CommentListFragment extends BaseItemFragment
         }
     }
 
-    private List<CommentData> initFalseData() {
-        List<CommentData> list = new ArrayList<>();
-        for (int index = 0; index < 10; index ++) {
-            CommentData data = new CommentData();
-            UserData replyer = new UserData();
-            replyer.setNickName("防腐层");
-            replyer.setDesc("ddddd");
-            replyer.setGrage(index);
-            data.setOwner(replyer);
-            data.setContent("瓦尔特VRTV让他 ");
-            data.setTime(System.currentTimeMillis());
-            ReplyData replyData = new ReplyData();
-            replyData.setReplyer(replyer);
-            replyData.setReplyTo(replyer);
-            replyData.setContent("饿哦日女偶俄如女儿地方女偶儿女偶尔女人额如厕我软编");
-            List<ReplyData> list1 = new ArrayList<>();
-            for (int i = 0, count = index % 5; i < count; i ++) {
-                list1.add(replyData);
-            }
-            data.setReplyList(list1);
-            list.add(data);
-        }
-        return list;
-    }
-
     @Subscribe
     public void handleReportEvent(ReportEvent event) {
         if (fragment != null && fragment.isAdded()) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.remove(fragment).commit();
         }
+    }
+
+    @Subscribe
+    public void handleSendComment(InputSendEvent event) {
+        if (!LoginManager.hasLogin(mActivity)) {
+            LoginManager.startLogin(mActivity);
+        } else {
+            addComment(event.content, videoDetailData.videoDetailBean.getId(), null, null);
+        }
+        Log.i(TAG, "handleSendComment: " + event.content);
     }
 
     @Override
@@ -237,5 +220,52 @@ public class CommentListFragment extends BaseItemFragment
     @Override
     public void onMoreComment(CommentData data) {
         Log.i(TAG, "onMoreComment: ");
+    }
+
+    private void addComment(String content, String vid, String reply_id, String replay_user_id) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(mActivity);
+        Call<ResponseBean<AddItemBean>> call = userApiService.addComment(
+                token, vid, reply_id, replay_user_id, content);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<AddItemBean>() {
+                @Override
+                public void onSuccess(AddItemBean bean) {
+                    showShortToast("add comment success");
+                    getCommentList(videoDetailData);
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    showShortToast(error);
+                }
+            });
+        }
+    }
+
+    private List<CommentData> initFalseData() {
+        List<CommentData> list = new ArrayList<>();
+        for (int index = 0; index < 10; index ++) {
+            CommentData data = new CommentData();
+            UserData replyer = new UserData();
+            replyer.setNickName("防腐层");
+            replyer.setDesc("ddddd");
+            replyer.setGrage(index);
+            data.setOwner(replyer);
+            data.setContent("瓦尔特VRTV让他 ");
+            data.setTime(System.currentTimeMillis());
+            ReplyData replyData = new ReplyData();
+            replyData.setReplyer(replyer);
+            replyData.setReplyTo(replyer);
+            replyData.setContent("饿哦日女偶俄如女儿地方女偶儿女偶尔女人额如厕我软编");
+            List<ReplyData> list1 = new ArrayList<>();
+            for (int i = 0, count = index % 5; i < count; i ++) {
+                list1.add(replyData);
+            }
+            data.setReplyList(list1);
+            list.add(data);
+        }
+        return list;
     }
 }
