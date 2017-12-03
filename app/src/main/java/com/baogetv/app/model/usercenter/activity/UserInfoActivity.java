@@ -351,7 +351,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getUserToken(getApplicationContext());
         Call<ResponseBean<UserDetailBean>> call
-                = userApiService.getUserDetail(token);
+                = userApiService.getUserDetail(token, null);
         if (call != null) {
             call.enqueue(new CustomCallBack<UserDetailBean>() {
                 @Override

@@ -65,7 +65,7 @@ public class SplashActivity extends BaseActivity {
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         Call<ResponseBean<UserDetailBean>> call
-                = userApiService.getUserDetail(LoginManager.getUserToken(getApplicationContext()));
+                = userApiService.getUserDetail(LoginManager.getUserToken(getApplicationContext()), null);
         if (call != null) {
             call.enqueue(new CustomCallBack<UserDetailBean>() {
                 @Override

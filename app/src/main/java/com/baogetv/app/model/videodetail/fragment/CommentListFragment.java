@@ -19,6 +19,7 @@ import com.baogetv.app.bean.AddItemBean;
 import com.baogetv.app.bean.CommentListBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.model.usercenter.LoginManager;
+import com.baogetv.app.model.usercenter.activity.MemberDetailActivity;
 import com.baogetv.app.model.usercenter.entity.UserData;
 import com.baogetv.app.model.usercenter.event.ReportEvent;
 import com.baogetv.app.model.videodetail.activity.CommentDetailActivity;
@@ -40,6 +41,7 @@ import java.util.List;
 
 import retrofit2.Call;
 
+import static com.baogetv.app.model.usercenter.activity.MemberDetailActivity.KEY_MEMBER_ID;
 import static com.baogetv.app.model.videodetail.activity.CommentDetailActivity.KEY_COMMENT_DATA;
 
 
@@ -214,11 +216,13 @@ public class CommentListFragment extends BaseItemFragment
     @Override
     public void onReplyerClick(ReplyData data) {
         Log.i(TAG, "onReplyerClick: ");
+        startMemberActivity(data.getBean().getUser_id());
     }
 
     @Override
     public void onReplyToClick(ReplyData data) {
         Log.i(TAG, "onReplyToClick: ");
+        startMemberActivity(data.getBean().getUser_id());
     }
 
     @Override
@@ -255,6 +259,12 @@ public class CommentListFragment extends BaseItemFragment
                 }
             });
         }
+    }
+
+    private void startMemberActivity(String uid) {
+        Intent intent = new Intent(mActivity, MemberDetailActivity.class);
+        intent.putExtra(KEY_MEMBER_ID, uid);
+        mActivity.startActivity(intent);
     }
 
     private List<CommentData> initFalseData() {

@@ -40,6 +40,10 @@ dependencies {
     compile project(':chalilalib')
     compile project(':PushSDK')
     compile project(':nicevideoplayer')
+    //权限管理
+    compile project(':gallerypick')
+    compile project(':WheelPicker')
+    compile project(':LoadingDialog')
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:design:26.+'
     compile 'com.android.support:support-vector-drawable:26.+'
@@ -48,11 +52,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.j256.ormlite:ormlite-android:5.0'
     compile 'com.j256.ormlite:ormlite-core:5.0'
-    testCompile 'junit:junit:4.12'
-    //权限管理
     compile 'com.yanzhenjie:permission:1.0.6'
-    compile project(':gallerypick')
-    compile project(':WheelPicker')
-    compile project(':LoadingDialog')
+    testCompile 'junit:junit:4.12'
 }
 

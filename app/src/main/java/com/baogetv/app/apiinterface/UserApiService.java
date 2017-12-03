@@ -77,11 +77,15 @@ public interface UserApiService {
      * 会员详情
      *
      * @param token：（token）
+     * @param user_id：（会员ID，不传就看token是哪个用户）
      * @return
      */
     @FormUrlEncoded
     @POST("index.php?s=/Member/detail")
-    Call<ResponseBean<UserDetailBean>> getUserDetail(@Field("token") String token);
+    Call<ResponseBean<UserDetailBean>> getUserDetail(
+            @Field("token") String token,
+            @Field("user_id") String user_id
+    );
 
     /**
      * 发送短信验证码

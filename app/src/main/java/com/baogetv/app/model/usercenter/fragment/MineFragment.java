@@ -289,7 +289,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         Call<ResponseBean<UserDetailBean>> call
-                = userApiService.getUserDetail(token);
+                = userApiService.getUserDetail(token, null);
         if (call != null) {
             call.enqueue(new CustomCallBack<UserDetailBean>() {
                 @Override

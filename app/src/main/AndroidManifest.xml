@@ -166,6 +166,8 @@
             android:name=".model.usercenter.activity.FindPasswordActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".model.usercenter.activity.MemberDetailActivity">
+        </activity>
     </application>
 
 </manifest>
