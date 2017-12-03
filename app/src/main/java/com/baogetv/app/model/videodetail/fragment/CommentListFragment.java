@@ -15,12 +15,15 @@ import com.baogetv.app.BaseItemFragment;
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
 import com.baogetv.app.model.usercenter.entity.UserData;
+import com.baogetv.app.model.usercenter.event.ReportEvent;
 import com.baogetv.app.model.videodetail.adapter.CommentListAdapter;
 import com.baogetv.app.model.videodetail.customview.CommentView;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,6 +116,19 @@ public class CommentListFragment extends BaseItemFragment
             fragment = CommentReportFragment.newInstance(commentData);
         }
         transaction.replace(R.id.floating_fragment_container, fragment).commit();
+    }
+
+    @Subscribe
+    public void handleReportEvent(ReportEvent event) {
+        if (fragment != null && fragment.isAdded()) {
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.remove(fragment).commit();
+        }
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
     }
 
     @Override

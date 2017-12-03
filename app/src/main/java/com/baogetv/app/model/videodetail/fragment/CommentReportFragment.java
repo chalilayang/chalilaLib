@@ -15,11 +15,14 @@ import com.baogetv.app.bean.ReportTypeBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.model.usercenter.adapter.ReportTypeListAdapter;
 import com.baogetv.app.model.usercenter.entity.ReportTypeData;
+import com.baogetv.app.model.usercenter.event.ReportEvent;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +87,7 @@ public class CommentReportFragment extends BaseFragment implements ItemViewHolde
         view.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                EventBus.getDefault().post(new ReportEvent());
             }
         });
     }
