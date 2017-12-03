@@ -56,6 +56,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private ImageView gradeIcon;
     private TextView gradeDesc;
     private MineBodyInfoView mineBodyInfoView;
+    private TextView scoreeDesc;
     private UpgradeProgress upgradeProgress;
     private MineLineItemView userGradeItemView;
     private MineLineItemView myCacheItemView;
@@ -134,6 +135,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         gradeIcon = view.findViewById(R.id.user_grade_icon);
         gradeDesc = view.findViewById(R.id.user_grade_desc);
         mineBodyInfoView = view.findViewById(R.id.body_info_view);
+        scoreeDesc = view.findViewById(R.id.score_desc);
         upgradeProgress = view.findViewById(R.id.user_grade_progress);
 
         userGradeItemView = view.findViewById(R.id.user_grade);
@@ -191,13 +193,20 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 e.printStackTrace();
             }
             mineBodyInfoView.setBodyFat(bodyFat);
-            int score = 0;
             try {
-                score = Integer.parseInt(detailBean.getScore());
+                int max = Integer.parseInt(detailBean.getNext_level_score());
+                if (max > 0) {
+                    int score = Integer.parseInt(detailBean.getScore());
+                    int scoreProgress = Math.min(100, score * 100 / max);
+                    String scoreDes = String.format(
+                            getString(R.string.upgrade_desc_format),
+                            String.valueOf(max - score), "LV2");
+                    scoreeDesc.setText(scoreDes);
+                    upgradeProgress.setUpGradeProgress(scoreProgress);
+                }
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
-            upgradeProgress.setUpGradeProgress(score);
         }
     }
 

@@ -3,30 +3,29 @@ package com.baogetv.app.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 /**
  * Created by chalilayang on 2017/11/26.
  */
 
 public class UserDetailBean implements Parcelable {
 
+
     /**
-     * user_id : 10
+     * user_id : 9
      * openid :
-     * username : 山南sky
-     * mobile : 13803845786
-     * device_token : AgNPWWcJ965E_IAmOLh4V2cfo83iUEDHju9SESmamRxT
+     * username : 山南
+     * mobile : 13821049089
+     * device_token : AgNPWWcJ965E_IAmOLh4V2dIJsLMmWDcQE_8a609vg2c
      * sex : 1
      * birthday : 1991-01-01
      * intro :
      * height : 0
      * weight : 0
-     * bfr : 0.00
+     * bfr : 0
      * pic : 0
-     * score : 0
+     * score : 36
      * level_id : 1
-     * level_time : 1970-01-01 08:00:00
+     * level_time : 2017-12-03 00:23:51
      * grade : 2
      * is_sure : 0
      * dumb_time : 1970-01-01 08:00:00
@@ -34,17 +33,18 @@ public class UserDetailBean implements Parcelable {
      * is_push_likes : 1
      * read_message_ids :
      * del_message_ids :
-     * login : 3
+     * login : 17
      * reg_ip : 2099501355
-     * reg_time : 2017-12-01 12:29:21
-     * last_login_ip : 125.35.217.43
-     * last_login_time : 2017-12-01 17:36:09
+     * reg_time : 2017-12-01 12:10:19
+     * last_login_ip : 42.80.233.3
+     * last_login_time : 2017-12-03 13:24:16
      * status : 1
-     * token : ef4d5ecb9c4c2cceda361b985811fe3c
+     * token : ad748196435a35e5d9fa89a120af158d
      * pic_url :
      * level_name : LV1
      * medal : lv1
      * level_pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-11-19/5a114121a67ac.jpg
+     * next_level_score : 666
      * age : 26
      */
 
@@ -81,6 +81,7 @@ public class UserDetailBean implements Parcelable {
     private String level_name;
     private String medal;
     private String level_pic_url;
+    private String next_level_score;
     private int age;
 
     public String getUser_id() {
@@ -347,6 +348,14 @@ public class UserDetailBean implements Parcelable {
         this.level_pic_url = level_pic_url;
     }
 
+    public String getNext_level_score() {
+        return next_level_score;
+    }
+
+    public void setNext_level_score(String next_level_score) {
+        this.next_level_score = next_level_score;
+    }
+
     public int getAge() {
         return age;
     }
@@ -396,6 +405,7 @@ public class UserDetailBean implements Parcelable {
         dest.writeString(this.level_name);
         dest.writeString(this.medal);
         dest.writeString(this.level_pic_url);
+        dest.writeString(this.next_level_score);
         dest.writeInt(this.age);
     }
 
@@ -436,6 +446,7 @@ public class UserDetailBean implements Parcelable {
         this.level_name = in.readString();
         this.medal = in.readString();
         this.level_pic_url = in.readString();
+        this.next_level_score = in.readString();
         this.age = in.readInt();
     }
 

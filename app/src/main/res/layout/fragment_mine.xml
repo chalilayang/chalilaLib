@@ -187,12 +187,12 @@
                         android:orientation="horizontal"/>
 
                     <com.chalilayang.scaleview.ScaleTextView
+                        android:id="@+id/score_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/size_30"
                         android:layout_marginRight="@dimen/size_30"
                         android:layout_marginTop="@dimen/size_60"
-                        android:text="@string/upgrade_desc"
                         android:textColor="#999999"
                         android:textSize="@dimen/size_24"/>
 

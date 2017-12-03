@@ -55,7 +55,7 @@
     <string name="body_fat">体脂</string>
     <string name="body_fat_format">%d</string>
 
-    <string name="upgrade_desc">还差20经验值达到V2</string>
+    <string name="upgrade_desc_format">还差%1$s经验值达到%2$s</string>
 
     <string name="search">搜索</string>
     <string name="search_cancel">取消</string>

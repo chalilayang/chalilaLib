@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.model.usercenter.activity.LoginActivity;
 import com.baogetv.app.model.usercenter.activity.RegisterActivity;
 import com.chalilayang.util.SPUtils;
@@ -23,6 +24,7 @@ public class LoginManager {
     private static final String KEY_DEVICE_TOKEN = "DEVICE_TOKEN";
     private static final String KEY_USER_TOKEN = "USER_TOKEN";
 
+    public static UserDetailBean detailBean;
     public static boolean hasLogin(Context context) {
         String token = getUserToken(context);
         if (!TextUtils.isEmpty(token)) {
@@ -55,6 +57,7 @@ public class LoginManager {
     }
 
     public static void cleanUserToken(Context context) {
+        detailBean = null;
         SPUtils.put(context, KEY_USER_TOKEN, "");
     }
 
