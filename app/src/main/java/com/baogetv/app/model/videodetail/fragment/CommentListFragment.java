@@ -105,6 +105,7 @@ public class CommentListFragment extends BaseItemFragment
         return contentView;
     }
 
+
     private CommentReportFragment fragment;
     private void showFragment(CommentData commentData) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -118,30 +119,29 @@ public class CommentListFragment extends BaseItemFragment
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         Call<ResponseBean<List<CommentListBean>>> call
-                = userApiService.getCommentList(videoDetailData.videoId);
+                = userApiService.getCommentList(2);
+        Log.i(TAG, "getCommentList: " + videoDetailData.videoId);
         if (call != null) {
             call.enqueue(new CustomCallBack<List<CommentListBean>>() {
                 @Override
                 public void onSuccess(List<CommentListBean> bean) {
                     List<CommentData> list = new ArrayList<>();
-                    for (int index = 0; index < 10; index ++) {
+                    for (int index = 0, count = bean.size(); index < count; index ++) {
                         CommentData data = new CommentData();
-                        UserData replyer = new UserData();
-                        replyer.setNickName("防腐层");
-                        replyer.setDesc("ddddd");
-                        replyer.setGrage(index);
-                        data.setOwner(replyer);
-                        data.setContent("瓦尔特VRTV让他 ");
+                        CommentListBean listBean = bean.get(index);
                         data.setTime(System.currentTimeMillis());
-                        ReplyData replyData = new ReplyData();
-                        replyData.setReplyer(replyer);
-                        replyData.setReplyTo(replyer);
-                        replyData.setContent("饿哦日女偶俄如女儿地方女偶儿女偶尔女人额如厕我软编");
-                        List<ReplyData> list1 = new ArrayList<>();
-                        for (int i = 0, count = index % 5; i < count; i ++) {
-                            list1.add(replyData);
+                        data.setBean(listBean);
+                        if (listBean.getChild() != null && listBean.getChild().size() > 0) {
+                            List<CommentListBean.DataBean> childList = listBean.getChild();
+                            List<ReplyData> list1 = new ArrayList<>(childList.size());
+                            for (int i = 0, childCount = childList.size();
+                                 i < childCount; i ++) {
+                                ReplyData replyData = new ReplyData();
+                                replyData.setBean(childList.get(i));
+                                list1.add(replyData);
+                            }
+                            data.setReplyList(list1);
                         }
-                        data.setReplyList(list1);
                         list.add(data);
                     }
                     recyclerViewAdapter.update(list);
@@ -154,6 +154,32 @@ public class CommentListFragment extends BaseItemFragment
             });
         }
     }
+
+    private List<CommentData> initFalseData() {
+        List<CommentData> list = new ArrayList<>();
+        for (int index = 0; index < 10; index ++) {
+            CommentData data = new CommentData();
+            UserData replyer = new UserData();
+            replyer.setNickName("防腐层");
+            replyer.setDesc("ddddd");
+            replyer.setGrage(index);
+            data.setOwner(replyer);
+            data.setContent("瓦尔特VRTV让他 ");
+            data.setTime(System.currentTimeMillis());
+            ReplyData replyData = new ReplyData();
+            replyData.setReplyer(replyer);
+            replyData.setReplyTo(replyer);
+            replyData.setContent("饿哦日女偶俄如女儿地方女偶儿女偶尔女人额如厕我软编");
+            List<ReplyData> list1 = new ArrayList<>();
+            for (int i = 0, count = index % 5; i < count; i ++) {
+                list1.add(replyData);
+            }
+            data.setReplyList(list1);
+            list.add(data);
+        }
+        return list;
+    }
+
     @Subscribe
     public void handleReportEvent(ReportEvent event) {
         if (fragment != null && fragment.isAdded()) {

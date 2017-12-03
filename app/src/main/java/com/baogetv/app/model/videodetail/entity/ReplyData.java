@@ -3,6 +3,7 @@ package com.baogetv.app.model.videodetail.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.baogetv.app.bean.CommentListBean;
 import com.baogetv.app.model.usercenter.entity.UserData;
 
 /**
@@ -13,6 +14,7 @@ public class ReplyData implements Parcelable {
     private UserData replyTo;
     private UserData replyer;
     private String content;
+    private CommentListBean.DataBean bean;
 
     public UserData getReplyTo() {
         return replyTo;
@@ -31,13 +33,27 @@ public class ReplyData implements Parcelable {
     }
 
     public String getContent() {
-        return content;
+        return bean.getContent();
     }
 
     public void setContent(String content) {
         this.content = content;
     }
+    public CommentListBean.DataBean getBean() {
+        return bean;
+    }
 
+    public void setBean(CommentListBean.DataBean bean) {
+        this.bean = bean;
+        UserData replyer = new UserData();
+        replyer.setNickName(bean.getUsername());
+        replyer.setIconUrl(bean.getUser_pic_url());
+        this.replyer = replyer;
+        UserData replyTo = new UserData();
+        replyTo.setNickName(bean.getReply_user_username());
+        replyTo.setIconUrl(bean.getReply_user_pic_url());
+        this.replyTo = replyer;
+    }
 
     @Override
     public int describeContents() {
@@ -49,6 +65,7 @@ public class ReplyData implements Parcelable {
         dest.writeParcelable(this.replyTo, flags);
         dest.writeParcelable(this.replyer, flags);
         dest.writeString(this.content);
+        dest.writeParcelable(this.bean, flags);
     }
 
     public ReplyData() {
@@ -58,6 +75,7 @@ public class ReplyData implements Parcelable {
         this.replyTo = in.readParcelable(UserData.class.getClassLoader());
         this.replyer = in.readParcelable(UserData.class.getClassLoader());
         this.content = in.readString();
+        this.bean = in.readParcelable(CommentListBean.DataBean.class.getClassLoader());
     }
 
     public static final Creator<ReplyData> CREATOR = new Creator<ReplyData>() {

@@ -53,7 +53,9 @@ public class UserData implements Parcelable {
     public void setGrage(int grage) {
         this.grage = grage;
     }
-
+    public void setGrage(String grage) {
+        this.grage = Integer.parseInt(grage);
+    }
 
     @Override
     public int describeContents() {

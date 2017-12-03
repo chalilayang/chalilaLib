@@ -3,6 +3,7 @@ package com.baogetv.app.model.videodetail.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.baogetv.app.bean.CommentListBean;
 import com.baogetv.app.model.usercenter.entity.UserData;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class CommentData implements Parcelable {
     private String content;
     private long time;
     private List<ReplyData> replyList;
-
+    private CommentListBean bean;
 
     public UserData getOwner() {
         return owner;
@@ -35,24 +36,6 @@ public class CommentData implements Parcelable {
         this.content = content;
     }
 
-    public List<ReplyData> getReplyList() {
-        List<ReplyData> list = new ArrayList<>();
-        if (replyList != null && replyList.size() > 0) {
-            list.addAll(replyList);
-        }
-        return list;
-    }
-
-    public void setReplyList(List<ReplyData> list) {
-        if (replyList == null) {
-            replyList = new ArrayList<>();
-        }
-        replyList.clear();
-        if (list != null && list.size() > 0) {
-            replyList.addAll(list);
-        }
-    }
-
     public long getTime() {
         return time;
     }
@@ -61,6 +44,28 @@ public class CommentData implements Parcelable {
         this.time = time;
     }
 
+    public List<ReplyData> getReplyList() {
+        return replyList;
+    }
+
+    public void setReplyList(List<ReplyData> replyList) {
+        this.replyList = replyList;
+    }
+
+    public CommentListBean getBean() {
+        return bean;
+    }
+
+    public void setBean(CommentListBean bean) {
+        this.bean = bean;
+        UserData replyer = new UserData();
+        replyer.setNickName(bean.getUsername());
+        replyer.setDesc(bean.getIntro());
+        replyer.setGrage(bean.getGrade());
+        replyer.setIconUrl(bean.getUser_pic_url());
+        setOwner(replyer);
+        setContent(bean.getContent());
+    }
 
     @Override
     public int describeContents() {
@@ -73,6 +78,7 @@ public class CommentData implements Parcelable {
         dest.writeString(this.content);
         dest.writeLong(this.time);
         dest.writeTypedList(this.replyList);
+        dest.writeParcelable(this.bean, flags);
     }
 
     public CommentData() {
@@ -83,10 +89,10 @@ public class CommentData implements Parcelable {
         this.content = in.readString();
         this.time = in.readLong();
         this.replyList = in.createTypedArrayList(ReplyData.CREATOR);
+        this.bean = in.readParcelable(CommentListBean.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<CommentData> CREATOR = new Parcelable
-            .Creator<CommentData>() {
+    public static final Creator<CommentData> CREATOR = new Creator<CommentData>() {
         @Override
         public CommentData createFromParcel(Parcel source) {
             return new CommentData(source);
