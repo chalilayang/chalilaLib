@@ -20,6 +20,8 @@ public class PageItemData implements Parcelable {
     public static final int TYPE_CHANNEL_HOT = 1241;
     public static final int TYPE_CHANNEL_DATE = 1242;
 
+    public static final int TYPE_MEMBER_COLLECT = 1243;
+
     private final String title;
     private final int type;
 

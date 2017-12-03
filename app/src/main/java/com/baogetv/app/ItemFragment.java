@@ -10,12 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.bean.BeanConvert;
+import com.baogetv.app.bean.CollectBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoListBean;
 import com.baogetv.app.bean.VideoRankListBean;
 import com.baogetv.app.model.channel.entity.ChannelItemData;
+import com.baogetv.app.model.usercenter.entity.MemberItemData;
 import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
 import com.baogetv.app.net.CustomCallBack;
@@ -138,7 +141,7 @@ public class ItemFragment extends BaseItemFragment
                     }
                     @Override
                     public void onFailed(String error) {
-                        Log.i(TAG, "onFailure: " + error);
+                        showShortToast(error);
                     }
                 });
             }
@@ -178,7 +181,7 @@ public class ItemFragment extends BaseItemFragment
 
                     @Override
                     public void onFailed(String error) {
-                        Log.i(TAG, "onFailure: " + error);
+                        showShortToast(error);
                     }
                 });
             }
@@ -209,7 +212,7 @@ public class ItemFragment extends BaseItemFragment
 
                     @Override
                     public void onFailed(String error) {
-                        Log.i(TAG, "onFailure: " + error);
+                        showShortToast(error);
                     }
                 });
             }
@@ -250,7 +253,38 @@ public class ItemFragment extends BaseItemFragment
 
                     @Override
                     public void onFailed(String error) {
-                        Log.i(TAG, "onFailure: " + error);
+                        showShortToast(error);
+                    }
+                });
+            }
+        } else if (itemData.getType() == PageItemData.TYPE_MEMBER_COLLECT) {
+            if (!(pageData instanceof MemberItemData)) {
+                return;
+            }
+            MemberItemData channelItemData = (MemberItemData) pageData;
+            UserApiService userApiService
+                    = RetrofitManager.getInstance().createReq(UserApiService.class);
+            Call<ResponseBean<List<CollectBean>>> call
+                    = userApiService.getCollectList(null, channelItemData.getMemberId());
+            if (call != null) {
+                call.enqueue(new CustomCallBack<List<CollectBean>>() {
+                    @Override
+                    public void onSuccess(List<CollectBean> data) {
+                        iVideoDatas.clear();
+                        if (data != null) {
+                            for (int index = 0, count = data.size(); index < count; index ++) {
+                                CollectBean bean = data.get(index);
+                                VideoListAdapter.IVideoData iVideoData
+                                        = BeanConvert.getIVideoData(bean);
+                                iVideoDatas.add(iVideoData);
+                            }
+                        }
+                        recyclerViewAdapter.update(iVideoDatas);
+                    }
+
+                    @Override
+                    public void onFailed(String error) {
+                        showShortToast(error);
                     }
                 });
             }

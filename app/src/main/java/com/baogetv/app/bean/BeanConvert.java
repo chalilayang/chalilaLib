@@ -51,4 +51,15 @@ public class BeanConvert {
         ChannelData result = new ChannelData(cid, picUrl, title, playCount, publishTime, desc);
         return result;
     }
+
+    public static  VideoListAdapter.IVideoData getIVideoData(CollectBean data) {
+        String picUrl = data.getPic_url();
+        String title = data.getType_name();
+        String publishTime = data.getAdd_time();
+        String playCount = data.getPlay();
+//        String duration = data.getLength();
+        String vid = data.getId();
+        VideoData result = new VideoData(picUrl, title, publishTime, playCount, "", vid);
+        return result;
+    }
 }

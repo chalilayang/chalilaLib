@@ -244,12 +244,15 @@ public interface UserApiService {
      * 我的收藏
      *
      * @param token：（Token，登录凭证）
+     * @param user_id：（会员ID，不传就看token是哪个用户）
      * @return
      */
     @FormUrlEncoded
     @POST("index.php?s=/Collects/my")
     Call<ResponseBean<List<CollectBean>>> getCollectList(
-            @Field("token") String token);
+            @Field("token") String token,
+            @Field("user_id") String user_id
+    );
 
 
     /**

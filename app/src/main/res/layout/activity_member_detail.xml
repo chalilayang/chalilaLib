@@ -1,96 +1,130 @@
-<android.support.design.widget.CoordinatorLayout
+<com.chalilayang.scaleview.ScaleLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".model.usercenter.activity.MemberDetailActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+    <include
+        android:id="@+id/title_container"
+        layout="@layout/base_title_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_690"
-        android:background="@color/white">
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/reshape_gray"/>
+
+    <com.chalilayang.scaleview.ScaleLinearLayout
+        android:id="@+id/has_login_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.chalilayang.scaleview.ScaleRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="@color/white"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-            <com.chalilayang.scaleview.ScaleRelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_30"
+            android:layout_marginRight="@dimen/size_30"
+            android:layout_marginTop="@dimen/size_38">
+
+            <com.baogetv.app.customview.LogoCircleImageView
+                android:id="@+id/mine_icon"
+                android:layout_width="@dimen/size_160"
+                android:layout_height="@dimen/size_160"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/user_default_icon"/>
+
+            <com.chalilayang.scaleview.ScaleLinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <ImageView
-                    android:id="@+id/image_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_330"
-                    android:scaleType="fitXY"
-                    android:src="@color/reshape_red"/>
-                <com.chalilayang.scaleview.ScaleLinearLayout
-                    android:id="@+id/circle_image_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_180"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="@dimen/size_346"
-                    android:layout_marginLeft="@dimen/size_30"
-                    android:layout_marginRight="@dimen/size_30"
-                    android:orientation="horizontal">
-                    <com.baogetv.app.customview.LogoCircleImageView
-                        android:id="@+id/circle_image"
-                        android:layout_width="@dimen/size_180"
-                        android:layout_height="@dimen/size_180"
-                        android:layout_gravity="center_vertical"/>
-                    <com.chalilayang.scaleview.ScaleLinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:layout_marginLeft="@dimen/size_24"
-                        android:layout_marginTop="@dimen/size_74">
-                        <com.chalilayang.scaleview.ScaleTextView
-                            android:id="@+id/channel_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/all_ranking"
-                            android:textSize="@dimen/size_30"
-                            android:textColor="@color/reply_content"/>
-                        <com.chalilayang.scaleview.ScaleTextView
-                            android:id="@+id/channel_info"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/size_20"
-                            android:text="@string/all_ranking"
-                            android:textSize="@dimen/size_24"
-                            android:textColor="@color/reply_time"/>
-                    </com.chalilayang.scaleview.ScaleLinearLayout>
-                </com.chalilayang.scaleview.ScaleLinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_30"
+                android:layout_toRightOf="@+id/mine_icon"
+                android:orientation="vertical">
+
                 <com.chalilayang.scaleview.ScaleTextView
-                    android:id="@+id/channel_desc"
+                    android:id="@+id/mine_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/system_notify"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/size_34"/>
+
+                <com.chalilayang.scaleview.ScaleLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/circle_image_container"
-                    android:layout_marginLeft="@dimen/size_30"
-                    android:layout_marginRight="@dimen/size_30"
-                    android:layout_marginTop="@dimen/size_26"
-                    android:text="@string/large_text"
-                    android:textSize="@dimen/size_26"
-                    android:textColor="@color/reply_name"
-                    android:maxLines="2"/>
-                <View
-                    android:id="@+id/bottom_divider"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_20"
-                    android:background="@color/f5f5f5"/>
-            </com.chalilayang.scaleview.ScaleRelativeLayout>
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
+                    android:layout_marginTop="@dimen/size_20"
+                    android:orientation="horizontal">
 
-    <include layout="@layout/content_channel_detail"/>
-    <ImageView
-        android:id="@+id/error_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/net_failed"
-        android:visibility="gone"/>
-</android.support.design.widget.CoordinatorLayout>
+                    <ImageView
+                        android:id="@+id/user_grade_icon"
+                        android:layout_width="@dimen/size_30"
+                        android:layout_height="@dimen/size_20"
+                        android:layout_gravity="center_vertical"/>
+
+                    <com.chalilayang.scaleview.ScaleTextView
+                        android:id="@+id/user_grade_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/size_20"
+                        android:text="@string/user_grade_test_desc"
+                        android:textAppearance="@style/search_label"/>
+                </com.chalilayang.scaleview.ScaleLinearLayout>
+
+                <com.chalilayang.scaleview.ScaleLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_30"
+                    android:orientation="horizontal">
+
+                    <com.chalilayang.scaleview.ScaleTextView
+                        android:id="@+id/user_mobile_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textAppearance="@style/search_label"/>
+
+                    <com.chalilayang.scaleview.ScaleTextView
+                        android:id="@+id/change_mobile_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/size_20"
+                        android:text="@string/change_mobile_num"
+                        android:textColor="@color/reshape_red"
+                        android:textSize="@dimen/size_24"/>
+                </com.chalilayang.scaleview.ScaleLinearLayout>
+            </com.chalilayang.scaleview.ScaleLinearLayout>
+        </com.chalilayang.scaleview.ScaleRelativeLayout>
+
+        <com.baogetv.app.model.usercenter.customview.MineBodyInfoView
+            android:id="@+id/body_info_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_30"
+            android:layout_marginRight="@dimen/size_30"
+            android:layout_marginTop="@dimen/size_70"
+            android:orientation="horizontal"/>
+    </com.chalilayang.scaleview.ScaleLinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_60"
+        android:background="@color/channel_list_divider"/>
+    <com.chalilayang.scaleview.ScaleTextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_100"
+        android:text="@string/user_collect"
+        android:textColor="@color/reply_content"
+        android:textSize="@dimen/size_30"
+        android:gravity="center"/>
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</com.chalilayang.scaleview.ScaleLinearLayout>

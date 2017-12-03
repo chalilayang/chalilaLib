@@ -6,10 +6,14 @@ package com.baogetv.app.bean;
 
 public class CollectBean {
 
+
     /**
      * video_id : 1
      * pic_url : /test2/Uploads/Picture/2016-12-05/58451c922375d.png
-     * title : 测试
+     * is_cnword : 1
+     * play : 30
+     * video_add_time : 2017-11-07 23:41:44
+     * video_update_time : 2017-11-07 23:41:44
      * type_name : 频道1
      * username : aa
      * userpic :
@@ -22,7 +26,10 @@ public class CollectBean {
 
     private String video_id;
     private String pic_url;
-    private String title;
+    private String is_cnword;
+    private String play;
+    private String video_add_time;
+    private String video_update_time;
     private String type_name;
     private String username;
     private String userpic;
@@ -48,12 +55,36 @@ public class CollectBean {
         this.pic_url = pic_url;
     }
 
-    public String getTitle() {
-        return title;
+    public String getIs_cnword() {
+        return is_cnword;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setIs_cnword(String is_cnword) {
+        this.is_cnword = is_cnword;
+    }
+
+    public String getPlay() {
+        return play;
+    }
+
+    public void setPlay(String play) {
+        this.play = play;
+    }
+
+    public String getVideo_add_time() {
+        return video_add_time;
+    }
+
+    public void setVideo_add_time(String video_add_time) {
+        this.video_add_time = video_add_time;
+    }
+
+    public String getVideo_update_time() {
+        return video_update_time;
+    }
+
+    public void setVideo_update_time(String video_update_time) {
+        this.video_update_time = video_update_time;
     }
 
     public String getType_name() {

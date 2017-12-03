@@ -76,7 +76,7 @@ public class MyCollectActivity extends BaseTitleActivity
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getUserToken(getApplicationContext());
-        Call<ResponseBean<List<CollectBean>>> call = userApiService.getCollectList(token);
+        Call<ResponseBean<List<CollectBean>>> call = userApiService.getCollectList(token, null);
         if (call != null) {
             call.enqueue(new CustomCallBack<List<CollectBean>>() {
                 @Override

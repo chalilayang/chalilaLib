@@ -82,7 +82,7 @@ public class CollectListAdapter
         protected SoftReference<ItemDeleteListener> mDeleteRef;
         @Override
         public void bindData(CollectBean data, int pos) {
-            title.setText(data.getTitle());
+            title.setText(data.getType_name());
             updateTime.setText(data.getAdd_time());
             Glide.with(mContext).load(data.getPic_url()).crossFade().into(mImageView);
         }
