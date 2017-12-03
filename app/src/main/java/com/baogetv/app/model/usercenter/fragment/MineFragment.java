@@ -171,8 +171,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
         if (detailBean != null) {
             Log.i(TAG, "updateInfo: " + detailBean.getPic_url());
-            Glide.with(this).load(detailBean.getPic_url())
-                    .placeholder(R.mipmap.user_default_icon).into(userIcon);
+            Glide.with(this).load(detailBean.getPic_url()).into(userIcon);
             Glide.with(this).load(detailBean.getLevel_pic_url()).into(gradeIcon);
             userIcon.setLogo(detailBean.getGrade(), detailBean.getLevel_id());
             userName.setText(detailBean.getUsername());
