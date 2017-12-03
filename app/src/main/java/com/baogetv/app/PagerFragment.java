@@ -16,11 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.baogetv.app.model.videodetail.event.PageSelectEvent;
 import com.baogetv.app.parcelables.PageData;
 import com.chalilayang.scaleview.ScaleCalculator;
 
+import org.greenrobot.eventbus.EventBus;
 
-public class PagerFragment extends BaseFragment {
+
+public class PagerFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
     private static final String TAG = "PagerFragment";
     public static final String PAGE_DATA = "PAGE_DATA";
     protected PageData pageData;
@@ -88,6 +91,7 @@ public class PagerFragment extends BaseFragment {
         if (pageData != null && pageData.getCount() > 0) {
             mSectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager);
             mViewPager.setAdapter(mSectionsPagerAdapter);
+            mViewPager.setOnPageChangeListener(this);
             tabLayout.setupWithViewPager(mViewPager);
             if (pageData.getTabStyle() != 0) {
                 tabLayout.setSelectedTabIndicatorHeight(0);
@@ -156,5 +160,21 @@ public class PagerFragment extends BaseFragment {
 
     public BaseFragment createFragment(int pageIndex) {
         return ItemFragment.newInstance(pageData.getItemDataList().get(pageIndex));
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        Log.i(TAG, "onPageScrolled: ");
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        Log.i(TAG, "onPageSelected: ");
+        EventBus.getDefault().post(new PageSelectEvent(position));
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        Log.i(TAG, "onPageScrollStateChanged: ");
     }
 }

@@ -20,6 +20,7 @@ import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
 import com.baogetv.app.model.videodetail.event.AddHistoryEvent;
+import com.baogetv.app.model.videodetail.event.PageSelectEvent;
 import com.baogetv.app.model.videodetail.fragment.PlayerFragment;
 import com.baogetv.app.model.videodetail.fragment.VideoDetailFragment;
 import com.baogetv.app.net.CustomCallBack;
@@ -141,6 +142,16 @@ public class VideoDetailActivity extends BaseActivity {
         }
     }
 
+    @Subscribe
+    public void handlePageEvent(PageSelectEvent event) {
+        Log.i(TAG, "handlePageEvent: " + event.pos);
+        if (event.pos == 1) {
+            editContainer.setVisibility(View.VISIBLE);
+        } else {
+            editContainer.setVisibility(View.GONE);
+        }
+    }
+    
     @Subscribe
     public void handleCollectEvent(AddCollectEvent event) {
         Log.i(TAG, "handleCollectEvent: ");
