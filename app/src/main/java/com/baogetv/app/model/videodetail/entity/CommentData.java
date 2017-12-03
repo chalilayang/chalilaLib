@@ -44,6 +44,10 @@ public class CommentData implements Parcelable {
         this.time = time;
     }
 
+    public void setTime(String time) {
+        setTime(Long.parseLong(time));
+    }
+
     public List<ReplyData> getReplyList() {
         return replyList;
     }

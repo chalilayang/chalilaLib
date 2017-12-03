@@ -129,7 +129,7 @@ public class CommentListFragment extends BaseItemFragment
                     for (int index = 0, count = bean.size(); index < count; index ++) {
                         CommentData data = new CommentData();
                         CommentListBean listBean = bean.get(index);
-                        data.setTime(System.currentTimeMillis());
+                        data.setTime(listBean.getAdd_time());
                         data.setBean(listBean);
                         if (listBean.getChild() != null && listBean.getChild().size() > 0) {
                             List<CommentListBean.DataBean> childList = listBean.getChild();

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.baogetv.app.R;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
+import com.baogetv.app.util.TimeUtil;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.chalilayang.scaleview.ScaleLinearLayout;
 
@@ -45,7 +46,7 @@ public class ReplyView extends ScaleLinearLayout {
     private int contentSize;
     private int timeSize;
 
-    private CommentData commentData;
+    private ReplyData replyData;
 
     private String replyFormat;
     private String replyFormatNoTo;
@@ -97,6 +98,14 @@ public class ReplyView extends ScaleLinearLayout {
         replyBtn.setTextSize(TypedValue.COMPLEX_UNIT_PX, timeSize);
         replyBtn.setTextColor(replyBtnColor);
         replyBtn.setText(getResources().getString(R.string.reply));
+        replyBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mRef != null && mRef.get() != null) {
+                    mRef.get().onReplyClick(replyData);
+                }
+            }
+        });
         rlp = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
@@ -106,9 +115,11 @@ public class ReplyView extends ScaleLinearLayout {
     }
 
     public void setReply(final ReplyData data) {
+        replyData = data;
         if (data != null) {
             contentTv.setMovementMethod(LinkMovementMethod.getInstance());
             contentTv.setHighlightColor(Color.TRANSPARENT);
+            time.setText(TimeUtil.getTimeStateNew(data.getBean().getAdd_time()));
             if (data.getReplyTo() != null) {
                 String replyName = data.getReplyer().getNickName();
                 String replyToName = data.getReplyTo().getNickName();
