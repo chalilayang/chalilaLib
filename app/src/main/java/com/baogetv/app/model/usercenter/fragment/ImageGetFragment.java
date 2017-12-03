@@ -13,16 +13,30 @@ import android.view.ViewGroup;
 
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
+import com.baogetv.app.apiinterface.FileUploadService;
+import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.ImageUploadBean;
+import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.model.usercenter.GlideImageLoader;
+import com.baogetv.app.model.usercenter.LoginManager;
+import com.baogetv.app.model.usercenter.event.DateSelectEvent;
 import com.baogetv.app.model.usercenter.event.ImageSelectEvent;
+import com.baogetv.app.net.CustomCallBack;
+import com.baogetv.app.net.RetrofitManager;
 import com.yancy.gallerypick.config.GalleryConfig;
 import com.yancy.gallerypick.config.GalleryPick;
 import com.yancy.gallerypick.inter.IHandlerCallBack;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
 
 import static com.baogetv.app.model.usercenter.activity.UserInfoActivity
         .PERMISSIONS_REQUEST_READ_CONTACTS;
@@ -123,10 +137,58 @@ public class ImageGetFragment extends BaseFragment implements IHandlerCallBack {
     public void onSuccess(List<String> photoList) {
         Log.i(TAG, "onSuccess: ");
         if (photoList != null && photoList.size() > 0) {
-            EventBus.getDefault().post(new ImageSelectEvent(photoList.get(0)));
+            uploadFile(photoList.get(0));
         }
     }
 
+    private void uploadFile(final String filePath) {
+        File file = new File(filePath);
+        RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part imageBodyPart = MultipartBody.Part.createFormData("pic", file.getName(), imageBody);
+        FileUploadService fileUploadService
+                = RetrofitManager.getInstance().createReq(FileUploadService.class);
+        Call<ResponseBean<ImageUploadBean>> call
+                = fileUploadService.uploadImage(imageBodyPart);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<ImageUploadBean>() {
+                @Override
+                public void onSuccess(ImageUploadBean data) {
+                    Log.i(TAG, "onSuccess: ");
+                    showShortToast("图片上传success");
+                    modifyUserInfo(data.getId());
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    showShortToast(error);
+                }
+            });
+        }
+    }
+
+    private void modifyUserInfo(final String pic) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(mActivity);
+        Call<ResponseBean<List<Object>>> call = userApiService.editUserDetail(
+                pic, null, null, null, null, null, null, null, null, null, token);
+        if (call != null) {
+            Log.i(TAG, "modifyUserInfo: call.enqueue");
+            call.enqueue(new CustomCallBack<List<Object>>() {
+                @Override
+                public void onSuccess(List<Object> data) {
+                    Log.i(TAG, "onSuccess: ");
+                    showShortToast("头像修改success");
+                    EventBus.getDefault().post(new ImageSelectEvent(""));
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    showShortToast(error);
+                }
+            });
+        }
+    }
     @Override
     public void onCancel() {
         Log.i(TAG, "onCancel: ");
