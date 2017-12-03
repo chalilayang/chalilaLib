@@ -59,39 +59,44 @@ public class LogoCircleImageView extends CircleImageView {
     public void setLogo(int grade, int level) {
         switch (level) {
             case 1:
-                proLogo = one;
+                proLogo = oneYellow;
                 if (grade == 3) {
-                    proLogo = oneYellow;
+                    proLogo = one;
                 }
                 break;
             case 2:
-                proLogo = two;
+                proLogo = twoYellow;
                 if (grade == 3) {
-                    proLogo = twoYellow;
+                    proLogo = two;
                 }
                 break;
             case 3:
-                proLogo = three;
+                proLogo = threeYellow;
                 if (grade == 3) {
-                    proLogo = threeYellow;
+                    proLogo = three;
                 }
                 break;
             case 4:
-                proLogo = four;
+                proLogo = fourYellow;
                 if (grade == 3) {
-                    proLogo = fourYellow;
+                    proLogo = four;
                 }
                 break;
             case 5:
-                proLogo = five;
+                proLogo = fiveYellow;
                 if (grade == 3) {
-                    proLogo = fiveYellow;
+                    proLogo = five;
                 }
                 break;
             default:
                 proLogo = null;
                 break;
 
+        }
+        if (grade == 3) {
+            circlePaint.setColor(getResources().getColor(R.color.reshape_red));
+        } else {
+            circlePaint.setColor(getResources().getColor(R.color.transparent));
         }
         invalidate();
     }

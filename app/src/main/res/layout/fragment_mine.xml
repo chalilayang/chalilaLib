@@ -106,7 +106,7 @@
                         android:layout_marginRight="@dimen/size_30"
                         android:layout_marginTop="@dimen/size_38">
 
-                        <com.chalilayang.customview.CircleImageView
+                        <com.baogetv.app.customview.LogoCircleImageView
                             android:id="@+id/mine_icon"
                             android:layout_width="@dimen/size_160"
                             android:layout_height="@dimen/size_160"

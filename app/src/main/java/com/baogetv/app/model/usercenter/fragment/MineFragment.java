@@ -18,6 +18,7 @@ import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.constant.AppConstance;
+import com.baogetv.app.customview.LogoCircleImageView;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.activity.MyCacheActivity;
 import com.baogetv.app.model.usercenter.activity.MyCollectActivity;
@@ -51,7 +52,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private View notLoginView;
     private View loginBtn;
     private View registerBtn;
-    private ImageView userIcon;
+    private LogoCircleImageView userIcon;
     private TextView userName;
     private ImageView gradeIcon;
     private TextView gradeDesc;
@@ -169,6 +170,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             Glide.with(this).load(detailBean.getPic_url())
                     .placeholder(R.mipmap.user_default_icon).into(userIcon);
             Glide.with(this).load(detailBean.getLevel_pic_url()).into(gradeIcon);
+            userIcon.setLogo(detailBean.getGrade(), detailBean.getLevel_id());
             userName.setText(detailBean.getUsername());
             gradeDesc.setText(detailBean.getLevel_name());
             int height = 0;
