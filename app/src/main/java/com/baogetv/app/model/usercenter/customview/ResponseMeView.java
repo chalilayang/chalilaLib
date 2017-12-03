@@ -68,9 +68,8 @@ public class ResponseMeView extends ScaleFrameLayout {
         if (commentData != null) {
             Glide.with(getContext()).load(data.getUserpic())
                     .error(R.mipmap.user_default_icon).into(userLogoImage);
-            userLogoImage.setLogo(1);
             userName.setText(data.getUsername());
-            userDesc.setText("ddddd");
+            userDesc.setText("dddd");
             commentTime.setText(data.getAdd_time());
             responseContent.setText(data.getContent());
             titleContainer.setMovementMethod(LinkMovementMethod.getInstance());

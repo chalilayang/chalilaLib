@@ -106,7 +106,7 @@ public class CommentView extends ScaleFrameLayout
         if (commentData != null) {
             Glide.with(getContext()).load(data.getOwner()
                             .getIconUrl()).error(R.mipmap.user_default_icon).into(userLogoImage);
-            userLogoImage.setLogo(data.getOwner().getGrage());
+            userLogoImage.setLogo(data.getBean().getGrade(), data.getBean().getLevel_id());
             userLogoImage.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {

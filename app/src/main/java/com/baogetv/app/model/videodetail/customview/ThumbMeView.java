@@ -61,7 +61,7 @@ public class ThumbMeView extends ScaleFrameLayout {
         if (commentData != null) {
             Glide.with(getContext()).load(data.getUserpic())
                     .error(R.mipmap.user_default_icon).into(userLogoImage);
-            userLogoImage.setLogo(1);
+//            userLogoImage.setLogo(data.);
             userName.setText(data.getUsername());
             userDesc.setText("ddddd");
             commentContent.setText(data.getContent());

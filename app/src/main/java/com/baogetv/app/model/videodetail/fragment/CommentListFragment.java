@@ -102,6 +102,7 @@ public class CommentListFragment extends BaseItemFragment
             recyclerView.setAdapter(recyclerViewAdapter);
             refreshLayout.setOnRefreshListener(this);
             contentView = view;
+            refreshLayout.setEnabled(false);
             getCommentList(videoDetailData);
         }
         return contentView;

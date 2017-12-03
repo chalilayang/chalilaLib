@@ -22,6 +22,12 @@ public class LogoCircleImageView extends CircleImageView {
     private Drawable three;
     private Drawable four;
     private Drawable five;
+    private Drawable oneYellow;
+    private Drawable twoYellow;
+    private Drawable threeYellow;
+    private Drawable fourYellow;
+    private Drawable fiveYellow;
+
     private Paint circlePaint;
     public LogoCircleImageView(Context context) {
         this(context, null);
@@ -38,6 +44,11 @@ public class LogoCircleImageView extends CircleImageView {
         three = context.getResources().getDrawable(R.mipmap.user_grade_three_icon);
         four = context.getResources().getDrawable(R.mipmap.user_grade_four_icon);
         five = context.getResources().getDrawable(R.mipmap.user_grade_five_icon);
+        oneYellow = context.getResources().getDrawable(R.mipmap.user_grade_one_yellow_icon);
+        twoYellow = context.getResources().getDrawable(R.mipmap.user_grade_two_yellow_icon);
+        threeYellow = context.getResources().getDrawable(R.mipmap.user_grade_three_yellow_icon);
+        fourYellow = context.getResources().getDrawable(R.mipmap.user_grade_four_yellow_icon);
+        fiveYellow = context.getResources().getDrawable(R.mipmap.user_grade_five_yellow_icon);
         circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         circlePaint.setColor(getResources().getColor(R.color.reshape_red));
         int paintWidth = ScaleCalculator.getInstance(context).scaleWidth(4);
@@ -45,22 +56,37 @@ public class LogoCircleImageView extends CircleImageView {
         circlePaint.setStyle(Paint.Style.STROKE);
     }
 
-    public void setLogo(int level) {
+    public void setLogo(int grade, int level) {
         switch (level) {
             case 1:
                 proLogo = one;
+                if (grade == 3) {
+                    proLogo = oneYellow;
+                }
                 break;
             case 2:
                 proLogo = two;
+                if (grade == 3) {
+                    proLogo = twoYellow;
+                }
                 break;
             case 3:
                 proLogo = three;
+                if (grade == 3) {
+                    proLogo = threeYellow;
+                }
                 break;
             case 4:
                 proLogo = four;
+                if (grade == 3) {
+                    proLogo = fourYellow;
+                }
                 break;
             case 5:
                 proLogo = five;
+                if (grade == 3) {
+                    proLogo = fiveYellow;
+                }
                 break;
             default:
                 proLogo = null;
@@ -68,6 +94,18 @@ public class LogoCircleImageView extends CircleImageView {
 
         }
         invalidate();
+    }
+
+    public void setLogo(String gradeStr, String levelStr) {
+        int grade = Integer.parseInt(gradeStr);
+        int level = Integer.parseInt(levelStr);
+        setLogo(grade, level);
+    }
+
+    public void setLogo(String levelStr) {
+        int grade = 0;
+        int level = Integer.parseInt(levelStr);
+        setLogo(grade, level);
     }
 
     @Override
