@@ -180,10 +180,10 @@ public class CommentListFragment extends BaseItemFragment
             Log.i(TAG, "handleSendComment: " + commentEvent + " " + replyEvent);
             if (commentEvent != null) {
                 String commentid = commentEvent.commentData.getBean().getId();
-                String uid = commentEvent.commentData.getBean().getUser_id();
-                addComment(event.content, videoDetailData.videoDetailBean.getId(), commentid, uid);
+//                String uid = commentEvent.commentData.getBean().getUser_id();
+                addComment(event.content, videoDetailData.videoDetailBean.getId(), commentid, null);
             } else if (replyEvent != null) {
-                String commentid = replyEvent.replyData.getBean().getId();
+                String commentid = replyEvent.replyData.getBean().getReply_id();
                 String uid = replyEvent.replyData.getBean().getUser_id();
                 addComment(event.content, videoDetailData.videoDetailBean.getId(), commentid, uid);
             } else {
@@ -273,6 +273,7 @@ public class CommentListFragment extends BaseItemFragment
                 @Override
                 public void onSuccess(AddItemBean bean) {
                     showShortToast("add comment success");
+                    Log.i(TAG, "onSuccess: add comment success");
                     getCommentList(videoDetailData);
                 }
 
