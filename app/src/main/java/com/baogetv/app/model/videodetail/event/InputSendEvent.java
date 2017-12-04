@@ -6,6 +6,8 @@ package com.baogetv.app.model.videodetail.event;
 
 public class InputSendEvent {
     public String content;
+    public NeedCommentEvent commentEvent;
+    public NeedReplyEvent replyEvent;
     public InputSendEvent(String p) {
         content = p;
     }

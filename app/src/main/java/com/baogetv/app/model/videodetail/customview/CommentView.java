@@ -95,6 +95,14 @@ public class CommentView extends ScaleFrameLayout
         } else {
             commentCount.setText(0+"");
         }
+        commentCount.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mRef != null && mRef.get() != null) {
+                    mRef.get().onCommentClick(data);
+                }
+            }
+        });
         zan.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,5 +194,6 @@ public class CommentView extends ScaleFrameLayout
         void onThumbUp(CommentData data);
         void onJuBaoClick(CommentData data);
         void onMoreComment(CommentData data);
+        void onCommentClick(CommentData data);
     }
 }

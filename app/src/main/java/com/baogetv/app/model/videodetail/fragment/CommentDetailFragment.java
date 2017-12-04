@@ -220,6 +220,11 @@ public class CommentDetailFragment extends BaseFragment
         Log.i(TAG, "onMoreComment: ");
     }
 
+    @Override
+    public void onCommentClick(CommentData data) {
+
+    }
+
     private void addComment(String content, String vid, String reply_id, String replay_user_id) {
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);

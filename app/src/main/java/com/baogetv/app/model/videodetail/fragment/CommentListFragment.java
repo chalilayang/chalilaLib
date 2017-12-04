@@ -29,6 +29,7 @@ import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.InputSendEvent;
+import com.baogetv.app.model.videodetail.event.NeedCommentEvent;
 import com.baogetv.app.model.videodetail.event.NeedReplyEvent;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
@@ -174,7 +175,20 @@ public class CommentListFragment extends BaseItemFragment
         if (!LoginManager.hasLogin(mActivity)) {
             LoginManager.startLogin(mActivity);
         } else {
-            addComment(event.content, videoDetailData.videoDetailBean.getId(), null, null);
+            NeedCommentEvent commentEvent = event.commentEvent;
+            NeedReplyEvent replyEvent = event.replyEvent;
+            Log.i(TAG, "handleSendComment: " + commentEvent + " " + replyEvent);
+            if (commentEvent != null) {
+                String commentid = commentEvent.commentData.getBean().getId();
+                String uid = commentEvent.commentData.getBean().getUser_id();
+                addComment(event.content, videoDetailData.videoDetailBean.getId(), commentid, uid);
+            } else if (replyEvent != null) {
+                String commentid = replyEvent.replyData.getBean().getId();
+                String uid = replyEvent.replyData.getBean().getUser_id();
+                addComment(event.content, videoDetailData.videoDetailBean.getId(), commentid, uid);
+            } else {
+                addComment(event.content, videoDetailData.videoDetailBean.getId(), null, null);
+            }
         }
         Log.i(TAG, "handleSendComment: " + event.content);
     }
@@ -241,6 +255,11 @@ public class CommentListFragment extends BaseItemFragment
         intent.putExtra(PAGE_DATA, videoDetailData);
         intent.putExtra(KEY_COMMENT_DATA, data);
         mActivity.startActivity(intent);
+    }
+
+    @Override
+    public void onCommentClick(CommentData data) {
+        EventBus.getDefault().post(new NeedCommentEvent(data));
     }
 
     private void addComment(String content, String vid, String reply_id, String replay_user_id) {

@@ -76,8 +76,15 @@ public class VideoDetailActivity extends BaseActivity {
                 if (TextUtils.isEmpty(content)) {
                     showShortToast("评论不能为空");
                 } else {
-                    EventBus.getDefault().post(new InputSendEvent(content));
+                    InputSendEvent event = new InputSendEvent(content);
+                    event.commentEvent = commentEvent;
+                    event.replyEvent = replyEvent;
+                    commentEvent = null;
+                    replyEvent = null;
+                    EventBus.getDefault().post(event);
                 }
+                editText.clearFocus();
+                InputUtil.HideKeyboard(editText);
             }
         });
         editContainer = findViewById(R.id.comment_edit_container);
@@ -163,14 +170,27 @@ public class VideoDetailActivity extends BaseActivity {
         }
     }
 
+    private NeedReplyEvent replyEvent;
+    private NeedCommentEvent commentEvent;
     @Subscribe
     public void handleCommentEvent(NeedCommentEvent event) {
+        if (replyEvent != null || commentEvent != null) {
+            return;
+        }
+        commentEvent = event;
         editText.requestFocus();
+        editText.setHint("@"+event.commentData.getBean().getUsername());
+        InputUtil.ShowKeyboard(editText);
     }
 
     @Subscribe
     public void handleReplyEvent(NeedReplyEvent event) {
+        if (replyEvent != null || commentEvent != null) {
+            return;
+        }
+        replyEvent = event;
         Log.i(TAG, "handleReplyEvent: ");
+        editText.requestFocus();
         editText.setHint("@"+event.replyData.getReplyer().getNickName());
         InputUtil.ShowKeyboard(editText);
     }

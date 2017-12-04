@@ -114,6 +114,13 @@ public class CommentListAdapter
     }
 
     @Override
+    public void onCommentClick(CommentData data) {
+        if (mRef != null && mRef.get() != null) {
+            mRef.get().onCommentClick(data);
+        }
+    }
+
+    @Override
     public int getItemViewType(int position) {
         if (position < getItemCount() - 1) {
             return TYPE_NORMAL;
