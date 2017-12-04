@@ -76,5 +76,7 @@ public class VideoListAdapter
         String getPublishTime();
         String getDuration();
         String getPlayCount();
+        boolean isCHN();
+        boolean isPro();
     }
 }

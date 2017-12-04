@@ -22,6 +22,18 @@ public class BeanConvert {
         String duration = data.getLength();
         String vid = data.getVideo_id();
         VideoData result = new VideoData(picUrl, title, publishTime, playCount, duration, vid);
+        try {
+            int isChn = Integer.parseInt(data.getIs_cnword());
+            result.setCHN(isChn != 0);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        try {
+            int isPro = Integer.parseInt(data.getIs_commend());
+            result.setCHN(isPro != 0);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
         return result;
     }
 
@@ -33,6 +45,18 @@ public class BeanConvert {
         String duration = data.getLength();
         String vid = data.getId();
         VideoData result = new VideoData(picUrl, title, publishTime, playCount, duration, vid);
+        try {
+            int isChn = Integer.parseInt(data.getIs_cnword());
+            result.setCHN(isChn != 0);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        try {
+            int isPro = Integer.parseInt(data.getIs_commend());
+            result.setCHN(isPro != 0);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
         return result;
     }
 
@@ -59,9 +83,15 @@ public class BeanConvert {
         String title = data.getType_name();
         String publishTime = data.getAdd_time();
         String playCount = data.getPlay();
-//        String duration = data.getLength();
+        String duration = data.getLength();
         String vid = data.getId();
-        VideoData result = new VideoData(picUrl, title, publishTime, playCount, "", vid);
+        VideoData result = new VideoData(picUrl, title, publishTime, playCount, duration, vid);
+        try {
+            int isChn = Integer.parseInt(data.getIs_cnword());
+            result.setCHN(isChn != 0);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
         return result;
     }
 

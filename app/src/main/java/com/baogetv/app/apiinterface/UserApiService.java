@@ -352,6 +352,41 @@ public interface UserApiService {
             @Field("video_id") int video_id,
             @Field("id") int id);
 
+
+    /**
+     * 点赞
+     *
+     * @param token：（Token，登录凭证）
+     * @param video_id：（视频ID）
+     * @param comments_id：（评论ID）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Likes/add")
+    Call<ResponseBean<AddItemBean>> addZan(
+            @Field("token") String token,
+            @Field("video_id") String video_id,
+            @Field("comments_id") String comments_id
+    );
+
+    /**
+     * 取消赞
+     *
+     * @param token：（Token，登录凭证）
+     * @param video_id：（视频ID）
+     * @param comments_id：（评论ID）
+     * @param id：（点赞ID）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Likes/del")
+    Call<ResponseBean<AddItemBean>> delZan(
+            @Field("token") String token,
+            @Field("video_id") String video_id,
+            @Field("comments_id") String comments_id,
+            @Field("id") String id
+    );
+
     /**
      * 赞我的
      *
@@ -363,7 +398,7 @@ public interface UserApiService {
     Call<ResponseBean<List<ZanMeBean>>> getZanMeList(@Field("token") String token);
 
     /**
-     * 回复333333333333333333333我的
+     * 回复我的
      *
      * @param token：（Token，登录凭证）
      * @return

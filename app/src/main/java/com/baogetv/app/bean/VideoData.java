@@ -13,6 +13,8 @@ public class VideoData implements VideoListAdapter.IVideoData {
     private final String playCount;
     private final String videoDuration;
     private final String videoId;
+    private boolean isCHN;
+    private boolean isPro;
     public VideoData(String pic, String video_title, String publish_time, String count, String duration, String videoID) {
         this.picUrl = pic;
         this.title = video_title;
@@ -50,5 +52,23 @@ public class VideoData implements VideoListAdapter.IVideoData {
     @Override
     public String getVideoID() {
         return videoId;
+    }
+
+    public void setCHN(boolean CHN) {
+        isCHN = CHN;
+    }
+
+    public void setPro(boolean pro) {
+        isPro = pro;
+    }
+
+    @Override
+    public boolean isCHN() {
+        return isCHN;
+    }
+
+    @Override
+    public boolean isPro() {
+        return isPro;
     }
 }

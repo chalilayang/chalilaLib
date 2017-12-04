@@ -6,26 +6,29 @@ package com.baogetv.app.bean;
 
 public class CollectBean {
 
-
     /**
-     * video_id : 1
-     * pic_url : /test2/Uploads/Picture/2016-12-05/58451c922375d.png
-     * is_cnword : 1
-     * play : 30
-     * video_add_time : 2017-11-07 23:41:44
-     * video_update_time : 2017-11-07 23:41:44
-     * type_name : 频道1
-     * username : aa
-     * userpic :
-     * id : 2
-     * add_time : 2017-11-07 23:41:44
-     * pic : 1
-     * userpicid : 0
-     * is_collect : 1
+     * video_id : 5
+     * pic : 23
+     * length : 测试
+     * title : 测试视频2
+     * is_cnword : 0
+     * play : 2
+     * video_add_time : 1512226870
+     * video_update_time : 1512226870
+     * type_name : 频道34
+     * username : 山南sky
+     * userpic : 29
+     * id : 10
+     * add_time : 2017-12-03 23:29:33
+     * pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-12-02/5a22ba62e0c24.png
+     * userpic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-12-03/5a23d90b6d2d8.png
+     * is_collect : 0
      */
 
     private String video_id;
-    private String pic_url;
+    private String pic;
+    private String length;
+    private String title;
     private String is_cnword;
     private String play;
     private String video_add_time;
@@ -35,8 +38,8 @@ public class CollectBean {
     private String userpic;
     private String id;
     private String add_time;
-    private String pic;
-    private String userpicid;
+    private String pic_url;
+    private String userpic_url;
     private String is_collect;
 
     public String getVideo_id() {
@@ -47,12 +50,28 @@ public class CollectBean {
         this.video_id = video_id;
     }
 
-    public String getPic_url() {
-        return pic_url;
+    public String getPic() {
+        return pic;
     }
 
-    public void setPic_url(String pic_url) {
-        this.pic_url = pic_url;
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
+
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getIs_cnword() {
@@ -127,20 +146,20 @@ public class CollectBean {
         this.add_time = add_time;
     }
 
-    public String getPic() {
-        return pic;
+    public String getPic_url() {
+        return pic_url;
     }
 
-    public void setPic(String pic) {
-        this.pic = pic;
+    public void setPic_url(String pic_url) {
+        this.pic_url = pic_url;
     }
 
-    public String getUserpicid() {
-        return userpicid;
+    public String getUserpic_url() {
+        return userpic_url;
     }
 
-    public void setUserpicid(String userpicid) {
-        this.userpicid = userpicid;
+    public void setUserpic_url(String userpic_url) {
+        this.userpic_url = userpic_url;
     }
 
     public String getIs_collect() {
