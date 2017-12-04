@@ -15,6 +15,7 @@ import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.AddItemBean;
+import com.baogetv.app.bean.BeanConvert;
 import com.baogetv.app.bean.CommentListBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.model.usercenter.LoginManager;
@@ -121,26 +122,30 @@ public class CommentDetailFragment extends BaseFragment
             call.enqueue(new CustomCallBack<List<CommentListBean>>() {
                 @Override
                 public void onSuccess(List<CommentListBean> bean) {
-                    List<CommentData> list = new ArrayList<>();
                     for (int index = 0, count = bean.size(); index < count; index ++) {
-                        CommentData data = new CommentData();
-                        CommentListBean listBean = bean.get(index);
-                        data.setTime(listBean.getAdd_time());
-                        data.setBean(listBean);
-                        if (listBean.getChild() != null && listBean.getChild().size() > 0) {
-                            List<CommentListBean.DataBean> childList = listBean.getChild();
-                            List<ReplyData> list1 = new ArrayList<>(childList.size());
-                            for (int i = 0, childCount = childList.size();
-                                 i < childCount; i ++) {
-                                ReplyData replyData = new ReplyData();
-                                replyData.setBean(childList.get(i));
-                                list1.add(replyData);
+                        if (bean.get(index).getId().equals(commentData.getBean().getId())) {
+                            List<CommentListBean.DataBean> replyDataList
+                                    = bean.get(index).getChild();
+                            if (replyDataList != null) {
+                                List<CommentListBean> beanList = new ArrayList<CommentListBean>();
+                                for (CommentListBean.DataBean dataBean: replyDataList) {
+                                    CommentListBean commentBean
+                                            = BeanConvert.getCommentListBean(dataBean);
+                                    beanList.add(commentBean);
+                                }
+                                List<CommentData> list = new ArrayList<>();
+                                for (int i = 0; i < beanList.size(); i ++) {
+                                    CommentData data = new CommentData();
+                                    CommentListBean listBean = bean.get(i);
+                                    data.setTime(listBean.getAdd_time());
+                                    data.setBean(listBean);
+                                    list.add(data);
+                                }
+                                recyclerViewAdapter.update(list);
                             }
-                            data.setReplyList(list1);
+                            break;
                         }
-                        list.add(data);
                     }
-                    recyclerViewAdapter.update(list);
                 }
 
                 @Override

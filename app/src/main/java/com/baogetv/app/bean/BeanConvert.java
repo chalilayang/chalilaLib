@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.baogetv.app.model.channel.entity.ChannelData;
 import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
+import com.baogetv.app.model.videodetail.entity.CommentData;
+import com.baogetv.app.model.videodetail.entity.ReplyData;
 
 /**
  * Created by chalilayang on 2017/11/25.
@@ -61,5 +63,54 @@ public class BeanConvert {
         String vid = data.getId();
         VideoData result = new VideoData(picUrl, title, publishTime, playCount, "", vid);
         return result;
+    }
+
+    public static CommentListBean getCommentListBean(CommentListBean.DataBean data) {
+        /**
+         * id : 3
+         * video_id : 2
+         * reply_id : 0
+         * user_id : 3
+         * reply_user_id : 0
+         * content : xsw
+         * likes : 0
+         * add_time : 1510449380
+         * status : 1
+         * username : 15913196454
+         * user_pic : 1
+         * reply_user_username :
+         * reply_user_pic :
+         * level_id : 1
+         * level_name : LV1
+         * grade : 3
+         * intro :
+         * user_pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-11-20
+         * /5a127d675b918.jpg
+         * reply_user_picid : 0
+         * is_like : 0
+         * child : []
+         */
+        CommentListBean commentData = new CommentListBean();
+        commentData.setId(data.getId());
+        commentData.setVideo_id(data.getVideo_id());
+        commentData.setReply_id(data.getReply_id());
+        commentData.setUser_id(data.getUser_id());
+        commentData.setReply_user_id(data.getUser_id());
+        commentData.setContent(data.getContent());
+        commentData.setLikes(data.getLikes());
+        commentData.setAdd_time(data.getAdd_time());
+        commentData.setStatus(data.getStatus());
+        commentData.setUsername(data.getUsername());
+        commentData.setUser_pic(data.getUser_pic());
+        commentData.setReply_user_username(data.getReply_user_username());
+        commentData.setReply_user_pic(data.getReply_user_pic());
+        commentData.setLevel_id(data.getLevel_id());
+        commentData.setLevel_name(data.getLevel_name());
+        commentData.setGrade(data.getGrade());
+        commentData.setIntro(data.getIntro());
+        commentData.setUser_pic_url(data.getUser_pic_url());
+        commentData.setReply_user_picid(data.getReply_user_picid());
+        commentData.setIs_like(data.getIs_like());
+        return commentData;
     }
 }

@@ -269,6 +269,42 @@ public class CommentListBean implements Parcelable {
         private String reply_user_pic_url;
         private int reply_user_picid;
         private String is_like;
+        private String level_id;
+        private String level_name;
+        private String grade;
+        private String intro;
+
+        public String getLevel_id() {
+            return level_id;
+        }
+
+        public void setLevel_id(String level_id) {
+            this.level_id = level_id;
+        }
+
+        public String getLevel_name() {
+            return level_name;
+        }
+
+        public void setLevel_name(String level_name) {
+            this.level_name = level_name;
+        }
+
+        public String getGrade() {
+            return grade;
+        }
+
+        public void setGrade(String grade) {
+            this.grade = grade;
+        }
+
+        public String getIntro() {
+            return intro;
+        }
+
+        public void setIntro(String intro) {
+            this.intro = intro;
+        }
 
         public String getId() {
             return id;
@@ -431,6 +467,10 @@ public class CommentListBean implements Parcelable {
             dest.writeString(this.reply_user_pic_url);
             dest.writeInt(this.reply_user_picid);
             dest.writeString(this.is_like);
+            dest.writeString(this.level_id);
+            dest.writeString(this.level_name);
+            dest.writeString(this.grade);
+            dest.writeString(this.intro);
         }
 
         public DataBean() {
@@ -454,6 +494,10 @@ public class CommentListBean implements Parcelable {
             this.reply_user_pic_url = in.readString();
             this.reply_user_picid = in.readInt();
             this.is_like = in.readString();
+            this.level_id = in.readString();
+            this.level_name = in.readString();
+            this.grade = in.readString();
+            this.intro = in.readString();
         }
 
         public static final Creator<DataBean> CREATOR = new Creator<DataBean>() {
