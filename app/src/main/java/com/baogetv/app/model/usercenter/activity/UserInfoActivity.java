@@ -167,9 +167,11 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
 
     private void showOrHideSexFragment(boolean flag) {
         if (flag) {
+            SexSelectEvent event = new SexSelectEvent(userDetailBean.getSex());
             if (sexSelectFragment == null) {
-
-                sexSelectFragment = SexSelectFragment.newInstance(null);
+                sexSelectFragment = SexSelectFragment.newInstance(event);
+            } else {
+                sexSelectFragment.setEvent(event);
             }
             FragmentManager manager = getFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();

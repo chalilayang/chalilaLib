@@ -12,6 +12,15 @@ public class SexSelectEvent implements Parcelable{
     public SexSelectEvent(int s) {
         sex = s;
     }
+    public SexSelectEvent(String s) {
+        int t = 0;
+        try {
+            t = Integer.parseInt(s);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        sex = t;
+    }
 
     @Override
     public int describeContents() {

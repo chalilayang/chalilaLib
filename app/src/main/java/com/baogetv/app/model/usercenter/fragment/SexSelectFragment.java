@@ -49,6 +49,12 @@ public class SexSelectFragment extends BaseFragment implements WheelPicker.OnIte
         return fragment;
     }
 
+    public void setEvent(SexSelectEvent event) {
+        Bundle args = new Bundle();
+        args.putParcelable(KEY_SEX_INFO, event);
+        setArguments(args);
+    }
+
     private void init() {
         sexList = new ArrayList<>();
         sexList.add(getString(R.string.secret));
@@ -73,10 +79,8 @@ public class SexSelectFragment extends BaseFragment implements WheelPicker.OnIte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (root == null) {
-            root = inflater.inflate(R.layout.fragment_date_pick, container, false);
-            initView(root);
-        }
+        root = inflater.inflate(R.layout.fragment_date_pick, container, false);
+        initView(root);
         return root;
     }
 
