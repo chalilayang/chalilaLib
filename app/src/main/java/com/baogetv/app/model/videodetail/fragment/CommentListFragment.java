@@ -29,11 +29,13 @@ import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.InputSendEvent;
+import com.baogetv.app.model.videodetail.event.NeedReplyEvent;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -229,6 +231,7 @@ public class CommentListFragment extends BaseItemFragment
     @Override
     public void onReplyClick(ReplyData data) {
         Log.i(TAG, "onReplyClick: ");
+        EventBus.getDefault().post(new NeedReplyEvent(data));
     }
 
     @Override

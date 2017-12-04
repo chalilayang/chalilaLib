@@ -1,11 +1,13 @@
 package com.baogetv.app.model.videodetail.activity;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.baogetv.app.BaseActivity;
@@ -22,12 +24,15 @@ import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
 import com.baogetv.app.model.videodetail.event.AddHistoryEvent;
 import com.baogetv.app.model.videodetail.event.InputSendEvent;
+import com.baogetv.app.model.videodetail.event.NeedCommentEvent;
+import com.baogetv.app.model.videodetail.event.NeedReplyEvent;
 import com.baogetv.app.model.videodetail.event.PageSelectEvent;
 import com.baogetv.app.model.videodetail.fragment.PlayerFragment;
 import com.baogetv.app.model.videodetail.fragment.VideoDetailFragment;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageItemData;
+import com.baogetv.app.util.InputUtil;
 import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -156,6 +161,18 @@ public class VideoDetailActivity extends BaseActivity {
                 }
             });
         }
+    }
+
+    @Subscribe
+    public void handleCommentEvent(NeedCommentEvent event) {
+        editText.requestFocus();
+    }
+
+    @Subscribe
+    public void handleReplyEvent(NeedReplyEvent event) {
+        Log.i(TAG, "handleReplyEvent: ");
+        editText.setHint("@"+event.replyData.getReplyer().getNickName());
+        InputUtil.ShowKeyboard(editText);
     }
 
     @Subscribe

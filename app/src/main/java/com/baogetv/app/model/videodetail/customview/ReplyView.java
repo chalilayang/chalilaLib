@@ -91,7 +91,6 @@ public class ReplyView extends ScaleLinearLayout {
         time = new TextView(context);
         time.setTextSize(TypedValue.COMPLEX_UNIT_PX, timeSize);
         time.setTextColor(timeColor);
-        time.setText(getResources().getString(R.string.reply));
         rlp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         bottomContainer.addView(time, rlp);
         replyBtn = new TextView(context);
