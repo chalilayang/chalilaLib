@@ -49,7 +49,9 @@ public abstract class BaseItemAdapter<T, D extends ItemViewHolder<T>>
 
     @Override
     public void onBindViewHolder(final D holder, int position) {
-        holder.setData(mValues.get(position), position);
+        if (mValues != null && position < mValues.size()) {
+            holder.setData(mValues.get(position), position);
+        }
     }
 
     @Override

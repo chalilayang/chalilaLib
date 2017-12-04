@@ -63,6 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
                 android:textColor="@color/reply_time"
                 android:textSize="@dimen/size_24"/>
 
@@ -87,13 +88,17 @@
                 android:drawableRight="@mipmap/comment_icon_gray"
                 android:layout_toLeftOf="@+id/report_comment"/>
 
-            <ImageView
+            <com.chalilayang.scaleview.ScaleTextView
                 android:id="@+id/comment_thumb_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/comment_icon"
-                android:src="@mipmap/comment_thumb_up"/>
+                android:layout_marginLeft="@dimen/size_20"
+                android:textSize="@dimen/size_24"
+                android:drawablePadding="@dimen/size_10"
+                android:textColor="@color/reply_time"
+                android:drawableRight="@mipmap/comment_thumb_up"
+                android:layout_toLeftOf="@+id/comment_icon"/>
 
         </com.chalilayang.scaleview.ScaleRelativeLayout>
 

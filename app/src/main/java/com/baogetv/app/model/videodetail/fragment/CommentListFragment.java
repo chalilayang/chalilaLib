@@ -200,6 +200,7 @@ public class CommentListFragment extends BaseItemFragment
     @Override
     public void onIconClick(CommentData data) {
         Log.i(TAG, "onIconClick: ");
+        startMemberActivity(data.getBean().getUser_id());
     }
 
     @Override

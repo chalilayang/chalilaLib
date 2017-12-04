@@ -43,7 +43,7 @@ public class CommentView extends ScaleFrameLayout
 
     private View reportBtn;
     private TextView commentCount;
-    private View zan;
+    private TextView zan;
 
     private String moreReplyFormat;
 
@@ -103,6 +103,7 @@ public class CommentView extends ScaleFrameLayout
                 }
             }
         });
+        zan.setText(data.getBean().getLikes());
         if (commentData != null) {
             Glide.with(getContext()).load(data.getOwner()
                             .getIconUrl()).error(R.mipmap.user_default_icon).into(userLogoImage);
