@@ -22,15 +22,14 @@ import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.activity.MemberDetailActivity;
 import com.baogetv.app.model.usercenter.event.ReportEvent;
-import com.baogetv.app.model.videodetail.activity.CommentDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.CommentListAdapter;
 import com.baogetv.app.model.videodetail.customview.CommentView;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
-import com.baogetv.app.model.videodetail.event.InputSendEvent;
-import com.baogetv.app.model.videodetail.event.NeedCommentEvent;
-import com.baogetv.app.model.videodetail.event.NeedReplyEvent;
+import com.baogetv.app.model.videodetail.event.InputSendDetailEvent;
+import com.baogetv.app.model.videodetail.event.NeedCommentDetailEvent;
+import com.baogetv.app.model.videodetail.event.NeedReplyDetailEvent;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.customview.RecyclerViewDivider;
@@ -173,13 +172,13 @@ public class CommentDetailFragment extends BaseFragment
     }
 
     @Subscribe
-    public void handleSendComment(InputSendEvent event) {
+    public void handleSendComment(InputSendDetailEvent event) {
         if (!LoginManager.hasLogin(mActivity)) {
             LoginManager.startLogin(mActivity);
         } else {
             EventBus.getDefault().cancelEventDelivery(event);
-            NeedCommentEvent commentEvent = event.commentEvent;
-            NeedReplyEvent replyEvent = event.replyEvent;
+            NeedCommentDetailEvent commentEvent = event.commentEvent;
+            NeedReplyDetailEvent replyEvent = event.replyEvent;
             Log.i(TAG, "handleSendComment: " + commentEvent + " " + replyEvent);
             if (commentEvent != null) {
                 String commentid = commentEvent.commentData.getBean().getId();
@@ -244,7 +243,7 @@ public class CommentDetailFragment extends BaseFragment
     @Override
     public void onReplyClick(ReplyData data) {
         Log.i(TAG, "onReplyClick: ");
-        EventBus.getDefault().post(new NeedReplyEvent(data));
+        EventBus.getDefault().post(new NeedReplyDetailEvent(data));
     }
 
     @Override
@@ -254,7 +253,7 @@ public class CommentDetailFragment extends BaseFragment
 
     @Override
     public void onCommentClick(CommentData data) {
-        EventBus.getDefault().post(new NeedCommentEvent(data));
+        EventBus.getDefault().post(new NeedCommentDetailEvent(data));
     }
 
     private void addComment(String content, String vid, String reply_id, String replay_user_id) {

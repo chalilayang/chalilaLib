@@ -1,13 +1,11 @@
 package com.baogetv.app.model.videodetail.activity;
 
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.baogetv.app.BaseActivity;
@@ -15,10 +13,8 @@ import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.bean.AddItemBean;
-import com.baogetv.app.bean.CollectBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoDetailBean;
-import com.baogetv.app.customview.CustomToastUtil;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
@@ -174,10 +170,10 @@ public class VideoDetailActivity extends BaseActivity {
     private NeedCommentEvent commentEvent;
     @Subscribe
     public void handleCommentEvent(NeedCommentEvent event) {
+        Log.i(TAG, "handleCommentEvent: ss ");
         if (replyEvent != null || commentEvent != null) {
             return;
         }
-        EventBus.getDefault().cancelEventDelivery(event) ;
         commentEvent = event;
         editText.requestFocus();
         editText.setHint("@"+event.commentData.getBean().getUsername());
@@ -189,7 +185,6 @@ public class VideoDetailActivity extends BaseActivity {
         if (replyEvent != null || commentEvent != null) {
             return;
         }
-        EventBus.getDefault().cancelEventDelivery(event) ;
         replyEvent = event;
         Log.i(TAG, "handleReplyEvent: ");
         editText.requestFocus();

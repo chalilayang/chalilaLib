@@ -21,7 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_98"
         android:layout_alignParentBottom="true"
-        android:background="@color/red">
+        android:visibility="gone"
+        android:background="@color/white">
         <com.chalilayang.scaleview.ScaleEditText
             android:id="@+id/comment_edit_text"
             android:layout_width="match_parent"

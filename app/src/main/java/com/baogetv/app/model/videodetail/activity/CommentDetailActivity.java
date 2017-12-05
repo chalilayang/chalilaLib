@@ -9,10 +9,15 @@ import android.widget.EditText;
 
 import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
+import com.baogetv.app.bean.CommentListBean;
 import com.baogetv.app.model.videodetail.entity.CommentData;
+import com.baogetv.app.model.videodetail.entity.ReplyData;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
+import com.baogetv.app.model.videodetail.event.InputSendDetailEvent;
 import com.baogetv.app.model.videodetail.event.InputSendEvent;
+import com.baogetv.app.model.videodetail.event.NeedCommentDetailEvent;
 import com.baogetv.app.model.videodetail.event.NeedCommentEvent;
+import com.baogetv.app.model.videodetail.event.NeedReplyDetailEvent;
 import com.baogetv.app.model.videodetail.event.NeedReplyEvent;
 import com.baogetv.app.model.videodetail.fragment.CommentDetailFragment;
 import com.baogetv.app.util.InputUtil;
@@ -35,12 +40,13 @@ public class CommentDetailActivity extends BaseTitleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitleActivity(getString(R.string.comment_detail));
+        initView();
         commentData = getIntent().getParcelableExtra(KEY_COMMENT_DATA);
         videoDetailData = getIntent().getParcelableExtra(PAGE_DATA);
         showFragment(videoDetailData, commentData);
     }
 
-    public void init() {
+    public void initView() {
         editText = (EditText) findViewById(R.id.comment_edit_text);
         sendBtn = findViewById(R.id.comment_send_btn);
         sendBtn.setOnClickListener(new View.OnClickListener() {
@@ -50,49 +56,57 @@ public class CommentDetailActivity extends BaseTitleActivity {
                 if (TextUtils.isEmpty(content)) {
                     showShortToast("评论不能为空");
                 } else {
-                    InputSendEvent event = new InputSendEvent(content);
+                    InputSendDetailEvent event = new InputSendDetailEvent(content);
                     event.commentEvent = commentEvent;
                     event.replyEvent = replyEvent;
                     commentEvent = null;
                     replyEvent = null;
                     EventBus.getDefault().post(event);
+                    editText.clearFocus();
+                    InputUtil.HideKeyboard(editText);
+                    editContainer.setVisibility(View.GONE);
                 }
-                editText.clearFocus();
-                InputUtil.HideKeyboard(editText);
-                editContainer.setVisibility(View.GONE);
             }
         });
         editContainer = findViewById(R.id.comment_edit_container);
         editContainer.setVisibility(View.GONE);
     }
 
-    private NeedReplyEvent replyEvent;
-    private NeedCommentEvent commentEvent;
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    private NeedReplyDetailEvent replyEvent;
+    private NeedCommentDetailEvent commentEvent;
     @Subscribe
-    public void handleCommentEvent(NeedCommentEvent event) {
+    public void handleCommentEvent(NeedCommentDetailEvent event) {
+        Log.i(TAG, "handleCommentEvent: dd ");
         if (replyEvent != null || commentEvent != null) {
             return;
         }
-        EventBus.getDefault().cancelEventDelivery(event);
         commentEvent = event;
-        editText.setHint("@"+event.commentData.getBean().getUsername());
-//        editContainer.setVisibility(View.VISIBLE);
-//        editText.requestFocus();
-//        InputUtil.ShowKeyboard(editText);
+        CommentData data = event.commentData;
+        CommentListBean bean = data.getBean();
+        editText.setHint("@"+bean.getUsername());
+        editContainer.setVisibility(View.VISIBLE);
+        editText.requestFocus();
+        InputUtil.ShowKeyboard(editText);
     }
 
     @Subscribe
-    public void handleReplyEvent(NeedReplyEvent event) {
+    public void handleReplyEvent(NeedReplyDetailEvent event) {
         if (replyEvent != null || commentEvent != null) {
             return;
         }
-        EventBus.getDefault().cancelEventDelivery(event);
-        replyEvent = event;
         Log.i(TAG, "handleReplyEvent: ");
-        editText.setHint("@"+event.replyData.getReplyer().getNickName());
-//        editContainer.setVisibility(View.VISIBLE);
-//        editText.requestFocus();
-//        InputUtil.ShowKeyboard(editText);
+        replyEvent = event;
+        ReplyData data = event.replyData;
+        CommentListBean.DataBean bean = data.getBean();
+        editText.setHint("@"+bean.getReply_user_username());
+        editContainer.setVisibility(View.VISIBLE);
+        editText.requestFocus();
+        InputUtil.ShowKeyboard(editText);
     }
     
     @Override
