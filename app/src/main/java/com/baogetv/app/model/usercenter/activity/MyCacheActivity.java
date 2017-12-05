@@ -1,12 +1,15 @@
 package com.baogetv.app.model.usercenter.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.baogetv.app.BaseTitleActivity;
+import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
+import com.baogetv.app.bean.CollectBean;
 import com.baogetv.app.db.DBController;
 import com.baogetv.app.db.domain.MyBusinessInfLocal;
 import com.baogetv.app.db.domain.MyBusinessInfo;
@@ -22,8 +25,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.baogetv.app.model.usercenter.activity.VideoPlayerActivity.KEY_VIDEO_PATH;
 
-public class MyCacheActivity extends BaseTitleActivity {
+
+public class MyCacheActivity extends BaseTitleActivity implements
+        ItemViewHolder.ItemClickListener<MyBusinessInfo>, ItemViewHolder.ItemDeleteListener<MyBusinessInfo> {
     private static final String TAG = "MyCollectActivity";
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -62,7 +68,33 @@ public class MyCacheActivity extends BaseTitleActivity {
         recyclerViewAdapter = new MyCacheAdapter(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerViewAdapter.setItemClick(this);
         recyclerViewAdapter.update(getDownloadListData());
+    }
+
+    @Override
+    public void onItemClick(MyBusinessInfo data, int position) {
+        List<DownloadInfo> downloadedList
+                = DownloadService.getDownloadManager(getApplicationContext()).findAllDownloaded();
+        for (int index = 0, count = downloadedList.size(); index < count; index ++) {
+            DownloadInfo info = downloadedList.get(index);
+            try {
+                MyBusinessInfLocal local = dbController.findMyDownloadInfoById(info.getId());
+                if (local.getUrl().equals(data.getUrl())) {
+                    String path = info.getPath();
+                    Intent intent = new Intent(this, VideoPlayerActivity.class);
+                    intent.putExtra(KEY_VIDEO_PATH, path);
+                    this.startActivity(intent);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void onDelete(MyBusinessInfo data, int pos) {
+
     }
 
     private List<MyBusinessInfo> getDownloadListData() {

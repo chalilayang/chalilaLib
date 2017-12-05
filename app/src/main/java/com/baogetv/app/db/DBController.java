@@ -108,7 +108,6 @@ public class DBController implements DownloadDBController {
 
     @Override
     public void pauseAllDownloading() {
-
         try {
             UpdateBuilder<MyDownloadInfLocal, Integer> myDownloadInfLocalIntegerUpdateBuilder =
                     myDownloadInfLocalDao.updateBuilder();
@@ -128,7 +127,6 @@ public class DBController implements DownloadDBController {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void createOrUpdate(DownloadThreadInfo downloadThreadInfo) {
