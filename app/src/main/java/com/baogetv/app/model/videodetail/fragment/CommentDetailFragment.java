@@ -231,13 +231,13 @@ public class CommentDetailFragment extends BaseFragment
     @Override
     public void onReplyerClick(ReplyData data) {
         Log.i(TAG, "onReplyerClick: ");
-        startMemberActivity(data.getBean().getUser_id());
+//        startMemberActivity(data.getBean().getUser_id());
     }
 
     @Override
     public void onReplyToClick(ReplyData data) {
         Log.i(TAG, "onReplyToClick: ");
-        startMemberActivity(data.getBean().getUser_id());
+//        startMemberActivity(data.getBean().getUser_id());
     }
 
     @Override

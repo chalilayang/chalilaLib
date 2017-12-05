@@ -11,8 +11,10 @@ import com.baogetv.app.BaseFragment;
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.AddItemBean;
 import com.baogetv.app.bean.ReportTypeBean;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.adapter.ReportTypeListAdapter;
 import com.baogetv.app.model.usercenter.entity.ReportTypeData;
 import com.baogetv.app.model.usercenter.event.ReportEvent;
@@ -34,7 +36,7 @@ public class CommentReportFragment extends BaseFragment implements ItemViewHolde
     private static final String TAG = CommentReportFragment.class.getSimpleName();
     private static final String KEY_COMMENT_DATA = "COMMENT_DATA";
     private CommentData commentData;
-    private int type;
+    private int curSelect;
     private View root;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -64,11 +66,9 @@ public class CommentReportFragment extends BaseFragment implements ItemViewHolde
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (root == null) {
-            root = inflater.inflate(R.layout.fragment_comment_report, container, false);
-            initView(root);
-            getReportList();
-        }
+        root = inflater.inflate(R.layout.fragment_comment_report, container, false);
+        initView(root);
+        getReportList();
         return root;
     }
 
@@ -87,7 +87,15 @@ public class CommentReportFragment extends BaseFragment implements ItemViewHolde
         view.findViewById(R.id.complete_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventBus.getDefault().post(new ReportEvent());
+                if (typeDatas != null && typeDatas.size() > curSelect) {
+                    String type = typeDatas.get(curSelect).bean.getId();
+                    String content = typeDatas.get(curSelect).bean.getName();
+                    String videoId = commentData.getBean().getVideo_id();
+                    String userId = commentData.getBean().getUser_id();
+                    report(type, content, videoId, userId);
+                } else {
+                    showShortToast("error");
+                }
             }
         });
     }
@@ -98,6 +106,7 @@ public class CommentReportFragment extends BaseFragment implements ItemViewHolde
             ReportTypeData reportTypeData = typeDatas.get(index);
             reportTypeData.selected = (index == position);
         }
+        curSelect = position;
         recyclerViewAdapter.update(typeDatas);
     }
 
@@ -119,6 +128,37 @@ public class CommentReportFragment extends BaseFragment implements ItemViewHolde
                         }
                     }
                     recyclerViewAdapter.update(typeDatas);
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    showShortToast(error);
+                }
+            });
+        }
+    }
+
+    /**
+     * 举报
+     *
+     * @param type_id：（举报类型：1.广告 2.暴力言论）
+     * @param content：（举报内容）
+     * @param video_id：（举报视频ID）
+     * @param be_user_id：（被举报用户ID）
+     * @return
+     */
+    private void report(String type_id, String content, String video_id, String be_user_id) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(mActivity);
+        Call<ResponseBean<AddItemBean>> call = userApiService.uploadReport(
+                token, type_id, content, video_id, be_user_id);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<AddItemBean>() {
+                @Override
+                public void onSuccess(AddItemBean data) {
+                    showShortToast("已举报");
+                    EventBus.getDefault().post(new ReportEvent());
                 }
 
                 @Override

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.bean.CommentListBean;
+import com.baogetv.app.model.usercenter.event.ReportEvent;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
@@ -108,7 +109,7 @@ public class CommentDetailActivity extends BaseTitleActivity {
         editText.requestFocus();
         InputUtil.ShowKeyboard(editText);
     }
-    
+
     @Override
     protected int getRootView() {
         return R.layout.activity_comment_detail;
