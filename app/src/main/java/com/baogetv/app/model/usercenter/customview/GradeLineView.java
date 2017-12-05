@@ -7,9 +7,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.baogetv.app.R;
+import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleFrameLayout;
 
 /**
@@ -20,7 +22,7 @@ public class GradeLineView extends ScaleFrameLayout {
 
     private static final String TAG = "GradeLineView";
     private TextView titleTv;
-    private TextView descTv;
+    private ImageView descTv;
     private TextView scoreTv;
 
     public GradeLineView(Context context) {
@@ -43,9 +45,9 @@ public class GradeLineView extends ScaleFrameLayout {
         scoreTv = root.findViewById(R.id.grade_score);
     }
 
-    public void setText(String title, String des, String score) {
+    public void setText(String title, String desUrl, String score) {
         titleTv.setText(title);
-        descTv.setText(des);
+        Glide.with(this.getContext()).load(desUrl).into(descTv);
         scoreTv.setText(score);
     }
 }

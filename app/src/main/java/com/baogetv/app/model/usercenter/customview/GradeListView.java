@@ -38,9 +38,9 @@ public class GradeListView extends ScaleFrameLayout {
         container = root.findViewById(R.id.list_container);
     }
 
-    public void add(String title, String des, String score) {
+    public void add(String title, String desUrl, String score) {
         GradeLineView lineView = new GradeLineView(this.getContext());
-        lineView.setText(title, des, score);
+        lineView.setText(title, desUrl, score);
         LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         container.addView(lineView, llp);

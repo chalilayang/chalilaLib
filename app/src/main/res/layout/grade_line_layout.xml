@@ -13,16 +13,14 @@
         android:gravity="center"
         android:layout_marginTop="@dimen/size_40"
         android:layout_marginBottom="@dimen/size_40"
-        android:text="@string/password"
         android:textSize="@dimen/size_26"
         android:textColor="@color/reply_name"/>
-    <com.chalilayang.scaleview.ScaleTextView
+    <ImageView
         android:id="@+id/grade_desc"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/size_30"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/password"
         android:textAppearance="@style/search_label"/>
     <com.chalilayang.scaleview.ScaleTextView
         android:id="@+id/grade_score"
@@ -32,7 +30,6 @@
         android:gravity="center"
         android:layout_marginTop="@dimen/size_40"
         android:layout_marginBottom="@dimen/size_40"
-        android:text="@string/password"
         android:textSize="@dimen/size_26"
         android:textColor="@color/reply_name"/>
 </com.chalilayang.scaleview.ScaleLinearLayout>

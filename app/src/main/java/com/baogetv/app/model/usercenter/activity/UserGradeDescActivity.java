@@ -72,7 +72,7 @@ public class UserGradeDescActivity extends BaseTitleActivity {
                         Collections.sort(grades);
                         for (int index = 0, count = grades.size(); index < count; index ++) {
                             GradeBean bean = data.get(grades.get(index).index);
-                            gradeListView.add(bean.getName(), bean.getMedal(), bean.getScore());
+                            gradeListView.add(bean.getName(), bean.getPic_url(), bean.getScore());
                         }
                     }
                 }
