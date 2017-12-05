@@ -14,6 +14,7 @@ import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.ResponseMeBean;
 import com.baogetv.app.bean.ScoreSourceBean;
 import com.baogetv.app.bean.ScoreSourceDetailBean;
+import com.baogetv.app.bean.SystemInfoBean;
 import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.bean.ZanMeBean;
 
@@ -461,4 +462,23 @@ public interface UserApiService {
      */
     @POST("index.php?s=/Accusation/type")
     Call<ResponseBean<List<ReportTypeBean>>> getReportTypeList();
+
+    /**
+     * 系统信息列表
+     * @param token：（Token，登录凭证）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Message/index")
+    Call<ResponseBean<List<SystemInfoBean>>> getSystemInfoList(@Field("token") String token);
+
+    /**
+     * 删除信息
+     * @param id：（系统信息ID）
+     * @param token：（Token，登录凭证）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Message/setIsRead")
+    Call<ResponseBean<List<Object>>> delelteInfo(@Field("id") String id, @Field("token") String token);
 }

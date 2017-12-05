@@ -151,6 +151,8 @@
 
     <string name="delete">删除</string>
     <string name="all_delete">全部删除</string>
+    <string name="tag_read">标记已读</string>
+    <string name="all_tag_read">全部标记已读</string>
 
     <string name="downloading">缓存中</string>
     <string name="downloaded">缓存完成</string>

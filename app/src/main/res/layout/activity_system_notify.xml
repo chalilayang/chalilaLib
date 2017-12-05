@@ -11,9 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         layout="@layout/base_title_layout"/>
-    <com.chalilayang.scaleview.ScaleFrameLayout
-        android:id="@+id/root_container"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/info_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/title_container"/>
+        android:layout_below="@+id/title_container"/>
 </com.chalilayang.scaleview.ScaleRelativeLayout>
