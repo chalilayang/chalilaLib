@@ -1,6 +1,7 @@
 package com.baogetv.app.model.videodetail.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -114,7 +115,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         private TextView desc;
 
         private TextView share;
-        private TextView like;
+        private TextView collect;
         private TextView cache;
 
         private FlowLayout flowLayout;
@@ -122,7 +123,8 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         private TextView channelTitle;
         private TextView channelUpdate;
         private TextView channelDesc;
-
+        private Drawable heartGray;
+        private Drawable heartRed;
         public void updateInfo() {
             if (videoDetailData != null) {
                 VideoDetailBean bean = videoDetailData.videoDetailBean;
@@ -130,7 +132,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 playCount.setText(String.format(playCountFormat, bean.getPlay()));
                 desc.setText(bean.getIntro());
                 share.setText(bean.getShares());
-                like.setText(bean.getLikes());
+                collect.setText(bean.getLikes());
                 List<VideoDetailBean.TagsBean> labels = bean.getTags();
                 flowLayout.removeAllViews();
                 if (labels != null) {
@@ -172,6 +174,12 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         public HeadViewHolder(View view) {
             super(view);
+            heartGray = mContext.getResources().getDrawable(R.mipmap.heart_btn_gray);
+            int width = heartGray.getIntrinsicWidth();
+            int height = heartGray.getIntrinsicHeight();
+            heartGray.setBounds(0, 0, width, height);
+            heartRed = mContext.getResources().getDrawable(R.mipmap.heart_btn_icon);
+            heartRed.setBounds(0, 0, width, height);
             title = (TextView) view.findViewById(R.id.video_name);
             playCount = (TextView) view.findViewById(R.id.video_play_count);
             desc = (TextView) view.findViewById(R.id.video_desc);
@@ -184,8 +192,8 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                     }
                 }
             });
-            like = (TextView) view.findViewById(R.id.video_heart);
-            like.setOnClickListener(new View.OnClickListener() {
+            collect = (TextView) view.findViewById(R.id.video_heart);
+            collect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (mRef != null && mRef.get() != null) {
