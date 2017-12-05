@@ -155,10 +155,13 @@
     <string name="tag_read">标记已读</string>
     <string name="all_tag_read">全部标记已读</string>
 
+    <string name="download_size_format">%1$s/%2$s</string>
     <string name="downloading">缓存中</string>
     <string name="downloaded">缓存完成</string>
+    <string name="download_waiting">等待</string>
     <string name="pause_download">暂停</string>
     <string name="start_download">开始</string>
+    <string name="download_error">失败</string>
     <string name="special_grade_desc">
         "特殊用户说明：知名健身运动员、健康行业从业者可以将资料（APP用户名和个人成就资料发送至邮箱）"
     "8538690@qq.com申请验证，获得很骚的红名认证。"</string>

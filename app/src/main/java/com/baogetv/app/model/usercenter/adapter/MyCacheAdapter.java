@@ -11,6 +11,7 @@ import com.baogetv.app.BaseItemAdapter;
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
 import com.baogetv.app.db.domain.MyBusinessInfo;
+import com.baogetv.app.model.usercenter.customview.CacheInfoView;
 import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleCalculator;
 
@@ -18,28 +19,19 @@ import java.lang.ref.SoftReference;
 
 public class MyCacheAdapter
         extends BaseItemAdapter<MyBusinessInfo, MyCacheAdapter.ViewHolder>
-        implements ItemViewHolder.ItemDeleteListener<MyBusinessInfo>{
-    private int margin_8px;
-    private int margin_15px;
-    private int margin_20px;
+        implements ItemViewHolder.ItemDeleteListener<MyBusinessInfo> {
     private int margin_30px;
     private int margin_160px;
-    private String videoCountFormat;
     protected SoftReference<ItemViewHolder.ItemDeleteListener<MyBusinessInfo>> mDeleteRef;
     public void setItemDeleteListener(ItemViewHolder.ItemDeleteListener<MyBusinessInfo> listener) {
         if (listener != null) {
             mDeleteRef = new SoftReference<>(listener);
         }
     }
-
     public MyCacheAdapter(Context context) {
         super(context);
-        margin_8px = ScaleCalculator.getInstance(mContext).scaleWidth(8);
-        margin_15px = ScaleCalculator.getInstance(mContext).scaleWidth(15);
-        margin_20px = ScaleCalculator.getInstance(mContext).scaleWidth(20);
         margin_30px = ScaleCalculator.getInstance(mContext).scaleWidth(30);
         margin_160px = ScaleCalculator.getInstance(mContext).scaleWidth(160);
-        videoCountFormat = mContext.getString(R.string.video_count_format);
     }
 
     @Override
@@ -74,14 +66,19 @@ public class MyCacheAdapter
     public class ViewHolder extends ItemViewHolder<MyBusinessInfo> {
         public final View contentRoot;
         public final ImageView mImageView;
-        public final TextView title;
-        public final TextView updateTime;
         public final TextView deleteBtn;
+        private CacheInfoView cacheInfoView;
         protected SoftReference<ItemDeleteListener> mDeleteRef;
         @Override
         public void bindData(MyBusinessInfo data, int pos) {
-            title.setText(data.getName());
             Glide.with(mContext).load(data.getIcon()).crossFade().into(mImageView);
+            cacheInfoView.setTitleTv(data.getName());
+            cacheInfoView.update(30 * 1024 * 1024, 100 * 1024 * 1024);
+            if (pos % 2 == 0) {
+                cacheInfoView.setCacheState(CacheInfoView.STATE_DOWNLOADED);
+            } else {
+                cacheInfoView.setCacheState(CacheInfoView.STATE_DOWNLOADING);
+            }
         }
 
         public ViewHolder(View view) {
@@ -89,9 +86,8 @@ public class MyCacheAdapter
             contentRoot = view.findViewById(R.id.item_content_view);
             contentRoot.setOnClickListener(this);
             contentRoot.setPadding(margin_30px, 0, 0, 0);
-            mImageView = (ImageView) view.findViewById(R.id.video_item_icon);
-            title = (TextView) view.findViewById(R.id.video_title);
-            updateTime = (TextView) view.findViewById(R.id.video_time);
+            mImageView = view.findViewById(R.id.video_item_icon);
+            cacheInfoView = view.findViewById(R.id.cache_info);
             deleteBtn = (TextView) view.findViewById(R.id.btn_delete);
             deleteBtn.getLayoutParams().width = margin_160px;
             deleteBtn.setOnClickListener(this);

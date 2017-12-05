@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.chalilayang.scaleview.ScaleLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+    <com.chalilayang.scaleview.ScaleTextView
+        android:id="@+id/cache_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="title"
+        android:textAppearance="@style/cache_list_item_title"/>
+
+    <com.chalilayang.scaleview.ScaleRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_10">
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/cache_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="123M/251M"
+            android:layout_alignParentLeft="true"
+            android:textAppearance="@style/cache_list_item_desc"/>
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/cache_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="123M/251M"
+            android:layout_alignParentRight="true"
+            android:textAppearance="@style/cache_list_item_desc"/>
+    </com.chalilayang.scaleview.ScaleRelativeLayout>
+    <ProgressBar
+        android:id="@+id/cache_progress"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="30"/>
+</com.chalilayang.scaleview.ScaleLinearLayout>

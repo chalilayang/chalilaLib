@@ -2,7 +2,6 @@
 <com.chalilayang.customview.SwipeMenuLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_menu"
     android:layout_width="match_parent"
     android:layout_height="@dimen/size_190"
@@ -21,53 +20,14 @@
             android:background="@color/transparent"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"/>
-        <com.chalilayang.scaleview.ScaleRelativeLayout
+        <com.baogetv.app.model.usercenter.customview.CacheInfoView
+            android:id="@+id/cache_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/size_24"
             android:layout_marginRight="@dimen/size_24"
-            android:layout_toRightOf="@+id/video_item_icon">
-            <com.chalilayang.scaleview.ScaleTextView
-                android:id="@+id/video_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="@dimen/size_24"
-                android:textAppearance="@style/cache_list_item_title"/>
-            <com.chalilayang.scaleview.ScaleTextView
-                android:id="@+id/download_progress_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="123M/251M"
-                android:layout_below="@+id/video_title"
-                android:layout_alignParentRight="true"
-                android:textAppearance="@style/cache_list_item_desc"/>
-            <ProgressBar
-                android:id="@+id/download_progress"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/download_progress_tv"
-                android:max="100"
-                android:progress="30"/>
-            <com.chalilayang.scaleview.ScaleTextView
-                android:id="@+id/download_progress_state"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/downloading"
-                android:layout_below="@+id/download_progress"
-                android:layout_alignParentLeft="true"
-                android:textAppearance="@style/cache_list_item_desc"/>
-            <com.chalilayang.scaleview.ScaleTextView
-                android:id="@+id/download_progress_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/start_download"
-                android:layout_below="@+id/download_progress"
-                android:layout_alignParentRight="true"
-                android:textAppearance="@style/cache_list_item_desc"/>
-        </com.chalilayang.scaleview.ScaleRelativeLayout>
+            android:layout_toRightOf="@+id/video_item_icon"/>
     </com.chalilayang.scaleview.ScaleRelativeLayout>
     <com.chalilayang.scaleview.ScaleTextView
         android:id="@+id/btn_delete"
