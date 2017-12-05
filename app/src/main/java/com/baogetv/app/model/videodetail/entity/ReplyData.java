@@ -52,7 +52,7 @@ public class ReplyData implements Parcelable {
         UserData replyTo = new UserData();
         replyTo.setNickName(bean.getReply_user_username());
         replyTo.setIconUrl(bean.getReply_user_pic_url());
-        this.replyTo = replyer;
+        this.replyTo = replyTo;
     }
 
     @Override

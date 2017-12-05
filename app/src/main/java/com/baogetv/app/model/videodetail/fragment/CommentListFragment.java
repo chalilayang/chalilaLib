@@ -179,13 +179,12 @@ public class CommentListFragment extends BaseItemFragment
             NeedReplyEvent replyEvent = event.replyEvent;
             Log.i(TAG, "handleSendComment: " + commentEvent + " " + replyEvent);
             if (commentEvent != null) {
-                String commentid = commentEvent.commentData.getBean().getId();
-//                String uid = commentEvent.commentData.getBean().getUser_id();
-                addComment(event.content, videoDetailData.videoDetailBean.getId(), commentid, null);
+                String commentId = commentEvent.commentData.getBean().getId();
+                addComment(event.content, videoDetailData.videoDetailBean.getId(), commentId, null);
             } else if (replyEvent != null) {
-                String commentid = replyEvent.replyData.getBean().getReply_id();
+                String commentId = replyEvent.replyData.getBean().getReply_id();
                 String uid = replyEvent.replyData.getBean().getUser_id();
-                addComment(event.content, videoDetailData.videoDetailBean.getId(), commentid, uid);
+                addComment(event.content, videoDetailData.videoDetailBean.getId(), commentId, uid);
             } else {
                 addComment(event.content, videoDetailData.videoDetailBean.getId(), null, null);
             }

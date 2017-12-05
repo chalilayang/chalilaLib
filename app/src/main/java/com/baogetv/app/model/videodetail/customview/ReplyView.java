@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
@@ -119,31 +120,34 @@ public class ReplyView extends ScaleLinearLayout {
             contentTv.setMovementMethod(LinkMovementMethod.getInstance());
             contentTv.setHighlightColor(Color.TRANSPARENT);
             time.setText(TimeUtil.getTimeStateNew(data.getBean().getAdd_time()));
-            if (data.getReplyTo() != null) {
-                String replyName = data.getReplyer().getNickName();
-                String replyToName = data.getReplyTo().getNickName();
-                String replyContent = data.getContent();
-                String content = String.format(replyFormat, replyName, replyToName, replyContent);
 
-                SpannableString spanString = new SpannableString (content);
-                int start = 0;
-                int nameEnd = start + replyName.length();
-                spanString.setSpan(new ClickableSpan() {
+            String replyName = data.getReplyer().getNickName();
+            String replyToName = data.getReplyTo().getNickName();
+            String replyContent = data.getContent();
+            String content = String.format(replyFormat, replyName, replyToName, replyContent);
+            if (TextUtils.isEmpty(replyToName)) {
+                content = String.format(replyFormatNoTo, replyName, replyContent);
+            }
+            SpannableString spanString = new SpannableString (content);
+            int start = 0;
+            int nameEnd = start + replyName.length();
+            spanString.setSpan(new ClickableSpan() {
 
-                    @Override
-                    public void updateDrawState (TextPaint ds) {
-                        ds.setUnderlineText (false);
-                        ds.setColor(nameColor);
+                @Override
+                public void updateDrawState (TextPaint ds) {
+                    ds.setUnderlineText (false);
+                    ds.setColor(nameColor);
+                }
+
+                @Override
+                public void onClick (final View widget) {
+                    Log.i(TAG, "onClick: ");
+                    if (mRef != null && mRef.get() != null) {
+                        mRef.get().onReplyerClick(data);
                     }
-
-                    @Override
-                    public void onClick (final View widget) {
-                        Log.i(TAG, "onClick: ");
-                        if (mRef != null && mRef.get() != null) {
-                            mRef.get().onReplyerClick(data);
-                        }
-                    }
-                }, start, nameEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+            }, start, nameEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            if (!TextUtils.isEmpty(replyToName)) {
                 start = nameEnd;
                 nameEnd = start + 2;
                 spanString.setSpan(
@@ -166,25 +170,25 @@ public class ReplyView extends ScaleLinearLayout {
                         }
                     }
                 }, start, nameEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                start = nameEnd;
-                nameEnd = start + 1 + replyContent.length(); // 加1是为了将冒号也包括在内
-                spanString.setSpan(new ClickableSpan() {
-
-                    @Override
-                    public void updateDrawState (TextPaint ds) {
-                        ds.setUnderlineText (false);
-                        ds.setColor(contentColor);
-                    }
-
-                    @Override
-                    public void onClick (final View widget) {
-                        if (mRef != null && mRef.get() != null) {
-                            mRef.get().onReplyClick(data);
-                        }
-                    }
-                }, start, nameEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                contentTv.setText(spanString);
             }
+            start = nameEnd;
+            nameEnd = start + 1 + replyContent.length(); // 加1是为了将冒号也包括在内
+            spanString.setSpan(new ClickableSpan() {
+
+                @Override
+                public void updateDrawState (TextPaint ds) {
+                    ds.setUnderlineText (false);
+                    ds.setColor(contentColor);
+                }
+
+                @Override
+                public void onClick (final View widget) {
+                    if (mRef != null && mRef.get() != null) {
+                        mRef.get().onReplyClick(data);
+                    }
+                }
+            }, start, nameEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            contentTv.setText(spanString);
         }
     }
 
