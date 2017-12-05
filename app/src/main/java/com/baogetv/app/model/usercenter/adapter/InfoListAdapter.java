@@ -10,6 +10,7 @@ import com.baogetv.app.BaseItemAdapter;
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
 import com.baogetv.app.bean.SystemInfoBean;
+import com.baogetv.app.util.TimeUtil;
 import com.chalilayang.scaleview.ScaleCalculator;
 
 import java.lang.ref.SoftReference;
@@ -56,18 +57,6 @@ public class InfoListAdapter extends BaseItemAdapter<SystemInfoBean, InfoListAda
         }
     }
 
-    public void deleteItem(int pos) {
-        if (pos >= 0 && pos < getItemCount()) {
-            mValues.remove(pos);
-            notifyItemChanged(pos);
-        }
-    }
-
-    public void deleteAllItem() {
-        mValues.clear();
-        notifyDataSetChanged();
-    }
-
     public class ViewHolder extends ItemViewHolder<SystemInfoBean> {
         protected SoftReference<ItemDeleteListener> mDeleteRef;
         public final View contentRoot;
@@ -79,7 +68,7 @@ public class InfoListAdapter extends BaseItemAdapter<SystemInfoBean, InfoListAda
         @Override
         public void bindData(SystemInfoBean data, int pos) {
             title.setText(data.getTitle());
-            updateTime.setText(data.getAdd_time());
+            updateTime.setText(TimeUtil.getTimeStateNew(data.getAdd_time()));
             int isUnRead = 1;
             try {
                 isUnRead = Integer.parseInt(data.getIs_unread());
@@ -94,7 +83,7 @@ public class InfoListAdapter extends BaseItemAdapter<SystemInfoBean, InfoListAda
             super(view);
             contentRoot = view.findViewById(R.id.item_content_view);
             contentRoot.setOnClickListener(this);
-            contentRoot.setPadding(margin_30px, 0, 0, 0);
+            contentRoot.setPadding(margin_30px, 0, margin_30px, 0);
             title = (TextView) view.findViewById(R.id.info_title);
             infoTip = view.findViewById(R.id.info_tip);
             updateTime = (TextView) view.findViewById(R.id.info_time);

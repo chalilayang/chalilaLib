@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.baogetv.app.customview.CustomToastUtil;
+import com.bumptech.glide.Glide;
 import com.umeng.message.PushAgent;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
@@ -44,6 +45,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
+
     protected void initState() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //透明状态栏

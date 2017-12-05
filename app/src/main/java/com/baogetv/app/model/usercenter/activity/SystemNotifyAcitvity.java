@@ -3,6 +3,7 @@ package com.baogetv.app.model.usercenter.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.baogetv.app.BaseTitleActivity;
@@ -101,30 +102,37 @@ public class SystemNotifyAcitvity extends BaseTitleActivity
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getUserToken(getApplicationContext());
-        String id = null;
+        String id = "";
         if (data != null) {
             id = data.getId();
+        } else {
+            List<SystemInfoBean> list = recyclerViewAdapter.getDataList();
+            for (int index = 0, count = list.size(); index < count; index ++) {
+                if (index == 0) {
+                    id = list.get(index).getId();
+                } else {
+                    id = id + "," + list.get(index).getId();
+                }
+            }
         }
-        Call<ResponseBean<List<Object>>> call
-                = userApiService.delelteInfo(token, id);
-        if (call != null) {
-            call.enqueue(new CustomCallBack<List<Object>>() {
-                @Override
-                public void onSuccess(List<Object> data) {
-                    Log.i(TAG, "onSuccess: ");
-//                    if (data == null) {
-//                        recyclerViewAdapter.deleteAllItem();
-//                    } else {
-//                        recyclerViewAdapter.deleteItem(pos);
-//                    }
-                    getInfoList();
-                }
+        Log.i(TAG, "tagRead: " + id);
+        if (!TextUtils.isEmpty(id)) {
+            Call<ResponseBean<List<Object>>> call
+                    = userApiService.delelteInfo(id, token);
+            if (call != null) {
+                call.enqueue(new CustomCallBack<List<Object>>() {
+                    @Override
+                    public void onSuccess(List<Object> data) {
+                        Log.i(TAG, "onSuccess: ");
+                        getInfoList();
+                    }
 
-                @Override
-                public void onFailed(String error) {
-                    showShortToast(error);
-                }
-            });
+                    @Override
+                    public void onFailed(String error) {
+                        showShortToast(error);
+                    }
+                });
+            }
         }
     }
 }
