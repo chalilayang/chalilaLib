@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.AttributeSet;
@@ -76,23 +77,25 @@ public class ResponseMeView extends ScaleFrameLayout {
             titleContainer.setHighlightColor(Color.TRANSPARENT);
             String content = String.format(commentFormat, data.getTitle());
             SpannableString spanString = new SpannableString (content);
-            int start = 1;
-            int nameEnd = start + data.getTitle().length();
-            spanString.setSpan(new ClickableSpan() {
+            if (TextUtils.isEmpty(data.getUsername())) {
+                int start = 1;
+                int nameEnd = start + data.getUsername().length();
+                spanString.setSpan(new ClickableSpan() {
 
-                @Override
-                public void updateDrawState (TextPaint ds) {
-                    ds.setUnderlineText (false);
-                    ds.setColor(contentColor);
-                }
-
-                @Override
-                public void onClick (final View widget) {
-                    if (mRef != null && mRef.get() != null) {
-                        mRef.get().onTitleClick(data);
+                    @Override
+                    public void updateDrawState (TextPaint ds) {
+                        ds.setUnderlineText (false);
+                        ds.setColor(contentColor);
                     }
-                }
-            }, start, nameEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    @Override
+                    public void onClick (final View widget) {
+                        if (mRef != null && mRef.get() != null) {
+                            mRef.get().onTitleClick(data);
+                        }
+                    }
+                }, start, nameEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
             titleContainer.setText(spanString);
         }
     }

@@ -1,10 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<com.chalilayang.scaleview.ScaleRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.baogetv.app.model.videodetail.activity.CommentDetailActivity">
-
-</android.support.constraint.ConstraintLayout>
+    tools:context="com.baogetv.app.BaseTitleActivity">
+    <include
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        layout="@layout/base_title_layout"/>
+    <com.chalilayang.scaleview.ScaleFrameLayout
+        android:id="@+id/root_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_container"/>
+    <com.chalilayang.scaleview.ScaleRelativeLayout
+        android:id="@+id/comment_edit_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_98"
+        android:layout_alignParentBottom="true"
+        android:background="@color/red">
+        <com.chalilayang.scaleview.ScaleEditText
+            android:id="@+id/comment_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/send_edit_hint"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_30"
+            android:layout_toLeftOf="@+id/comment_send_btn"
+            android:textCursorDrawable="@drawable/edit_text_cursor"
+            android:cursorVisible="true"
+            android:textSize="@dimen/size_32"
+            android:textColor="@color/send_edit_text_color"
+            android:inputType="text"
+            android:background="@color/transparent"/>
+        <ImageView
+            android:id="@+id/comment_send_btn"
+            android:layout_width="@dimen/size_140"
+            android:layout_height="@dimen/size_60"
+            android:layout_marginRight="@dimen/size_30"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/send_btn_icon"/>
+    </com.chalilayang.scaleview.ScaleRelativeLayout>
+</com.chalilayang.scaleview.ScaleRelativeLayout>

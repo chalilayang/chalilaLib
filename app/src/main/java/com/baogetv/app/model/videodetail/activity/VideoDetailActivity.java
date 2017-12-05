@@ -177,6 +177,7 @@ public class VideoDetailActivity extends BaseActivity {
         if (replyEvent != null || commentEvent != null) {
             return;
         }
+        EventBus.getDefault().cancelEventDelivery(event) ;
         commentEvent = event;
         editText.requestFocus();
         editText.setHint("@"+event.commentData.getBean().getUsername());
@@ -188,6 +189,7 @@ public class VideoDetailActivity extends BaseActivity {
         if (replyEvent != null || commentEvent != null) {
             return;
         }
+        EventBus.getDefault().cancelEventDelivery(event) ;
         replyEvent = event;
         Log.i(TAG, "handleReplyEvent: ");
         editText.requestFocus();
