@@ -16,6 +16,7 @@ import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.ImageUploadBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.UserDetailBean;
+import com.baogetv.app.constant.AppConstance;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.event.BodyInfoSelectEvent;
 import com.baogetv.app.model.usercenter.event.DateSelectEvent;
@@ -72,6 +73,11 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
 
     private void init() {
         userIconLine = (MineLineItemView) findViewById(R.id.user_icon);
+        if (userDetailBean != null) {
+            Glide.with(this)
+                    .load(userDetailBean.getPic_url())
+                    .into(userIconLine.getRightImageView());
+        }
         userIconLine.setOnClickListener(this);
         userGradeLine = (MineLineItemView) findViewById(R.id.user_grade);
         userGradeLine.setOnClickListener(this);
@@ -95,6 +101,9 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 showOrHideImageSelectFragment(true);
                 break;
             case R.id.user_grade:
+                Intent intent = new Intent(this, UserGradeDescActivity.class);
+                intent.putExtra(AppConstance.KEY_USER_DETAIL_BEAN, userDetailBean);
+                startActivity(intent);
                 break;
             case R.id.user_nick_name:
                 startNameIntroActivity();

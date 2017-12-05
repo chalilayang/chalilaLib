@@ -26,7 +26,6 @@ import com.baogetv.app.model.usercenter.customview.UpgradeProgress;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.bumptech.glide.Glide;
-import com.chalilayang.scaleview.ScaleCalculator;
 
 import java.util.ArrayList;
 import java.util.Collections;
