@@ -26,6 +26,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/action_settings"
+                android:maxLines="1"
+                android:ellipsize="middle"
+                android:layout_marginRight="@dimen/size_30"
+                android:layout_toLeftOf="@+id/channel_item_update_time"
                 android:textAppearance="@style/channel_item_title"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"/>
