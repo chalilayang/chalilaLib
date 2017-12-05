@@ -222,6 +222,7 @@ public class CommentListFragment extends BaseItemFragment
     @Override
     public void onThumbUp(CommentData data) {
         Log.i(TAG, "onThumbUp: ");
+        addZan(videoDetailData.videoDetailBean.getId(), data.getBean().getReply_id());
     }
 
     @Override
@@ -274,6 +275,29 @@ public class CommentListFragment extends BaseItemFragment
                 public void onSuccess(AddItemBean bean) {
                     showShortToast("add comment success");
                     Log.i(TAG, "onSuccess: add comment success");
+                    getCommentList(videoDetailData);
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    showShortToast(error);
+                }
+            });
+        }
+    }
+
+    private void addZan(String vid, String comment_id) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(mActivity);
+        Call<ResponseBean<AddItemBean>> call = userApiService.addZan(
+                token, vid, comment_id);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<AddItemBean>() {
+                @Override
+                public void onSuccess(AddItemBean bean) {
+                    showShortToast("点赞 success");
+                    Log.i(TAG, "onSuccess: add zan success");
                     getCommentList(videoDetailData);
                 }
 
