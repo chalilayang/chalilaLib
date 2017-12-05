@@ -1,6 +1,7 @@
 package com.baogetv.app.model.videodetail.customview;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -45,6 +46,9 @@ public class CommentView extends ScaleFrameLayout
     private TextView commentCount;
     private TextView zan;
 
+    private Drawable heartGray;
+    private Drawable heartRed;
+
     private String moreReplyFormat;
 
     public CommentView(Context context) {
@@ -62,6 +66,12 @@ public class CommentView extends ScaleFrameLayout
 
     private void init(Context context) {
         moreReplyFormat = getResources().getString(R.string.more_reply_format);
+        heartGray = getResources().getDrawable(R.mipmap.comment_thumb_up);
+        int width = heartGray.getIntrinsicWidth();
+        int height = heartGray.getIntrinsicHeight();
+        heartGray.setBounds(0, 0, width, height);
+        heartRed = getResources().getDrawable(R.mipmap.comment_thum_up_red);
+        heartRed.setBounds(0, 0, width, height);
         View root = LayoutInflater.from(context).inflate(R.layout.comment_layout, this);
         userLogoImage = root.findViewById(R.id.comment_user_icon);
         userName = root.findViewById(R.id.comment_name);
@@ -112,6 +122,9 @@ public class CommentView extends ScaleFrameLayout
             }
         });
         zan.setText(data.getBean().getLikes());
+        int isLike = Integer.parseInt(data.getBean().getIs_like());
+        Drawable thumbDrawable = isLike > 0 ? heartRed : heartGray;
+        zan.setCompoundDrawables(thumbDrawable, null, null, null);
         if (commentData != null) {
             Glide.with(getContext()).load(data.getOwner()
                             .getIconUrl()).error(R.mipmap.user_default_icon).into(userLogoImage);

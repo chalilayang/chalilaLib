@@ -222,7 +222,7 @@ public class CommentListFragment extends BaseItemFragment
     @Override
     public void onThumbUp(CommentData data) {
         Log.i(TAG, "onThumbUp: ");
-        addZan(videoDetailData.videoDetailBean.getId(), data.getBean().getReply_id());
+        addZan(videoDetailData.videoDetailBean.getId(), data.getBean().getId());
     }
 
     @Override
