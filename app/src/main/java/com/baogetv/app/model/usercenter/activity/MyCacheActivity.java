@@ -66,31 +66,29 @@ public class MyCacheActivity extends BaseTitleActivity {
     }
 
     private List<MyBusinessInfo> getDownloadListData() {
-        List<DownloadInfo> downloadingList = dbController.findAllDownloading();
-        List<DownloadInfo> downloadedList = dbController.findAllDownloaded();
+        List<DownloadInfo> downloadingList
+                = DownloadService.getDownloadManager(getApplicationContext()).findAllDownloading();
+        List<DownloadInfo> downloadedList
+                = DownloadService.getDownloadManager(getApplicationContext()).findAllDownloaded();
+        Log.i(TAG, "getDownloadListData: ");
+
         ArrayList<MyBusinessInfo> myBusinessInfos = new ArrayList<>();
-        if (downloadedList != null) {
-            for (int index = 0,  count = downloadedList.size(); index < count; index ++) {
-                DownloadInfo info = downloadedList.get(index);
-                try {
-                    MyBusinessInfLocal local = dbController.findMyDownloadInfoById(info.getId());
-                    myBusinessInfos.add(
-                            new MyBusinessInfo(local.getName(), local.getIcon(), local.getUrl()));
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+        for (int index = 0, count = downloadedList.size(); index < count; index ++) {
+            DownloadInfo info = downloadedList.get(index);
+            try {
+                MyBusinessInfLocal local = dbController.findMyDownloadInfoById(info.getId());
+                myBusinessInfos.add(new MyBusinessInfo(local.getName(), local.getIcon(), local.getUrl()));
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
-        if (downloadingList != null) {
-            for (int index = 0,  count = downloadingList.size(); index < count; index ++) {
-                DownloadInfo info = downloadedList.get(index);
-                try {
-                    MyBusinessInfLocal local = dbController.findMyDownloadInfoById(info.getId());
-                    myBusinessInfos.add(
-                            new MyBusinessInfo(local.getName(), local.getIcon(), local.getUrl()));
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+        for (int index = 0, count = downloadingList.size(); index < count; index ++) {
+            DownloadInfo info = downloadingList.get(index);
+            try {
+                MyBusinessInfLocal local = dbController.findMyDownloadInfoById(info.getId());
+                myBusinessInfos.add(new MyBusinessInfo(local.getName(), local.getIcon(), local.getUrl()));
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
 //        ArrayList<MyBusinessInfo> myBusinessInfos = new ArrayList<>();
