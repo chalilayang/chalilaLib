@@ -26,19 +26,36 @@
                 android:layout_marginTop="@dimen/size_40"
                 android:layout_centerHorizontal="true"
                 android:src="@mipmap/user_default_icon"/>
+            <com.chalilayang.scaleview.ScaleTextView
+                android:id="@+id/level_score_desc"
+                android:layout_width="@dimen/size_690"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_54"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/user_icon"
+                android:textSize="@dimen/size_30"/>
             <com.baogetv.app.model.usercenter.customview.UpgradeProgress
                 android:id="@+id/user_grade_progress"
                 android:layout_width="@dimen/size_690"
                 android:layout_height="@dimen/size_10"
-                android:layout_below="@+id/user_icon"
+                android:layout_below="@+id/level_score_desc"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/size_40"
-                android:layout_marginTop="@dimen/size_54"/>
+                android:layout_marginBottom="@dimen/size_40"/>
             <com.baogetv.app.model.usercenter.customview.GradeListView
                 android:id="@+id/grade_list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/user_grade_progress"/>
+            <com.chalilayang.scaleview.ScaleTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/special_grade_desc"
+                android:layout_below="@+id/grade_list_view"
+                android:layout_marginTop="@dimen/size_60"
+                android:layout_marginRight="@dimen/size_30"
+                android:layout_marginLeft="@dimen/size_30"
+                android:textColor="@color/reply_time"
+                android:textSize="@dimen/size_30"/>
         </com.chalilayang.scaleview.ScaleRelativeLayout>
     </ScrollView>
 </com.chalilayang.scaleview.ScaleRelativeLayout>

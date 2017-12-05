@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baogetv.app.R;
+import com.chalilayang.scaleview.ScaleCalculator;
 import com.chalilayang.scaleview.ScaleFrameLayout;
 
 /**
@@ -38,11 +39,32 @@ public class GradeListView extends ScaleFrameLayout {
         container = root.findViewById(R.id.list_container);
     }
 
-    public void add(String title, String desUrl, String score) {
-        GradeLineView lineView = new GradeLineView(this.getContext());
-        lineView.setText(title, desUrl, score);
+    public void add(String title, String desUrl, String score, boolean select, boolean bottom) {
+        View divider = new View(this.getContext());
+        divider.setBackgroundResource(R.color.channel_list_divider);
         LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        llp.leftMargin = llp.rightMargin = ScaleCalculator.getInstance(getContext()).scaleHeight(30);
+        llp.height = ScaleCalculator.getInstance(getContext()).scaleHeight(1);
+        container.addView(divider, llp);
+
+        GradeLineView lineView = new GradeLineView(this.getContext());
+        lineView.setText(title, desUrl, score);
+        if (select) {
+            lineView.setBackgroundResource(R.color.search_label_bg);
+        }
+        llp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         container.addView(lineView, llp);
+
+        if (bottom) {
+            divider = new View(this.getContext());
+            divider.setBackgroundResource(R.color.channel_list_divider);
+            llp = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            llp.leftMargin = llp.rightMargin = ScaleCalculator.getInstance(getContext()).scaleHeight(30);
+            llp.height = ScaleCalculator.getInstance(getContext()).scaleHeight(1);
+            container.addView(divider, llp);
+        }
     }
 }

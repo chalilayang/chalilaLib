@@ -2,11 +2,8 @@ package com.baogetv.app.model.usercenter.customview;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 

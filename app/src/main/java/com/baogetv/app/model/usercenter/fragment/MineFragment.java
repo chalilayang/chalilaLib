@@ -225,6 +225,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             switch (id) {
                 case R.id.user_grade:
                     intent = new Intent(this.getActivity(), UserGradeDescActivity.class);
+                    intent.putExtra(AppConstance.KEY_USER_DETAIL_BEAN, detailBean);
                     startActivity(intent);
                     break;
                 case R.id.my_cache:
