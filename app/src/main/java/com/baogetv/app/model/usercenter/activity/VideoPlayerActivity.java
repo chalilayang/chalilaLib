@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
+import com.baogetv.app.model.videodetail.player.LocalePlayerController;
 import com.baogetv.app.model.videodetail.player.PlayerController;
 import com.xiao.nicevideoplayer.NiceVideoPlayer;
 import com.xiao.nicevideoplayer.NiceVideoPlayerController;
@@ -22,16 +23,19 @@ public class VideoPlayerActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
         videoPath = getIntent().getStringExtra(KEY_VIDEO_PATH);
+        initView();
     }
 
-    public void init(View root) {
-        mNiceVideoPlayer = (NiceVideoPlayer) root.findViewById(R.id.player_surface);
+    public void initView() {
+        mNiceVideoPlayer = (NiceVideoPlayer) findViewById(R.id.player_surface);
         mNiceVideoPlayer.setPlayerType(NiceVideoPlayer.TYPE_NATIVE);
         if (!TextUtils.isEmpty(videoPath)) {
             mNiceVideoPlayer.setUp(videoPath, null);
             Log.i(TAG, "init: " + videoPath);
-            NiceVideoPlayerController controller = new PlayerController(this);
+            NiceVideoPlayerController controller = new LocalePlayerController(this);
             mNiceVideoPlayer.setController(controller);
+            mNiceVideoPlayer.enterFullScreen();
+            mNiceVideoPlayer.start();
         }
     }
 
