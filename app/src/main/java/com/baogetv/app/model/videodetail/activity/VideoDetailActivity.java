@@ -77,6 +77,8 @@ public class VideoDetailActivity extends BaseActivity {
                     event.replyEvent = replyEvent;
                     commentEvent = null;
                     replyEvent = null;
+                    editText.setText("");
+                    editText.setHint(getResources().getString(R.string.send_edit_hint));
                     EventBus.getDefault().post(event);
                 }
                 editText.clearFocus();
