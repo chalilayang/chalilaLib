@@ -33,7 +33,7 @@
                 android:layout_marginTop="@dimen/size_54"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/user_icon"
-                android:textSize="@dimen/size_30"/>
+                android:textSize="@dimen/size_22"/>
             <com.baogetv.app.model.usercenter.customview.UpgradeProgress
                 android:id="@+id/user_grade_progress"
                 android:layout_width="@dimen/size_690"

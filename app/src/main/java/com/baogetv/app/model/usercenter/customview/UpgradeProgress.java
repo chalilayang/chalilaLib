@@ -56,6 +56,7 @@ public class UpgradeProgress extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        setBackgroundResource(R.color.up_level_progress_bg);
         outRect.left = 0;
         outRect.top = 0;
         outRect.right = canvas.getWidth();

@@ -78,7 +78,8 @@ public class LevelUtil {
         if (nextLevel != null && curLevel != null) {
             int score = nextLevel.score - curLevel.score;
             String levelName = list.get(nextLevel.index).getName();
-            result = String.format(format, score, levelName);
+            String metal = list.get(nextLevel.index).getMedal();
+            result = String.format(format, score, levelName, metal);
         }
         return result;
     }

@@ -15,10 +15,13 @@ import android.widget.TextView;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.GradeBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.constant.AppConstance;
 import com.baogetv.app.customview.LogoCircleImageView;
+import com.baogetv.app.model.usercenter.Level;
+import com.baogetv.app.model.usercenter.LevelUtil;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.activity.MyCacheActivity;
 import com.baogetv.app.model.usercenter.activity.MyCollectActivity;
@@ -35,6 +38,8 @@ import com.baogetv.app.model.usercenter.customview.UpgradeProgress;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.bumptech.glide.Glide;
+
+import java.util.List;
 
 import retrofit2.Call;
 
@@ -56,6 +61,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private View registerBtn;
     private LogoCircleImageView userIcon;
     private TextView userName;
+    private TextView mobileNum;
     private ImageView gradeIcon;
     private TextView gradeDesc;
     private MineBodyInfoView mineBodyInfoView;
@@ -136,6 +142,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
         userName = view.findViewById(R.id.mine_name);
         userIcon = view.findViewById(R.id.mine_icon);
+        mobileNum = view.findViewById(R.id.user_mobile_num);
         view.findViewById(R.id.change_mobile_num).setOnClickListener(this);
         gradeIcon = view.findViewById(R.id.user_grade_icon);
         gradeDesc = view.findViewById(R.id.user_grade_desc);
@@ -175,6 +182,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             Glide.with(this).load(detailBean.getLevel_pic_url()).into(gradeIcon);
             userIcon.setLogo(detailBean.getGrade(), detailBean.getLevel_id());
             userName.setText(detailBean.getUsername());
+            mobileNum.setText(detailBean.getMobile());
             gradeDesc.setText(detailBean.getLevel_name());
             int height = 0;
             try {
@@ -192,25 +200,23 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             mineBodyInfoView.setBodyWeight(weight);
             int bodyFat = 0;
             try {
-                float fBodyFat = Float.parseFloat(detailBean.getBfr());
-                bodyFat = Math.min((int) fBodyFat * 100, 100);
+                int fBodyFat = Integer.parseInt(detailBean.getBfr());
+                bodyFat = Math.min(fBodyFat, 100);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
             mineBodyInfoView.setBodyFat(bodyFat);
-            try {
-                int max = Integer.parseInt(detailBean.getNext_level_score());
-                if (max > 0) {
+            if (levelList != null) {
+                Level nextLevel = LevelUtil.getNextLevel(detailBean, levelList);
+                if (nextLevel != null) {
                     int score = Integer.parseInt(detailBean.getScore());
-                    int scoreProgress = Math.min(100, score * 100 / max);
-                    String scoreDes = String.format(
-                            getString(R.string.upgrade_desc_format),
-                            String.valueOf(max - score), "LV2");
-                    scoreeDesc.setText(scoreDes);
-                    upgradeProgress.setUpGradeProgress(scoreProgress);
+                    int nextScore = Integer.parseInt(levelList.get(nextLevel.index).getScore());
+                    int progress = Math.min((int)(score * 100.0 / nextScore), 100);
+                    upgradeProgress.setUpGradeProgress(progress);
+                    scoreeDesc.setText(LevelUtil.getLevelDesc(mActivity, detailBean, levelList));
                 }
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
+            } else {
+                getGradeList();
             }
         }
     }
@@ -303,6 +309,27 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 @Override
                 public void onFailed(String error) {
                     showShortToast(error);
+                }
+            });
+        }
+    }
+
+
+    private List<GradeBean> levelList;
+    private void getGradeList() {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        Call<ResponseBean<List<GradeBean>>> call = userApiService.getGradeList(null);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<List<GradeBean>>() {
+                @Override
+                public void onSuccess(List<GradeBean> data) {
+                    levelList = data;
+                    updateInfo();
+                }
+                @Override
+                public void onFailed(String error) {
+
                 }
             });
         }

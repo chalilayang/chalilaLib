@@ -115,7 +115,8 @@ public class BodyInfoSelectFragment extends BaseFragment implements WheelPicker.
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                modifyUserInfo(year+"", month+"", day+"");
+                String bodyFat = String.valueOf(day);
+                modifyUserInfo(year+"", month+"", bodyFat+"");
             }
         });
         cancelBtn = view.findViewById(R.id.cancel_btn);
