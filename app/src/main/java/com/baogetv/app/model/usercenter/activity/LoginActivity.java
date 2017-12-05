@@ -22,6 +22,7 @@ import retrofit2.Call;
 
 import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_FIND_PASSWORD_ACTIVITY;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
 
 public class LoginActivity extends BaseActivity implements PasswordInputView.OnForgetClickListener {
     private static final String TAG = LoginActivity.class.getSimpleName();
@@ -31,6 +32,7 @@ public class LoginActivity extends BaseActivity implements PasswordInputView.OnF
     private View wechatBtn;
     private View sinaBtn;
     private View qqBtn;
+    private View newUserRegister;
     private boolean isFetchingResult;
 
     @Override
@@ -59,6 +61,13 @@ public class LoginActivity extends BaseActivity implements PasswordInputView.OnF
             @Override
             public void onClick(View v) {
                 tryLogin();
+            }
+        });
+        newUserRegister = findViewById(R.id.new_user_register);
+        newUserRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginManager.startRegister(LoginActivity.this);
             }
         });
     }
@@ -136,6 +145,11 @@ public class LoginActivity extends BaseActivity implements PasswordInputView.OnF
         if (requestCode == REQUEST_CODE_FIND_PASSWORD_ACTIVITY) {
             if (resultCode == RESULT_OK) {
                 showShortToast("请用新密码进行登录");
+            }
+        } else if (requestCode == REQUEST_CODE_REGISTER_ACTIVITY) {
+            if (resultCode == RESULT_OK) {
+                UserDetailBean bean = data.getParcelableExtra(KEY_USER_DETAIL_BEAN);
+                loginSuccess(bean);
             }
         }
     }

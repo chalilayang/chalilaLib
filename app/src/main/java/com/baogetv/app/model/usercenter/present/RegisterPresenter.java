@@ -2,6 +2,7 @@ package com.baogetv.app.model.usercenter.present;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.baogetv.app.R;
@@ -113,5 +114,9 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                         mContext, mContext.getString(R.string.verify_code_get_failed) + "：" + error);
             }
         });
+    }
+
+    public void showShortToast(String msg) {
+        CustomToastUtil.makeShort(mContext, msg);
     }
 }
