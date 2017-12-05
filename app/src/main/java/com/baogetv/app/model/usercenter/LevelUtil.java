@@ -72,11 +72,19 @@ public class LevelUtil {
 
     public static String getLevelDesc(Context context, UserDetailBean bean, List<GradeBean> list) {
         String format = context.getString(R.string.upgrade_desc_format);
-        Level curLevel = getCurLevel(bean, list);
+        if (bean == null || list == null || context == null) {
+            return format;
+        }
+        int curScore = 0;
+        try {
+            curScore = Integer.parseInt(bean.getScore());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
         Level nextLevel = getNextLevel(bean, list);
         String result = "";
-        if (nextLevel != null && curLevel != null) {
-            int score = nextLevel.score - curLevel.score;
+        if (nextLevel != null) {
+            int score = nextLevel.score - curScore;
             String levelName = list.get(nextLevel.index).getName();
             String metal = list.get(nextLevel.index).getMedal();
             result = String.format(format, score, levelName, metal);

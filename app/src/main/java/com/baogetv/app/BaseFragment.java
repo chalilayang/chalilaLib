@@ -66,6 +66,8 @@ public class BaseFragment extends Fragment {
     }
 
     public void showShortToast(String msg) {
-        CustomToastUtil.makeShort(mActivity, msg);
+        if (mActivity != null && !mActivity.isFinishing()) {
+            CustomToastUtil.makeShort(mActivity, msg);
+        }
     }
 }

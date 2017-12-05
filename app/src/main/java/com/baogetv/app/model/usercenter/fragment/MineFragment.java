@@ -325,7 +325,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 @Override
                 public void onSuccess(List<GradeBean> data) {
                     levelList = data;
-                    updateInfo();
+                    if (mActivity != null && !mActivity.isFinishing()) {
+                        updateInfo();
+                    }
                 }
                 @Override
                 public void onFailed(String error) {
