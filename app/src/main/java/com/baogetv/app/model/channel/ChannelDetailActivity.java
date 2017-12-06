@@ -121,7 +121,7 @@ public class ChannelDetailActivity extends BaseActivity {
         if (beanCall != null) {
             beanCall.enqueue(new CustomCallBack<ChannelDetailBean>() {
                 @Override
-                public void onSuccess(ChannelDetailBean data) {
+                public void onSuccess(ChannelDetailBean data, String msg, int state) {
                     detailBean = data;
                     refreshInfo();
                     if (detailBean != null) {
@@ -130,7 +130,7 @@ public class ChannelDetailActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showError();
                 }
             });

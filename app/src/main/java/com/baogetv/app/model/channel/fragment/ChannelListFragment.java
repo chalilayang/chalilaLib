@@ -108,7 +108,7 @@ public class ChannelListFragment extends BaseFragment
         if (beanCall != null) {
             beanCall.enqueue(new CustomCallBack<List<ChannelListBean>>() {
                 @Override
-                public void onSuccess(List<ChannelListBean> listBeen) {
+                public void onSuccess(List<ChannelListBean> listBeen, String msg, int state) {
                     channelDataList.clear();
                     if (listBeen != null) {
                         for (int index = 0, count = listBeen.size(); index < count; index ++) {
@@ -121,7 +121,7 @@ public class ChannelListFragment extends BaseFragment
                     recyclerViewAdapter.update(channelDataList);
                 }
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                 }
             });
         }

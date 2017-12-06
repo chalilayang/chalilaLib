@@ -104,7 +104,7 @@ public class LoginActivity extends BaseActivity implements PasswordInputView.OnF
             isFetchingResult = true;
             beanCall.enqueue(new CustomCallBack<UserDetailBean>() {
                 @Override
-                public void onSuccess(UserDetailBean data) {
+                public void onSuccess(UserDetailBean data, String msg, int state) {
                     isFetchingResult = false;
                     if (data != null) {
                         LoginManager.putUserToken(getApplicationContext(), data.getToken());
@@ -115,7 +115,7 @@ public class LoginActivity extends BaseActivity implements PasswordInputView.OnF
                     }
                 }
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     isFetchingResult = false;
                     loginFailed("Login fail " + error);
                 }

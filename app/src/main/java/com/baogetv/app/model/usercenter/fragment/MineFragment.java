@@ -300,14 +300,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         if (call != null) {
             call.enqueue(new CustomCallBack<UserDetailBean>() {
                 @Override
-                public void onSuccess(UserDetailBean data) {
+                public void onSuccess(UserDetailBean data, String msg, int state) {
                     detailBean = data;
                     updateInfo();
                     hasLoginView.setVisibility(View.VISIBLE);
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });
@@ -323,14 +323,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         if (call != null) {
             call.enqueue(new CustomCallBack<List<GradeBean>>() {
                 @Override
-                public void onSuccess(List<GradeBean> data) {
+                public void onSuccess(List<GradeBean> data, String msg, int state) {
                     levelList = data;
                     if (mActivity != null && !mActivity.isFinishing()) {
                         updateInfo();
                     }
                 }
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
 
                 }
             });

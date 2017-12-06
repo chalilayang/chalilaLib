@@ -92,13 +92,13 @@ public class MobileChangeActivity extends BaseActivity
                 = listService.sendMobileSMS(mobile);
         listBeanCall.enqueue(new CustomCallBack<List<Object>>() {
             @Override
-            public void onSuccess(List<Object> data) {
+            public void onSuccess(List<Object> data, String msg, int state) {
                 Log.i(TAG, "onSuccess: ");
                 verifyCodeView.startCountDown(60);
             }
 
             @Override
-            public void onFailed(String error) {
+            public void onFailed(String error, int state) {
                 Log.i(TAG, "onFailed: ");
                 showShortToast(getString(R.string.verify_code_get_failed) + "：" + error);
             }
@@ -129,13 +129,13 @@ public class MobileChangeActivity extends BaseActivity
                 = listService.resetMobile(token, mobile, verifyNum);
         listBeanCall.enqueue(new CustomCallBack<List<Object>>() {
             @Override
-            public void onSuccess(List<Object> data) {
+            public void onSuccess(List<Object> data, String msg, int state) {
                 Log.i(TAG, "onSuccess: ");
                 showSuccess();
             }
 
             @Override
-            public void onFailed(String error) {
+            public void onFailed(String error, int state) {
                 Log.i(TAG, "onFailed: ");
                 showShortToast(getString(R.string.verify_code_get_failed) + "：" + error);
             }

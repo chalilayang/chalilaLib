@@ -69,7 +69,7 @@ public class SplashActivity extends BaseActivity {
         if (call != null) {
             call.enqueue(new CustomCallBack<UserDetailBean>() {
                 @Override
-                public void onSuccess(UserDetailBean data) {
+                public void onSuccess(UserDetailBean data, String msg, int state) {
                     if (data != null) {
                         startHomeActivity(data);
                     } else {
@@ -78,7 +78,7 @@ public class SplashActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     startVideoLoginActivity();
                 }
             });

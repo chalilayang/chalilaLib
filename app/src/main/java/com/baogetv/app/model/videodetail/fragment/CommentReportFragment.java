@@ -118,7 +118,7 @@ public class CommentReportFragment extends BaseFragment implements ItemViewHolde
         if (call != null) {
             call.enqueue(new CustomCallBack<List<ReportTypeBean>>() {
                 @Override
-                public void onSuccess(List<ReportTypeBean> data) {
+                public void onSuccess(List<ReportTypeBean> data, String msg, int state) {
                     if (data != null && data.size() > 0) {
                         for (int index = 0; index < data.size(); index ++) {
                             ReportTypeData reportTypeData = new ReportTypeData();
@@ -131,7 +131,7 @@ public class CommentReportFragment extends BaseFragment implements ItemViewHolde
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });
@@ -156,13 +156,13 @@ public class CommentReportFragment extends BaseFragment implements ItemViewHolde
         if (call != null) {
             call.enqueue(new CustomCallBack<AddItemBean>() {
                 @Override
-                public void onSuccess(AddItemBean data) {
+                public void onSuccess(AddItemBean data, String msg, int state) {
                     showShortToast("已举报");
                     EventBus.getDefault().post(new ReportEvent());
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });

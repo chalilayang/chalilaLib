@@ -55,7 +55,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
         if (beanCall != null) {
             beanCall.enqueue(new CustomCallBack<UserDetailBean>() {
                 @Override
-                public void onSuccess(UserDetailBean data) {
+                public void onSuccess(UserDetailBean data, String msg, int state) {
                     if (data != null) {
                         LoginManager.putUserToken(mContext, data.getToken());
                         LoginManager.putUserID(mContext, data.getUser_id());
@@ -65,7 +65,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                     }
                 }
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     Log.i(TAG, "onFailed: " + error);
                     registerView.registerFailed("RegisterBean failed " + error);
                 }
@@ -102,13 +102,13 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                 = listService.sendMobileSMS(mobile);
         listBeanCall.enqueue(new CustomCallBack<List<Object>>() {
             @Override
-            public void onSuccess(List<Object> data) {
+            public void onSuccess(List<Object> data, String msg, int state) {
                 Log.i(TAG, "onSuccess: ");
                 registerView.startVerifyCountDown();
             }
 
             @Override
-            public void onFailed(String error) {
+            public void onFailed(String error, int state) {
                 Log.i(TAG, "onFailed: ");
                 CustomToastUtil.makeShort(
                         mContext, mContext.getString(R.string.verify_code_get_failed) + "：" + error);

@@ -101,7 +101,7 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
         if (call != null) {
             call.enqueue(new CustomCallBack<List<Object>>() {
                 @Override
-                public void onSuccess(List<Object> data) {
+                public void onSuccess(List<Object> data, String msg, int state) {
                     showShortToast("login out success");
                     LoginManager.cleanUserToken(getApplicationContext());
                     setResult(RESULT_OK);
@@ -109,7 +109,7 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });

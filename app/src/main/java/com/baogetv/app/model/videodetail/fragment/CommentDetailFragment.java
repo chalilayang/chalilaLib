@@ -128,7 +128,7 @@ public class CommentDetailFragment extends BaseFragment
         if (call != null) {
             call.enqueue(new CustomCallBack<List<CommentListBean>>() {
                 @Override
-                public void onSuccess(List<CommentListBean> bean) {
+                public void onSuccess(List<CommentListBean> bean, String msg, int state) {
                     for (int index = 0, count = bean.size(); index < count; index ++) {
                         if (bean.get(index).getId().equals(commentData.getBean().getId())) {
                             List<CommentListBean.DataBean> replyDataList
@@ -156,7 +156,7 @@ public class CommentDetailFragment extends BaseFragment
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });
@@ -265,14 +265,14 @@ public class CommentDetailFragment extends BaseFragment
         if (call != null) {
             call.enqueue(new CustomCallBack<AddItemBean>() {
                 @Override
-                public void onSuccess(AddItemBean bean) {
+                public void onSuccess(AddItemBean bean, String msg, int state) {
                     showShortToast("add comment success");
                     Log.i(TAG, "onSuccess: add comment success");
                     getCommentList(videoDetailData);
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });
@@ -288,14 +288,14 @@ public class CommentDetailFragment extends BaseFragment
         if (call != null) {
             call.enqueue(new CustomCallBack<AddItemBean>() {
                 @Override
-                public void onSuccess(AddItemBean bean) {
+                public void onSuccess(AddItemBean bean, String msg, int state) {
                     showShortToast("点赞 success");
                     Log.i(TAG, "onSuccess: add zan success");
                     getCommentList(videoDetailData);
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });

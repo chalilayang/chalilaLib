@@ -81,12 +81,12 @@ public class MyCollectActivity extends BaseTitleActivity
         if (call != null) {
             call.enqueue(new CustomCallBack<List<CollectBean>>() {
                 @Override
-                public void onSuccess(List<CollectBean> data) {
+                public void onSuccess(List<CollectBean> data, String msg, int state) {
                     recyclerViewAdapter.update(data);
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });
@@ -127,13 +127,13 @@ public class MyCollectActivity extends BaseTitleActivity
             if (call != null) {
                 call.enqueue(new CustomCallBack<List<Object>>() {
                     @Override
-                    public void onSuccess(List<Object> data) {
+                    public void onSuccess(List<Object> data, String msg, int state) {
                         Log.i(TAG, "onSuccess: ");
                         getCollectList();
                     }
 
                     @Override
-                    public void onFailed(String error) {
+                    public void onFailed(String error, int state) {
                         showShortToast(error);
                     }
                 });

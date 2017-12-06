@@ -75,12 +75,12 @@ public class SystemNotifyAcitvity extends BaseTitleActivity
         if (call != null) {
             call.enqueue(new CustomCallBack<List<SystemInfoBean>>() {
                 @Override
-                public void onSuccess(List<SystemInfoBean> data) {
+                public void onSuccess(List<SystemInfoBean> data, String msg, int state) {
                     recyclerViewAdapter.update(data);
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });
@@ -122,13 +122,13 @@ public class SystemNotifyAcitvity extends BaseTitleActivity
             if (call != null) {
                 call.enqueue(new CustomCallBack<List<Object>>() {
                     @Override
-                    public void onSuccess(List<Object> data) {
+                    public void onSuccess(List<Object> data, String msg, int state) {
                         Log.i(TAG, "onSuccess: ");
                         getInfoList();
                     }
 
                     @Override
-                    public void onFailed(String error) {
+                    public void onFailed(String error, int state) {
                         showShortToast(error);
                     }
                 });

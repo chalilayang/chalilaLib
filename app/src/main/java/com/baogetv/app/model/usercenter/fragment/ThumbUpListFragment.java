@@ -98,7 +98,7 @@ public class ThumbUpListFragment extends BaseFragment
         if (call != null) {
             call.enqueue(new CustomCallBack<List<ZanMeBean>>() {
                 @Override
-                public void onSuccess(List<ZanMeBean> data) {
+                public void onSuccess(List<ZanMeBean> data, String msg, int state) {
 
                     ZanMeBean zanMeBean = new ZanMeBean();
                     zanMeBean.setVideo_id("1");
@@ -117,7 +117,7 @@ public class ThumbUpListFragment extends BaseFragment
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });

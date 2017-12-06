@@ -73,7 +73,7 @@ public class UserGradeDescActivity extends BaseTitleActivity {
         if (call != null) {
             call.enqueue(new CustomCallBack<List<GradeBean>>() {
                 @Override
-                public void onSuccess(List<GradeBean> data) {
+                public void onSuccess(List<GradeBean> data, String msg, int state) {
                     Log.i(TAG, "onSuccess: " + data.size());
                     if (data != null) {
                         Level nextLevel = LevelUtil.getNextLevel(userDetailBean, data);
@@ -132,7 +132,7 @@ public class UserGradeDescActivity extends BaseTitleActivity {
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
 
                 }
             });

@@ -89,12 +89,12 @@ public class AdviceActivity extends BaseTitleActivity {
         if (call != null) {
             call.enqueue(new CustomCallBack<AdviceBean>() {
                 @Override
-                public void onSuccess(AdviceBean data) {
+                public void onSuccess(AdviceBean data, String msg, int state) {
                     showShortToast("success");
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });

@@ -121,14 +121,14 @@ public class VideoInfoFragment extends BaseFragment
         if (call != null) {
             call.enqueue(new CustomCallBack<ChannelDetailBean>() {
                 @Override
-                public void onSuccess(ChannelDetailBean data) {
+                public void onSuccess(ChannelDetailBean data, String msg, int state) {
                     Log.i(TAG, "onSuccess: ");
                     channelDetailBean = data;
                     recyclerViewAdapter.setChannelDetailBean(data);
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     Log.i(TAG, "onFailed: ");
                     showShortToast(error);
                 }
@@ -144,7 +144,7 @@ public class VideoInfoFragment extends BaseFragment
         if (call != null) {
             call.enqueue(new CustomCallBack<List<VideoListBean>>() {
                 @Override
-                public void onSuccess(List<VideoListBean> listBeen) {
+                public void onSuccess(List<VideoListBean> listBeen, String msg, int state) {
                     iVideoDatas.clear();
                     if (listBeen != null) {
                         for (int index = 0, count = listBeen.size(); index < count; index ++) {
@@ -158,7 +158,7 @@ public class VideoInfoFragment extends BaseFragment
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });

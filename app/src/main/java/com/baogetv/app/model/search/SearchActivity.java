@@ -257,12 +257,12 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         if (listBeanCall != null) {
             listBeanCall.enqueue(new CustomCallBack<List<String>>() {
                 @Override
-                public void onSuccess(List<String> data) {
+                public void onSuccess(List<String> data, String msg, int state) {
                     addLabel(data);
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
 
                 }
             });

@@ -127,7 +127,7 @@ public class ItemFragment extends BaseItemFragment
             if (listBeanCall != null) {
                 listBeanCall.enqueue(new CustomCallBack<List<VideoListBean>>() {
                     @Override
-                    public void onSuccess(List<VideoListBean> listBeen) {
+                    public void onSuccess(List<VideoListBean> listBeen, String msg, int state) {
                         iVideoDatas.clear();
                         if (listBeen != null) {
                             for (int index = 0, count = listBeen.size(); index < count; index ++) {
@@ -140,7 +140,7 @@ public class ItemFragment extends BaseItemFragment
                         recyclerViewAdapter.update(iVideoDatas);
                     }
                     @Override
-                    public void onFailed(String error) {
+                    public void onFailed(String error, int state) {
                         showShortToast(error);
                     }
                 });
@@ -166,7 +166,7 @@ public class ItemFragment extends BaseItemFragment
             if (listBeanCall != null) {
                 listBeanCall.enqueue(new CustomCallBack<List<VideoRankListBean>>() {
                     @Override
-                    public void onSuccess(List<VideoRankListBean> listBeen) {
+                    public void onSuccess(List<VideoRankListBean> listBeen, String msg, int state) {
                         iVideoDatas.clear();
                         if (listBeen != null) {
                             for (int index = 0, count = listBeen.size(); index < count; index ++) {
@@ -180,7 +180,7 @@ public class ItemFragment extends BaseItemFragment
                     }
 
                     @Override
-                    public void onFailed(String error) {
+                    public void onFailed(String error, int state) {
                         showShortToast(error);
                     }
                 });
@@ -195,7 +195,7 @@ public class ItemFragment extends BaseItemFragment
             if (listBeanCall != null) {
                 listBeanCall.enqueue(new CustomCallBack<List<VideoListBean>>() {
                     @Override
-                    public void onSuccess(List<VideoListBean> listBeen) {
+                    public void onSuccess(List<VideoListBean> listBeen, String msg, int state) {
                         iVideoDatas.clear();
                         if (listBeen != null) {
                             for (int index = 0, count = listBeen.size(); index < count; index++) {
@@ -211,7 +211,7 @@ public class ItemFragment extends BaseItemFragment
                     }
 
                     @Override
-                    public void onFailed(String error) {
+                    public void onFailed(String error, int state) {
                         showShortToast(error);
                     }
                 });
@@ -238,7 +238,7 @@ public class ItemFragment extends BaseItemFragment
             if (listBeanCall != null) {
                 listBeanCall.enqueue(new CustomCallBack<List<VideoListBean>>() {
                     @Override
-                    public void onSuccess(List<VideoListBean> listBeen) {
+                    public void onSuccess(List<VideoListBean> listBeen, String msg, int state) {
                         iVideoDatas.clear();
                         if (listBeen != null) {
                             for (int index = 0, count = listBeen.size(); index < count; index ++) {
@@ -252,7 +252,7 @@ public class ItemFragment extends BaseItemFragment
                     }
 
                     @Override
-                    public void onFailed(String error) {
+                    public void onFailed(String error, int state) {
                         showShortToast(error);
                     }
                 });
@@ -269,7 +269,7 @@ public class ItemFragment extends BaseItemFragment
             if (call != null) {
                 call.enqueue(new CustomCallBack<List<CollectBean>>() {
                     @Override
-                    public void onSuccess(List<CollectBean> data) {
+                    public void onSuccess(List<CollectBean> data, String msg, int state) {
                         iVideoDatas.clear();
                         if (data != null) {
                             for (int index = 0, count = data.size(); index < count; index ++) {
@@ -283,7 +283,7 @@ public class ItemFragment extends BaseItemFragment
                     }
 
                     @Override
-                    public void onFailed(String error) {
+                    public void onFailed(String error, int state) {
                         showShortToast(error);
                     }
                 });

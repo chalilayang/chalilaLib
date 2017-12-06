@@ -105,7 +105,7 @@ public class ResponseMeListFragment extends BaseFragment
         if (call != null) {
             call.enqueue(new CustomCallBack<List<ResponseMeBean>>() {
                 @Override
-                public void onSuccess(List<ResponseMeBean> data) {
+                public void onSuccess(List<ResponseMeBean> data, String msg, int state) {
                     ResponseMeBean zanMeBean = new ResponseMeBean();
                     zanMeBean.setVideo_id("1");
                     zanMeBean.setContent("xxs");
@@ -123,7 +123,7 @@ public class ResponseMeListFragment extends BaseFragment
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });

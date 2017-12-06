@@ -255,14 +255,14 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         if (call != null) {
             call.enqueue(new CustomCallBack<ImageUploadBean>() {
                 @Override
-                public void onSuccess(ImageUploadBean data) {
+                public void onSuccess(ImageUploadBean data, String msg, int state) {
                     Log.i(TAG, "onSuccess: ");
                     showShortToast("图片上传success");
                     modifyUserInfo(data.getId());
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });
@@ -279,7 +279,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
             Log.i(TAG, "modifyUserInfo: call.enqueue");
             call.enqueue(new CustomCallBack<List<Object>>() {
                 @Override
-                public void onSuccess(List<Object> data) {
+                public void onSuccess(List<Object> data, String msg, int state) {
                     Log.i(TAG, "onSuccess: ");
                     showShortToast("头像修改success");
                     hideLoadingDialog();
@@ -288,7 +288,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });
@@ -366,12 +366,12 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         if (call != null) {
             call.enqueue(new CustomCallBack<UserDetailBean>() {
                 @Override
-                public void onSuccess(UserDetailBean data) {
+                public void onSuccess(UserDetailBean data, String msg, int state) {
                     userDetailBean = data;
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });

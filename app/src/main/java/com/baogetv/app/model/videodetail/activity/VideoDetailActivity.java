@@ -96,7 +96,7 @@ public class VideoDetailActivity extends BaseActivity {
         if (call != null) {
             call.enqueue(new CustomCallBack<VideoDetailBean>() {
                 @Override
-                public void onSuccess(VideoDetailBean data) {
+                public void onSuccess(VideoDetailBean data, String msg, int state) {
                     if (data != null) {
                         videoDetailBean = data;
                         showDetailFragment();
@@ -108,7 +108,7 @@ public class VideoDetailActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showError();
                     showShortToast(error);
                 }
@@ -156,12 +156,12 @@ public class VideoDetailActivity extends BaseActivity {
         if (call != null) {
             call.enqueue(new CustomCallBack<AddItemBean>() {
                 @Override
-                public void onSuccess(AddItemBean data) {
+                public void onSuccess(AddItemBean data, String msg, int state) {
                     showShortToast("save history success");
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });
@@ -226,12 +226,12 @@ public class VideoDetailActivity extends BaseActivity {
         if (call != null) {
             call.enqueue(new CustomCallBack<AddItemBean>() {
                 @Override
-                public void onSuccess(AddItemBean data) {
+                public void onSuccess(AddItemBean data, String msg, int state) {
                     showShortToast("已收藏");
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });

@@ -135,14 +135,14 @@ public class SexSelectFragment extends BaseFragment implements WheelPicker.OnIte
             Log.i(TAG, "modifyUserInfo: call.enqueue");
             call.enqueue(new CustomCallBack<List<Object>>() {
                 @Override
-                public void onSuccess(List<Object> data) {
+                public void onSuccess(List<Object> data, String msg, int state) {
                     Log.i(TAG, "onSuccess: ");
                     showShortToast("success");
                     EventBus.getDefault().post(new SexSelectEvent(sexType));
                 }
 
                 @Override
-                public void onFailed(String error) {
+                public void onFailed(String error, int state) {
                     showShortToast(error);
                 }
             });
