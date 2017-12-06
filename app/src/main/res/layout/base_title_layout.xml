@@ -25,6 +25,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:maxLines="1"
+            android:layout_toLeftOf="@+id/right_title"
+            android:layout_toRightOf="@+id/back_icon"
+            android:ellipsize="middle"
             android:textAppearance="@style/title_big_style"/>
 
         <com.chalilayang.scaleview.ScaleTextView

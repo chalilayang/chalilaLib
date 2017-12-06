@@ -18,6 +18,7 @@ import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoListBean;
 import com.baogetv.app.bean.VideoRankListBean;
 import com.baogetv.app.model.channel.entity.ChannelItemData;
+import com.baogetv.app.model.search.SearchItemData;
 import com.baogetv.app.model.usercenter.entity.MemberItemData;
 import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
@@ -196,10 +197,20 @@ public class ItemFragment extends BaseItemFragment
         } else if (itemData.getType() == PageItemData.TYPE_SEARCH_RELATIVE
                 || itemData.getType() == PageItemData.TYPE_SEARCH_PLAY_MOST
                 || itemData.getType() == PageItemData.TYPE_SEARCH_LATEST_PUBLISH) {
+            if (!(pageData instanceof SearchItemData)) {
+                return;
+            }
+            String searchKey = ((SearchItemData) pageData).getSearchKey();
+            String orderType = "0";
+            if (itemData.getType() == PageItemData.TYPE_SEARCH_PLAY_MOST) {
+                orderType = "1";
+            } else if (itemData.getType() == PageItemData.TYPE_SEARCH_LATEST_PUBLISH) {
+                orderType = "2";
+            }
             VideoListService listService
                     = RetrofitManager.getInstance().createReq(VideoListService.class);
             Call<ResponseBean<List<VideoListBean>>> listBeanCall
-                    = listService.getVideoList(null, null, null, null, null);
+                    = listService.getVideoList(null, null, searchKey, orderType, "0");
             if (listBeanCall != null) {
                 refreshLayout.setRefreshing(true);
                 listBeanCall.enqueue(new CustomCallBack<List<VideoListBean>>() {
@@ -211,8 +222,6 @@ public class ItemFragment extends BaseItemFragment
                                 VideoListBean bean = listBeen.get(index);
                                 VideoListAdapter.IVideoData iVideoData
                                         = BeanConvert.getIVideoData(bean);
-                                iVideoDatas.add(iVideoData);
-                                iVideoDatas.add(iVideoData);
                                 iVideoDatas.add(iVideoData);
                             }
                         }

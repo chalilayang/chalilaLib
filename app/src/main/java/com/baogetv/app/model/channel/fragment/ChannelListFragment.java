@@ -106,6 +106,7 @@ public class ChannelListFragment extends BaseFragment
                 = RetrofitManager.getInstance().createReq(VideoListService.class);
         Call<ResponseBean<List<ChannelListBean>>> beanCall = listService.getChannelList(null, null);
         if (beanCall != null) {
+            refreshLayout.setRefreshing(true);
             beanCall.enqueue(new CustomCallBack<List<ChannelListBean>>() {
                 @Override
                 public void onSuccess(List<ChannelListBean> listBeen, String msg, int state) {
@@ -119,16 +120,21 @@ public class ChannelListFragment extends BaseFragment
                         }
                     }
                     recyclerViewAdapter.update(channelDataList);
+                    refreshLayout.setRefreshing(false);
                 }
                 @Override
                 public void onFailed(String error, int state) {
+                    refreshLayout.setRefreshing(false);
                 }
             });
+        } else {
+            refreshLayout.setRefreshing(false);
         }
     }
 
     @Override
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");
+        getChannelList();
     }
 }

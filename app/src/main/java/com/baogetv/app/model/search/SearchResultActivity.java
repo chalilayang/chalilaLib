@@ -37,11 +37,20 @@ public class SearchResultActivity extends BaseTitleActivity {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (searchResultFragment == null) {
             List<PageItemData> list = new ArrayList<>(2);
-            PageItemData pageItemData = new PageItemData(getString(R.string.search_relative), PageItemData.TYPE_SEARCH_RELATIVE);
+            SearchItemData pageItemData = new SearchItemData(
+                    getString(R.string.search_relative),
+                    PageItemData.TYPE_SEARCH_RELATIVE,
+                    key);
             list.add(pageItemData);
-            pageItemData = new PageItemData(getString(R.string.search_play_most), PageItemData.TYPE_SEARCH_PLAY_MOST);
+            pageItemData = new SearchItemData(
+                    getString(R.string.search_play_most),
+                    PageItemData.TYPE_SEARCH_PLAY_MOST,
+                    key);
             list.add(pageItemData);
-            pageItemData = new PageItemData(getString(R.string.search_latest_publish), PageItemData.TYPE_SEARCH_LATEST_PUBLISH);
+            pageItemData = new SearchItemData(
+                    getString(R.string.search_latest_publish),
+                    PageItemData.TYPE_SEARCH_LATEST_PUBLISH,
+                    key);
             list.add(pageItemData);
             PageData pageData = new PageData(list);
             pageData.setTabStyle(1);
