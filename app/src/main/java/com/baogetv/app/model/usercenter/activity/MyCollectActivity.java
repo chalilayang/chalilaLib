@@ -1,5 +1,6 @@
 package com.baogetv.app.model.usercenter.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.CollectBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.model.usercenter.LoginManager;
+import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.customview.RecyclerViewDivider;
@@ -23,6 +25,8 @@ import com.baogetv.app.model.usercenter.adapter.CollectListAdapter;
 import java.util.List;
 
 import retrofit2.Call;
+
+import static com.baogetv.app.constant.AppConstance.KEY_VIDEO_ID;
 
 
 public class MyCollectActivity extends BaseTitleActivity
@@ -96,6 +100,9 @@ public class MyCollectActivity extends BaseTitleActivity
     @Override
     public void onItemClick(CollectBean data, int position) {
         Log.i(TAG, "onItemClick: ");
+        Intent intent = new Intent(this, VideoDetailActivity.class);
+        intent.putExtra(KEY_VIDEO_ID, data.getId());
+        startActivity(intent);
     }
 
     @Override
