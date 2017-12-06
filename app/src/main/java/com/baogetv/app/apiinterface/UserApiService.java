@@ -270,7 +270,7 @@ public interface UserApiService {
      * 取消播放记录
      *
      * @param token：（Token，登录凭证）
-     * @param id：（收藏ID）
+     * @param id：（收藏ID，多个ID用逗号隔开）
      * @return
      */
     @FormUrlEncoded

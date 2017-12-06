@@ -115,27 +115,30 @@ public class PlayHistoryActivity extends BaseTitleActivity
         } else {
             List<HistoryBean> list = recyclerViewAdapter.getDataList();
             for (int index = 0, count = list.size(); index < count; index ++) {
-                id = id + "," + list.get(index).getId();
+                if (index == 0) {
+                    id = list.get(index).getId();
+                } else {
+                    id = id + "," + list.get(index).getId();
+                }
             }
         }
-        if (TextUtils.isEmpty(id)) {
-            return;
-        }
-        Call<ResponseBean<List<Object>>> call
-                = userApiService.deleteHistory(token, id);
-        if (call != null) {
-            call.enqueue(new CustomCallBack<List<Object>>() {
-                @Override
-                public void onSuccess(List<Object> data) {
-                    Log.i(TAG, "onSuccess: ");
-                    getHistoryList();
-                }
+        if (!TextUtils.isEmpty(id)) {
+            Call<ResponseBean<List<Object>>> call
+                    = userApiService.deleteHistory(token, id);
+            if (call != null) {
+                call.enqueue(new CustomCallBack<List<Object>>() {
+                    @Override
+                    public void onSuccess(List<Object> data) {
+                        Log.i(TAG, "onSuccess: ");
+                        getHistoryList();
+                    }
 
-                @Override
-                public void onFailed(String error) {
-                    showShortToast(error);
-                }
-            });
+                    @Override
+                    public void onFailed(String error) {
+                        showShortToast(error);
+                    }
+                });
+            }
         }
     }
 
