@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.baogetv.app.ItemViewHolder;
@@ -107,31 +108,36 @@ public class MyCollectActivity extends BaseTitleActivity
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getUserToken(getApplicationContext());
-        String videoId = null;
-        String id = null;
+        String id = "";
         if (data != null) {
-            videoId = data.getVideo_id();
             id = data.getId();
+        } else {
+            List<CollectBean> list = recyclerViewAdapter.getDataList();
+            for (int index = 0, count = list.size(); index < count; index ++) {
+                if (index == 0) {
+                    id = list.get(index).getId();
+                } else {
+                    id = id + "," + list.get(index).getId();
+                }
+            }
         }
-        Call<ResponseBean<List<Object>>> call
-                = userApiService.deleteCollect(token, videoId, id);
-        if (call != null) {
-            call.enqueue(new CustomCallBack<List<Object>>() {
-                @Override
-                public void onSuccess(List<Object> data) {
-                    Log.i(TAG, "onSuccess: ");
-                    if (data == null) {
-                        recyclerViewAdapter.deleteAllItem();
-                    } else {
-                        recyclerViewAdapter.deleteItem(pos);
+        if (!TextUtils.isEmpty(id)) {
+            Call<ResponseBean<List<Object>>> call
+                    = userApiService.deleteCollect(token, id);
+            if (call != null) {
+                call.enqueue(new CustomCallBack<List<Object>>() {
+                    @Override
+                    public void onSuccess(List<Object> data) {
+                        Log.i(TAG, "onSuccess: ");
+                        getCollectList();
                     }
-                }
 
-                @Override
-                public void onFailed(String error) {
-                    showShortToast(error);
-                }
-            });
+                    @Override
+                    public void onFailed(String error) {
+                        showShortToast(error);
+                    }
+                });
+            }
         }
     }
 
