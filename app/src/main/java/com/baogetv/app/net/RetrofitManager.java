@@ -1,37 +1,42 @@
 package com.baogetv.app.net;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.baogetv.app.constant.AppConstance;
 import com.baogetv.app.constant.UrlConstance;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static anet.channel.util.Utils.context;
 
 /**
  * Created by chalilayang on 2017/10/18.
  */
 
 public class RetrofitManager {
-    private static class Holder {
-        public static RetrofitManager INSTANCE = new RetrofitManager();
-    }
 
     public static RetrofitManager getInstance() {
-        return Holder.INSTANCE;
+        return instance;
+    }
+    private static volatile RetrofitManager instance;
+    public static void init(Context context) {
+        instance = new RetrofitManager(context);
     }
 
     private Retrofit mRetrofit;
-
-    private RetrofitManager() {
-        initRetrofit();
+    private RetrofitManager(Context context) {
+        initRetrofit(context);
     }
 
-    private void initRetrofit() {
+    private void initRetrofit(Context mContext) {
         HttpLoggingInterceptor LoginInterceptor
                 = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
@@ -48,6 +53,9 @@ public class RetrofitManager {
         builder.readTimeout(20, TimeUnit.SECONDS);
         builder.writeTimeout(20, TimeUnit.SECONDS);
         builder.retryOnConnectionFailure(true);
+        File cacheDir = new File(mContext.getCacheDir(), "response");
+        Cache cache = new Cache(cacheDir, 1024 * 1024 * 10);
+        builder.cache(cache);
         OkHttpClient client = builder.build();
 
         mRetrofit = new Retrofit.Builder()

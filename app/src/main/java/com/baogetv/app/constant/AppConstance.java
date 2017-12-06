@@ -21,4 +21,6 @@ public class AppConstance {
     public static final String UMENG_PUSH_MASTER_SECRET = "8djpfliumffpjnmy4bshylvjrkvjd6qr";
 
     public static final String KEY_USER_DETAIL_BEAN = "USER_DETAIL_BEAN";
+    public static final String KEY_VIDEO_ID = "KEY_VIDEO_ID";
+    public static final String KEY_VIDEO_DETAIL = "KEY_VIDEO_DETAIL";
 }

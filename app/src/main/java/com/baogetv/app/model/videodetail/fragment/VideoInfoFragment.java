@@ -39,6 +39,7 @@ import java.util.List;
 import retrofit2.Call;
 
 import static com.baogetv.app.PagerFragment.PAGE_DATA;
+import static com.baogetv.app.constant.AppConstance.KEY_VIDEO_ID;
 
 /**
  * Created by chalilayang on 2017/11/20.
@@ -177,7 +178,7 @@ public class VideoInfoFragment extends BaseFragment
     public void onVideoClick(String vid) {
         Log.i(TAG, "onVideoClick: ");
         Intent intent = new Intent(mActivity, VideoDetailActivity.class);
-        intent.putExtra(VideoDetailActivity.KEY_VIDEO_ID, vid);
+        intent.putExtra(KEY_VIDEO_ID, vid);
         mActivity.startActivity(intent);
     }
 

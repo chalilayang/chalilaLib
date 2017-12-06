@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.baogetv.app.model.usercenter.LoginManager;
+import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.push.MyPushIntentService;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -29,6 +30,7 @@ public class BaoGeApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Log.i(TAG, "onCreate: ");
+        RetrofitManager.init(this.getApplicationContext());
         PushAgent mPushAgent = PushAgent.getInstance(this);
         //注册推送服务，每次调用register方法都会回调该接口
         mPushAgent.register(new IUmengRegisterCallback() {

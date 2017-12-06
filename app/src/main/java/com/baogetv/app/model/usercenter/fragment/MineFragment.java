@@ -225,47 +225,71 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View view) {
         int id = view.getId();
         Intent intent = null;
-        if (!LoginManager.hasLogin(mActivity)) {
-            LoginManager.startLogin(mActivity);
-        } else {
-            switch (id) {
-                case R.id.user_grade:
+        switch (id) {
+            case R.id.user_grade:
+                if (!LoginManager.hasLogin(mActivity)) {
+                    LoginManager.startLogin(mActivity);
+                } else {
                     intent = new Intent(this.getActivity(), UserGradeDescActivity.class);
                     intent.putExtra(AppConstance.KEY_USER_DETAIL_BEAN, detailBean);
                     startActivity(intent);
-                    break;
-                case R.id.my_cache:
-                    intent = new Intent(this.getActivity(), MyCacheActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.my_collect:
+                }
+                break;
+            case R.id.my_cache:
+                intent = new Intent(this.getActivity(), MyCacheActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.my_collect:
+                if (!LoginManager.hasLogin(mActivity)) {
+                    LoginManager.startLogin(mActivity);
+                } else {
                     intent = new Intent(this.getActivity(), MyCollectActivity.class);
                     startActivity(intent);
-                    break;
-                case R.id.play_history:
-                    intent = new Intent(this.getActivity(), PlayHistoryActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.response:
+                }
+                break;
+            case R.id.play_history:
+                intent = new Intent(this.getActivity(), PlayHistoryActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.response:
+                if (!LoginManager.hasLogin(mActivity)) {
+                    LoginManager.startLogin(mActivity);
+                } else {
                     intent = new Intent(this.getActivity(), ResponseActivity.class);
                     startActivity(intent);
-                    break;
-                case R.id.thumb_up:
+                }
+                break;
+            case R.id.thumb_up:
+                if (!LoginManager.hasLogin(mActivity)) {
+                    LoginManager.startLogin(mActivity);
+                } else {
                     intent = new Intent(this.getActivity(), ThumbUpActivity.class);
                     startActivity(intent);
-                    break;
-                case R.id.system_notify:
+                }
+                break;
+            case R.id.system_notify:
+                if (!LoginManager.hasLogin(mActivity)) {
+                    LoginManager.startLogin(mActivity);
+                } else {
                     intent = new Intent(this.getActivity(), SystemNotifyAcitvity.class);
                     startActivity(intent);
-                    break;
-                case R.id.setting:
+                }
+                break;
+            case R.id.setting:
+                if (!LoginManager.hasLogin(mActivity)) {
+                    LoginManager.startLogin(mActivity);
+                } else {
                     intent = new Intent(mActivity, SettingActivity.class);
                     mActivity.startActivityForResult(intent, REQUEST_CODE_SETTING_ACTIVITY);
-                    break;
-                case R.id.change_mobile_num:
+                }
+                break;
+            case R.id.change_mobile_num:
+                if (!LoginManager.hasLogin(mActivity)) {
+                    LoginManager.startLogin(mActivity);
+                } else {
                     LoginManager.startChangeMobile(mActivity);
-                    break;
-            }
+                }
+                break;
         }
     }
 

@@ -14,7 +14,7 @@ import com.xiao.nicevideoplayer.NiceVideoPlayer;
 import com.xiao.nicevideoplayer.NiceVideoPlayerController;
 import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
 
-import static com.baogetv.app.model.videodetail.activity.VideoDetailActivity.KEY_VIDEO_DETAIL;
+import static com.baogetv.app.constant.AppConstance.KEY_VIDEO_DETAIL;
 
 /**
  * Created by chalilayang on 2017/11/20.

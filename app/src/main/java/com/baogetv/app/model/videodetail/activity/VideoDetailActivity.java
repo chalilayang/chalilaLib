@@ -40,11 +40,11 @@ import java.util.List;
 
 import retrofit2.Call;
 
+import static com.baogetv.app.constant.AppConstance.KEY_VIDEO_ID;
+
 public class VideoDetailActivity extends BaseActivity {
 
     private static final String TAG = "VideoDetailActivity";
-    public static final String KEY_VIDEO_ID = "KEY_VIDEO_ID";
-    public static final String KEY_VIDEO_DETAIL = "KEY_VIDEO_DETAIL";
     private VideoDetailFragment videoDetailFragment;
     private PlayerFragment playerFragment;
     private VideoDetailBean videoDetailBean;

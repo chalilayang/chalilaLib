@@ -46,7 +46,18 @@ public class HistoryManager {
                 new HistoryItemEntity(vid, title, url, String.valueOf(System.currentTimeMillis())));
     }
 
-    public List<HistoryItemEntity> getHistoryList(String vid, String title, String url) {
+    public void deleteHistory(String vid) {
+        List<HistoryItemEntity> list = entityDao.queryBuilder()
+                .where(HistoryItemEntityDao.Properties.VideoId.eq(vid)).build().list();
+        entityDao.deleteInTx(list);
+    }
+
+    public void clearHistory() {
+        List<HistoryItemEntity> list = entityDao.queryBuilder().build().list();
+        entityDao.deleteInTx(list);
+    }
+
+    public List<HistoryItemEntity> getHistoryList() {
         return entityDao.queryBuilder().build().list();
     }
 }

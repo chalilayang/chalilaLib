@@ -31,6 +31,8 @@ import java.util.List;
 
 import retrofit2.Call;
 
+import static com.baogetv.app.constant.AppConstance.KEY_VIDEO_ID;
+
 
 public class ItemFragment extends BaseItemFragment
         implements SwipeRefreshLayout.OnRefreshListener,
@@ -116,7 +118,7 @@ public class ItemFragment extends BaseItemFragment
     public void onItemClick(VideoListAdapter.IVideoData data, int position) {
         Log.i(TAG, "onItemClick: " + position);
         Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
-        intent.putExtra(VideoDetailActivity.KEY_VIDEO_ID, data.getVideoID());
+        intent.putExtra(KEY_VIDEO_ID, data.getVideoID());
         getActivity().startActivity(intent);
     }
 
