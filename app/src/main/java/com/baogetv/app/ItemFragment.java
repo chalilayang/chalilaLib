@@ -72,7 +72,6 @@ public class ItemFragment extends BaseItemFragment
             layoutManager = new LinearLayoutManager(getActivity());
             recyclerViewAdapter = new VideoListAdapter(getActivity());
             recyclerViewAdapter.setItemClick(this);
-            getVideoList(pageData);
         }
         Log.i(TAG, "onCreate: " + pageData.getTitle());
     }
@@ -97,9 +96,10 @@ public class ItemFragment extends BaseItemFragment
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(recyclerViewAdapter);
                 refreshLayout.setOnRefreshListener(this);
-                refreshLayout.setEnabled(false);
             }
             contentView = view;
+            refreshLayout.setRefreshing(true);
+            getVideoList(pageData);
         }
         Log.i(TAG, "onCreateView: " + pageData.getTitle());
         return contentView;
@@ -108,6 +108,8 @@ public class ItemFragment extends BaseItemFragment
     @Override
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");
+        refreshLayout.setRefreshing(true);
+        getVideoList(pageData);
     }
 
     @Override
@@ -138,10 +140,12 @@ public class ItemFragment extends BaseItemFragment
                             }
                         }
                         recyclerViewAdapter.update(iVideoDatas);
+                        refreshLayout.setRefreshing(false);
                     }
                     @Override
                     public void onFailed(String error, int state) {
                         showShortToast(error);
+                        refreshLayout.setRefreshing(false);
                     }
                 });
             }

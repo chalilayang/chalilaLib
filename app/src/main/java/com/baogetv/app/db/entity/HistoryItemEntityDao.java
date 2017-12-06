@@ -26,6 +26,7 @@ public class HistoryItemEntityDao extends AbstractDao<HistoryItemEntity, Long> {
         public final static Property VideoId = new Property(1, String.class, "videoId", false, "VIDEO_ID");
         public final static Property VideoTitle = new Property(2, String.class, "videoTitle", false, "VIDEO_TITLE");
         public final static Property PicUrl = new Property(3, String.class, "picUrl", false, "PIC_URL");
+        public final static Property AddTime = new Property(4, String.class, "addTime", false, "ADD_TIME");
     }
 
 
@@ -44,7 +45,8 @@ public class HistoryItemEntityDao extends AbstractDao<HistoryItemEntity, Long> {
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"VIDEO_ID\" TEXT," + // 1: videoId
                 "\"VIDEO_TITLE\" TEXT," + // 2: videoTitle
-                "\"PIC_URL\" TEXT);"); // 3: picUrl
+                "\"PIC_URL\" TEXT," + // 3: picUrl
+                "\"ADD_TIME\" TEXT);"); // 4: addTime
     }
 
     /** Drops the underlying database table. */
@@ -76,6 +78,11 @@ public class HistoryItemEntityDao extends AbstractDao<HistoryItemEntity, Long> {
         if (picUrl != null) {
             stmt.bindString(4, picUrl);
         }
+ 
+        String addTime = entity.getAddTime();
+        if (addTime != null) {
+            stmt.bindString(5, addTime);
+        }
     }
 
     @Override
@@ -101,6 +108,11 @@ public class HistoryItemEntityDao extends AbstractDao<HistoryItemEntity, Long> {
         if (picUrl != null) {
             stmt.bindString(4, picUrl);
         }
+ 
+        String addTime = entity.getAddTime();
+        if (addTime != null) {
+            stmt.bindString(5, addTime);
+        }
     }
 
     @Override
@@ -114,7 +126,8 @@ public class HistoryItemEntityDao extends AbstractDao<HistoryItemEntity, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // videoId
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // videoTitle
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // picUrl
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // picUrl
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // addTime
         );
         return entity;
     }
@@ -125,6 +138,7 @@ public class HistoryItemEntityDao extends AbstractDao<HistoryItemEntity, Long> {
         entity.setVideoId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setVideoTitle(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setPicUrl(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setAddTime(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
      }
     
     @Override

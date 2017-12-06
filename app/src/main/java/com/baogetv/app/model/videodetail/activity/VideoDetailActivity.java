@@ -15,6 +15,7 @@ import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.bean.AddItemBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoDetailBean;
+import com.baogetv.app.model.usercenter.HistoryManager;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
@@ -147,24 +148,34 @@ public class VideoDetailActivity extends BaseActivity {
 
     private void addPlayHistory(VideoDetailBean bean) {
         if (!LoginManager.hasLogin(getApplicationContext())) {
-            return;
-        }
-        UserApiService userApiService
-                = RetrofitManager.getInstance().createReq(UserApiService.class);
-        String token = LoginManager.getUserToken(getApplicationContext());
-        Call<ResponseBean<AddItemBean>> call = userApiService.addHistory(token, bean.getId());
-        if (call != null) {
-            call.enqueue(new CustomCallBack<AddItemBean>() {
-                @Override
-                public void onSuccess(AddItemBean data, String msg, int state) {
-                    showShortToast("save history success");
-                }
+            String vid = bean.getId();
+            String title = bean.getTitle();
+            String pic = bean.getPic_url();
+            HistoryManager.getInstance(getApplicationContext()).saveHistory(
+                    vid, title, pic);
+            if (HistoryManager.getInstance(getApplicationContext()).isInHistory(vid)) {
+                showShortToast("save history success");
+            } else {
+                showShortToast("save history failed");
+            }
+        } else {
+            UserApiService userApiService
+                    = RetrofitManager.getInstance().createReq(UserApiService.class);
+            String token = LoginManager.getUserToken(getApplicationContext());
+            Call<ResponseBean<AddItemBean>> call = userApiService.addHistory(token, bean.getId());
+            if (call != null) {
+                call.enqueue(new CustomCallBack<AddItemBean>() {
+                    @Override
+                    public void onSuccess(AddItemBean data, String msg, int state) {
+                        showShortToast("save history success");
+                    }
 
-                @Override
-                public void onFailed(String error, int state) {
-                    showShortToast(error);
-                }
-            });
+                    @Override
+                    public void onFailed(String error, int state) {
+                        showShortToast(error);
+                    }
+                });
+            }
         }
     }
 
