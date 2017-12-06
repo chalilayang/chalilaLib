@@ -69,6 +69,7 @@ public class MyCacheActivity extends BaseTitleActivity implements
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.setItemClick(this);
+        recyclerViewAdapter.setItemDeleteListener(this);
         recyclerViewAdapter.update(getDownloadListData());
     }
 
@@ -94,7 +95,11 @@ public class MyCacheActivity extends BaseTitleActivity implements
 
     @Override
     public void onDelete(MyBusinessInfo data, int pos) {
-
+        DownloadInfo downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());
+        if (downloadInfo != null) {
+            downloadManager.remove(downloadInfo);
+            recyclerViewAdapter.deleteItem(pos);
+        }
     }
 
     private List<MyBusinessInfo> getDownloadListData() {
