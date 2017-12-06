@@ -32,8 +32,8 @@ public class PagerFragment extends BaseFragment implements ViewPager.OnPageChang
     private View mContentView;
     private Drawable tabSelectedDrawble;
 
-    private ViewPager mViewPager;
-
+    protected TabLayout tabLayout;
+    protected ViewPager mViewPager;
     public PagerFragment() {
         // Required empty public constructor
     }
@@ -86,7 +86,7 @@ public class PagerFragment extends BaseFragment implements ViewPager.OnPageChang
     }
 
     public void init(View root) {
-        TabLayout tabLayout = root.findViewById(R.id.tab_layout);
+        tabLayout = root.findViewById(R.id.tab_layout);
         mViewPager = root.findViewById(R.id.view_pager);
         if (pageData != null && pageData.getCount() > 0) {
             mSectionsPagerAdapter = new SectionsPagerAdapter(fragmentManager);

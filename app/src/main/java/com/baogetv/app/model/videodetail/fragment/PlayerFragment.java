@@ -60,6 +60,8 @@ public class PlayerFragment extends BaseFragment {
             Log.i(TAG, "init: " + videoDetailBean.getFile_url());
             NiceVideoPlayerController controller = new PlayerController(this.getActivity());
             mNiceVideoPlayer.setController(controller);
+            mNiceVideoPlayer.continueFromLastPosition(false);
+            mNiceVideoPlayer.start();
             controller.setTitle(videoDetailBean.getTitle());
         }
     }

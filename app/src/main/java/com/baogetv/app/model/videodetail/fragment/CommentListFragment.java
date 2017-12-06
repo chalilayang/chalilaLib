@@ -28,6 +28,7 @@ import com.baogetv.app.model.videodetail.customview.CommentView;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
+import com.baogetv.app.model.videodetail.event.CommentCountEvent;
 import com.baogetv.app.model.videodetail.event.InputSendEvent;
 import com.baogetv.app.model.videodetail.event.NeedCommentEvent;
 import com.baogetv.app.model.videodetail.event.NeedReplyEvent;
@@ -152,6 +153,7 @@ public class CommentListFragment extends BaseItemFragment
                         list.add(data);
                     }
                     recyclerViewAdapter.update(list);
+                    EventBus.getDefault().post(new CommentCountEvent(list.size()));
                 }
 
                 @Override

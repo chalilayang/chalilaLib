@@ -123,6 +123,8 @@ public class PlayerController extends NiceVideoPlayerController
                 mNiceVideoPlayer.restart();
             } else if (mNiceVideoPlayer.isIdle()) {
                 mNiceVideoPlayer.start();
+            } else if (mNiceVideoPlayer.isCompleted()) {
+                mNiceVideoPlayer.restart();
             }
         } else if (v.getId() == R.id.full_screen_btn || v.getId() == R.id.small_screen_btn) {
             if (mNiceVideoPlayer.isNormal() || mNiceVideoPlayer.isTinyWindow()) {
@@ -153,7 +155,8 @@ public class PlayerController extends NiceVideoPlayerController
             if (mNiceVideoPlayer.isPlaying()
                     || mNiceVideoPlayer.isPaused()
                     || mNiceVideoPlayer.isBufferingPlaying()
-                    || mNiceVideoPlayer.isBufferingPaused()) {
+                    || mNiceVideoPlayer.isBufferingPaused()
+                    || mNiceVideoPlayer.isCompleted()) {
                 setControllerVisibility(!controllerVisible);
             }
         }

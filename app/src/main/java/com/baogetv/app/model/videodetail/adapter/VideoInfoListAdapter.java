@@ -15,6 +15,7 @@ import com.baogetv.app.R;
 import com.baogetv.app.bean.ChannelDetailBean;
 import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
+import com.baogetv.app.util.TimeUtil;
 import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.nex3z.flowlayout.FlowLayout;
@@ -238,7 +239,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         public void updateInfo() {
             title.setText(mItem.getTitle());
-            updateTime.setText(String.valueOf(mItem.getPublishTime()));
+            updateTime.setText(TimeUtil.getTimeStateNew(mItem.getPublishTime()));
             Glide.with(mContext).load(mItem.getPicUrl()).into(mImageView);
         }
 

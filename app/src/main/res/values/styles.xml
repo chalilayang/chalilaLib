@@ -27,7 +27,7 @@
     </style>
 
     <style name="video_detail_tab_text_style">
-        <item name="android:textSize">@dimen/size_30</item>
+        <item name="android:textSize">@dimen/size_36</item>
     </style>
 
     <style name="search_column_title">
