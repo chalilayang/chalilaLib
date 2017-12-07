@@ -128,7 +128,7 @@ public class CommentDetailFragment extends BaseFragment
             token = LoginManager.getUserToken(mActivity);
         }
         Call<ResponseBean<List<CommentListBean>>> call
-                = userApiService.getCommentList(videoDetailData.videoDetailBean.getId(), token);
+                = userApiService.getCommentList(videoDetailData.videoDetailBean.getId(), token, "0", "100");
         if (call != null) {
             call.enqueue(new CustomCallBack<List<CommentListBean>>() {
                 @Override

@@ -129,6 +129,10 @@ public class CommentListAdapter
         }
     }
 
+    public int getDataCount() {
+        return mValues.size();
+    }
+
     @Override
     public int getItemCount() {
         return super.getItemCount() + 1;

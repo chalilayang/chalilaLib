@@ -303,7 +303,9 @@ public interface UserApiService {
     @POST("index.php?s=/Comments/index")
     Call<ResponseBean<List<CommentListBean>>> getCommentList(
             @Field("video_id") String video_id,
-            @Field("token") String token
+            @Field("token") String token,
+            @Field("p") String p,
+            @Field("r") String r
     );
 
     /**
@@ -377,7 +379,6 @@ public interface UserApiService {
      * @param token：（Token，登录凭证）
      * @param video_id：（视频ID）
      * @param comments_id：（评论ID）
-     * @param id：（点赞ID）
      * @return
      */
     @FormUrlEncoded
@@ -385,8 +386,7 @@ public interface UserApiService {
     Call<ResponseBean<AddItemBean>> delZan(
             @Field("token") String token,
             @Field("video_id") String video_id,
-            @Field("comments_id") String comments_id,
-            @Field("id") String id
+            @Field("comments_id") String comments_id
     );
 
     /**

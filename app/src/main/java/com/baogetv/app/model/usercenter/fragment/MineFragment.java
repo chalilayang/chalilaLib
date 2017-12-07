@@ -16,6 +16,7 @@ import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.GradeBean;
+import com.baogetv.app.bean.NewCountBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.constant.AppConstance;
@@ -309,6 +310,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     updateInfo();
                 }
             }
+            getNewZanCount();
+            getNewResponseMeCount();
         }
     }
 
@@ -358,5 +361,65 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
+    private void getNewZanCount() {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        if (LoginManager.hasLogin(mActivity)) {
+            String token = LoginManager.getUserToken(mActivity);
+            Call<ResponseBean<NewCountBean>> call = userApiService.getNewZanCount(token);
+            if (call != null) {
+                call.enqueue(new CustomCallBack<NewCountBean>() {
+                    @Override
+                    public void onSuccess(NewCountBean data, String msg, int state) {
+                        if (mActivity != null && !mActivity.isFinishing()) {
+                            int count = 0;
+                            try {
+                                count = Integer.parseInt(data.getCount());
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
+                            if (count > 0) {
+                                thumbUpItemView.setNewLogoText(String.valueOf(data.getCount()));
+                            }
+                        }
+                    }
+                    @Override
+                    public void onFailed(String error, int state) {
 
+                    }
+                });
+            }
+        }
+    }
+
+    private void getNewResponseMeCount() {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        if (LoginManager.hasLogin(mActivity)) {
+            String token = LoginManager.getUserToken(mActivity);
+            Call<ResponseBean<NewCountBean>> call = userApiService.getNewResponseMeCount(token);
+            if (call != null) {
+                call.enqueue(new CustomCallBack<NewCountBean>() {
+                    @Override
+                    public void onSuccess(NewCountBean data, String msg, int state) {
+                        if (mActivity != null && !mActivity.isFinishing()) {
+                            int count = 0;
+                            try {
+                                count = Integer.parseInt(data.getCount());
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
+                            if (count > 0) {
+                                responseItemView.setNewLogoText(String.valueOf(data.getCount()));
+                            }
+                        }
+                    }
+                    @Override
+                    public void onFailed(String error, int state) {
+
+                    }
+                });
+            }
+        }
+    }
 }

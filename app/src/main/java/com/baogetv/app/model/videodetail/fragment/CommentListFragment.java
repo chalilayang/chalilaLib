@@ -52,7 +52,7 @@ import static com.baogetv.app.model.videodetail.activity.CommentDetailActivity.K
 public class CommentListFragment extends BaseItemFragment
         implements SwipeRefreshLayout.OnRefreshListener,
         ItemViewHolder.ItemClickListener<CommentData>, CommentView.OnCommentListener {
-
+    public static final int PAGE_COUNT = 10;
     private static final String TAG = "CommentListFragment";
     private static final String PAGE_DATA = "PAGE_DATA";
     private SwipeRefreshLayout refreshLayout;
@@ -108,7 +108,6 @@ public class CommentListFragment extends BaseItemFragment
             recyclerView.setAdapter(recyclerViewAdapter);
             refreshLayout.setOnRefreshListener(this);
             contentView = view;
-            refreshLayout.setEnabled(false);
             getCommentList(videoDetailData);
         }
         return contentView;
@@ -131,8 +130,9 @@ public class CommentListFragment extends BaseItemFragment
         if (LoginManager.hasLogin(mActivity)) {
             token = LoginManager.getUserToken(mActivity);
         }
+        int curCount = recyclerViewAdapter.getItemCount();
         Call<ResponseBean<List<CommentListBean>>> call
-                = userApiService.getCommentList(videoDetailData.videoDetailBean.getId(), token);
+                = userApiService.getCommentList(videoDetailData.videoDetailBean.getId(), token, "0", "100");
         if (call != null) {
             call.enqueue(new CustomCallBack<List<CommentListBean>>() {
                 @Override
@@ -146,8 +146,7 @@ public class CommentListFragment extends BaseItemFragment
                         if (listBean.getChild() != null && listBean.getChild().size() > 0) {
                             List<CommentListBean.DataBean> childList = listBean.getChild();
                             List<ReplyData> list1 = new ArrayList<>(childList.size());
-                            for (int i = 0, childCount = childList.size();
-                                 i < childCount; i ++) {
+                            for (int i = 0, childCount = childList.size(); i < childCount; i ++) {
                                 ReplyData replyData = new ReplyData();
                                 replyData.setBean(childList.get(i));
                                 list1.add(replyData);
@@ -296,6 +295,29 @@ public class CommentListFragment extends BaseItemFragment
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getUserToken(mActivity);
         Call<ResponseBean<AddItemBean>> call = userApiService.addZan(
+                token, vid, comment_id);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<AddItemBean>() {
+                @Override
+                public void onSuccess(AddItemBean bean, String msg, int state) {
+                    showShortToast("点赞 success");
+                    Log.i(TAG, "onSuccess: add zan success");
+                    getCommentList(videoDetailData);
+                }
+
+                @Override
+                public void onFailed(String error, int state) {
+                    showShortToast(error);
+                }
+            });
+        }
+    }
+
+    private void delZan(String vid, String comment_id) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(mActivity);
+        Call<ResponseBean<AddItemBean>> call = userApiService.delZan(
                 token, vid, comment_id);
         if (call != null) {
             call.enqueue(new CustomCallBack<AddItemBean>() {
