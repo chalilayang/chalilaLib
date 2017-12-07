@@ -177,6 +177,11 @@
             android:name=".model.usercenter.activity.VideoPlayerActivity"
             android:screenOrientation="landscape">
         </activity>
+        <receiver android:name=".net.NetStateReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"></action>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
