@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.baogetv.app.R;
 import com.baogetv.app.customview.CustomToastUtil;
+import com.baogetv.app.util.CacheUtil;
+import com.baogetv.app.util.SettingManager;
 
 /**
  * Created by chalilayang on 2017/12/7.
@@ -19,20 +21,22 @@ public class NetStateReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equalsIgnoreCase(ANDROID_NET_CHANGE_ACTION)) {
             if (NetUtil.isNetworkAvailable(context)) {
-                //Wifi情况下
                 if (NetUtil.isWifiConnected(context)) {
                     Log.d("same_info>>", "net wifi");
+                    CacheUtil.resumeAllCaching(context.getApplicationContext());
                     CustomToastUtil.makeShort(context.getApplicationContext(),
                             context.getString(R.string.wifi_connect));
-                }
-                //数据流量的情况下
-                else {
+                } else {
+                    if (!SettingManager.allowCacheWithMobile(context.getApplicationContext())) {
+                        CacheUtil.pauseAllCaching(context.getApplicationContext());
+                    }
                     Log.d("same_info>>", "net data");
                     CustomToastUtil.makeShort(context.getApplicationContext(),
                             context.getString(R.string.mobile_connect));
                 }
             } else {
                 Log.d("same_info>>", "net error");
+                CacheUtil.pauseAllCaching(context.getApplicationContext());
                 CustomToastUtil.makeShort(context.getApplicationContext(),
                         context.getString(R.string.net_error));
             }

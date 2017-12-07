@@ -75,4 +75,26 @@ public class CacheUtil {
         }
         return result;
     }
+
+    public static void pauseAllCaching(Context context) {
+        DownloadManager downloadManager
+                = DownloadService.getDownloadManager(context.getApplicationContext());
+        List<DownloadInfo> list = downloadManager.findAllDownloading();
+        if (list != null) {
+            for (int index = 0, count = list.size(); index < count; index ++) {
+                downloadManager.pause(list.get(index));
+            }
+        }
+    }
+
+    public static void resumeAllCaching(Context context) {
+        DownloadManager downloadManager
+                = DownloadService.getDownloadManager(context.getApplicationContext());
+        List<DownloadInfo> list = downloadManager.findAllDownloading();
+        if (list != null) {
+            for (int index = 0, count = list.size(); index < count; index ++) {
+                downloadManager.resume(list.get(index));
+            }
+        }
+    }
 }
