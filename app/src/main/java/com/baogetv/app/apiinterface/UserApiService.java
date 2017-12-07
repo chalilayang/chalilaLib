@@ -169,8 +169,8 @@ public interface UserApiService {
             @Field("height") String height,
             @Field("weight") String weight,
             @Field("bfr") String bfr,
-            @Field("is_push_comments") Boolean is_push_comments,
-            @Field("is_push_likes") Boolean is_push_likes,
+            @Field("is_push_comments") String is_push_comments,
+            @Field("is_push_likes") String is_push_likes,
             @Field("token") String token);
 
     /**

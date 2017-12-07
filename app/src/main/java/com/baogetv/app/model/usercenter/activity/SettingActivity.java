@@ -52,8 +52,13 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
         thumbUpPush.setClickCallback(new MineLineItemView.ClickCallback() {
             @Override
             public void onMoreViewClick() {
-                thumbUpPush.setOpenState(!thumbUpPush.isOpen());
-                SettingManager.putAllowZanNotify(getApplicationContext(), thumbUpPush.isOpen());
+                if (LoginManager.hasLogin(getApplicationContext())) {
+                    String result = "0";
+                    if (!SettingManager.allowZanNotify(getApplicationContext())) {
+                        result = "1";
+                    }
+                    modifyZanSetting(result);
+                }
             }
         });
         commentPush = (MineLineItemView) findViewById(R.id.comment_push);
@@ -61,8 +66,13 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
         commentPush.setClickCallback(new MineLineItemView.ClickCallback() {
             @Override
             public void onMoreViewClick() {
-                commentPush.setOpenState(!commentPush.isOpen());
-                SettingManager.putAllowCommentNotify(getApplicationContext(), commentPush.isOpen());
+                if (LoginManager.hasLogin(getApplicationContext())) {
+                    String result = "0";
+                    if (!SettingManager.allowCommentNotify(getApplicationContext())) {
+                        result = "1";
+                    }
+                    modifyCommentSetting(result);
+                }
             }
         });
         giveScore = (MineLineItemView) findViewById(R.id.give_score);
@@ -125,4 +135,63 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
     protected int getRootView() {
         return R.layout.activity_setting;
     }
+
+    private void modifyZanSetting(final String allowZan) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(getApplicationContext());
+        Call<ResponseBean<List<Object>>> call = userApiService.editUserDetail(
+                null, null, null, null, null, null, null, null, null, allowZan, token);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<List<Object>>() {
+                @Override
+                public void onSuccess(List<Object> data, String msg, int state) {
+                    showShortToast("success");
+                    boolean allowZanValue = SettingManager.allowZanNotify(getApplicationContext());
+                    try {
+                        allowZanValue = Integer.parseInt(allowZan) > 0;
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                    thumbUpPush.setOpenState(allowZanValue);
+                    SettingManager.putAllowZanNotify(getApplicationContext(), thumbUpPush.isOpen());
+                }
+
+                @Override
+                public void onFailed(String error, int state) {
+                    showShortToast(error);
+                }
+            });
+        }
+    }
+
+    private void modifyCommentSetting(final String allowComment) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(getApplicationContext());
+        Call<ResponseBean<List<Object>>> call = userApiService.editUserDetail(
+                null, null, null, null, null, null, null, null, allowComment, null, token);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<List<Object>>() {
+                @Override
+                public void onSuccess(List<Object> data, String msg, int state) {
+                    showShortToast("success");
+                    boolean allowZanValue = SettingManager.allowCommentNotify(getApplicationContext());
+                    try {
+                        allowZanValue = Integer.parseInt(allowComment) > 0;
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                    commentPush.setOpenState(allowZanValue);
+                    SettingManager.putAllowCommentNotify(getApplicationContext(), commentPush.isOpen());
+                }
+
+                @Override
+                public void onFailed(String error, int state) {
+                    showShortToast(error);
+                }
+            });
+        }
+    }
+
 }
