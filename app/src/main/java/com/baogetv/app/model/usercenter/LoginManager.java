@@ -10,6 +10,7 @@ import com.baogetv.app.model.usercenter.activity.FindPasswordActivity;
 import com.baogetv.app.model.usercenter.activity.LoginActivity;
 import com.baogetv.app.model.usercenter.activity.MobileChangeActivity;
 import com.baogetv.app.model.usercenter.activity.RegisterActivity;
+import com.baogetv.app.util.SettingManager;
 import com.chalilayang.util.SPUtils;
 
 import java.util.regex.Matcher;
@@ -44,6 +45,20 @@ public class LoginManager {
         detailBean = bean;
         LoginManager.putUserToken(context, bean.getToken());
         LoginManager.putUserID(context, bean.getUser_id());
+        boolean allowComment;
+        try {
+            allowComment = Integer.parseInt(bean.getIs_push_comments()) > 0;
+            SettingManager.putAllowCommentNotify(context, allowComment);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        boolean allowZan;
+        try {
+            allowZan = Integer.parseInt(bean.getIs_push_likes()) > 0;
+            SettingManager.putAllowZanNotify(context, allowZan);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void startLogin(Activity activity) {

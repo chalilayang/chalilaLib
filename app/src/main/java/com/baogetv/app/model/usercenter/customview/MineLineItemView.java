@@ -124,14 +124,13 @@ public class MineLineItemView extends RelativeLayout {
         return open;
     }
 
-    public void swichOpenState() {
-        if (open) {
+    public void setOpenState(boolean openState) {
+        if (openState) {
             moreView.setImageResource(R.mipmap.closed_icon);
-            open = false;
         } else {
             moreView.setImageResource(R.mipmap.opened_icon);
-            open = true;
         }
+        open = openState;
     }
 
     public ImageView getRightImageView() {

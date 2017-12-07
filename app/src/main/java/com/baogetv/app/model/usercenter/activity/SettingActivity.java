@@ -12,6 +12,7 @@ import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.customview.MineLineItemView;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
+import com.baogetv.app.util.SettingManager;
 
 import java.util.List;
 
@@ -36,26 +37,32 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setTitleActivity(getString(R.string.setting));
         netSet = (MineLineItemView) findViewById(R.id.net_set);
+        netSet.setOpenState(SettingManager.allowCacheWithMobile(getApplicationContext()));
         netSet.setClickCallback(new MineLineItemView.ClickCallback() {
             @Override
             public void onMoreViewClick() {
-                netSet.swichOpenState();
+                netSet.setOpenState(!netSet.isOpen());
+                SettingManager.putAllowCacheWithMobile(getApplicationContext(), netSet.isOpen());
             }
         });
         clearCache = (MineLineItemView) findViewById(R.id.cache_clear);
         clearCache.setOnClickListener(this);
         thumbUpPush = (MineLineItemView) findViewById(R.id.thumb_up_push);
+        thumbUpPush.setOpenState(SettingManager.allowZanNotify(getApplicationContext()));
         thumbUpPush.setClickCallback(new MineLineItemView.ClickCallback() {
             @Override
             public void onMoreViewClick() {
-                thumbUpPush.swichOpenState();
+                thumbUpPush.setOpenState(!thumbUpPush.isOpen());
+                SettingManager.putAllowZanNotify(getApplicationContext(), thumbUpPush.isOpen());
             }
         });
         commentPush = (MineLineItemView) findViewById(R.id.comment_push);
+        commentPush.setOpenState(SettingManager.allowCommentNotify(getApplicationContext()));
         commentPush.setClickCallback(new MineLineItemView.ClickCallback() {
             @Override
             public void onMoreViewClick() {
-                commentPush.swichOpenState();
+                commentPush.setOpenState(!commentPush.isOpen());
+                SettingManager.putAllowCommentNotify(getApplicationContext(), commentPush.isOpen());
             }
         });
         giveScore = (MineLineItemView) findViewById(R.id.give_score);
@@ -91,7 +98,6 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
                 loginOut();
                 break;
         }
-
     }
 
     private void loginOut() {
