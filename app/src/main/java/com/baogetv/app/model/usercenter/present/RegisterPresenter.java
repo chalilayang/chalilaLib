@@ -57,8 +57,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                 @Override
                 public void onSuccess(UserDetailBean data, String msg, int state) {
                     if (data != null) {
-                        LoginManager.putUserToken(mContext, data.getToken());
-                        LoginManager.putUserID(mContext, data.getUser_id());
+                        LoginManager.updateDetailBean(mContext, data);
                         registerView.showSuccess(data);
                     } else {
                         registerView.registerFailed("RegisterBean failed null ");

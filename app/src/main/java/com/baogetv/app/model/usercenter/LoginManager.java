@@ -30,7 +30,7 @@ public class LoginManager {
     private static final String KEY_USER_TOKEN = "USER_TOKEN";
     private static final String KEY_USER_ID = "USER_ID";
 
-    public static UserDetailBean detailBean;
+    private static UserDetailBean detailBean;
     public static boolean hasLogin(Context context) {
         String token = getUserToken(context);
         if (!TextUtils.isEmpty(token)) {
@@ -38,6 +38,12 @@ public class LoginManager {
         } else {
             return false;
         }
+    }
+
+    public static void updateDetailBean(Context context, UserDetailBean bean) {
+        detailBean = bean;
+        LoginManager.putUserToken(context, bean.getToken());
+        LoginManager.putUserID(context, bean.getUser_id());
     }
 
     public static void startLogin(Activity activity) {

@@ -326,6 +326,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 @Override
                 public void onSuccess(UserDetailBean data, String msg, int state) {
                     detailBean = data;
+                    LoginManager.updateDetailBean(mActivity.getApplicationContext(), data);
                     updateInfo();
                     hasLoginView.setVisibility(View.VISIBLE);
                 }

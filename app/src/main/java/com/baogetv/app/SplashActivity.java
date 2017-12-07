@@ -71,6 +71,7 @@ public class SplashActivity extends BaseActivity {
                 @Override
                 public void onSuccess(UserDetailBean data, String msg, int state) {
                     if (data != null) {
+                        LoginManager.updateDetailBean(getApplicationContext(), data);
                         startHomeActivity(data);
                     } else {
                         startVideoLoginActivity();

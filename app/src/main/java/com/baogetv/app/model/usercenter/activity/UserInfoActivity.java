@@ -368,6 +368,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 @Override
                 public void onSuccess(UserDetailBean data, String msg, int state) {
                     userDetailBean = data;
+                    LoginManager.updateDetailBean(getApplicationContext(), data);
                 }
 
                 @Override

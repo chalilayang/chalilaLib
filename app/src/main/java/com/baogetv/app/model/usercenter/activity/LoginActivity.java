@@ -107,8 +107,7 @@ public class LoginActivity extends BaseActivity implements PasswordInputView.OnF
                 public void onSuccess(UserDetailBean data, String msg, int state) {
                     isFetchingResult = false;
                     if (data != null) {
-                        LoginManager.putUserToken(getApplicationContext(), data.getToken());
-                        LoginManager.putUserID(getApplicationContext(), data.getUser_id());
+                        LoginManager.updateDetailBean(getApplicationContext(), data);
                         loginSuccess(data);
                     } else {
                         loginFailed("LoginBean null");
