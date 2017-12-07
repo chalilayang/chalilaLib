@@ -65,7 +65,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private ImageView gradeIcon;
     private TextView gradeDesc;
     private MineBodyInfoView mineBodyInfoView;
-    private TextView scoreeDesc;
+    private TextView scoreDesc;
     private UpgradeProgress upgradeProgress;
     private MineLineItemView userGradeItemView;
     private MineLineItemView myCacheItemView;
@@ -147,7 +147,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         gradeIcon = view.findViewById(R.id.user_grade_icon);
         gradeDesc = view.findViewById(R.id.user_grade_desc);
         mineBodyInfoView = view.findViewById(R.id.body_info_view);
-        scoreeDesc = view.findViewById(R.id.score_desc);
+        scoreDesc = view.findViewById(R.id.score_desc);
         upgradeProgress = view.findViewById(R.id.user_grade_progress);
 
         userGradeItemView = view.findViewById(R.id.user_grade);
@@ -213,7 +213,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     int nextScore = Integer.parseInt(levelList.get(nextLevel.index).getScore());
                     int progress = Math.min((int)(score * 100.0 / nextScore), 100);
                     upgradeProgress.setUpGradeProgress(progress);
-                    scoreeDesc.setText(LevelUtil.getLevelDesc(mActivity, detailBean, levelList));
+                    scoreDesc.setText(LevelUtil.getLevelDesc(mActivity, detailBean, levelList));
                 }
             } else {
                 getGradeList();
@@ -276,12 +276,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 }
                 break;
             case R.id.setting:
-                if (!LoginManager.hasLogin(mActivity)) {
-                    LoginManager.startLogin(mActivity);
-                } else {
-                    intent = new Intent(mActivity, SettingActivity.class);
-                    mActivity.startActivityForResult(intent, REQUEST_CODE_SETTING_ACTIVITY);
-                }
+                intent = new Intent(mActivity, SettingActivity.class);
+                mActivity.startActivityForResult(intent, REQUEST_CODE_SETTING_ACTIVITY);
                 break;
             case R.id.change_mobile_num:
                 if (!LoginManager.hasLogin(mActivity)) {
@@ -361,4 +357,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             });
         }
     }
+
+
 }

@@ -9,6 +9,7 @@ import com.baogetv.app.bean.CommentListBean;
 import com.baogetv.app.bean.GradeBean;
 import com.baogetv.app.bean.GradeDetailBean;
 import com.baogetv.app.bean.HistoryBean;
+import com.baogetv.app.bean.NewCountBean;
 import com.baogetv.app.bean.ReportTypeBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.ResponseMeBean;
@@ -295,12 +296,14 @@ public interface UserApiService {
      * 评论列表
      *
      * @param video_id：（视频ID）
+     * @param token：（Token，登录凭证）
      * @return
      */
     @FormUrlEncoded
     @POST("index.php?s=/Comments/index")
     Call<ResponseBean<List<CommentListBean>>> getCommentList(
-            @Field("video_id") String video_id
+            @Field("video_id") String video_id,
+            @Field("token") String token
     );
 
     /**
@@ -387,6 +390,16 @@ public interface UserApiService {
     );
 
     /**
+     * 未读点赞数
+     *
+     * @param token：（Token，登录凭证）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Likes/fromMeNewcount")
+    Call<ResponseBean<NewCountBean>> getNewZanCount(@Field("token") String token);
+
+    /**
      * 赞我的
      *
      * @param token：（Token，登录凭证）
@@ -403,8 +416,18 @@ public interface UserApiService {
      * @return
      */
     @FormUrlEncoded
-    @POST("index.php?s=/Likes/fromMe")
+    @POST("index.php?s=/Comments/atMe")
     Call<ResponseBean<List<ResponseMeBean>>> getResponseMeList(@Field("token") String token);
+
+    /**
+     * 未读回复
+     *
+     * @param token：（Token，登录凭证）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Comments/atMeNewcount")
+    Call<ResponseBean<NewCountBean>> getNewResponseMeCount(@Field("token") String token);
 
     /**
      * 广告列表

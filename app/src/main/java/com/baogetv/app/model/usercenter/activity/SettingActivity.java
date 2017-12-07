@@ -87,6 +87,9 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
         versionRight.setOnClickListener(this);
         loginOut = findViewById(R.id.login_out);
         loginOut.setOnClickListener(this);
+        if (!LoginManager.hasLogin(getApplicationContext())) {
+            loginOut.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

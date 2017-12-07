@@ -123,8 +123,12 @@ public class CommentDetailFragment extends BaseFragment
     public void getCommentList(VideoDetailData videoDetailData) {
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = null;
+        if (LoginManager.hasLogin(mActivity)) {
+            token = LoginManager.getUserToken(mActivity);
+        }
         Call<ResponseBean<List<CommentListBean>>> call
-                = userApiService.getCommentList(videoDetailData.videoDetailBean.getId());
+                = userApiService.getCommentList(videoDetailData.videoDetailBean.getId(), token);
         if (call != null) {
             call.enqueue(new CustomCallBack<List<CommentListBean>>() {
                 @Override
