@@ -103,7 +103,7 @@ public class ChannelDetailActivity extends BaseActivity {
 
     private void refreshInfo() {
         if (detailBean != null) {
-            Glide.with(this).load(detailBean.getPic_url()).into(imageView);
+            Glide.with(this).load(detailBean.getCover_url()).into(imageView);
             Glide.with(this).load(detailBean.getPic_url()).into(circleImageView);
             channelTitle.setText(detailBean.getName());
             String info = String.format(
