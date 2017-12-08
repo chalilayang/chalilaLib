@@ -61,7 +61,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     private void initView() {
         setContentView(R.layout.activity_home_page);
         homeDrawablePositive = getResources().getDrawable(R.mipmap.home_page_positive);
-        int width = ScaleCalculator.getInstance(this).scaleWidth(48);
+        int width = ScaleCalculator.getInstance(this).scaleWidth(36);
         int height = (int) (homeDrawablePositive.getIntrinsicHeight()
                 * width * 1.0f / homeDrawablePositive.getIntrinsicWidth());
         homeDrawablePositive.setBounds(0, 0, width, height);
@@ -69,7 +69,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         homeDrawableNormal.setBounds(0, 0, width, height);
 
         channelDrawablePositive = getResources().getDrawable(R.mipmap.channel_positive);
-        width = ScaleCalculator.getInstance(this).scaleWidth(48);
+        width = ScaleCalculator.getInstance(this).scaleWidth(36);
         height = (int) (channelDrawablePositive.getIntrinsicHeight()
                 * width * 1.0f / channelDrawablePositive.getIntrinsicWidth());
         channelDrawablePositive.setBounds(0, 0, width, height);
@@ -77,7 +77,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         channelDrawableNormal.setBounds(0, 0, width, height);
 
         userCenterDrawablePositive = getResources().getDrawable(R.mipmap.user_center_positive);
-        width = ScaleCalculator.getInstance(this).scaleWidth(48);
+        width = ScaleCalculator.getInstance(this).scaleWidth(36);
         height = (int) (userCenterDrawablePositive.getIntrinsicHeight()
                 * width * 1.0f / userCenterDrawablePositive.getIntrinsicWidth());
         userCenterDrawablePositive.setBounds(0, 0, width, height);

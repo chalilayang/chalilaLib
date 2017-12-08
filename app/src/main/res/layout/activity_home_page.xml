@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:padding="@dimen/size_20"
+        android:padding="@dimen/size_10"
         android:orientation="horizontal">
         <com.chalilayang.scaleview.ScaleTextView
             android:id="@+id/home_btn"
