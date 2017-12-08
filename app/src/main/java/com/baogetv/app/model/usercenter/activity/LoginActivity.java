@@ -24,7 +24,9 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.utils.SocializeUtils;
 
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import retrofit2.Call;
 
@@ -193,7 +195,41 @@ public class LoginActivity extends BaseActivity
     @Override
     public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
         hideLoadingDialog();
-        showShortToast("成功了");
+        final Set<Map.Entry<String, String>> entries = data.entrySet();
+        final Iterator<Map.Entry<String, String>> iterator = entries.iterator();
+        while (iterator.hasNext()) {
+            final Map.Entry<String, String> next = iterator.next();
+            Log.e("TAG", "====" + next.getKey() + "=======" + next.getValue());
+        }
+        //当授权成功后，去获取用户信息的方法里面获取参数
+        UMShareAPI.get(getApplicationContext()).getPlatformInfo(LoginActivity.this, platform, new UMAuthListener() {
+
+
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+
+            }
+
+            @Override
+            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                final Set<Map.Entry<String, String>> entries = map.entrySet();
+                final Iterator<Map.Entry<String, String>> iterator = entries.iterator();
+                while (iterator.hasNext()) {
+                    final Map.Entry<String, String> next = iterator.next();
+                    Log.e(TAG, "====" + next.getKey() + "=======" + next.getValue());
+                }
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media, int i) {
+
+            }
+        });
     }
 
     /**

@@ -16,11 +16,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baogetv.app.bean.GradeBean;
+import com.baogetv.app.bean.UserDetailBean;
+import com.baogetv.app.model.usercenter.Level;
+import com.baogetv.app.model.usercenter.LevelUtil;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.chalilayang.scaleview.ScaleTextView;
 import com.baogetv.app.R;
 
 import java.lang.ref.SoftReference;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -43,6 +48,20 @@ public class MineLineItemView extends RelativeLayout {
     private boolean checkType;
     private boolean open;
     private boolean rightVisible;
+
+    private ImageView levelIcon;
+    private TextView levelTv;
+    private Drawable one;
+    private Drawable two;
+    private Drawable three;
+    private Drawable four;
+    private Drawable five;
+    private Drawable oneYellow;
+    private Drawable twoYellow;
+    private Drawable threeYellow;
+    private Drawable fourYellow;
+    private Drawable fiveYellow;
+
     public MineLineItemView(Context context) {
         this(context, null);
     }
@@ -68,6 +87,18 @@ public class MineLineItemView extends RelativeLayout {
         size_20px = ScaleCalculator.getInstance(context).scaleWidth(20);
         size_30px = ScaleCalculator.getInstance(context).scaleWidth(30);
         size_110px = ScaleCalculator.getInstance(context).scaleWidth(110);
+
+        one = context.getResources().getDrawable(R.mipmap.user_grade_one_icon);
+        two = context.getResources().getDrawable(R.mipmap.user_grade_two_icon);
+        three = context.getResources().getDrawable(R.mipmap.user_grade_three_icon);
+        four = context.getResources().getDrawable(R.mipmap.user_grade_four_icon);
+        five = context.getResources().getDrawable(R.mipmap.user_grade_five_icon);
+        oneYellow = context.getResources().getDrawable(R.mipmap.user_grade_one_yellow_icon);
+        twoYellow = context.getResources().getDrawable(R.mipmap.user_grade_two_yellow_icon);
+        threeYellow = context.getResources().getDrawable(R.mipmap.user_grade_three_yellow_icon);
+        fourYellow = context.getResources().getDrawable(R.mipmap.user_grade_four_yellow_icon);
+        fiveYellow = context.getResources().getDrawable(R.mipmap.user_grade_five_yellow_icon);
+
         textView = new ScaleTextView(context);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 30);
         textView.setTextColor(getResources().getColor(R.color.search_label_text));
@@ -111,7 +142,31 @@ public class MineLineItemView extends RelativeLayout {
         rlp.addRule(RelativeLayout.LEFT_OF, moreView.getId());
         rlp.addRule(CENTER_VERTICAL);
         rlp.rightMargin = size_30px;
+        versionTv.setVisibility(INVISIBLE);
         addView(versionTv, rlp);
+
+        levelTv = new TextView(context);
+        levelTv.setId(R.id.level_tv_id);
+        levelTv.setTextSize(TypedValue.COMPLEX_UNIT_PX, size_20px);
+        levelTv.setBackgroundResource(R.drawable.search_label_bg);
+        levelTv.setPadding(size_20px, 0, size_20px, 0);
+        levelTv.setTextColor(getResources().getColor(R.color.search_label_text));
+        rlp = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        rlp.addRule(RelativeLayout.LEFT_OF, moreView.getId());
+        rlp.addRule(CENTER_VERTICAL);
+        rlp.rightMargin = size_30px;
+        levelTv.setVisibility(INVISIBLE);
+        addView(levelTv, rlp);
+
+        levelIcon = new ImageView(context);
+        rlp = new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        rlp.addRule(RelativeLayout.LEFT_OF, levelTv.getId());
+        rlp.addRule(CENTER_VERTICAL);
+        levelIcon.setVisibility(INVISIBLE);
+        rlp.rightMargin = size_20px;
+        addView(levelIcon, rlp);
 
         newLogoView = new TextView(context);
         newLogoView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size_20px);
@@ -180,6 +235,63 @@ public class MineLineItemView extends RelativeLayout {
     public void setVersion(String version) {
         versionTv.setText(version);
         versionTv.setVisibility(VISIBLE);
+    }
+
+    public void setUserLever( UserDetailBean bean) {
+        int levelValue = 0;
+        levelValue = Integer.parseInt(bean.getLevel_id());
+        int grade = 0;
+        try {
+            grade = Integer.parseInt(bean.getGrade());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        Drawable proLogo;
+        switch (levelValue) {
+            case 1:
+                proLogo = oneYellow;
+                if (grade == 3) {
+                    proLogo = one;
+                }
+                break;
+            case 2:
+                proLogo = twoYellow;
+                if (grade == 3) {
+                    proLogo = two;
+                }
+                break;
+            case 3:
+                proLogo = threeYellow;
+                if (grade == 3) {
+                    proLogo = three;
+                }
+                break;
+            case 4:
+                proLogo = fourYellow;
+                if (grade == 3) {
+                    proLogo = four;
+                }
+                break;
+            case 5:
+                proLogo = fiveYellow;
+                if (grade == 3) {
+                    proLogo = five;
+                }
+                break;
+            default:
+                proLogo = null;
+                break;
+        }
+        if (proLogo != null) {
+            int height = size_30px;
+            int width = proLogo.getIntrinsicWidth() * height / proLogo.getIntrinsicHeight();
+            proLogo.setBounds(0, 0, width, height);
+        }
+        String medal = bean.getMedal();
+        levelTv.setText(medal);
+        levelIcon.setImageDrawable(proLogo);
+        levelIcon.setVisibility(VISIBLE);
+        levelTv.setVisibility(VISIBLE);
     }
 
     public ImageView getRightImageView() {

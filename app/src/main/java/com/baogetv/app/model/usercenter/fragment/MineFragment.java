@@ -40,10 +40,12 @@ import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 
+import static com.baogetv.app.constant.AppConstance.KEY_LEVEL_LIST;
 import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_SETTING_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_USER_INFO_ACTIVITY;
@@ -116,6 +118,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             public void onClick(View view) {
                 Intent intent = new Intent(mActivity, UserInfoActivity.class);
                 intent.putExtra(KEY_USER_DETAIL_BEAN, detailBean);
+                intent.putParcelableArrayListExtra(KEY_LEVEL_LIST, levelList);
                 mActivity.startActivityForResult(intent, REQUEST_CODE_USER_INFO_ACTIVITY);
             }
         });
@@ -339,7 +342,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
 
-    private List<GradeBean> levelList;
+    private ArrayList<GradeBean> levelList;
     private void getGradeList() {
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
@@ -348,7 +351,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             call.enqueue(new CustomCallBack<List<GradeBean>>() {
                 @Override
                 public void onSuccess(List<GradeBean> data, String msg, int state) {
-                    levelList = data;
+                    if (levelList == null) {
+                        levelList = new ArrayList<GradeBean>();
+                    }
+                    levelList.clear();
+                    levelList.addAll(data);
                     if (mActivity != null && !mActivity.isFinishing()) {
                         updateInfo();
                     }

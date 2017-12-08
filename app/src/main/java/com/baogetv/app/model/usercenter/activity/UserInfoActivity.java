@@ -13,6 +13,7 @@ import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.FileUploadService;
 import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.GradeBean;
 import com.baogetv.app.bean.ImageUploadBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.UserDetailBean;
@@ -43,6 +44,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 
+import static com.baogetv.app.constant.AppConstance.KEY_LEVEL_LIST;
 import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
 import static com.baogetv.app.model.usercenter.activity.NameModifyActivity.REQUEST_CODE_NAME_MODIFY;
 
@@ -63,21 +65,19 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
     private SexSelectFragment sexSelectFragment;
     private BodyInfoSelectFragment bodyInfoSelectFragment;
     private UserDetailBean userDetailBean;
+    private List<GradeBean> gradeBeanList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitleActivity(getString(R.string.user_info));
         userDetailBean = getIntent().getParcelableExtra(KEY_USER_DETAIL_BEAN);
+        gradeBeanList = getIntent().getParcelableArrayListExtra(KEY_LEVEL_LIST);
+        Log.i(TAG, "onCreate: " + gradeBeanList.size());
         init();
     }
 
     private void init() {
         userIconLine = (MineLineItemView) findViewById(R.id.user_icon);
-        if (userDetailBean != null) {
-            Glide.with(this)
-                    .load(userDetailBean.getPic_url())
-                    .into(userIconLine.getRightImageView());
-        }
         userIconLine.setOnClickListener(this);
         userGradeLine = (MineLineItemView) findViewById(R.id.user_grade);
         userGradeLine.setOnClickListener(this);
@@ -87,10 +87,12 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         userSexLine.setOnClickListener(this);
         userBirthdayLine = (MineLineItemView) findViewById(R.id.user_birthday);
         userBirthdayLine.setOnClickListener(this);
+        userBirthdayLine.setVersion(userDetailBean.getBirthday());
         userBodyLine = (MineLineItemView) findViewById(R.id.user_body_info);
         userBodyLine.setOnClickListener(this);
         userSignatureLine = (MineLineItemView) findViewById(R.id.user_signature);
         userSignatureLine.setOnClickListener(this);
+        freshInfo();
     }
 
     @Override
@@ -328,6 +330,37 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         setResult(RESULT_OK);
     }
 
+    private void freshInfo() {
+        if (userDetailBean != null) {
+            Glide.with(this)
+                    .load(userDetailBean.getPic_url())
+                    .into(userIconLine.getRightImageView());
+            userGradeLine.setUserLever(userDetailBean);
+            userNickNameLine.setVersion(userDetailBean.getUsername());
+            int sex = 0;
+            try {
+                sex = Integer.parseInt(userDetailBean.getSex());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            switch (sex) {
+                case 0:
+                    userSexLine.setVersion("保密");
+                    break;
+                case 1:
+                    userSexLine.setVersion("男");
+                    break;
+                case 2:
+                    userSexLine.setVersion("女");
+                    break;
+            }
+            userBirthdayLine.setVersion(userDetailBean.getBirthday());
+            String bodyInfo = userDetailBean.getHeight() + "cm-"
+                    + userDetailBean.getWeight() + "kg-" + userDetailBean.getBfr() + "%bfr";
+            userBodyLine.setVersion(bodyInfo);
+        }
+    }
+
     @Override
     protected int getRootView() {
         return R.layout.activity_user_info;
@@ -368,6 +401,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 @Override
                 public void onSuccess(UserDetailBean data, String msg, int state) {
                     userDetailBean = data;
+                    freshInfo();
                     LoginManager.updateDetailBean(getApplicationContext(), data);
                 }
 

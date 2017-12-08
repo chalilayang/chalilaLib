@@ -1,10 +1,13 @@
 package com.baogetv.app.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by chalilayang on 2017/11/26.
  */
 
-public class GradeBean {
+public class GradeBean implements Parcelable {
 
     /**
      * id : 1
@@ -89,4 +92,48 @@ public class GradeBean {
     public void setPic(String pic) {
         this.pic = pic;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.medal);
+        dest.writeString(this.score);
+        dest.writeString(this.pic_url);
+        dest.writeString(this.status);
+        dest.writeString(this.add_time);
+        dest.writeString(this.pic);
+    }
+
+    public GradeBean() {
+    }
+
+    protected GradeBean(Parcel in) {
+        this.id = in.readString();
+        this.name = in.readString();
+        this.medal = in.readString();
+        this.score = in.readString();
+        this.pic_url = in.readString();
+        this.status = in.readString();
+        this.add_time = in.readString();
+        this.pic = in.readString();
+    }
+
+    public static final Creator<GradeBean> CREATOR = new Creator<GradeBean>() {
+        @Override
+        public GradeBean createFromParcel(Parcel source) {
+            return new GradeBean(source);
+        }
+
+        @Override
+        public GradeBean[] newArray(int size) {
+            return new GradeBean[size];
+        }
+    };
 }
