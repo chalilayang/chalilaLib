@@ -38,6 +38,7 @@ public class CustomSeekBar extends View {
     private Paint barPaint;
     private LinearGradient gradient;
     private Paint barShadowPaint;
+    private Paint barBufferPaint;
     private int startColor;
     private int endColor;
 
@@ -47,10 +48,12 @@ public class CustomSeekBar extends View {
     private int minHeight;
 
     private int progress = 0;
+    private int secondProgress = 0;
 
-    private Point circleCenter = new Point();
-    private Rect barRect = new Rect();
-    private Rect barShadowRect = new Rect();
+    private Point circleCenter;
+    private Rect barRect;
+    private Rect barShadowRect;
+    private Rect barBufferRect;
 
     private OnSeekUpdateListener mCallback;
 
@@ -93,10 +96,16 @@ public class CustomSeekBar extends View {
         barShadowPaint.setStyle(Paint.Style.FILL);
         barShadowPaint.setColor(getResources().getColor(R.color.white_40_percent));
 
+        barBufferPaint = new Paint();
+        barBufferPaint.setAntiAlias(true);
+        barBufferPaint.setStyle(Paint.Style.FILL);
+        barBufferPaint.setColor(getResources().getColor(R.color.white));
+
         circleRadius = 0;
         circleCenter = new Point();
         barRect = new Rect();
         barShadowRect = new Rect();
+        barBufferRect = new Rect();
     }
 
     private void setProgressValue(int tmpValue, boolean fromUser) {
@@ -117,9 +126,11 @@ public class CustomSeekBar extends View {
         }
     }
 
-    public void setSecondaryProgress(float p) {
-//        progress = p;
-//        invalidate();
+    public void setSecondaryProgress(int p) {
+        Log.i(TAG, "setSecondaryProgress: " + p);
+        secondProgress = p;
+        updateBufferProgressBarRect();
+        invalidate();
     }
 
     public void setProgress(int tmpValue) {
@@ -196,6 +207,7 @@ public class CustomSeekBar extends View {
 
     private void drawBar(Canvas canvas) {
         canvas.drawRect(barShadowRect, barShadowPaint);
+        canvas.drawRect(barBufferRect, barBufferPaint);
         canvas.drawRect(barRect, barPaint);
     }
     private void drawCircle(Canvas canvas) {
@@ -229,15 +241,25 @@ public class CustomSeekBar extends View {
             int bottom = measuredHeight - top;
             barShadowRect.set(left, top, right, bottom);
             updateProgressBarRect();
+            updateBufferProgressBarRect();
+        }
+    }
+
+    private void updateBufferProgressBarRect() {
+        if (measuredWidth > 0 && measuredHeight > 0) {
+            int right = (int) (
+                    barShadowRect.width() * secondProgress * 1.0 / MAX + barBufferRect.left
+            );
+            barBufferRect.set(barShadowRect.left, barShadowRect.top, right, barShadowRect.bottom);
+            updateCircleRect();
         }
     }
 
     private void updateProgressBarRect() {
         if (measuredWidth > 0 && measuredHeight > 0) {
             int right = (int) (
-                            (barShadowRect.right - barShadowRect.left) * progress * 1.0 / MAX
-                                    + barShadowRect.left
-                    );
+                    barShadowRect.width() * progress * 1.0 / MAX + barBufferRect.left
+            );
             barRect.set(barShadowRect.left, barShadowRect.top, right, barShadowRect.bottom);
             updateCircleRect();
         }
