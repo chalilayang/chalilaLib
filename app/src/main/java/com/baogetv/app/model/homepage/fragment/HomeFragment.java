@@ -2,6 +2,7 @@ package com.baogetv.app.model.homepage.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.baogetv.app.model.search.SearchActivity;
 import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageData;
 import com.baogetv.app.parcelables.PageItemData;
+import com.chalilayang.scaleview.ScaleCalculator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,7 @@ public class HomeFragment extends PagerFragment {
 
     private static final String TAG = "HomeFragment";
     private View searchBtn;
+    private TabLayout tabLayout;
     public static HomeFragment newInstance(PageData data) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -52,12 +55,15 @@ public class HomeFragment extends PagerFragment {
     @Override
     public void init(View root) {
         super.init(root);
+        tabLayout = root.findViewById(R.id.tab_layout);
+        int padding = ScaleCalculator.getInstance(mActivity).scaleWidth(40);
+        setIndicator(mActivity, tabLayout, padding, padding);
         searchBtn = root.findViewById(R.id.search_btn);
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SearchActivity.class);
-                getActivity().startActivity(intent);
+                Intent intent = new Intent(mActivity, SearchActivity.class);
+                mActivity.startActivity(intent);
             }
         });
     }

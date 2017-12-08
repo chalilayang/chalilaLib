@@ -83,16 +83,16 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         userCenterDrawablePositive.setBounds(0, 0, width, height);
         userCenterDrawableNormal = getResources().getDrawable(R.mipmap.user_center_normal);
         userCenterDrawableNormal.setBounds(0, 0, width, height);
-        int marginDrawble = ScaleCalculator.getInstance(this).scaleWidth(12);
+        int marginDrawable = ScaleCalculator.getInstance(this).scaleWidth(12);
         homeBtn = (TextView) findViewById(R.id.home_btn);
-        homeBtn.setCompoundDrawablePadding(marginDrawble);
+        homeBtn.setCompoundDrawablePadding(marginDrawable);
         homeBtn.setOnClickListener(this);
         channelBtn = (TextView) findViewById(R.id.channel_btn);
         channelBtn.setOnClickListener(this);
-        channelBtn.setCompoundDrawablePadding(marginDrawble);
+        channelBtn.setCompoundDrawablePadding(marginDrawable);
         userCenterBtn = (TextView) findViewById(R.id.user_center_btn);
         userCenterBtn.setOnClickListener(this);
-        userCenterBtn.setCompoundDrawablePadding(marginDrawble);
+        userCenterBtn.setCompoundDrawablePadding(marginDrawable);
         homeBtn.performClick();
     }
 

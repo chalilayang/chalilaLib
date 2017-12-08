@@ -1,7 +1,9 @@
 package com.baogetv.app;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
@@ -10,10 +12,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baogetv.app.model.videodetail.event.PageSelectEvent;
@@ -21,6 +26,8 @@ import com.baogetv.app.parcelables.PageData;
 import com.chalilayang.scaleview.ScaleCalculator;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.lang.reflect.Field;
 
 
 public class PagerFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
@@ -176,5 +183,38 @@ public class PagerFragment extends BaseFragment implements ViewPager.OnPageChang
     @Override
     public void onPageScrollStateChanged(int state) {
         Log.i(TAG, "onPageScrollStateChanged: ");
+    }
+
+
+    public static void setIndicator(Context context, TabLayout tabs, int leftDip, int rightDip) {
+        Class<?> tabLayout = tabs.getClass();
+        Field tabStrip = null;
+        try {
+            tabStrip = tabLayout.getDeclaredField("mTabStrip");
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+
+        tabStrip.setAccessible(true);
+        LinearLayout ll_tab = null;
+        try {
+            ll_tab = (LinearLayout) tabStrip.get(tabs);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        int left = leftDip;
+        int right = rightDip;
+
+        for (int i = 0; i < ll_tab.getChildCount(); i++) {
+            View child = ll_tab.getChildAt(i);
+            child.setPadding(0, 0, 0, 0);
+            LinearLayout.LayoutParams params
+                    = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
+            params.leftMargin = left;
+            params.rightMargin = right;
+            child.setLayoutParams(params);
+            child.invalidate();
+        }
     }
 }
