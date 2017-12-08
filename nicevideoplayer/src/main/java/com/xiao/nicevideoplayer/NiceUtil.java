@@ -51,13 +51,13 @@ public class NiceUtil {
 
     public static void showActionBar(Context context) {
         AppCompatActivity appCompatActivity = getAppCompActivity(context);
-        if (appCompatActivity != null) {
-            ActionBar ab = getAppCompActivity(context).getSupportActionBar();
-            if (ab != null) {
-                ab.setShowHideAnimationEnabled(false);
-                ab.show();
-            }
-        }
+//        if (appCompatActivity != null) {
+//            ActionBar ab = getAppCompActivity(context).getSupportActionBar();
+//            if (ab != null) {
+//                ab.setShowHideAnimationEnabled(false);
+//                ab.show();
+//            }
+//        }
         scanForActivity(context)
                 .getWindow()
                 .clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);

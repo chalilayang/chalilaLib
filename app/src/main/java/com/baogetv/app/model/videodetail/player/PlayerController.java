@@ -1,6 +1,7 @@
 package com.baogetv.app.model.videodetail.player;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.CountDownTimer;
 import android.support.annotation.DrawableRes;
 import android.util.Log;
@@ -66,6 +67,7 @@ public class PlayerController extends NiceVideoPlayerController
         timeFormat = context.getResources().getString(R.string.player_time_format);
         LayoutInflater.from(context).inflate(
                 R.layout.player_controller, this, true);
+        findViewById(R.id.full_screen_back).setOnClickListener(this);
         playBtn = (ImageView) findViewById(R.id.pause_btn);
         videoTitleSmall = (ScaleTextView) findViewById(R.id.player_title_small);
         videoTitle = (ScaleTextView) findViewById(R.id.player_title_fullscreen);
@@ -131,6 +133,12 @@ public class PlayerController extends NiceVideoPlayerController
                 mNiceVideoPlayer.enterFullScreen();
             } else if (mNiceVideoPlayer.isFullScreen()) {
                 mNiceVideoPlayer.exitFullScreen();
+            }
+        } else if (v.getId() == R.id.full_screen_back) {
+            if (mNiceVideoPlayer.isFullScreen()) {
+                mNiceVideoPlayer.exitFullScreen();
+            } else {
+                NiceUtil.scanForActivity(mContext).onBackPressed();
             }
         } else if (v.getId() == R.id.player_lock) {
             if (mNiceVideoPlayer.isFullScreen()) {
