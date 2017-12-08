@@ -6,17 +6,25 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.UserDetailBean;
+import com.baogetv.app.customview.CustomToastUtil;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.customview.PasswordInputView;
 import com.baogetv.app.model.usercenter.customview.TitleInputView;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.utils.SocializeUtils;
+
+import java.util.Map;
 
 import retrofit2.Call;
 
@@ -24,7 +32,8 @@ import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_FIND_PASSWORD_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
 
-public class LoginActivity extends BaseActivity implements PasswordInputView.OnForgetClickListener {
+public class LoginActivity extends BaseActivity
+        implements PasswordInputView.OnForgetClickListener, UMAuthListener {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private TitleInputView mobileNumView;
     private PasswordInputView passwordView;
@@ -68,6 +77,13 @@ public class LoginActivity extends BaseActivity implements PasswordInputView.OnF
             @Override
             public void onClick(View view) {
                 LoginManager.startRegister(LoginActivity.this);
+            }
+        });
+        wechatBtn = findViewById(R.id.wechat_login);
+        wechatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                wxLogin();
             }
         });
     }
@@ -151,5 +167,56 @@ public class LoginActivity extends BaseActivity implements PasswordInputView.OnF
                 loginSuccess(bean);
             }
         }
+    }
+
+
+    //微信登录
+    public void wxLogin() {
+        UMShareAPI.get(getApplication()).doOauthVerify(LoginActivity.this, SHARE_MEDIA.WEIXIN, this);
+    }
+
+    /**
+     * @desc 授权开始的回调
+     * @param platform 平台名称
+     */
+    @Override
+    public void onStart(SHARE_MEDIA platform) {
+        showLoadingDialog("三方登录...", "success");
+    }
+
+    /**
+     * @desc 授权成功的回调
+     * @param platform 平台名称
+     * @param action 行为序号，开发者用不上
+     * @param data 用户资料返回
+     */
+    @Override
+    public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+        hideLoadingDialog();
+        showShortToast("成功了");
+    }
+
+    /**
+     * @desc 授权失败的回调
+     * @param platform 平台名称
+     * @param action 行为序号，开发者用不上
+     * @param t 错误原因
+     */
+    @Override
+    public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+        hideLoadingDialog();
+        Log.i(TAG, "onError: " + t.getMessage());
+        CustomToastUtil.makeLongText(this, "失败：" + t.getMessage());
+    }
+
+    /**
+     * @desc 授权取消的回调
+     * @param platform 平台名称
+     * @param action 行为序号，开发者用不上
+     */
+    @Override
+    public void onCancel(SHARE_MEDIA platform, int action) {
+        hideLoadingDialog();
+        CustomToastUtil.makeLongText(this, "取消了");
     }
 }

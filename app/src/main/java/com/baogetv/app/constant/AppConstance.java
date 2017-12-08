@@ -28,7 +28,7 @@ public class AppConstance {
     public static final String QQ_APP_KEY = "lRbPqYJ3y7nICy8I";
 
     public static final String WEICHAT_APP_ID = "wx5f458bd391d3d86f";
-    public static final String WEICHAT_APP_SECRET = null;
+    public static final String WEICHAT_APP_SECRET = "82a20462f78cd6f099d587026713b6e4";
 
     public static final String SINA_APP_ID = "wx5f458bd391d3d86f";
     public static final String SINA_APP_SECRET = null;

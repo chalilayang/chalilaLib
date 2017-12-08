@@ -3,11 +3,16 @@ package com.baogetv.app;
 import android.app.Application;
 import android.util.Log;
 
+import com.baogetv.app.constant.AppConstance;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.push.MyPushIntentService;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
+import com.umeng.socialize.Config;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.common.QueuedWork;
 import com.xiasuhuei321.loadingdialog.manager.StyleManager;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
@@ -49,6 +54,12 @@ public class BaoGeApplication extends Application {
             }
         });
         mPushAgent.setPushIntentServiceClass(MyPushIntentService.class);
+        Config.DEBUG = true;
+        QueuedWork.isUseThreadPool = false;
+        UMShareAPI.get(this);
+        //微信 appid appsecret   在微信开放平台申请
+        PlatformConfig.setWeixin(AppConstance.WEICHAT_APP_ID, AppConstance.WEICHAT_APP_SECRET);
+
         StyleManager s = new StyleManager();
         s.Anim(false).repeatTime(0).contentSize(-1).intercept(true);
         LoadingDialog.initStyle(s);

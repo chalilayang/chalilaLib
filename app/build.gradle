@@ -4,7 +4,6 @@ apply plugin: 'org.greenrobot.greendao' // apply plugin
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
-
     defaultConfig {
         applicationId "com.baogetv.app"
         minSdkVersion 16
@@ -14,16 +13,36 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
-
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
     }
-
+    signingConfigs {
+        release {
+            keyAlias 'key0'
+            keyPassword '111111'
+            storeFile file('baoge.keystore.jks')
+            storePassword '111111'
+        }
+        debug {
+            keyAlias 'key0'
+            keyPassword '111111'
+            storeFile file('baoge.keystore.jks')
+            storePassword '111111'
+        }
+    }
     buildTypes {
         release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFile '../proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFile '../proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     greendao {
@@ -40,7 +59,7 @@ dependencies {
     compile project(':chalilalib')
     compile project(':PushSDK')
     compile project(':nicevideoplayer')
-    //权限管理
+
     compile project(':gallerypick')
     compile project(':WheelPicker')
     compile project(':LoadingDialog')
@@ -52,7 +71,16 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.j256.ormlite:ormlite-android:5.0'
     compile 'com.j256.ormlite:ormlite-core:5.0'
+    //权限管理
     compile 'com.yanzhenjie:permission:1.0.6'
     testCompile 'junit:junit:4.12'
+
+
+    compile files('libs/SocialSDK_QQ_Simplify.jar')
+    compile files('libs/SocialSDK_Sina_Simplify.jar')
+    compile files('libs/SocialSDK_WeChat_Simplify.jar')
+    compile files('libs/umeng_social_api.jar')
+    compile files('libs/umeng_social_net.jar')
+    compile files('libs/umeng_social_tool.jar')
 }
 
