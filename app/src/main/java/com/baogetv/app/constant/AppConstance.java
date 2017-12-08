@@ -23,4 +23,13 @@ public class AppConstance {
     public static final String KEY_USER_DETAIL_BEAN = "USER_DETAIL_BEAN";
     public static final String KEY_VIDEO_ID = "KEY_VIDEO_ID";
     public static final String KEY_VIDEO_DETAIL = "KEY_VIDEO_DETAIL";
+
+    public static final String QQ_APP_ID = "1106573350";
+    public static final String QQ_APP_KEY = "lRbPqYJ3y7nICy8I";
+
+    public static final String WEICHAT_APP_ID = "wx5f458bd391d3d86f";
+    public static final String WEICHAT_APP_SECRET = null;
+
+    public static final String SINA_APP_ID = "wx5f458bd391d3d86f";
+    public static final String SINA_APP_SECRET = null;
 }
