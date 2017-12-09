@@ -13,6 +13,7 @@ import com.baogetv.app.model.usercenter.customview.MineLineItemView;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.util.SettingManager;
+import com.baogetv.app.util.SystemUtil;
 
 import java.util.List;
 
@@ -81,6 +82,8 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
         advice.setOnClickListener(this);
         curVersion = (MineLineItemView) findViewById(R.id.current_version);
         curVersion.setOnClickListener(this);
+        String versionName = SystemUtil.getAppVersionName(getApplicationContext());
+        curVersion.setVersion(versionName);
         userLicense = (MineLineItemView) findViewById(R.id.user_license);
         userLicense.setOnClickListener(this);
         versionRight = (MineLineItemView) findViewById(R.id.version_right);
