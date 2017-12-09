@@ -88,6 +88,20 @@ public class LoginActivity extends BaseActivity
                 wxLogin();
             }
         });
+        sinaBtn = findViewById(R.id.sina_login);
+        sinaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sinaLogin();
+            }
+        });
+        qqBtn = findViewById(R.id.qq_login);
+        qqBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                qqLogin();
+            }
+        });
     }
 
     private void tryLogin() {
@@ -202,6 +216,14 @@ public class LoginActivity extends BaseActivity
     public void wxLogin() {
         UMShareAPI.get(getApplication()).doOauthVerify(LoginActivity.this, SHARE_MEDIA.WEIXIN, this);
     }
+    //QQ登录
+    public void qqLogin() {
+        UMShareAPI.get(getApplication()).doOauthVerify(this, SHARE_MEDIA.QQ, this);
+    }
+    //sina登录
+    public void sinaLogin() {
+        UMShareAPI.get(getApplication()).doOauthVerify(this, SHARE_MEDIA.SINA, this);
+    }
 
     /**
      * @desc 授权开始的回调
@@ -249,6 +271,18 @@ public class LoginActivity extends BaseActivity
                         String nickName = map.get("name");
                         String pic = map.get("iconurl");
                         loginPartner(LoginManager.KEY_WECHAT, openid, nickName, pic);
+                        break;
+                    case QQ:
+                        openid = map.get("openid");
+                        nickName = map.get("name");
+                        pic = map.get("iconurl");
+                        loginPartner(LoginManager.KEY_QQ, openid, nickName, pic);
+                        break;
+                    case SINA:
+                        openid = map.get("uid");
+                        nickName = map.get("name");
+                        pic = map.get("iconurl");
+                        loginPartner(LoginManager.KEY_SINA, openid, nickName, pic);
                         break;
                 }
             }

@@ -57,8 +57,9 @@ public class BaoGeApplication extends Application {
         Config.DEBUG = true;
         QueuedWork.isUseThreadPool = false;
         UMShareAPI.get(this);
-        //微信 appid appsecret   在微信开放平台申请
+
         PlatformConfig.setWeixin(AppConstance.WEICHAT_APP_ID, AppConstance.WEICHAT_APP_SECRET);
+        PlatformConfig.setQQZone(AppConstance.QQ_APP_ID, AppConstance.QQ_APP_KEY);
 
         StyleManager s = new StyleManager();
         s.Anim(false).repeatTime(0).contentSize(-1).intercept(true);
