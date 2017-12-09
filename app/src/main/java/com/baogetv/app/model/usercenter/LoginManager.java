@@ -95,7 +95,11 @@ public class LoginManager {
     }
 
     public static String getDeviceToken(Context context) {
-        return (String) SPUtils.get(context, KEY_DEVICE_TOKEN, "");
+        if (SPUtils.contains(context, KEY_DEVICE_TOKEN)) {
+            return (String) SPUtils.get(context, KEY_DEVICE_TOKEN, "");
+        } else {
+            return null;
+        }
     }
 
     public static void putUserToken(Context context, String token) {
@@ -103,7 +107,11 @@ public class LoginManager {
     }
 
     public static String getUserToken(Context context) {
-        return (String) SPUtils.get(context, KEY_USER_TOKEN, "");
+        if (SPUtils.contains(context, KEY_USER_TOKEN)) {
+            return (String) SPUtils.get(context, KEY_USER_TOKEN, "");
+        } else {
+            return null;
+        }
     }
 
     public static void putUserID(Context context, String uid) {
