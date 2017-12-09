@@ -46,6 +46,7 @@ import retrofit2.Call;
 
 import static com.baogetv.app.constant.AppConstance.KEY_LEVEL_LIST;
 import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
 import static com.baogetv.app.model.usercenter.activity.NameModifyActivity.REQUEST_CODE_NAME_MODIFY;
 
 public class UserInfoActivity extends BaseTitleActivity implements View.OnClickListener {
@@ -331,33 +332,37 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
     }
 
     private void freshInfo() {
-        if (userDetailBean != null) {
-            Glide.with(this)
-                    .load(userDetailBean.getPic_url())
-                    .into(userIconLine.getRightImageView());
-            userGradeLine.setUserLever(userDetailBean);
-            userNickNameLine.setVersion(userDetailBean.getUsername());
-            int sex = 0;
-            try {
-                sex = Integer.parseInt(userDetailBean.getSex());
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
+        if (!LoginManager.hasLogin(getApplicationContext())) {
+            LoginManager.startLogin(this);
+        } else {
+            if (userDetailBean != null) {
+                Glide.with(this)
+                        .load(userDetailBean.getPic_url())
+                        .into(userIconLine.getRightImageView());
+                userGradeLine.setUserLever(userDetailBean);
+                userNickNameLine.setVersion(userDetailBean.getUsername());
+                int sex = 0;
+                try {
+                    sex = Integer.parseInt(userDetailBean.getSex());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                switch (sex) {
+                    case 0:
+                        userSexLine.setVersion("保密");
+                        break;
+                    case 1:
+                        userSexLine.setVersion("男");
+                        break;
+                    case 2:
+                        userSexLine.setVersion("女");
+                        break;
+                }
+                userBirthdayLine.setVersion(userDetailBean.getBirthday());
+                String bodyInfo = userDetailBean.getHeight() + "cm-"
+                        + userDetailBean.getWeight() + "kg-" + userDetailBean.getBfr() + "%bfr";
+                userBodyLine.setVersion(bodyInfo);
             }
-            switch (sex) {
-                case 0:
-                    userSexLine.setVersion("保密");
-                    break;
-                case 1:
-                    userSexLine.setVersion("男");
-                    break;
-                case 2:
-                    userSexLine.setVersion("女");
-                    break;
-            }
-            userBirthdayLine.setVersion(userDetailBean.getBirthday());
-            String bodyInfo = userDetailBean.getHeight() + "cm-"
-                    + userDetailBean.getWeight() + "kg-" + userDetailBean.getBfr() + "%bfr";
-            userBodyLine.setVersion(bodyInfo);
         }
     }
 
@@ -407,6 +412,8 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
 
                 @Override
                 public void onFailed(String error, int state) {
+                    LoginManager.cleanUserToken(getApplicationContext());
+                    userDetailBean = null;
                     showShortToast(error);
                 }
             });
@@ -420,6 +427,10 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
             if (resultCode == RESULT_OK) {
                 fetchUserInfo();
                 setResult(RESULT_OK);
+            }
+        } else if (requestCode == REQUEST_CODE_LOGIN_ACTIVITY) {
+            if (resultCode == RESULT_OK) {
+                fetchUserInfo();
             }
         }
     }

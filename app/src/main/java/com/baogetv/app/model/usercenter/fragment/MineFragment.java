@@ -335,6 +335,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
                 @Override
                 public void onFailed(String error, int state) {
+                    LoginManager.cleanUserToken(mActivity);
+                    detailBean = null;
+                    updateInfo();
                     showShortToast(error);
                 }
             });

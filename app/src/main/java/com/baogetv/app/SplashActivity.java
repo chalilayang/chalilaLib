@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.ResponseBean;
@@ -22,6 +23,7 @@ import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
 
 public class SplashActivity extends BaseActivity {
 
+    private static final String TAG = "SplashActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +82,9 @@ public class SplashActivity extends BaseActivity {
 
                 @Override
                 public void onFailed(String error, int state) {
+                    Log.i(TAG, "onFailed: " + state + " " + error);
+                    showShortToast(error);
+                    LoginManager.cleanUserToken(getApplicationContext());
                     startVideoLoginActivity();
                 }
             });
