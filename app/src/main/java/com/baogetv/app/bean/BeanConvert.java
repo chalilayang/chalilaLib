@@ -69,7 +69,7 @@ public class BeanConvert {
             try {
                 playCount = Integer.parseInt(data.getCount());
             } catch (NumberFormatException e) {
-                Log.i(TAG, "getIVideoData: " + e);;
+                Log.i(TAG, "getIVideoData: " + e);
             }
         }
         String desc = data.getIntro();
