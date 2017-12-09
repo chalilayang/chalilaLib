@@ -1,5 +1,7 @@
 package com.baogetv.app.apiinterface;
 
+import com.baogetv.app.bean.AdvBean;
+import com.baogetv.app.bean.AdvListBean;
 import com.baogetv.app.bean.ChannelDetailBean;
 import com.baogetv.app.bean.ChannelListBean;
 import com.baogetv.app.bean.ResponseBean;
@@ -96,4 +98,42 @@ public interface VideoListService {
     @POST("index.php?s=/Channel/index")
     Call<ResponseBean<List<ChannelListBean>>> getChannelList(
             @Field("name") String name, @Field("intro") String intro);
+
+    /**
+     * 广告列表
+     *
+     * @param title：（广告标题）
+     * @param type_id：（广告类型ID：1.引导页 2.启动广告 3.文字广告）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Adv/index")
+    Call<ResponseBean<List<AdvListBean>>> getAdvList(
+            @Field("title") String title, @Field("type_id") String type_id);
+
+    /**
+     * 广告详情
+     *
+     * @param id：（广告ID）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Adv/detail")
+    Call<ResponseBean<AdvBean>> getAdvDetail(
+            @Field("id") String id);
+
+
+    /**
+     * 广告点击成功调用
+     *
+     * @param token：（Token，登录凭证）
+     * @param id：（广告ID）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Adv/advclick")
+    Call<ResponseBean<List<Object>>> AdvClick(
+            @Field("token") String token,
+            @Field("id") String id);
+
 }

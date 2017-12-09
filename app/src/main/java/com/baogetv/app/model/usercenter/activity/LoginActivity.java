@@ -228,9 +228,8 @@ public class LoginActivity extends BaseActivity
             Log.e("TAG", "====" + next.getKey() + "=======" + next.getValue());
         }
         //当授权成功后，去获取用户信息的方法里面获取参数
-        UMShareAPI.get(getApplicationContext()).getPlatformInfo(LoginActivity.this, platform, new UMAuthListener() {
-
-
+        UMShareAPI.get(getApplicationContext()).getPlatformInfo(LoginActivity.this,
+                platform, new UMAuthListener() {
             @Override
             public void onStart(SHARE_MEDIA share_media) {
 

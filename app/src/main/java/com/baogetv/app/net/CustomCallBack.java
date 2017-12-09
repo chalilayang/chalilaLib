@@ -20,7 +20,7 @@ public abstract class CustomCallBack<T> implements Callback<ResponseBean<T>> {
             if (responseBean != null) {
                 onFailed(responseBean.getMsg(), responseBean.getStatus());
             } else {
-                onFailed("responseBean == null", responseBean.getStatus());
+                onFailed("responseBean == null", -1);
             }
         }
     }
