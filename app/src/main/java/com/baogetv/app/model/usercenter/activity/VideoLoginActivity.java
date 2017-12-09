@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.bean.UserDetailBean;
+import com.baogetv.app.customview.VideoPlayerView;
 import com.baogetv.app.model.homepage.HomePageActivity;
 import com.baogetv.app.model.usercenter.LoginManager;
 
@@ -19,6 +20,7 @@ public class VideoLoginActivity extends BaseActivity {
 
     private View loginBtn;
     private View registerBtn;
+    private VideoPlayerView playerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,7 @@ public class VideoLoginActivity extends BaseActivity {
     }
 
     private void init() {
+        playerView = (VideoPlayerView) findViewById(R.id.player_view);
         loginBtn = findViewById(R.id.login_tv);
         if (loginBtn != null) {
             loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +73,14 @@ public class VideoLoginActivity extends BaseActivity {
                 UserDetailBean bean = data.getParcelableExtra(KEY_USER_DETAIL_BEAN);
                 startHomeActivity(bean);
             }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (playerView != null) {
+            playerView.release();
         }
     }
 
