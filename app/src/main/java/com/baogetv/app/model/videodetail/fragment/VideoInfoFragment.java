@@ -141,7 +141,8 @@ public class VideoInfoFragment extends BaseFragment
         String cid = videoDetailData.videoDetailBean.getChannel_id();
         VideoListService listService
                 = RetrofitManager.getInstance().createReq(VideoListService.class);
-        Call<ResponseBean<List<VideoListBean>>> call = listService.getVideoList(cid, null, null, null, null);
+        Call<ResponseBean<List<VideoListBean>>> call = listService.getVideoList(
+                cid, null, null, null, null, null, null);
         if (call != null) {
             call.enqueue(new CustomCallBack<List<VideoListBean>>() {
                 @Override

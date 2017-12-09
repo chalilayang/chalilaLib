@@ -32,6 +32,7 @@ public abstract class BaseItemAdapter<T, D extends ItemViewHolder<T>>
 
     public void setHasMoreData(boolean hasMoreData) {
         this.hasMoreData = hasMoreData;
+        notifyItemChanged(getItemCount()-1);
     }
 
     public void setNeedLoadMore(boolean need) {

@@ -37,18 +37,21 @@ import static com.baogetv.app.constant.AppConstance.KEY_VIDEO_ID;
 
 public class ItemFragment extends BaseItemFragment
         implements SwipeRefreshLayout.OnRefreshListener,
-        ItemViewHolder.ItemClickListener<VideoListAdapter.IVideoData>{
+        ItemViewHolder.ItemClickListener<VideoListAdapter.IVideoData>,
+        OnLoadMoreListener.DataLoadingSubject {
 
     private static final String TAG = "ItemFragment";
     private static final String PAGE_DATA = "PAGE_DATA";
+    private static final int LOAD_PAGE_SIZE = 10;
     private PageItemData pageData;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
     private View contentView;
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     private VideoListAdapter recyclerViewAdapter;
     private List<VideoListAdapter.IVideoData> iVideoDatas;
     private RecyclerViewDivider recyclerViewDivider;
+    private OnLoadMoreListener onLoadMoreListener;
 
     public ItemFragment() {
         iVideoDatas = new ArrayList<>();
@@ -75,6 +78,19 @@ public class ItemFragment extends BaseItemFragment
             layoutManager = new LinearLayoutManager(getActivity());
             recyclerViewAdapter = new VideoListAdapter(getActivity());
             recyclerViewAdapter.setItemClick(this);
+            onLoadMoreListener = new OnLoadMoreListener(layoutManager, this) {
+                @Override
+                public void onLoadMore(int totalItemCount) {
+                    Log.i(TAG, "onLoadMore: " + totalItemCount);
+                    int more = totalItemCount % LOAD_PAGE_SIZE;
+                    int pageNum = totalItemCount / LOAD_PAGE_SIZE;
+                    if (more != 0) {
+                        recyclerViewAdapter.setHasMoreData(false);
+                    } else {
+                        getVideoList(pageData, pageNum);
+                    }
+                }
+            };
         }
         Log.i(TAG, "onCreate: " + pageData.getTitle());
     }
@@ -88,6 +104,7 @@ public class ItemFragment extends BaseItemFragment
                 recyclerView = (RecyclerView) view;
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(recyclerViewAdapter);
+                recyclerView.addOnScrollListener(onLoadMoreListener);
             } else if (view instanceof SwipeRefreshLayout ){
                 refreshLayout = (SwipeRefreshLayout) view;
                 recyclerView = refreshLayout.findViewById(R.id.list);
@@ -98,11 +115,11 @@ public class ItemFragment extends BaseItemFragment
                 recyclerView.addItemDecoration(recyclerViewDivider);
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(recyclerViewAdapter);
+                recyclerView.addOnScrollListener(onLoadMoreListener);
                 refreshLayout.setOnRefreshListener(this);
             }
             contentView = view;
         }
-        getVideoList(pageData);
         Log.i(TAG, "onCreateView: " + pageData.getTitle());
         return contentView;
     }
@@ -110,7 +127,7 @@ public class ItemFragment extends BaseItemFragment
     @Override
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");
-        getVideoList(pageData);
+        getVideoList(pageData, 0);
     }
 
     @Override
@@ -121,18 +138,34 @@ public class ItemFragment extends BaseItemFragment
         getActivity().startActivity(intent);
     }
 
-    public void getVideoList(PageItemData itemData) {
+    @Override
+    public boolean isLoading() {
+        return isLoadingData;
+    }
+
+    private boolean isLoadingData;
+    @Override
+    public boolean needLoadMore() {
+        return true;
+    }
+
+    public void getVideoList(PageItemData itemData, final int pageNum) {
         if (itemData.getType() == PageItemData.TYPE_ALL_VIDEO) {
             VideoListService listService
                     = RetrofitManager.getInstance().createReq(VideoListService.class);
             Call<ResponseBean<List<VideoListBean>>> listBeanCall
-                    = listService.getVideoList(null, null, null, null, null);
+                    = listService.getVideoList(
+                            null, null, null, null, null,
+                    String.valueOf(pageNum), String.valueOf(LOAD_PAGE_SIZE));
             if (listBeanCall != null) {
                 refreshLayout.setRefreshing(true);
+                isLoadingData = true;
                 listBeanCall.enqueue(new CustomCallBack<List<VideoListBean>>() {
                     @Override
                     public void onSuccess(List<VideoListBean> listBeen, String msg, int state) {
-                        iVideoDatas.clear();
+                        if (pageNum == 0) {
+                            iVideoDatas.clear();
+                        }
                         if (listBeen != null) {
                             for (int index = 0, count = listBeen.size(); index < count; index ++) {
                                 VideoListBean bean = listBeen.get(index);
@@ -143,11 +176,13 @@ public class ItemFragment extends BaseItemFragment
                         }
                         recyclerViewAdapter.update(iVideoDatas);
                         refreshLayout.setRefreshing(false);
+                        isLoadingData = false;
                     }
                     @Override
                     public void onFailed(String error, int state) {
                         showShortToast(error);
                         refreshLayout.setRefreshing(false);
+                        isLoadingData = false;
                     }
                 });
             }
@@ -159,22 +194,28 @@ public class ItemFragment extends BaseItemFragment
             Call<ResponseBean<List<VideoRankListBean>>> listBeanCall = null;
             switch (itemData.getType()) {
                 case PageItemData.TYPE_RANK_VIDEO:
-                    listBeanCall = listService.getRankVideoList(0);
+                    listBeanCall = listService.getRankVideoList(0,
+                            String.valueOf(pageNum), String.valueOf(LOAD_PAGE_SIZE));
                     break;
                 case PageItemData.TYPE_RANK_VIDEO_WEEK:
-                    listBeanCall = listService.getRankVideoList(1);
+                    listBeanCall = listService.getRankVideoList(1,
+                            String.valueOf(pageNum), String.valueOf(LOAD_PAGE_SIZE));
                     break;
                 case PageItemData.TYPE_RANK_VIDEO_MONTH:
-                    listBeanCall = listService.getRankVideoList(2);
+                    listBeanCall = listService.getRankVideoList(2,
+                            String.valueOf(pageNum), String.valueOf(LOAD_PAGE_SIZE));
                     break;
 
             }
             if (listBeanCall != null) {
                 refreshLayout.setRefreshing(true);
+                isLoadingData = true;
                 listBeanCall.enqueue(new CustomCallBack<List<VideoRankListBean>>() {
                     @Override
                     public void onSuccess(List<VideoRankListBean> listBeen, String msg, int state) {
-                        iVideoDatas.clear();
+                        if (pageNum == 0) {
+                            iVideoDatas.clear();
+                        }
                         if (listBeen != null) {
                             for (int index = 0, count = listBeen.size(); index < count; index ++) {
                                 VideoRankListBean bean = listBeen.get(index);
@@ -185,12 +226,14 @@ public class ItemFragment extends BaseItemFragment
                         }
                         recyclerViewAdapter.update(iVideoDatas);
                         refreshLayout.setRefreshing(false);
+                        isLoadingData = false;
                     }
 
                     @Override
                     public void onFailed(String error, int state) {
                         showShortToast(error);
                         refreshLayout.setRefreshing(false);
+                        isLoadingData = false;
                     }
                 });
             }
@@ -210,13 +253,17 @@ public class ItemFragment extends BaseItemFragment
             VideoListService listService
                     = RetrofitManager.getInstance().createReq(VideoListService.class);
             Call<ResponseBean<List<VideoListBean>>> listBeanCall
-                    = listService.getVideoList(null, null, searchKey, orderType, "0");
+                    = listService.getVideoList(null, null, searchKey, orderType, "0",
+                    String.valueOf(pageNum), String.valueOf(LOAD_PAGE_SIZE));
             if (listBeanCall != null) {
                 refreshLayout.setRefreshing(true);
+                isLoadingData = true;
                 listBeanCall.enqueue(new CustomCallBack<List<VideoListBean>>() {
                     @Override
                     public void onSuccess(List<VideoListBean> listBeen, String msg, int state) {
-                        iVideoDatas.clear();
+                        if (pageNum == 0) {
+                            iVideoDatas.clear();
+                        }
                         if (listBeen != null) {
                             for (int index = 0, count = listBeen.size(); index < count; index++) {
                                 VideoListBean bean = listBeen.get(index);
@@ -227,12 +274,14 @@ public class ItemFragment extends BaseItemFragment
                         }
                         recyclerViewAdapter.update(iVideoDatas);
                         refreshLayout.setRefreshing(false);
+                        isLoadingData = false;
                     }
 
                     @Override
                     public void onFailed(String error, int state) {
                         showShortToast(error);
                         refreshLayout.setRefreshing(false);
+                        isLoadingData = false;
                     }
                 });
             }
@@ -248,19 +297,24 @@ public class ItemFragment extends BaseItemFragment
             switch (itemData.getType()) {
                 case PageItemData.TYPE_CHANNEL_HOT:
                     listBeanCall = listService.getVideoList(
-                            channelItemData.getChannelId(), null, null, "1", null);
+                            channelItemData.getChannelId(), null, null, "1", null,
+                            String.valueOf(pageNum), String.valueOf(LOAD_PAGE_SIZE));
                     break;
                 case PageItemData.TYPE_CHANNEL_DATE:
                     listBeanCall = listService.getVideoList(
-                            channelItemData.getChannelId(), null, null, "2", null);
+                            channelItemData.getChannelId(), null, null, "2", null,
+                            String.valueOf(pageNum), String.valueOf(LOAD_PAGE_SIZE));
                     break;
             }
             if (listBeanCall != null) {
                 refreshLayout.setRefreshing(true);
+                isLoadingData = true;
                 listBeanCall.enqueue(new CustomCallBack<List<VideoListBean>>() {
                     @Override
                     public void onSuccess(List<VideoListBean> listBeen, String msg, int state) {
-                        iVideoDatas.clear();
+                        if (pageNum == 0) {
+                            iVideoDatas.clear();
+                        }
                         if (listBeen != null) {
                             for (int index = 0, count = listBeen.size(); index < count; index ++) {
                                 VideoListBean bean = listBeen.get(index);
@@ -271,11 +325,13 @@ public class ItemFragment extends BaseItemFragment
                         }
                         recyclerViewAdapter.update(iVideoDatas);
                         refreshLayout.setRefreshing(false);
+                        isLoadingData = false;
                     }
 
                     @Override
                     public void onFailed(String error, int state) {
                         refreshLayout.setRefreshing(false);
+                        isLoadingData = false;
                         showShortToast(error);
                     }
                 });
@@ -291,10 +347,13 @@ public class ItemFragment extends BaseItemFragment
                     = userApiService.getCollectList(null, channelItemData.getMemberId());
             if (call != null) {
                 refreshLayout.setRefreshing(true);
+                isLoadingData = true;
                 call.enqueue(new CustomCallBack<List<CollectBean>>() {
                     @Override
                     public void onSuccess(List<CollectBean> data, String msg, int state) {
-                        iVideoDatas.clear();
+                        if (pageNum == 0) {
+                            iVideoDatas.clear();
+                        }
                         if (data != null) {
                             for (int index = 0, count = data.size(); index < count; index ++) {
                                 CollectBean bean = data.get(index);
@@ -305,11 +364,13 @@ public class ItemFragment extends BaseItemFragment
                         }
                         recyclerViewAdapter.update(iVideoDatas);
                         refreshLayout.setRefreshing(false);
+                        isLoadingData = false;
                     }
 
                     @Override
                     public void onFailed(String error, int state) {
                         refreshLayout.setRefreshing(false);
+                        isLoadingData = false;
                         showShortToast(error);
                     }
                 });

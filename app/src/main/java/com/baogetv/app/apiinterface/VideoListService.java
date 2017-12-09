@@ -28,6 +28,8 @@ public interface VideoListService {
      * @param keyword：（关键字（标题/简介模糊搜索））
      * @param orderby：（排序依据：0.默认排序     1.按播放量排序 2.按发布时间排序）
      * @param ordertype：（排序类型：0.降序     1.升序）
+     * @param p：（分页，第几页）
+     * @param r：（分页，每页显示多少条数据）
      * @return
      */
     @FormUrlEncoded
@@ -38,19 +40,28 @@ public interface VideoListService {
             @Field("tag_id") String tag_id,
             @Field("keyword") String keyword,
             @Field("orderby") String orderby,
-            @Field("ordertype") String ordertype);
+            @Field("ordertype") String ordertype,
+            @Field("p") String p,
+            @Field("r") String r);
 
     /**
      * 排行榜
-     * @param type 排行榜类型：0.总榜 1.周榜 2.月榜
+     *
+     * @param type             排行榜类型：0.总榜 1.周榜 2.月榜
+     * @param p：（分页，第几页）
+     * @param r：（分页，每页显示多少条数据）
      * @return
      */
     @FormUrlEncoded
     @POST("index.php?s=/Video/ranking")
-    Call<ResponseBean<List<VideoRankListBean>>> getRankVideoList(@Field("type") int type);
+    Call<ResponseBean<List<VideoRankListBean>>> getRankVideoList(
+            @Field("type") int type,
+            @Field("p") String p,
+            @Field("r") String r);
 
     /**
      * 视频详情
+     *
      * @param id
      * @return
      */
@@ -66,6 +77,7 @@ public interface VideoListService {
 
     /**
      * 频道详情
+     *
      * @param id（频道ID）
      * @return
      */
@@ -75,6 +87,7 @@ public interface VideoListService {
 
     /**
      * 频道列表
+     *
      * @param name：（频道名称）
      * @param intro：（频道简介）
      * @return
