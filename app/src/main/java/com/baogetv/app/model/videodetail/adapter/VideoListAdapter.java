@@ -28,6 +28,7 @@ public class VideoListAdapter
         super(context);
         imageHeight = ScaleCalculator.getInstance(mContext).scaleWidth(420);
         videoDescFormat = mContext.getResources().getString(R.string.video_desc_format);
+        setNeedLoadMore(true);
     }
 
     @Override
@@ -39,14 +40,24 @@ public class VideoListAdapter
         return new ViewHolder(view);
     }
 
+    @Override
+    public ViewHolder createMoreViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.footer, parent, false);
+        view.getLayoutParams().height = ScaleCalculator.getInstance(mContext).scaleWidth(60);
+        return new ViewHolder(view);
+    }
+
     public class ViewHolder extends ItemViewHolder<IVideoData> {
         public final LogoImageView mContentView;
         public final TextView videoTitle;
         public final TextView videoDesc;
         public final TextView videoDuration;
 
+        public final TextView loadMoreTip;
         public ViewHolder(View view) {
             super(view);
+            loadMoreTip = view.findViewById(R.id.load_more_tip);
             mContentView = (LogoImageView) view.findViewById(R.id.img);
             videoTitle = (TextView) view.findViewById(R.id.video_title);
             videoDesc = (TextView) view.findViewById(R.id.video_desc);
@@ -55,17 +66,22 @@ public class VideoListAdapter
 
         @Override
         public void bindData(IVideoData data, int pos) {
-            mContentView.setChnLogoVisible(true);
-            videoTitle.setText(data.getTitle());
-            String desc
-                    = String.format(videoDescFormat, data.getPlayCount(), data.getPublishTime());
-            videoDesc.setText(desc);
-            videoDuration.setText(data.getDuration());
-            String pic = data.getPicUrl();
-            Glide.with(mContext)
-                    .load(pic)
-                    .crossFade()
-                    .into(mContentView);
+            if (loadMoreTip != null) {
+                loadMoreTip.setText(hasMoreData?loadingMore : noMoreData);
+            } else {
+                mContentView.setChnLogoVisible(true);
+                videoTitle.setText(data.getTitle());
+                String desc
+                        = String.format(videoDescFormat, data.getPlayCount(), data.getPublishTime());
+                videoDesc.setText(desc);
+                videoDuration.setText(data.getDuration());
+                String pic = data.getPicUrl();
+                mContentView.setChnLogoVisible(data.isCHN());
+                Glide.with(mContext)
+                        .load(pic)
+                        .crossFade()
+                        .into(mContentView);
+            }
         }
     }
 
