@@ -14,6 +14,7 @@ import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.bean.AdvBean;
 import com.baogetv.app.bean.AdvListBean;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.CommentCountEvent;
 import com.baogetv.app.net.CustomCallBack;
@@ -33,6 +34,7 @@ public class VideoDetailFragment extends PagerFragment {
 
     private VideoDetailData videoDetailData;
     private TextView advBtn;
+    private AdvBean advBean;
     public static VideoDetailFragment newInstance(VideoDetailData data) {
         VideoDetailFragment fragment = new VideoDetailFragment();
         Bundle args = new Bundle();
@@ -81,7 +83,9 @@ public class VideoDetailFragment extends PagerFragment {
         advBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (advBean != null) {
+                    advClick(advBean.getId());
+                }
             }
         });
     }
@@ -123,8 +127,28 @@ public class VideoDetailFragment extends PagerFragment {
                 @Override
                 public void onSuccess(AdvBean data, String msg, int state) {
                     if (data != null) {
+                        advBean = data;
                         advBtn.setText(data.getTitle());
                     }
+                }
+
+                @Override
+                public void onFailed(String error, int state) {
+
+                }
+            });
+        }
+    }
+
+    private void advClick(String id) {
+        VideoListService service = RetrofitManager.getInstance().createReq(VideoListService.class);
+        String token = LoginManager.getUserToken(mActivity);
+        Call<ResponseBean<List<Object>>> call = service.advClick(token, id);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<List<Object>>() {
+                @Override
+                public void onSuccess(List<Object> data, String msg, int state) {
+
                 }
 
                 @Override

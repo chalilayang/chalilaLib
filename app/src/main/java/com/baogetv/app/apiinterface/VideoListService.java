@@ -132,7 +132,7 @@ public interface VideoListService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Adv/advclick")
-    Call<ResponseBean<List<Object>>> AdvClick(
+    Call<ResponseBean<List<Object>>> advClick(
             @Field("token") String token,
             @Field("id") String id);
 
