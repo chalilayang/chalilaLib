@@ -2,12 +2,13 @@ package com.baogetv.app.customview;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
-import android.content.res.AssetManager;
 import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.baogetv.app.R;
 
 import java.io.IOException;
 
@@ -20,8 +21,6 @@ public class VideoPlayerView extends SurfaceView
         MediaPlayer.OnPreparedListener {
     private static final String TAG = VideoPlayerView.class.getSimpleName();
     private MediaPlayer videoPlayer;
-    private MediaPlayer musicPlayer;
-    private boolean surfaceReady;
     private SurfaceHolder surfaceHolder;
 
     public VideoPlayerView(Context context) {
@@ -41,28 +40,21 @@ public class VideoPlayerView extends SurfaceView
 
     private void init() {
         getHolder().addCallback(this);
-        videoPlayer = new MediaPlayer();
-        surfaceReady = false;
-        videoPlayer = new MediaPlayer();
-        videoPlayer.setOnPreparedListener(this);
     }
 
     private void play() {
-        if (surfaceReady) {
-            try {
-                videoPlayer.reset();
-                videoPlayer.setSurface(surfaceHolder.getSurface());
-                AssetManager assetManager = this.getContext().getAssets();
-                AssetFileDescriptor fileDescriptor = assetManager.openFd("video.mp4");
-                videoPlayer.setDataSource(
-                        fileDescriptor.getFileDescriptor(),fileDescriptor.getStartOffset(),
-                        fileDescriptor.getStartOffset());
-                videoPlayer.prepareAsync();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            videoPlayer = new MediaPlayer();
+            videoPlayer.setOnPreparedListener(this);
+            videoPlayer.setSurface(surfaceHolder.getSurface());
+            AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.video);
+            videoPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(),
+                    file.getLength());
+            videoPlayer.prepareAsync();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -76,16 +68,9 @@ public class VideoPlayerView extends SurfaceView
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Log.i(TAG, "surfaceCreated: ddddd ");
+        Log.i(TAG, "surfaceCreated:");
         surfaceHolder = holder;
-        surfaceReady = true;
         play();
-    }
-
-    private void pause() {
-        if (videoPlayer != null) {
-            videoPlayer.pause();
-        }
     }
 
     @Override
@@ -96,18 +81,13 @@ public class VideoPlayerView extends SurfaceView
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         surfaceHolder = null;
-        surfaceReady = false;
-        pause();
+        release();
     }
 
     public void release() {
         if (videoPlayer != null) {
             videoPlayer.release();
             videoPlayer = null;
-        }
-        if (musicPlayer != null) {
-            musicPlayer.release();
-            musicPlayer = null;
         }
     }
 }
