@@ -67,38 +67,40 @@
                         android:layout_gravity="center_vertical"/>
 
                     <com.chalilayang.scaleview.ScaleTextView
+                        android:id="@+id/user_medal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/size_20"
+                        android:paddingLeft="@dimen/size_20"
+                        android:paddingRight="@dimen/size_20"
+                        android:maxLines="1"
+                        android:background="@drawable/search_label_bg"
+                        android:text="@string/user_grade_test_desc"
+                        android:textAppearance="@style/search_label"/>
+
+                    <com.chalilayang.scaleview.ScaleTextView
                         android:id="@+id/user_grade_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:paddingLeft="@dimen/size_20"
+                        android:paddingRight="@dimen/size_20"
                         android:layout_marginLeft="@dimen/size_20"
-                        android:text="@string/user_grade_test_desc"
+                        android:maxLines="1"
+                        android:background="@drawable/search_label_bg"
+                        android:text="@string/normal_user"
                         android:textAppearance="@style/search_label"/>
                 </com.chalilayang.scaleview.ScaleLinearLayout>
 
-                <com.chalilayang.scaleview.ScaleLinearLayout
-                    android:layout_width="match_parent"
+                <com.chalilayang.scaleview.ScaleTextView
+                    android:id="@+id/lazy_man"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/size_30"
-                    android:orientation="horizontal">
-
-                    <com.chalilayang.scaleview.ScaleTextView
-                        android:id="@+id/user_mobile_num"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:textAppearance="@style/search_label"/>
-
-                    <com.chalilayang.scaleview.ScaleTextView
-                        android:id="@+id/change_mobile_num"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/size_20"
-                        android:text="@string/change_mobile_num"
-                        android:textColor="@color/reshape_red"
-                        android:textSize="@dimen/size_24"/>
-                </com.chalilayang.scaleview.ScaleLinearLayout>
+                    android:text="@string/lazy_man"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="@style/search_label"/>
             </com.chalilayang.scaleview.ScaleLinearLayout>
         </com.chalilayang.scaleview.ScaleRelativeLayout>
 
