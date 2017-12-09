@@ -84,7 +84,7 @@ public class BeanConvert {
         String publishTime = data.getAdd_time();
         String playCount = data.getPlay();
         String duration = data.getLength();
-        String vid = data.getId();
+        String vid = data.getVideo_id();
         VideoData result = new VideoData(picUrl, title, publishTime, playCount, duration, vid);
         try {
             int isChn = Integer.parseInt(data.getIs_cnword());
