@@ -31,6 +31,24 @@ import retrofit2.http.POST;
  */
 
 public interface UserApiService {
+
+    /**
+     * 三方登录
+     *
+     * @param type：（登录方式：weixin/qq/weibo(默认为：weixin)）
+     * @param authentication：（登录凭证字符串）
+     * @param username：（昵称）
+     * @param pic_url：（图片URL）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Member/otherlogin")
+    Call<ResponseBean<UserDetailBean>> loginPartner(
+            @Field("type") String type,
+            @Field("authentication") String authentication,
+            @Field("username") String username,
+            @Field("pic_url") String pic_url);
+
     /**
      * 登录
      *

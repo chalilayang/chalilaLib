@@ -171,6 +171,32 @@ public class LoginActivity extends BaseActivity
         }
     }
 
+    private void loginPartner(String type, String openid, String name, String url) {
+        UserApiService listService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        Call<ResponseBean<UserDetailBean>> beanCall
+                = listService.loginPartner(type, openid, name, url);
+        if (beanCall != null) {
+            isFetchingResult = true;
+            beanCall.enqueue(new CustomCallBack<UserDetailBean>() {
+                @Override
+                public void onSuccess(UserDetailBean data, String msg, int state) {
+                    isFetchingResult = false;
+                    if (data != null) {
+                        LoginManager.updateDetailBean(getApplicationContext(), data);
+                        loginSuccess(data);
+                    } else {
+                        loginFailed("LoginBean null");
+                    }
+                }
+                @Override
+                public void onFailed(String error, int state) {
+                    isFetchingResult = false;
+                    loginFailed("Login fail " + error);
+                }
+            });
+        }
+    }
 
     //微信登录
     public void wxLogin() {
@@ -217,6 +243,14 @@ public class LoginActivity extends BaseActivity
                 while (iterator.hasNext()) {
                     final Map.Entry<String, String> next = iterator.next();
                     Log.e(TAG, "====" + next.getKey() + "=======" + next.getValue());
+                }
+                switch (share_media) {
+                    case WEIXIN:
+                        String openid = map.get("openid");
+                        String nickName = map.get("name");
+                        String pic = map.get("iconurl");
+                        loginPartner(LoginManager.KEY_WECHAT, openid, nickName, pic);
+                        break;
                 }
             }
 

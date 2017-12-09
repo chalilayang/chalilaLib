@@ -31,6 +31,10 @@ public class LoginManager {
     private static final String KEY_USER_TOKEN = "USER_TOKEN";
     private static final String KEY_USER_ID = "USER_ID";
 
+    public static final String KEY_WECHAT = "weixin";
+    public static final String KEY_SINA = "weibo";
+    public static final String KEY_QQ = "qq";
+
     private static UserDetailBean detailBean;
     public static boolean hasLogin(Context context) {
         String token = getUserToken(context);
