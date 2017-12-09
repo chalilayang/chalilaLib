@@ -82,8 +82,8 @@ public class ItemFragment extends BaseItemFragment
                 @Override
                 public void onLoadMore(int totalItemCount) {
                     Log.i(TAG, "onLoadMore: " + totalItemCount);
-                    int more = totalItemCount % LOAD_PAGE_SIZE;
-                    int pageNum = totalItemCount / LOAD_PAGE_SIZE;
+                    int more = iVideoDatas.size() % LOAD_PAGE_SIZE;
+                    int pageNum = iVideoDatas.size() / LOAD_PAGE_SIZE + 1;
                     if (more != 0) {
                         recyclerViewAdapter.setHasMoreData(false);
                     } else {
@@ -150,6 +150,7 @@ public class ItemFragment extends BaseItemFragment
     }
 
     public void getVideoList(PageItemData itemData, final int pageNum) {
+        Log.i(TAG, "getVideoList: " + pageNum);
         if (itemData.getType() == PageItemData.TYPE_ALL_VIDEO) {
             VideoListService listService
                     = RetrofitManager.getInstance().createReq(VideoListService.class);
@@ -163,15 +164,19 @@ public class ItemFragment extends BaseItemFragment
                 listBeanCall.enqueue(new CustomCallBack<List<VideoListBean>>() {
                     @Override
                     public void onSuccess(List<VideoListBean> listBeen, String msg, int state) {
-                        if (pageNum == 0) {
+                        if (pageNum <= 1) {
                             iVideoDatas.clear();
                         }
                         if (listBeen != null) {
-                            for (int index = 0, count = listBeen.size(); index < count; index ++) {
-                                VideoListBean bean = listBeen.get(index);
-                                VideoListAdapter.IVideoData iVideoData
-                                        = BeanConvert.getIVideoData(bean);
-                                iVideoDatas.add(iVideoData);
+                            if (listBeen.size() <= 0) {
+                                recyclerViewAdapter.setHasMoreData(false);
+                            } else {
+                                for (int index = 0, count = listBeen.size(); index < count; index ++) {
+                                    VideoListBean bean = listBeen.get(index);
+                                    VideoListAdapter.IVideoData iVideoData
+                                            = BeanConvert.getIVideoData(bean);
+                                    iVideoDatas.add(iVideoData);
+                                }
                             }
                         }
                         recyclerViewAdapter.update(iVideoDatas);
@@ -213,15 +218,19 @@ public class ItemFragment extends BaseItemFragment
                 listBeanCall.enqueue(new CustomCallBack<List<VideoRankListBean>>() {
                     @Override
                     public void onSuccess(List<VideoRankListBean> listBeen, String msg, int state) {
-                        if (pageNum == 0) {
+                        if (pageNum <= 1) {
                             iVideoDatas.clear();
                         }
                         if (listBeen != null) {
-                            for (int index = 0, count = listBeen.size(); index < count; index ++) {
-                                VideoRankListBean bean = listBeen.get(index);
-                                VideoListAdapter.IVideoData iVideoData
-                                        = BeanConvert.getIVideoData(bean);
-                                iVideoDatas.add(iVideoData);
+                            if (listBeen.size() <= 0) {
+                                recyclerViewAdapter.setHasMoreData(false);
+                            } else {
+                                for (int index = 0, count = listBeen.size(); index < count; index ++) {
+                                    VideoRankListBean bean = listBeen.get(index);
+                                    VideoListAdapter.IVideoData iVideoData
+                                            = BeanConvert.getIVideoData(bean);
+                                    iVideoDatas.add(iVideoData);
+                                }
                             }
                         }
                         recyclerViewAdapter.update(iVideoDatas);
@@ -261,15 +270,19 @@ public class ItemFragment extends BaseItemFragment
                 listBeanCall.enqueue(new CustomCallBack<List<VideoListBean>>() {
                     @Override
                     public void onSuccess(List<VideoListBean> listBeen, String msg, int state) {
-                        if (pageNum == 0) {
+                        if (pageNum <= 1) {
                             iVideoDatas.clear();
                         }
                         if (listBeen != null) {
-                            for (int index = 0, count = listBeen.size(); index < count; index++) {
-                                VideoListBean bean = listBeen.get(index);
-                                VideoListAdapter.IVideoData iVideoData
-                                        = BeanConvert.getIVideoData(bean);
-                                iVideoDatas.add(iVideoData);
+                            if (listBeen.size() <= 0) {
+                                recyclerViewAdapter.setHasMoreData(false);
+                            } else {
+                                for (int index = 0, count = listBeen.size(); index < count; index ++) {
+                                    VideoListBean bean = listBeen.get(index);
+                                    VideoListAdapter.IVideoData iVideoData
+                                            = BeanConvert.getIVideoData(bean);
+                                    iVideoDatas.add(iVideoData);
+                                }
                             }
                         }
                         recyclerViewAdapter.update(iVideoDatas);
@@ -312,15 +325,19 @@ public class ItemFragment extends BaseItemFragment
                 listBeanCall.enqueue(new CustomCallBack<List<VideoListBean>>() {
                     @Override
                     public void onSuccess(List<VideoListBean> listBeen, String msg, int state) {
-                        if (pageNum == 0) {
+                        if (pageNum <= 1) {
                             iVideoDatas.clear();
                         }
                         if (listBeen != null) {
-                            for (int index = 0, count = listBeen.size(); index < count; index ++) {
-                                VideoListBean bean = listBeen.get(index);
-                                VideoListAdapter.IVideoData iVideoData
-                                        = BeanConvert.getIVideoData(bean);
-                                iVideoDatas.add(iVideoData);
+                            if (listBeen.size() <= 0) {
+                                recyclerViewAdapter.setHasMoreData(false);
+                            } else {
+                                for (int index = 0, count = listBeen.size(); index < count; index ++) {
+                                    VideoListBean bean = listBeen.get(index);
+                                    VideoListAdapter.IVideoData iVideoData
+                                            = BeanConvert.getIVideoData(bean);
+                                    iVideoDatas.add(iVideoData);
+                                }
                             }
                         }
                         recyclerViewAdapter.update(iVideoDatas);
@@ -351,15 +368,19 @@ public class ItemFragment extends BaseItemFragment
                 call.enqueue(new CustomCallBack<List<CollectBean>>() {
                     @Override
                     public void onSuccess(List<CollectBean> data, String msg, int state) {
-                        if (pageNum == 0) {
+                        if (pageNum <= 1) {
                             iVideoDatas.clear();
                         }
                         if (data != null) {
-                            for (int index = 0, count = data.size(); index < count; index ++) {
-                                CollectBean bean = data.get(index);
-                                VideoListAdapter.IVideoData iVideoData
-                                        = BeanConvert.getIVideoData(bean);
-                                iVideoDatas.add(iVideoData);
+                            if (data.size() <= 0) {
+                                recyclerViewAdapter.setHasMoreData(false);
+                            } else {
+                                for (int index = 0, count = data.size(); index < count; index ++) {
+                                    CollectBean bean = data.get(index);
+                                    VideoListAdapter.IVideoData iVideoData
+                                            = BeanConvert.getIVideoData(bean);
+                                    iVideoDatas.add(iVideoData);
+                                }
                             }
                         }
                         recyclerViewAdapter.update(iVideoDatas);
