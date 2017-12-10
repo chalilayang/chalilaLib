@@ -431,16 +431,18 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        NiceVideoPlayerManager.instance().releaseNiceVideoPlayer();
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         /** attention to this below ,must add this**/
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (playerFragment != null) {
+            playerFragment.release();
+        }
     }
 
     /**
@@ -450,13 +452,5 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         shareAction.close();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (playerFragment != null) {
-            playerFragment.release();
-        }
     }
 }

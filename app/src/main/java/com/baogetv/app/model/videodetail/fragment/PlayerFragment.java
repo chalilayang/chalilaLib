@@ -51,7 +51,6 @@ public class PlayerFragment extends BaseFragment {
             contentView = inflater.inflate(R.layout.fragment_player, container, false);
             init(contentView);
         }
-        mNiceVideoPlayer.start();
         return contentView;
     }
 
@@ -68,7 +67,35 @@ public class PlayerFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume: ");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i(TAG, "onStart: ");
+        mNiceVideoPlayer.start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i(TAG, "onPause: ");
+        mNiceVideoPlayer.pause();
+    }
+
+    @Override
+    public void onStop() {
+        Log.i(TAG, "onStop: ");
+        super.onStop();
+    }
+
     public void release() {
-        NiceVideoPlayerManager.instance().releaseNiceVideoPlayer();
+        if (mNiceVideoPlayer != null) {
+            mNiceVideoPlayer.release();
+        }
     }
 }
