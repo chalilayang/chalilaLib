@@ -1,5 +1,7 @@
 package com.baogetv.app.constant;
 
+import com.umeng.socialize.bean.SHARE_MEDIA;
+
 /**
  * Created by chalilayang on 2017/10/18.
  */
@@ -33,4 +35,7 @@ public class AppConstance {
 
     public static final String SINA_APP_ID = "wx5f458bd391d3d86f";
     public static final String SINA_APP_SECRET = null;
+
+    public static final SHARE_MEDIA[] SHARE_LIST = {SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
+            SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SINA /*,SHARE_MEDIA.DOUBAN*/};
 }

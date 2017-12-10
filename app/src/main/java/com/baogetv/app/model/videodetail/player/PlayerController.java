@@ -14,6 +14,7 @@ import com.baogetv.app.R;
 import com.baogetv.app.customview.CustomToastUtil;
 import com.baogetv.app.model.videodetail.customview.CustomSeekBar;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
+import com.baogetv.app.model.videodetail.event.ShareEvent;
 import com.baogetv.app.util.FileUtils;
 import com.baogetv.app.util.StorageManager;
 import com.chalilayang.scaleview.ScaleTextView;
@@ -159,6 +160,8 @@ public class PlayerController extends NiceVideoPlayerController
             }
         } else if (v.getId() == R.id.player_add_collect) {
             EventBus.getDefault().post(new AddCollectEvent());
+        } else if (v.getId() == R.id.player_share) {
+            EventBus.getDefault().post(new ShareEvent());
         } else if (v == this) {
             if (mNiceVideoPlayer.isPlaying()
                     || mNiceVideoPlayer.isPaused()

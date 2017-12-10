@@ -15,6 +15,7 @@ import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.bean.AddItemBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoDetailBean;
+import com.baogetv.app.constant.AppConstance;
 import com.baogetv.app.model.usercenter.HistoryManager;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
@@ -24,12 +25,20 @@ import com.baogetv.app.model.videodetail.event.InputSendEvent;
 import com.baogetv.app.model.videodetail.event.NeedCommentEvent;
 import com.baogetv.app.model.videodetail.event.NeedReplyEvent;
 import com.baogetv.app.model.videodetail.event.PageSelectEvent;
+import com.baogetv.app.model.videodetail.event.ShareEvent;
 import com.baogetv.app.model.videodetail.fragment.PlayerFragment;
 import com.baogetv.app.model.videodetail.fragment.VideoDetailFragment;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageItemData;
 import com.baogetv.app.util.InputUtil;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.ShareContent;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.shareboard.ShareBoardConfig;
+import com.umeng.socialize.shareboard.SnsPlatform;
+import com.umeng.socialize.utils.ShareBoardlistener;
 import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -42,7 +51,7 @@ import retrofit2.Call;
 
 import static com.baogetv.app.constant.AppConstance.KEY_VIDEO_ID;
 
-public class VideoDetailActivity extends BaseActivity {
+public class VideoDetailActivity extends BaseActivity implements ShareBoardlistener, UMShareListener {
 
     private static final String TAG = "VideoDetailActivity";
     private VideoDetailFragment videoDetailFragment;
@@ -52,6 +61,11 @@ public class VideoDetailActivity extends BaseActivity {
     private EditText editText;
     private View sendBtn;
     private View editContainer;
+    private ShareContent shareContent;
+    private ShareAction shareAction = new ShareAction(VideoDetailActivity.this)
+            .setDisplayList(AppConstance.SHARE_LIST)
+            .setShareboardclickCallback(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -240,6 +254,18 @@ public class VideoDetailActivity extends BaseActivity {
         addPlayHistory(videoDetailBean);
     }
 
+    @Subscribe
+    public void handleShareEvent(ShareEvent event) {
+        Log.i(TAG, "handleShareEvent: ");
+        shareContent = new ShareContent();
+        shareContent.mText = videoDetailBean.getTitle();
+        shareContent.mFollow = "http://www.baidu.com";
+        ShareBoardConfig config = new ShareBoardConfig();
+        config.setShareboardPostion(ShareBoardConfig.SHAREBOARD_POSITION_CENTER);
+        config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_NONE);
+        shareAction.open(config);
+    }
+
     private void addCollect(VideoDetailBean bean) {
         if (!LoginManager.hasLogin(getApplicationContext())) {
             return;
@@ -260,6 +286,66 @@ public class VideoDetailActivity extends BaseActivity {
                     showShortToast(error);
                 }
             });
+        }
+    }
+
+    @Override
+    public void onStart(SHARE_MEDIA share_media) {
+
+    }
+
+    @Override
+    public void onResult(SHARE_MEDIA share_media) {
+        showShortToast("share success");
+    }
+
+    @Override
+    public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+        showShortToast("share error");
+    }
+
+    @Override
+    public void onCancel(SHARE_MEDIA share_media) {
+        showShortToast("share cancel");
+    }
+
+    @Override
+    public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+        ShareContent content = shareContent;
+        if (content == null) {
+            return;
+        }
+        switch (share_media) {
+            case WEIXIN:
+                new ShareAction(this).setPlatform(share_media).setCallback(this)
+                        .setShareContent(content)
+                        .share();
+                break;
+            case WEIXIN_CIRCLE:
+                new ShareAction(this).setPlatform(share_media).setCallback(this)
+                        .setShareContent(content)
+                        .share();
+                break;
+            case SINA:
+                new ShareAction(this).setPlatform(share_media).setCallback(this)
+                        .setShareContent(content)
+                        .share();
+                break;
+            case QZONE:
+                new ShareAction(this).setPlatform(share_media).setCallback(this)
+                        .setShareContent(content)
+                        .share();
+                break;
+            case QQ:
+                new ShareAction(this).setPlatform(share_media).setCallback(this)
+                        .setShareContent(content)
+                        .share();
+                break;
+            default:
+                new ShareAction(this).setPlatform(share_media).setCallback(this)
+                        .setShareContent(content)
+                        .share();
+                break;
         }
     }
 

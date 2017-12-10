@@ -344,6 +344,7 @@ public class LoginActivity extends BaseActivity
                 }
             }
         }
+        Log.i(TAG, "uploadHistory: " + detailBean.getToken() + " " + id);
         if (!TextUtils.isEmpty(id)) {
             Call<ResponseBean<List<Object>>> call = userApiService.editHistory(detailBean.getToken(), id);
             if (call != null) {
