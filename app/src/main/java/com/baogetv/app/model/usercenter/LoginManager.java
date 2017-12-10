@@ -38,11 +38,37 @@ public class LoginManager {
     private static UserDetailBean detailBean;
     public static boolean hasLogin(Context context) {
         String token = getUserToken(context);
-        if (!TextUtils.isEmpty(token)) {
+        if (!TextUtils.isEmpty(token) || detailBean == null) {
             return true;
         } else {
             return false;
         }
+    }
+
+    public static boolean hasCommentRight(Context context) {
+        if (!hasLogin(context) || detailBean == null) {
+            return false;
+        }
+        int grade = 0;
+        try {
+            grade = Integer.parseInt(detailBean.getGrade());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        if (grade < 2) {
+            return false;
+        }
+        if (TextUtils.isEmpty(detailBean.getMobile())) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean hasMobile(Context context) {
+        if (!hasLogin(context) || detailBean == null) {
+            return false;
+        }
+        return !TextUtils.isEmpty(detailBean.getMobile());
     }
 
     public static void updateDetailBean(Context context, UserDetailBean bean) {

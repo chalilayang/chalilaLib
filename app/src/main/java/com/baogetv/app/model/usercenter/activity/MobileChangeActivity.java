@@ -10,6 +10,7 @@ import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.customview.CustomToastUtil;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.customview.TitleInputView;
@@ -131,7 +132,7 @@ public class MobileChangeActivity extends BaseActivity
             @Override
             public void onSuccess(List<Object> data, String msg, int state) {
                 Log.i(TAG, "onSuccess: ");
-                showSuccess();
+                getUserDetail();
             }
 
             @Override
@@ -140,6 +141,32 @@ public class MobileChangeActivity extends BaseActivity
                 showShortToast(getString(R.string.verify_code_get_failed) + "：" + error);
             }
         });
+    }
+
+    private void getUserDetail() {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        Call<ResponseBean<UserDetailBean>> call
+                = userApiService.getUserDetail(LoginManager.getUserToken(getApplicationContext()), null);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<UserDetailBean>() {
+                @Override
+                public void onSuccess(UserDetailBean data, String msg, int state) {
+                    if (data != null) {
+                        LoginManager.updateDetailBean(getApplicationContext(), data);
+                        showSuccess();
+                    }
+                }
+
+                @Override
+                public void onFailed(String error, int state) {
+                    Log.i(TAG, "onFailed: " + state + " " + error);
+                    showShortToast(error);
+                    LoginManager.cleanUserToken(getApplicationContext());
+                    LoginManager.startLogin(MobileChangeActivity.this);
+                }
+            });
+        }
     }
 
     private void showSuccess() {

@@ -69,21 +69,29 @@ public class VideoDetailActivity extends BaseActivity {
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String content = editText.getText().toString();
-                if (TextUtils.isEmpty(content)) {
-                    showShortToast("评论不能为空");
+                if (!LoginManager.hasCommentRight(getApplicationContext())) {
+                    if (!LoginManager.hasLogin(getApplicationContext())) {
+                        LoginManager.startLogin(VideoDetailActivity.this);
+                    } else {
+                        LoginManager.startChangeMobile(VideoDetailActivity.this);
+                    }
                 } else {
-                    InputSendEvent event = new InputSendEvent(content);
-                    event.commentEvent = commentEvent;
-                    event.replyEvent = replyEvent;
-                    commentEvent = null;
-                    replyEvent = null;
-                    editText.setText("");
-                    editText.setHint(getResources().getString(R.string.send_edit_hint));
-                    EventBus.getDefault().post(event);
+                    String content = editText.getText().toString();
+                    if (TextUtils.isEmpty(content)) {
+                        showShortToast("评论不能为空");
+                    } else {
+                        InputSendEvent event = new InputSendEvent(content);
+                        event.commentEvent = commentEvent;
+                        event.replyEvent = replyEvent;
+                        commentEvent = null;
+                        replyEvent = null;
+                        editText.setText("");
+                        editText.setHint(getResources().getString(R.string.send_edit_hint));
+                        EventBus.getDefault().post(event);
+                    }
+                    editText.clearFocus();
+                    InputUtil.HideKeyboard(editText);
                 }
-                editText.clearFocus();
-                InputUtil.HideKeyboard(editText);
             }
         });
         editContainer = findViewById(R.id.comment_edit_container);

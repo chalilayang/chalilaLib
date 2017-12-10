@@ -10,6 +10,7 @@ import android.widget.EditText;
 import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.bean.CommentListBean;
+import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.event.ReportEvent;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
@@ -53,19 +54,28 @@ public class CommentDetailActivity extends BaseTitleActivity {
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String content = editText.getText().toString();
-                if (TextUtils.isEmpty(content)) {
-                    showShortToast("评论不能为空");
+                if (!LoginManager.hasCommentRight(getApplicationContext())) {
+                    if (!LoginManager.hasLogin(getApplicationContext())) {
+                        LoginManager.startLogin(CommentDetailActivity.this);
+                    } else {
+                        LoginManager.startChangeMobile(CommentDetailActivity.this);
+                    }
                 } else {
-                    InputSendDetailEvent event = new InputSendDetailEvent(content);
-                    event.commentEvent = commentEvent;
-                    event.replyEvent = replyEvent;
-                    commentEvent = null;
-                    replyEvent = null;
-                    EventBus.getDefault().post(event);
+                    String content = editText.getText().toString();
+                    if (TextUtils.isEmpty(content)) {
+                        showShortToast("评论不能为空");
+                    } else {
+                        InputSendDetailEvent event = new InputSendDetailEvent(content);
+                        event.commentEvent = commentEvent;
+                        event.replyEvent = replyEvent;
+                        commentEvent = null;
+                        replyEvent = null;
+                        editText.setText("");
+                        editText.setHint(getResources().getString(R.string.send_edit_hint));
+                        EventBus.getDefault().post(event);
+                    }
                     editText.clearFocus();
                     InputUtil.HideKeyboard(editText);
-                    editContainer.setVisibility(View.GONE);
                 }
             }
         });
