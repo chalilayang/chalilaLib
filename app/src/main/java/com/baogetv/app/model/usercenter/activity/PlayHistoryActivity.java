@@ -128,7 +128,7 @@ public class PlayHistoryActivity extends BaseTitleActivity
     public void onItemClick(HistoryBean data, int position) {
         Log.i(TAG, "onItemClick: ");
         Intent intent = new Intent(this, VideoDetailActivity.class);
-        intent.putExtra(KEY_VIDEO_ID, data.getId());
+        intent.putExtra(KEY_VIDEO_ID, data.getVideo_id());
         startActivity(intent);
     }
 

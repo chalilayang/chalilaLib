@@ -153,6 +153,7 @@ public class VideoDetailActivity extends BaseActivity {
             String pic = bean.getPic_url();
             HistoryManager.getInstance(getApplicationContext()).saveHistory(
                     vid, title, pic);
+            Log.i(TAG, "addPlayHistory: " + vid + " " + title + " ");
             if (HistoryManager.getInstance(getApplicationContext()).isInHistory(vid)) {
                 showShortToast("save history success");
             } else {

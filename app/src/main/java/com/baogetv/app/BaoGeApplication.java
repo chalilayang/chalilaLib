@@ -8,6 +8,7 @@ import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.push.MyPushIntentService;
 import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
@@ -37,6 +38,8 @@ public class BaoGeApplication extends Application {
         Log.i(TAG, "onCreate: ");
         RetrofitManager.init(this.getApplicationContext());
         PushAgent mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.setDebugMode(true);
+        mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE);
         //注册推送服务，每次调用register方法都会回调该接口
         mPushAgent.register(new IUmengRegisterCallback() {
 
@@ -53,7 +56,8 @@ public class BaoGeApplication extends Application {
 
             }
         });
-        mPushAgent.setPushIntentServiceClass(MyPushIntentService.class);
+
+        //mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_P
         Config.DEBUG = true;
         QueuedWork.isUseThreadPool = false;
         UMShareAPI.get(this);
