@@ -2,12 +2,18 @@ package com.baogetv.app.model.usercenter;
 
 import android.content.Context;
 
+import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.HistoryBean;
+import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.db.entity.HistoryItemEntity;
 import com.baogetv.app.db.entity.HistoryItemEntityDao;
 import com.baogetv.app.db.util.DaoManager;
+import com.baogetv.app.net.CustomCallBack;
+import com.baogetv.app.net.RetrofitManager;
 
 import java.util.List;
+
+import retrofit2.Call;
 
 /**
  * Created by chalilayang on 2017/12/6.

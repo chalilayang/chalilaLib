@@ -48,6 +48,7 @@
     <string name="report_type_no_relation">不相关评论</string>
     <string name="report_upload">完成</string>
     <string name="comment_detail">评论详情</string>
+    <string name="no_comment_right">您暂时没有评论权限</string>
 
     <string name="mine">我的</string>
     <string name="height">身高</string>

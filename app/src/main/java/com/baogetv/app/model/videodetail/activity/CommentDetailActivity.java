@@ -57,8 +57,10 @@ public class CommentDetailActivity extends BaseTitleActivity {
                 if (!LoginManager.hasCommentRight(getApplicationContext())) {
                     if (!LoginManager.hasLogin(getApplicationContext())) {
                         LoginManager.startLogin(CommentDetailActivity.this);
-                    } else {
+                    } else if (LoginManager.hasMobile(getApplicationContext())) {
                         LoginManager.startChangeMobile(CommentDetailActivity.this);
+                    } else {
+                        showShortToast(getString(R.string.no_comment_right));
                     }
                 } else {
                     String content = editText.getText().toString();

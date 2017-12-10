@@ -299,6 +299,19 @@ public interface UserApiService {
             @Field("id") String id);
 
     /**
+     * 关联播放记录
+     *
+     * @param token：（Token，登录凭证）
+     * @param id：（收藏ID，多个ID用逗号隔开）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Play/edit")
+    Call<ResponseBean<List<Object>>> editHistory(
+            @Field("token") String token,
+            @Field("id") String id);
+
+    /**
      * 根据播放记录ID获取数据
      *
      * @param id：（播放记录ID，多个用逗号隔开）

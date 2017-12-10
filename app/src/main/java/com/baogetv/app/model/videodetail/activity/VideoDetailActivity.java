@@ -72,8 +72,10 @@ public class VideoDetailActivity extends BaseActivity {
                 if (!LoginManager.hasCommentRight(getApplicationContext())) {
                     if (!LoginManager.hasLogin(getApplicationContext())) {
                         LoginManager.startLogin(VideoDetailActivity.this);
-                    } else {
+                    } else if (LoginManager.hasMobile(getApplicationContext())) {
                         LoginManager.startChangeMobile(VideoDetailActivity.this);
+                    } else {
+                        showShortToast(getString(R.string.no_comment_right));
                     }
                 } else {
                     String content = editText.getText().toString();

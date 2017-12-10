@@ -1,5 +1,6 @@
 package com.baogetv.app.model.usercenter.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,9 +12,12 @@ import android.widget.Toast;
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
+import com.baogetv.app.bean.HistoryBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.customview.CustomToastUtil;
+import com.baogetv.app.db.entity.HistoryItemEntity;
+import com.baogetv.app.model.usercenter.HistoryManager;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.customview.PasswordInputView;
 import com.baogetv.app.model.usercenter.customview.TitleInputView;
@@ -25,6 +29,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.utils.SocializeUtils;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -140,6 +145,7 @@ public class LoginActivity extends BaseActivity
                     isFetchingResult = false;
                     if (data != null) {
                         LoginManager.updateDetailBean(getApplicationContext(), data);
+                        uploadHistory(getApplicationContext(), data);
                         loginSuccess(data);
                     } else {
                         loginFailed("LoginBean null");
@@ -198,7 +204,7 @@ public class LoginActivity extends BaseActivity
                     isFetchingResult = false;
                     if (data != null) {
                         LoginManager.updateDetailBean(getApplicationContext(), data);
-                        loginSuccess(data);
+                        uploadHistory(getApplicationContext(), data);
                     } else {
                         loginFailed("LoginBean null");
                     }
@@ -321,5 +327,43 @@ public class LoginActivity extends BaseActivity
     public void onCancel(SHARE_MEDIA platform, int action) {
         hideLoadingDialog();
         CustomToastUtil.makeLongText(this, "取消了");
+    }
+
+    public void uploadHistory(Context context, final UserDetailBean detailBean) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String id = "";
+        List<HistoryItemEntity> list
+                = HistoryManager.getInstance(context).getHistoryList();
+        if (list != null) {
+            for (int index = 0, count = list.size(); index < count; index ++) {
+                if (index == 0) {
+                    id = list.get(index).getHistoryId();
+                } else {
+                    id = id + "," + list.get(index).getHistoryId();
+                }
+            }
+        }
+        if (!TextUtils.isEmpty(id)) {
+            Call<ResponseBean<List<Object>>> call = userApiService.editHistory(detailBean.getToken(), id);
+            if (call != null) {
+                call.enqueue(new CustomCallBack<List<Object>>() {
+                    @Override
+                    public void onSuccess(List<Object> data, String msg, int state) {
+                        HistoryManager.getInstance(getApplicationContext()).clearHistory();
+                        loginSuccess(detailBean);
+                    }
+
+                    @Override
+                    public void onFailed(String error, int state) {
+                        showShortToast(error);
+                        HistoryManager.getInstance(getApplicationContext()).clearHistory();
+                        loginSuccess(detailBean);
+                    }
+                });
+            }
+        } else {
+            loginSuccess(detailBean);
+        }
     }
 }
