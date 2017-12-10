@@ -40,15 +40,18 @@ public class PlayerFragment extends BaseFragment {
         if (getArguments() != null) {
             videoDetailBean = getArguments().getParcelable(KEY_VIDEO_DETAIL);
         }
+        Log.i(TAG, "onCreate: ");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.i(TAG, "onCreateView: ");
         if (contentView == null) {
             contentView = inflater.inflate(R.layout.fragment_player, container, false);
             init(contentView);
         }
+        mNiceVideoPlayer.start();
         return contentView;
     }
 
@@ -61,7 +64,6 @@ public class PlayerFragment extends BaseFragment {
             NiceVideoPlayerController controller = new PlayerController(this.getActivity());
             mNiceVideoPlayer.setController(controller);
             mNiceVideoPlayer.continueFromLastPosition(false);
-            mNiceVideoPlayer.start();
             controller.setTitle(videoDetailBean.getTitle());
         }
     }

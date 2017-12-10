@@ -746,6 +746,5 @@ public class NiceVideoPlayer extends FrameLayout
         if (mController != null) {
             mController.reset();
         }
-        Runtime.getRuntime().gc();
     }
 }
