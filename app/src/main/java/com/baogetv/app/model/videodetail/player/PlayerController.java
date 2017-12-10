@@ -44,11 +44,6 @@ public class PlayerController extends NiceVideoPlayerController
     private ImageView playBtn;
     private ImageView lockBtn;
 
-    private View fullScreenController;
-    private ScaleTextView timeTv;
-    private CustomSeekBar playerSeekBar;
-    private ImageView fullScreenBtn;
-
     private View topGroup;
 
     private View smallScreenController;
@@ -88,14 +83,6 @@ public class PlayerController extends NiceVideoPlayerController
         lockBtn.setImageResource(R.mipmap.player_unlock);
         lockBtn.setVisibility(GONE);
 
-        fullScreenController = findViewById(R.id.full_screen_controller);
-        fullScreenController.setVisibility(GONE);
-        playerSeekBar = (CustomSeekBar) findViewById(R.id.player_seek_bar);
-        playerSeekBar.setOnSeekUpdateListener(this);
-        timeTv = (ScaleTextView) findViewById(R.id.player_time);
-        fullScreenBtn = (ImageView) findViewById(R.id.full_screen_btn);
-        fullScreenBtn.setOnClickListener(this);
-
         topGroup = findViewById(R.id.top_group);
 
         smallScreenController = findViewById(R.id.small_screen_controller);
@@ -129,7 +116,7 @@ public class PlayerController extends NiceVideoPlayerController
             } else if (mNiceVideoPlayer.isCompleted()) {
                 mNiceVideoPlayer.restart();
             }
-        } else if (v.getId() == R.id.full_screen_btn || v.getId() == R.id.small_screen_btn) {
+        } else if (v.getId() == R.id.small_screen_btn) {
             if (mNiceVideoPlayer.isNormal() || mNiceVideoPlayer.isTinyWindow()) {
                 mNiceVideoPlayer.enterFullScreen();
             } else if (mNiceVideoPlayer.isFullScreen()) {
@@ -222,7 +209,6 @@ public class PlayerController extends NiceVideoPlayerController
 
     @Override
     public void setVideoDuration(long length) {
-        timeTv.setText(NiceUtil.formatTime(length));
         timeTvSmall.setText(NiceUtil.formatTime(length));
     }
 
@@ -269,28 +255,22 @@ public class PlayerController extends NiceVideoPlayerController
     protected void onPlayModeChanged(int playMode) {
         switch (playMode) {
             case NiceVideoPlayer.MODE_FULL_SCREEN:
-                fullScreenBtn.setImageResource(R.mipmap.player_small_screen);
                 fullScreenBtnSmall.setImageResource(R.mipmap.player_small_screen);
                 lockBtn.setVisibility(VISIBLE);
                 heartBtn.setVisibility(VISIBLE);
                 shareBtn.setVisibility(VISIBLE);
                 shootBtn.setVisibility(VISIBLE);
-                fullScreenController.setVisibility(VISIBLE);
-                smallScreenController.setVisibility(GONE);
                 videoTitle.setVisibility(VISIBLE);
                 videoTitleSmall.setVisibility(GONE);
                 break;
             case NiceVideoPlayer.MODE_NORMAL:
             case NiceVideoPlayer.MODE_TINY_WINDOW:
-                fullScreenBtn.setImageResource(R.mipmap.full_screen_icon);
                 fullScreenBtnSmall.setImageResource(R.mipmap.full_screen_icon);
                 screenLocked = false;
                 lockBtn.setVisibility(GONE);
                 heartBtn.setVisibility(GONE);
                 shareBtn.setVisibility(GONE);
                 shootBtn.setVisibility(GONE);
-                fullScreenController.setVisibility(GONE);
-                smallScreenController.setVisibility(VISIBLE);
                 videoTitle.setVisibility(GONE);
                 videoTitleSmall.setVisibility(VISIBLE);
                 break;
@@ -307,14 +287,11 @@ public class PlayerController extends NiceVideoPlayerController
         long position = mNiceVideoPlayer.getCurrentPosition();
         long duration = mNiceVideoPlayer.getDuration();
         int bufferPercentage = mNiceVideoPlayer.getBufferPercentage();
-        playerSeekBar.setSecondaryProgress(bufferPercentage);
         playerSeekBarSmall.setSecondaryProgress(bufferPercentage);
         int progress = (int) (100f * position / duration);
-        playerSeekBar.setProgress(progress);
         playerSeekBarSmall.setProgress(progress);
         String pos = NiceUtil.formatTime(position);
         String dur = NiceUtil.formatTime(duration);
-        timeTv.setText(String.format(timeFormat, pos, dur));
         timeTvSmall.setText(pos);
         durationTvSmall.setText(dur);
     }
@@ -322,10 +299,9 @@ public class PlayerController extends NiceVideoPlayerController
     @Override
     public void onSeekUpdate(int value, boolean fromUser) {
         if (fromUser && mNiceVideoPlayer != null) {
-            long pos = value * mNiceVideoPlayer.getDuration() / playerSeekBar.getMax();
+            long pos = value * mNiceVideoPlayer.getDuration() / playerSeekBarSmall.getMax();
             mNiceVideoPlayer.seekTo(pos);
         }
-        playerSeekBar.setProgress(value);
         playerSeekBarSmall.setProgress(value);
     }
 
@@ -373,18 +349,11 @@ public class PlayerController extends NiceVideoPlayerController
         }
         if (!screenLocked) {
             topGroup.setVisibility(visible ? View.VISIBLE : View.GONE);
-            if (mNiceVideoPlayer.isFullScreen()) {
-                fullScreenController.setVisibility(visible ? View.VISIBLE : View.GONE);
-                smallScreenController.setVisibility(GONE);
-            } else {
-                smallScreenController.setVisibility(visible ? View.VISIBLE : View.GONE);
-                fullScreenController.setVisibility(GONE);
-            }
+            smallScreenController.setVisibility(visible ? View.VISIBLE : View.GONE);
             playBtn.setVisibility(visible ? View.VISIBLE : View.GONE);
         } else {
             topGroup.setVisibility(View.GONE);
             smallScreenController.setVisibility(View.GONE);
-            fullScreenController.setVisibility(GONE);
             playBtn.setVisibility(View.GONE);
         }
         if (visible) {
