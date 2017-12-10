@@ -79,6 +79,9 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.screenBrightness = 0.4f;
+        getWindow().setAttributes(params);
         setContentView(R.layout.activity_video_detail);
         videoId = getIntent().getStringExtra(KEY_VIDEO_ID);
         customShareListener = new CustomShareListener(this);
@@ -425,6 +428,12 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                 getSupportActionBar().hide();
             }
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        NiceVideoPlayerManager.instance().releaseNiceVideoPlayer();
     }
 
     @Override

@@ -342,6 +342,7 @@ public class PlayerController extends NiceVideoPlayerController
 
     @Override
     protected void showChangeBrightness(int newBrightnessProgress) {
+        Log.i(TAG, "showChangeBrightness: " + newBrightnessProgress);
         mChangeBrightness.setVisibility(View.VISIBLE);
         mChangeBrightnessProgress.setProgress(newBrightnessProgress);
     }

@@ -2,6 +2,7 @@ package com.xiao.nicevideoplayer;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -18,6 +19,7 @@ import java.util.TimerTask;
 public abstract class NiceVideoPlayerController
         extends FrameLayout implements View.OnTouchListener {
 
+    private static final String TAG = "NiceVideoPlayerControll";
     protected Context mContext;
     protected INiceVideoPlayer mNiceVideoPlayer;
 
@@ -29,7 +31,7 @@ public abstract class NiceVideoPlayerController
     private boolean mNeedChangePosition;
     private boolean mNeedChangeVolume;
     private boolean mNeedChangeBrightness;
-    private static final int THRESHOLD = 80;
+    private static final int THRESHOLD = 20;
     private long mGestureDownPosition;
     private float mGestureDownBrightness;
     private int mGestureDownVolume;
@@ -198,6 +200,7 @@ public abstract class NiceVideoPlayerController
                             mNeedChangeBrightness = true;
                             mGestureDownBrightness = NiceUtil.scanForActivity(mContext)
                                     .getWindow().getAttributes().screenBrightness;
+                            Log.i(TAG, "onTouch: mGestureDownBrightness " + mGestureDownBrightness);
                         } else {
                             // 右侧改变声音
                             mNeedChangeVolume = true;
@@ -216,6 +219,7 @@ public abstract class NiceVideoPlayerController
                     deltaY = -deltaY;
                     float deltaBrightness = deltaY * 3 / getHeight();
                     float newBrightness = mGestureDownBrightness + deltaBrightness;
+                    Log.i(TAG, "onTouch: " + newBrightness + " " + deltaBrightness);
                     newBrightness = Math.max(0, Math.min(newBrightness, 1));
                     float newBrightnessPercentage = newBrightness;
                     WindowManager.LayoutParams params = NiceUtil.scanForActivity(mContext)
