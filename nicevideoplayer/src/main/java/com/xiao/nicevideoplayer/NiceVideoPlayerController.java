@@ -210,7 +210,7 @@ public abstract class NiceVideoPlayerController
                 }
                 if (mNeedChangePosition) {
                     long duration = mNiceVideoPlayer.getDuration();
-                    long toPosition = (long) (mGestureDownPosition + duration * deltaX / getWidth());
+                    long toPosition = (long) (mGestureDownPosition + duration * deltaX * 0.3f / getWidth());
                     mNewPosition = Math.max(0, Math.min(duration, toPosition));
                     int newPositionProgress = (int) (100f * mNewPosition / duration);
                     showChangePosition(duration, newPositionProgress);
