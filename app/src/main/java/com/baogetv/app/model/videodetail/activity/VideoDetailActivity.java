@@ -1,6 +1,8 @@
 package com.baogetv.app.model.videodetail.activity;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -34,6 +36,7 @@ import com.baogetv.app.parcelables.PageItemData;
 import com.baogetv.app.util.InputUtil;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.ShareContent;
+import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.shareboard.ShareBoardConfig;
@@ -44,6 +47,7 @@ import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +55,7 @@ import retrofit2.Call;
 
 import static com.baogetv.app.constant.AppConstance.KEY_VIDEO_ID;
 
-public class VideoDetailActivity extends BaseActivity implements ShareBoardlistener, UMShareListener {
+public class VideoDetailActivity extends BaseActivity implements ShareBoardlistener {
 
     private static final String TAG = "VideoDetailActivity";
     private VideoDetailFragment videoDetailFragment;
@@ -61,6 +65,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
     private EditText editText;
     private View sendBtn;
     private View editContainer;
+    private CustomShareListener customShareListener;
     private ShareContent shareContent;
     private ShareAction shareAction = new ShareAction(VideoDetailActivity.this)
             .setDisplayList(AppConstance.SHARE_LIST)
@@ -73,6 +78,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_video_detail);
         videoId = getIntent().getStringExtra(KEY_VIDEO_ID);
+        customShareListener = new CustomShareListener(this);
         initView();
         initData();
     }
@@ -289,26 +295,70 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
         }
     }
 
-    @Override
-    public void onStart(SHARE_MEDIA share_media) {
+    private static class CustomShareListener implements UMShareListener {
 
+        private WeakReference<VideoDetailActivity> mActivity;
+
+        private CustomShareListener(VideoDetailActivity activity) {
+            mActivity = new WeakReference(activity);
+        }
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            if (platform.name().equals("WEIXIN_FAVORITE")) {
+                if (mActivity != null && mActivity.get() != null) {
+                    mActivity.get().showShortToast(platform + " 收藏成功啦");
+                }
+            } else {
+                if (platform != SHARE_MEDIA.MORE && platform != SHARE_MEDIA.SMS
+                        && platform != SHARE_MEDIA.EMAIL
+                        && platform != SHARE_MEDIA.FLICKR
+                        && platform != SHARE_MEDIA.FOURSQUARE
+                        && platform != SHARE_MEDIA.TUMBLR
+                        && platform != SHARE_MEDIA.POCKET
+                        && platform != SHARE_MEDIA.PINTEREST
+                        && platform != SHARE_MEDIA.INSTAGRAM
+                        && platform != SHARE_MEDIA.GOOGLEPLUS
+                        && platform != SHARE_MEDIA.YNOTE
+                        && platform != SHARE_MEDIA.EVERNOTE) {
+                    if (mActivity != null && mActivity.get() != null) {
+                        mActivity.get().showShortToast(platform + " 分享成功啦");
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            if (platform != SHARE_MEDIA.MORE && platform != SHARE_MEDIA.SMS
+                    && platform != SHARE_MEDIA.EMAIL
+                    && platform != SHARE_MEDIA.FLICKR
+                    && platform != SHARE_MEDIA.FOURSQUARE
+                    && platform != SHARE_MEDIA.TUMBLR
+                    && platform != SHARE_MEDIA.POCKET
+                    && platform != SHARE_MEDIA.PINTEREST
+
+                    && platform != SHARE_MEDIA.INSTAGRAM
+                    && platform != SHARE_MEDIA.GOOGLEPLUS
+                    && platform != SHARE_MEDIA.YNOTE
+                    && platform != SHARE_MEDIA.EVERNOTE) {
+                if (mActivity != null && mActivity.get() != null) {
+                    mActivity.get().showShortToast(platform + " 分享失败啦");
+                }
+            }
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            if (mActivity != null && mActivity.get() != null) {
+                mActivity.get().showShortToast(platform + " 分享取消了");
+            }
+        }
     }
-
-    @Override
-    public void onResult(SHARE_MEDIA share_media) {
-        showShortToast("share success");
-    }
-
-    @Override
-    public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-        showShortToast("share error");
-    }
-
-    @Override
-    public void onCancel(SHARE_MEDIA share_media) {
-        showShortToast("share cancel");
-    }
-
     @Override
     public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
         ShareContent content = shareContent;
@@ -317,32 +367,32 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
         }
         switch (share_media) {
             case WEIXIN:
-                new ShareAction(this).setPlatform(share_media).setCallback(this)
+                new ShareAction(this).setPlatform(share_media).setCallback(customShareListener)
                         .setShareContent(content)
                         .share();
                 break;
             case WEIXIN_CIRCLE:
-                new ShareAction(this).setPlatform(share_media).setCallback(this)
+                new ShareAction(this).setPlatform(share_media).setCallback(customShareListener)
                         .setShareContent(content)
                         .share();
                 break;
             case SINA:
-                new ShareAction(this).setPlatform(share_media).setCallback(this)
+                new ShareAction(this).setPlatform(share_media).setCallback(customShareListener)
                         .setShareContent(content)
                         .share();
                 break;
             case QZONE:
-                new ShareAction(this).setPlatform(share_media).setCallback(this)
+                new ShareAction(this).setPlatform(share_media).setCallback(customShareListener)
                         .setShareContent(content)
                         .share();
                 break;
             case QQ:
-                new ShareAction(this).setPlatform(share_media).setCallback(this)
+                new ShareAction(this).setPlatform(share_media).setCallback(customShareListener)
                         .setShareContent(content)
                         .share();
                 break;
             default:
-                new ShareAction(this).setPlatform(share_media).setCallback(this)
+                new ShareAction(this).setPlatform(share_media).setCallback(customShareListener)
                         .setShareContent(content)
                         .share();
                 break;
@@ -368,6 +418,22 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                 getSupportActionBar().hide();
             }
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        /** attention to this below ,must add this**/
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * 屏幕横竖屏切换时避免出现window leak的问题
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        shareAction.close();
     }
 
     @Override
