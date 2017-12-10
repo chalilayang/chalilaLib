@@ -8,6 +8,7 @@ import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.constant.UrlConstance;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.customview.MineLineItemView;
 import com.baogetv.app.net.CustomCallBack;
@@ -86,6 +87,8 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
         curVersion.setVersion(versionName);
         userLicense = (MineLineItemView) findViewById(R.id.user_license);
         userLicense.setOnClickListener(this);
+        videoIntroduce = (MineLineItemView) findViewById(R.id.video_introduce);
+        videoIntroduce.setOnClickListener(this);
         versionRight = (MineLineItemView) findViewById(R.id.version_right);
         versionRight.setOnClickListener(this);
         loginOut = findViewById(R.id.login_out);
@@ -102,13 +105,25 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
                 Intent intent = new Intent(this, AdviceActivity.class);
                 startActivityForResult(intent, AdviceActivity.REQUEST_CODE_ADVICE);
                 break;
-            case R.id.net_set:
-                break;
             case R.id.cache_clear:
                 break;
-            case R.id.thumb_up_push:
+            case R.id.video_introduce:
+                intent = new Intent(this, WebReadActivity.class);
+                intent.putExtra(WebReadActivity.KEY_WEB_TITLE, getString(R.string.video_introduce));
+                intent.putExtra(WebReadActivity.KEY_URL, String.format(UrlConstance.KEY_WEB_BASE, "3"));
+                startActivity(intent);
                 break;
-            case R.id.comment_push:
+            case R.id.user_license:
+                intent = new Intent(this, WebReadActivity.class);
+                intent.putExtra(WebReadActivity.KEY_WEB_TITLE, getString(R.string.user_license));
+                intent.putExtra(WebReadActivity.KEY_URL, String.format(UrlConstance.KEY_WEB_BASE, "3"));
+                startActivity(intent);
+                break;
+            case R.id.version_right:
+                intent = new Intent(this, WebReadActivity.class);
+                intent.putExtra(WebReadActivity.KEY_WEB_TITLE, getString(R.string.version_right));
+                intent.putExtra(WebReadActivity.KEY_URL, String.format(UrlConstance.KEY_WEB_BASE, "3"));
+                startActivity(intent);
                 break;
             case R.id.login_out:
                 loginOut();

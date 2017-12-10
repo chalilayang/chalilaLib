@@ -184,6 +184,10 @@
             android:name=".model.usercenter.activity.VideoPlayerActivity"
             android:screenOrientation="landscape">
         </activity>
+        <activity
+            android:name=".model.usercenter.activity.WebReadActivity"
+            android:screenOrientation="portrait">
+        </activity>
 
         <!--微信-->
         <activity
