@@ -105,22 +105,37 @@ public class PlayHistoryActivity extends BaseTitleActivity
                 });
             }
         } else {
+            refreshLayout.setRefreshing(true);
+            UserApiService userApiService
+                    = RetrofitManager.getInstance().createReq(UserApiService.class);
+            String id = "";
             List<HistoryItemEntity> list
                     = HistoryManager.getInstance(getApplicationContext()).getHistoryList();
-            List<HistoryBean> beanList = new ArrayList<>();
-            if (list != null && list.size() > 0) {
+            if (list != null) {
                 for (int index = 0, count = list.size(); index < count; index ++) {
-                    HistoryItemEntity entity = list.get(index);
-                    HistoryBean bean = new HistoryBean();
-                    bean.setAdd_time(TimeUtil.getTimeStateNew(entity.getAddTime()));
-                    bean.setVideo_id(entity.getVideoId());
-                    bean.setTitle(entity.getVideoTitle());
-                    bean.setPic_url(entity.getPicUrl());
-                    beanList.add(bean);
+                    if (index == 0) {
+                        id = list.get(index).getHistoryId();
+                    } else {
+                        id = id + "," + list.get(index).getHistoryId();
+                    }
                 }
             }
-            recyclerViewAdapter.update(beanList);
-            refreshLayout.setRefreshing(false);
+            Call<ResponseBean<List<HistoryBean>>> call = userApiService.getHistoryListById(id);
+            if (call != null) {
+                call.enqueue(new CustomCallBack<List<HistoryBean>>() {
+                    @Override
+                    public void onSuccess(List<HistoryBean> data, String msg, int state) {
+                        recyclerViewAdapter.update(data);
+                        refreshLayout.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void onFailed(String error, int state) {
+                        showShortToast(error);
+                        refreshLayout.setRefreshing(false);
+                    }
+                });
+            }
         }
     }
 
@@ -157,6 +172,7 @@ public class PlayHistoryActivity extends BaseTitleActivity
                 }
             }
             if (!TextUtils.isEmpty(id)) {
+                refreshLayout.setRefreshing(true);
                 Call<ResponseBean<List<Object>>> call
                         = userApiService.deleteHistory(token, id);
                 if (call != null) {
@@ -165,11 +181,13 @@ public class PlayHistoryActivity extends BaseTitleActivity
                         public void onSuccess(List<Object> data, String msg, int state) {
                             Log.i(TAG, "onSuccess: ");
                             getHistoryList();
+                            refreshLayout.setRefreshing(false);
                         }
 
                         @Override
                         public void onFailed(String error, int state) {
                             showShortToast(error);
+                            refreshLayout.setRefreshing(false);
                         }
                     });
                 }

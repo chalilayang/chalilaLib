@@ -154,37 +154,40 @@ public class VideoDetailActivity extends BaseActivity {
         transaction.replace(R.id.video_player_fragment_container, playerFragment).commit();
     }
 
-    private void addPlayHistory(VideoDetailBean bean) {
-        if (!LoginManager.hasLogin(getApplicationContext())) {
-            String vid = bean.getId();
-            String title = bean.getTitle();
-            String pic = bean.getPic_url();
-            HistoryManager.getInstance(getApplicationContext()).saveHistory(
-                    vid, title, pic);
-            Log.i(TAG, "addPlayHistory: " + vid + " " + title + " ");
-            if (HistoryManager.getInstance(getApplicationContext()).isInHistory(vid)) {
-                showShortToast("save history success");
-            } else {
-                showShortToast("save history failed");
-            }
-        } else {
-            UserApiService userApiService
-                    = RetrofitManager.getInstance().createReq(UserApiService.class);
-            String token = LoginManager.getUserToken(getApplicationContext());
-            Call<ResponseBean<AddItemBean>> call = userApiService.addHistory(token, bean.getId());
-            if (call != null) {
-                call.enqueue(new CustomCallBack<AddItemBean>() {
-                    @Override
-                    public void onSuccess(AddItemBean data, String msg, int state) {
-                        showShortToast("save history success");
+    private void addPlayHistory(final VideoDetailBean bean) {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = null;
+        if (LoginManager.hasLogin(getApplicationContext())) {
+            token = LoginManager.getUserToken(getApplicationContext());
+        }
+        Call<ResponseBean<AddItemBean>> call = userApiService.addHistory(token, bean.getId());
+        if (call != null) {
+            call.enqueue(new CustomCallBack<AddItemBean>() {
+                @Override
+                public void onSuccess(AddItemBean data, String msg, int state) {
+                    showShortToast("save history success");
+                    if (!LoginManager.hasLogin(getApplicationContext())) {
+                        String historyId = data.getId();
+                        String vid = bean.getId();
+                        String title = bean.getTitle();
+                        String pic = bean.getPic_url();
+                        HistoryManager.getInstance(getApplicationContext()).saveHistory(historyId,
+                                vid, title, pic);
+                        Log.i(TAG, "addPlayHistory: " + vid + " " + title + " ");
+                        if (HistoryManager.getInstance(getApplicationContext()).isInHistory(vid)) {
+                            showShortToast("save history success");
+                        } else {
+                            showShortToast("save history failed");
+                        }
                     }
+                }
 
-                    @Override
-                    public void onFailed(String error, int state) {
-                        showShortToast(error);
-                    }
-                });
-            }
+                @Override
+                public void onFailed(String error, int state) {
+                    showShortToast(error);
+                }
+            });
         }
     }
 

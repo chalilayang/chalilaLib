@@ -299,6 +299,18 @@ public interface UserApiService {
             @Field("id") String id);
 
     /**
+     * 根据播放记录ID获取数据
+     *
+     * @param id：（播放记录ID，多个用逗号隔开）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Play/databyid")
+    Call<ResponseBean<List<HistoryBean>>> getHistoryListById(
+            @Field("id") String id);
+
+
+    /**
      * 我的播放记录
      *
      * @param token：（Token，登录凭证）
@@ -308,7 +320,6 @@ public interface UserApiService {
     @POST("index.php?s=/Play/my")
     Call<ResponseBean<List<HistoryBean>>> getHistoryList(
             @Field("token") String token);
-
 
     /**
      * 评论列表

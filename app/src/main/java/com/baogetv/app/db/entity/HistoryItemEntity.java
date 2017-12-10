@@ -13,6 +13,8 @@ public class HistoryItemEntity {
     @Id
     private Long id;
     @Property
+    private String historyId;
+    @Property
     private String videoId;
     @Property
     private String videoTitle;
@@ -20,17 +22,19 @@ public class HistoryItemEntity {
     private String picUrl;
     @Property
     private String addTime;
-    @Generated(hash = 1534690242)
-    public HistoryItemEntity(Long id, String videoId, String videoTitle, String picUrl,
+    @Generated(hash = 1796552931)
+    public HistoryItemEntity(Long id, String historyId, String videoId, String videoTitle, String picUrl,
             String addTime) {
         this.id = id;
+        this.historyId = historyId;
         this.videoId = videoId;
         this.videoTitle = videoTitle;
         this.picUrl = picUrl;
         this.addTime = addTime;
     }
-    public HistoryItemEntity(String videoId, String videoTitle, String picUrl,
+    public HistoryItemEntity(String historyId, String videoId, String videoTitle, String picUrl,
                              String addTime) {
+        this.historyId = historyId;
         this.videoId = videoId;
         this.videoTitle = videoTitle;
         this.picUrl = picUrl;
@@ -44,6 +48,12 @@ public class HistoryItemEntity {
     }
     public void setId(Long id) {
         this.id = id;
+    }
+    public String getHistoryId() {
+        return this.historyId;
+    }
+    public void setHistoryId(String historyId) {
+        this.historyId = historyId;
     }
     public String getVideoId() {
         return this.videoId;

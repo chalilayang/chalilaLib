@@ -38,7 +38,7 @@ public class LoginManager {
     private static UserDetailBean detailBean;
     public static boolean hasLogin(Context context) {
         String token = getUserToken(context);
-        if (!TextUtils.isEmpty(token) || detailBean == null) {
+        if (!TextUtils.isEmpty(token) && detailBean != null) {
             return true;
         } else {
             return false;

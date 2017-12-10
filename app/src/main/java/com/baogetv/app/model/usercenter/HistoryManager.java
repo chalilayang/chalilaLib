@@ -38,12 +38,12 @@ public class HistoryManager {
         return list != null && list.size() > 0;
     }
 
-    public void saveHistory(String vid, String title, String url) {
+    public void saveHistory(String history, String vid, String title, String url) {
         List<HistoryItemEntity> list = entityDao.queryBuilder()
                 .where(HistoryItemEntityDao.Properties.VideoId.eq(vid)).build().list();
         entityDao.deleteInTx(list);
         entityDao.insert(
-                new HistoryItemEntity(vid, title, url, String.valueOf(System.currentTimeMillis())));
+                new HistoryItemEntity(history, vid, title, url, String.valueOf(System.currentTimeMillis())));
     }
 
     public void deleteHistory(String vid) {
