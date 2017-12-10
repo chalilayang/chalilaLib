@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.baogetv.app.R;
 import com.baogetv.app.customview.CustomToastUtil;
@@ -54,6 +56,12 @@ public class PlayerController extends NiceVideoPlayerController
 
     private String timeFormat;
 
+    private LinearLayout mChangeBrightness;
+    private ProgressBar mChangeBrightnessProgress;
+
+    private LinearLayout mChangeVolume;
+    private ProgressBar mChangeVolumeProgress;
+
     public PlayerController(Context context) {
         super(context);
         init(context);
@@ -97,6 +105,12 @@ public class PlayerController extends NiceVideoPlayerController
         setOnClickListener(this);
         playBtn.setOnClickListener(this);
         lockBtn.setOnClickListener(this);
+
+        mChangeBrightness = (LinearLayout) findViewById(com.xiao.nicevideoplayer.R.id.change_brightness);
+        mChangeBrightnessProgress = (ProgressBar) findViewById(com.xiao.nicevideoplayer.R.id.change_brightness_progress);
+
+        mChangeVolume = (LinearLayout) findViewById(com.xiao.nicevideoplayer.R.id.change_volume);
+        mChangeVolumeProgress = (ProgressBar) findViewById(com.xiao.nicevideoplayer.R.id.change_volume_progress);
     }
 
     /**
@@ -317,22 +331,24 @@ public class PlayerController extends NiceVideoPlayerController
 
     @Override
     protected void showChangeVolume(int newVolumeProgress) {
-
+        mChangeVolume.setVisibility(View.VISIBLE);
+        mChangeVolumeProgress.setProgress(newVolumeProgress);
     }
 
     @Override
     protected void hideChangeVolume() {
-
+        mChangeVolume.setVisibility(View.GONE);
     }
 
     @Override
     protected void showChangeBrightness(int newBrightnessProgress) {
-
+        mChangeBrightness.setVisibility(View.VISIBLE);
+        mChangeBrightnessProgress.setProgress(newBrightnessProgress);
     }
 
     @Override
     protected void hideChangeBrightness() {
-
+        mChangeBrightness.setVisibility(View.GONE);
     }
 
     /**
