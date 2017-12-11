@@ -83,6 +83,7 @@ public class CommentDetailFragment extends BaseFragment
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerViewAdapter = new CommentListAdapter(getActivity());
         recyclerViewAdapter.setItemClick(this);
+        recyclerViewAdapter.setHasMoreData(false);
         recyclerViewAdapter.setOnCommentListener(this);
     }
 
@@ -264,12 +265,12 @@ public class CommentDetailFragment extends BaseFragment
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getUserToken(mActivity);
-        Call<ResponseBean<AddItemBean>> call = userApiService.addComment(
+        Call<ResponseBean<CommentListBean>> call = userApiService.addComment(
                 token, vid, reply_id, replay_user_id, content);
         if (call != null) {
-            call.enqueue(new CustomCallBack<AddItemBean>() {
+            call.enqueue(new CustomCallBack<CommentListBean>() {
                 @Override
-                public void onSuccess(AddItemBean bean, String msg, int state) {
+                public void onSuccess(CommentListBean bean, String msg, int state) {
                     showShortToast("add comment success");
                     Log.i(TAG, "onSuccess: add comment success");
                     getCommentList(videoDetailData);

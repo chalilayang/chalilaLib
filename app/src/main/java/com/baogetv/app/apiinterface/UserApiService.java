@@ -364,7 +364,7 @@ public interface UserApiService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Comments/add")
-    Call<ResponseBean<AddItemBean>> addComment(
+    Call<ResponseBean<CommentListBean>> addComment(
             @Field("token") String token,
             @Field("video_id") String video_id,
             @Field("reply_id") String reply_id,
