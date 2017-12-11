@@ -2,6 +2,7 @@ package com.baogetv.app.model.videodetail.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.baogetv.app.BaseItemAdapter;
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
 import com.baogetv.app.customview.LogoImageView;
+import com.baogetv.app.util.TimeUtil;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.chalilayang.scaleview.ScaleCalculator;
@@ -71,8 +73,17 @@ public class VideoListAdapter
             } else {
                 mContentView.setChnLogoVisible(true);
                 videoTitle.setText(data.getTitle());
+                String publish = null;
+                try {
+                    publish = TimeUtil.getTimeStateNew(data.getPublishTime());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                if (TextUtils.isEmpty(publish)) {
+                    publish = data.getPublishTime();
+                }
                 String desc
-                        = String.format(videoDescFormat, data.getPlayCount(), data.getPublishTime());
+                        = String.format(videoDescFormat, data.getPlayCount(), publish);
                 videoDesc.setText(desc);
                 videoDuration.setText(data.getDuration());
                 String pic = data.getPicUrl();
