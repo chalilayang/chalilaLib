@@ -23,22 +23,22 @@ public class CommentListAdapter
 
     public CommentListAdapter(Context context) {
         super(context);
+        setNeedLoadMore(true);
     }
 
-    private static final int TYPE_NORMAL = 0;
-    private static final int TYPE_FOOT = 1;
     @Override
     public ViewHolder createItemViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_NORMAL) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.comment_item, parent, false);
-            return new ViewHolder(view);
-        } else {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.footer, parent, false);
-            view.getLayoutParams().height = ScaleCalculator.getInstance(mContext).scaleWidth(120);
-            return new ViewHolder(view);
-        }
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.comment_item, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public ViewHolder createMoreViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.footer, parent, false);
+        view.getLayoutParams().height = ScaleCalculator.getInstance(mContext).scaleWidth(360);
+        return new ViewHolder(view);
     }
 
     private SoftReference<CommentView.OnCommentListener> mRef;
@@ -50,16 +50,23 @@ public class CommentListAdapter
     public class ViewHolder extends ItemViewHolder<CommentData> {
         public final CommentView mCommentView;
 
+        public final TextView loadMoreTip;
+
         public ViewHolder(View view) {
             super(view);
+            loadMoreTip = view.findViewById(R.id.load_more_tip);
             mCommentView = (CommentView) view.findViewById(R.id.comment_view);
         }
 
         @Override
         public void bindData(CommentData data, int pos) {
-            if (mCommentView != null) {
-                mCommentView.setCommentData(data);
-                mCommentView.setOnCommentListener(CommentListAdapter.this);
+            if (loadMoreTip != null) {
+                loadMoreTip.setText(hasMoreData?loadingMore : noMoreData);
+            } else {
+                if (mCommentView != null) {
+                    mCommentView.setCommentData(data);
+                    mCommentView.setOnCommentListener(CommentListAdapter.this);
+                }
             }
         }
     }
@@ -118,19 +125,5 @@ public class CommentListAdapter
         if (mRef != null && mRef.get() != null) {
             mRef.get().onCommentClick(data);
         }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (position < getItemCount() - 1) {
-            return TYPE_NORMAL;
-        } else {
-            return TYPE_FOOT;
-        }
-    }
-
-    @Override
-    public int getItemCount() {
-        return super.getItemCount() + 1;
     }
 }

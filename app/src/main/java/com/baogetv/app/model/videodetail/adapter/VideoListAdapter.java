@@ -1,12 +1,10 @@
 package com.baogetv.app.model.videodetail.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.baogetv.app.BaseItemAdapter;
@@ -15,11 +13,7 @@ import com.baogetv.app.R;
 import com.baogetv.app.customview.LogoImageView;
 import com.baogetv.app.util.TimeUtil;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.chalilayang.scaleview.ScaleCalculator;
-import com.chalilayang.scaleview.ScaleTextView;
-
-import java.util.List;
 
 public class VideoListAdapter
         extends BaseItemAdapter<VideoListAdapter.IVideoData, VideoListAdapter.ViewHolder> {

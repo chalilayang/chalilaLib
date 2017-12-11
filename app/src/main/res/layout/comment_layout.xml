@@ -29,7 +29,9 @@
                 android:id="@+id/comment_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxWidth="@dimen/size_320"
                 android:gravity="center"
+                android:maxLines="1"
                 android:textColor="@color/reshape_red"
                 android:textSize="@dimen/size_34"/>
 
@@ -37,9 +39,11 @@
                 android:id="@+id/comment_name_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxWidth="@dimen/size_120"
+                android:gravity="center"
+                android:maxLines="1"
                 android:layout_marginLeft="@dimen/size_20"
                 android:background="@drawable/search_label_bg"
-                android:gravity="center"
                 android:paddingLeft="@dimen/size_10"
                 android:paddingRight="@dimen/size_10"
                 android:textSize="@dimen/size_24"/>

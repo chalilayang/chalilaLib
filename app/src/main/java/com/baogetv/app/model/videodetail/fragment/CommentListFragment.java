@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.baogetv.app.BaseItemFragment;
 import com.baogetv.app.ItemViewHolder;
+import com.baogetv.app.OnLoadMoreListener;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.AddItemBean;
@@ -20,7 +21,6 @@ import com.baogetv.app.bean.CommentListBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.activity.MemberDetailActivity;
-import com.baogetv.app.model.usercenter.entity.UserData;
 import com.baogetv.app.model.usercenter.event.ReportEvent;
 import com.baogetv.app.model.videodetail.activity.CommentDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.CommentListAdapter;
@@ -51,18 +51,22 @@ import static com.baogetv.app.model.videodetail.activity.CommentDetailActivity.K
 
 public class CommentListFragment extends BaseItemFragment
         implements SwipeRefreshLayout.OnRefreshListener,
-        ItemViewHolder.ItemClickListener<CommentData>, CommentView.OnCommentListener {
-    public static final int PAGE_COUNT = 10;
+        ItemViewHolder.ItemClickListener<CommentData>,
+        CommentView.OnCommentListener, OnLoadMoreListener.DataLoadingSubject {
+    private static final int LOAD_PAGE_SIZE = 10;
     private static final String TAG = "CommentListFragment";
     private static final String PAGE_DATA = "PAGE_DATA";
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
     private View contentView;
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     private CommentListAdapter recyclerViewAdapter;
     private VideoDetailData videoDetailData;
+    private OnLoadMoreListener onLoadMoreListener;
+    private List<CommentData> commentList;
 
     public CommentListFragment() {
+        commentList = new ArrayList<>();
     }
 
     @Override
@@ -88,6 +92,19 @@ public class CommentListFragment extends BaseItemFragment
         recyclerViewAdapter = new CommentListAdapter(getActivity());
         recyclerViewAdapter.setItemClick(this);
         recyclerViewAdapter.setOnCommentListener(this);
+        onLoadMoreListener = new OnLoadMoreListener(layoutManager, this) {
+            @Override
+            public void onLoadMore(int totalItemCount) {
+                Log.i(TAG, "onLoadMore: " + totalItemCount);
+                int more = commentList.size() % LOAD_PAGE_SIZE;
+                int pageNum = commentList.size() / LOAD_PAGE_SIZE + 1;
+                if (more != 0) {
+                    recyclerViewAdapter.setHasMoreData(false);
+                } else {
+                    getCommentList(videoDetailData, pageNum);
+                }
+            }
+        };
     }
 
     @Override
@@ -105,14 +122,27 @@ public class CommentListFragment extends BaseItemFragment
             recyclerView = refreshLayout.findViewById(R.id.list);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.addItemDecoration(divider);
+            recyclerView.addOnScrollListener(onLoadMoreListener);
             recyclerView.setAdapter(recyclerViewAdapter);
             refreshLayout.setOnRefreshListener(this);
             contentView = view;
-            getCommentList(videoDetailData);
+        }
+        if (commentList.size() == 0) {
+            getCommentList(videoDetailData, 0);
         }
         return contentView;
     }
 
+    @Override
+    public boolean isLoading() {
+        return isLoadingData;
+    }
+
+    private boolean isLoadingData;
+    @Override
+    public boolean needLoadMore() {
+        return true;
+    }
 
     private CommentReportFragment fragment;
     private void showFragment(CommentData commentData) {
@@ -123,45 +153,61 @@ public class CommentListFragment extends BaseItemFragment
         transaction.replace(R.id.floating_fragment_container, fragment).commit();
     }
 
-    public void getCommentList(VideoDetailData videoDetailData) {
+    public void getCommentList(VideoDetailData videoDetailData, final int pageNum) {
+        Log.i(TAG, "getCommentList: ");
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = null;
         if (LoginManager.hasLogin(mActivity)) {
             token = LoginManager.getUserToken(mActivity);
         }
-        int curCount = recyclerViewAdapter.getItemCount();
-        Call<ResponseBean<List<CommentListBean>>> call
-                = userApiService.getCommentList(videoDetailData.videoDetailBean.getId(), token, "0", "100");
+        Call<ResponseBean<List<CommentListBean>>> call = userApiService.getCommentList(
+                        videoDetailData.videoDetailBean.getId(),
+                token, String.valueOf(pageNum), String.valueOf(LOAD_PAGE_SIZE));
         if (call != null) {
+            refreshLayout.setRefreshing(true);
+            isLoadingData = true;
             call.enqueue(new CustomCallBack<List<CommentListBean>>() {
                 @Override
                 public void onSuccess(List<CommentListBean> bean, String msg, int state) {
-                    List<CommentData> list = new ArrayList<>();
-                    for (int index = 0, count = bean.size(); index < count; index ++) {
-                        CommentData data = new CommentData();
-                        CommentListBean listBean = bean.get(index);
-                        data.setTime(listBean.getAdd_time());
-                        data.setBean(listBean);
-                        if (listBean.getChild() != null && listBean.getChild().size() > 0) {
-                            List<CommentListBean.DataBean> childList = listBean.getChild();
-                            List<ReplyData> list1 = new ArrayList<>(childList.size());
-                            for (int i = 0, childCount = childList.size(); i < childCount; i ++) {
-                                ReplyData replyData = new ReplyData();
-                                replyData.setBean(childList.get(i));
-                                list1.add(replyData);
-                            }
-                            data.setReplyList(list1);
-                        }
-                        list.add(data);
+                    Log.i(TAG, "onSuccess: " + bean.size() + " " + pageNum);
+                    if (pageNum <= 1) {
+                        commentList.clear();
                     }
-                    recyclerViewAdapter.update(list);
-                    EventBus.getDefault().post(new CommentCountEvent(list.size()));
+                    if (bean != null) {
+                        if (bean.size() <= 0) {
+                            recyclerViewAdapter.setHasMoreData(false);
+                        } else {
+                            for (int index = 0, count = bean.size(); index < count; index ++) {
+                                CommentData data = new CommentData();
+                                CommentListBean listBean = bean.get(index);
+                                data.setTime(listBean.getAdd_time());
+                                data.setBean(listBean);
+                                if (listBean.getChild() != null && listBean.getChild().size() > 0) {
+                                    List<CommentListBean.DataBean> childList = listBean.getChild();
+                                    List<ReplyData> list1 = new ArrayList<>(childList.size());
+                                    for (int i = 0, childCount = childList.size(); i < childCount; i ++) {
+                                        ReplyData replyData = new ReplyData();
+                                        replyData.setBean(childList.get(i));
+                                        list1.add(replyData);
+                                    }
+                                    data.setReplyList(list1);
+                                }
+                                commentList.add(data);
+                            }
+                        }
+                    }
+                    recyclerViewAdapter.update(commentList);
+                    EventBus.getDefault().post(new CommentCountEvent(commentList.size()));
+                    refreshLayout.setRefreshing(false);
+                    isLoadingData = false;
                 }
 
                 @Override
                 public void onFailed(String error, int state) {
                     showShortToast(error);
+                    refreshLayout.setRefreshing(false);
+                    isLoadingData = false;
                 }
             });
         }
@@ -205,6 +251,7 @@ public class CommentListFragment extends BaseItemFragment
     @Override
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");
+        getCommentList(videoDetailData, 0);
     }
 
     @Override
@@ -279,7 +326,7 @@ public class CommentListFragment extends BaseItemFragment
                 public void onSuccess(AddItemBean bean, String msg, int state) {
                     showShortToast("add comment success");
                     Log.i(TAG, "onSuccess: add comment success");
-                    getCommentList(videoDetailData);
+                    getCommentList(videoDetailData, 0);
                 }
 
                 @Override
@@ -302,7 +349,7 @@ public class CommentListFragment extends BaseItemFragment
                 public void onSuccess(AddItemBean bean, String msg, int state) {
                     showShortToast("点赞 success");
                     Log.i(TAG, "onSuccess: add zan success");
-                    getCommentList(videoDetailData);
+                    getCommentList(videoDetailData, 0);
                 }
 
                 @Override
@@ -325,7 +372,7 @@ public class CommentListFragment extends BaseItemFragment
                 public void onSuccess(AddItemBean bean, String msg, int state) {
                     showShortToast("点赞 success");
                     Log.i(TAG, "onSuccess: add zan success");
-                    getCommentList(videoDetailData);
+                    getCommentList(videoDetailData, 0);
                 }
 
                 @Override
@@ -340,30 +387,5 @@ public class CommentListFragment extends BaseItemFragment
         Intent intent = new Intent(mActivity, MemberDetailActivity.class);
         intent.putExtra(KEY_MEMBER_ID, uid);
         mActivity.startActivity(intent);
-    }
-
-    private List<CommentData> initFalseData() {
-        List<CommentData> list = new ArrayList<>();
-        for (int index = 0; index < 10; index ++) {
-            CommentData data = new CommentData();
-            UserData replyer = new UserData();
-            replyer.setNickName("防腐层");
-            replyer.setDesc("ddddd");
-            replyer.setGrage(index);
-            data.setOwner(replyer);
-            data.setContent("瓦尔特VRTV让他 ");
-            data.setTime(System.currentTimeMillis());
-            ReplyData replyData = new ReplyData();
-            replyData.setReplyer(replyer);
-            replyData.setReplyTo(replyer);
-            replyData.setContent("饿哦日女偶俄如女儿地方女偶儿女偶尔女人额如厕我软编");
-            List<ReplyData> list1 = new ArrayList<>();
-            for (int i = 0, count = index % 5; i < count; i ++) {
-                list1.add(replyData);
-            }
-            data.setReplyList(list1);
-            list.add(data);
-        }
-        return list;
     }
 }

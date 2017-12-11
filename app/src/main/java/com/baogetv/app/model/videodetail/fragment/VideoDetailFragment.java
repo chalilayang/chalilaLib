@@ -88,6 +88,14 @@ public class VideoDetailFragment extends PagerFragment {
                 }
             }
         });
+        if (tabLayout != null) {
+            TabLayout.Tab tab = tabLayout.getTabAt(1);
+            if (tab != null) {
+                String content = getString(R.string.comment)
+                        + "(" + videoDetailData.videoDetailBean.getComments() + ")";
+                tab.setText(content);
+            }
+        }
     }
 
     @Override

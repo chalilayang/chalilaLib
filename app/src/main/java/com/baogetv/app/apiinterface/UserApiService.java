@@ -339,6 +339,8 @@ public interface UserApiService {
      *
      * @param video_id：（视频ID）
      * @param token：（Token，登录凭证）
+     * @param p：（分页，第几页）
+     * @param r：（分页，每页显示多少条数据）
      * @return
      */
     @FormUrlEncoded
