@@ -258,12 +258,18 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
     @Subscribe
     public void handleCollectEvent(AddCollectEvent event) {
         Log.i(TAG, "handleCollectEvent: ");
-        addCollect(videoDetailBean);
+        if (LoginManager.hasLogin(getApplicationContext())) {
+            addCollect(videoDetailBean);
+        } else {
+            LoginManager.startLogin(this);
+        }
     }
 
     @Subscribe
     public void handleHistoryEvent(AddHistoryEvent event) {
-        addPlayHistory(videoDetailBean);
+        if (LoginManager.hasLogin(getApplicationContext())) {
+            addPlayHistory(videoDetailBean);
+        }
     }
 
     @Subscribe
