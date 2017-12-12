@@ -65,7 +65,6 @@ public class VideoListAdapter
             if (loadMoreTip != null) {
                 loadMoreTip.setText(hasMoreData?loadingMore : noMoreData);
             } else {
-                mContentView.setChnLogoVisible(true);
                 videoTitle.setText(data.getTitle());
                 String publish = null;
                 try {

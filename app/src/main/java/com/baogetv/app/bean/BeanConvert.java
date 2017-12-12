@@ -30,7 +30,7 @@ public class BeanConvert {
         }
         try {
             int isPro = Integer.parseInt(data.getIs_commend());
-            result.setCHN(isPro != 0);
+            result.setPro(isPro != 0);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -53,7 +53,7 @@ public class BeanConvert {
         }
         try {
             int isPro = Integer.parseInt(data.getIs_commend());
-            result.setCHN(isPro != 0);
+            result.setPro(isPro != 0);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
