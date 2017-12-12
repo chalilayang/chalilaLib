@@ -29,6 +29,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
     private final List<VideoListAdapter.IVideoData> mValues;
     public static final int TYPE_NORMAL = 0;
     public static final int TYPE_HEAD = 1;
+    public static final int TYPE_FOOT = 2;
     private Context mContext;
     private int margin_8px;
     private int margin_15px;
@@ -40,6 +41,9 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
     private ChannelDetailBean channelDetailBean;
     private String playCountFormat;
 
+    protected String loadingMore;
+    protected String noMoreData;
+    protected boolean hasMoreData;
     public VideoInfoListAdapter(Context context) {
         mValues = new ArrayList<>();
         mContext = context;
@@ -50,6 +54,14 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         margin_160px = ScaleCalculator.getInstance(mContext).scaleWidth(160);
         videoCountFormat = mContext.getString(R.string.video_count_format);
         playCountFormat = mContext.getString(R.string.play_count_format);
+        loadingMore = mContext.getString(R.string.loading_more_data);
+        noMoreData = mContext.getString(R.string.no_more_data);
+        hasMoreData = true;
+    }
+
+    public void setHasMoreData(boolean hasMoreData) {
+        this.hasMoreData = hasMoreData;
+        notifyItemChanged(getItemCount()-1);
     }
 
     public void setVideoInfo(VideoDetailData videoInfo) {
@@ -77,10 +89,15 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                     .inflate(R.layout.video_info_list_item, parent, false);
             view.getLayoutParams().height = ScaleCalculator.getInstance(mContext).scaleHeight(206);
             return new ViewHolder(view);
-        } else {
+        } else if (viewType == TYPE_HEAD){
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.video_info_head_item, parent, false);
             return new HeadViewHolder(view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.footer, parent, false);
+            view.getLayoutParams().height = ScaleCalculator.getInstance(mContext).scaleWidth(60);
+            return new FootViewHolder(view);
         }
     }
 
@@ -91,8 +108,10 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             normalViewHolder.mItem = mValues.get(position-1);
             normalViewHolder.mImageView.setImageResource(R.mipmap.user_default_icon);
             normalViewHolder.updateInfo();
-        } else {
+        } else if (getItemViewType(position) == TYPE_HEAD) {
             ((HeadViewHolder) holder).updateInfo();
+        } else {
+            ((FootViewHolder) holder).updateInfo();
         }
     }
 
@@ -100,8 +119,11 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
     public int getItemViewType(int position) {
         if (position == 0) {
             return TYPE_HEAD;
+        } else if (position == getItemCount()-1) {
+            return TYPE_FOOT;
+        } else {
+            return TYPE_NORMAL;
         }
-        return TYPE_NORMAL;
     }
 
     @Override
@@ -126,6 +148,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         private TextView channelDesc;
         private Drawable heartGray;
         private Drawable heartRed;
+
         public void updateInfo() {
             if (videoDetailData != null) {
                 VideoDetailBean bean = videoDetailData.videoDetailBean;
@@ -260,6 +283,19 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
+    public class FootViewHolder extends RecyclerView.ViewHolder {
+        public final TextView loadMoreTip;
+
+        public void updateInfo() {
+            loadMoreTip.setText(hasMoreData?loadingMore : noMoreData);
+        }
+
+        public FootViewHolder(View view) {
+            super(view);
+            loadMoreTip = view.findViewById(R.id.load_more_tip);
+        }
+    }
+
 
     private SoftReference<OnClickCallBack> mRef;
     public void setOnClickListener(OnClickCallBack listener) {
@@ -267,6 +303,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             mRef = new SoftReference<OnClickCallBack>(listener);
         }
     }
+
     public interface OnClickCallBack {
         void onChannelClick(ChannelDetailBean bean);
         void onCacheClick(VideoDetailBean bean);

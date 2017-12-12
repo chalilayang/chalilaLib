@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.baogetv.app.BaseFragment;
+import com.baogetv.app.OnLoadMoreListener;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.bean.BeanConvert;
@@ -46,17 +47,21 @@ import static com.baogetv.app.constant.AppConstance.KEY_VIDEO_ID;
  */
 
 public class VideoInfoFragment extends BaseFragment 
-        implements SwipeRefreshLayout.OnRefreshListener, VideoInfoListAdapter.OnClickCallBack {
+        implements SwipeRefreshLayout.OnRefreshListener,
+        VideoInfoListAdapter.OnClickCallBack,
+        OnLoadMoreListener.DataLoadingSubject {
 
     private static final String TAG = "VideoInfoFragment";
+    private static final int LOAD_PAGE_SIZE = 10;
     private View contentView;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     private VideoInfoListAdapter recyclerViewAdapter;
     private VideoDetailData videoDetailData;
     private List<VideoListAdapter.IVideoData> iVideoDatas;
     private ChannelDetailBean channelDetailBean;
+    private OnLoadMoreListener onLoadMoreListener;
 
     public VideoInfoFragment() {
         iVideoDatas = new ArrayList<>();
@@ -75,6 +80,21 @@ public class VideoInfoFragment extends BaseFragment
         if (getArguments() != null) {
             videoDetailData = getArguments().getParcelable(PAGE_DATA);
         }
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerViewAdapter = new VideoInfoListAdapter(getActivity());
+        onLoadMoreListener = new OnLoadMoreListener(layoutManager, this) {
+            @Override
+            public void onLoadMore(int totalItemCount) {
+                Log.i(TAG, "onLoadMore: " + totalItemCount);
+                int more = iVideoDatas.size() % LOAD_PAGE_SIZE;
+                int pageNum = iVideoDatas.size() / LOAD_PAGE_SIZE + 1;
+                if (more != 0) {
+                    recyclerViewAdapter.setHasMoreData(false);
+                } else {
+                    getVideoList(pageNum);
+                }
+            }
+        };
     }
 
     @Override
@@ -89,7 +109,7 @@ public class VideoInfoFragment extends BaseFragment
 
     public void init(View root) {
         refreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.video_list_container);
-        refreshLayout.setEnabled(false);
+        refreshLayout.setEnabled(true);
         recyclerView = (RecyclerView) root.findViewById(R.id.video_list);
         RecyclerViewDivider divider
                 = new RecyclerViewDivider(getActivity().getApplicationContext(),
@@ -99,18 +119,17 @@ public class VideoInfoFragment extends BaseFragment
                 getActivity().getApplicationContext()).scaleWidth(30);
         divider.setMargin(margin_30px);
         recyclerView.addItemDecoration(divider);
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerViewAdapter = new VideoInfoListAdapter(getActivity());
         recyclerViewAdapter.setVideoInfo(videoDetailData);
         recyclerViewAdapter.setOnClickListener(this);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addOnScrollListener(onLoadMoreListener);
         recyclerView.setAdapter(recyclerViewAdapter);
         refreshLayout.setOnRefreshListener(this);
         if (channelDetailBean == null) {
             getChannelDetail();
         }
         if (iVideoDatas == null || iVideoDatas.size() <= 0) {
-            getVideoList();
+            getVideoList(0);
         }
     }
 
@@ -137,31 +156,55 @@ public class VideoInfoFragment extends BaseFragment
         }
     }
 
-    private void getVideoList() {
+    @Override
+    public boolean isLoading() {
+        return isLoadingData;
+    }
+
+    private boolean isLoadingData;
+    @Override
+    public boolean needLoadMore() {
+        return true;
+    }
+
+    private void getVideoList(final int pageNum) {
         String cid = videoDetailData.videoDetailBean.getChannel_id();
         VideoListService listService
                 = RetrofitManager.getInstance().createReq(VideoListService.class);
         Call<ResponseBean<List<VideoListBean>>> call = listService.getVideoList(
-                cid, null, null, null, null, null, null);
+                cid, null, null, null, null,
+                String.valueOf(pageNum), String.valueOf(LOAD_PAGE_SIZE));
         if (call != null) {
+            refreshLayout.setRefreshing(true);
+            isLoadingData = true;
             call.enqueue(new CustomCallBack<List<VideoListBean>>() {
                 @Override
                 public void onSuccess(List<VideoListBean> listBeen, String msg, int state) {
-                    iVideoDatas.clear();
+                    if (pageNum <= 1) {
+                        iVideoDatas.clear();
+                    }
                     if (listBeen != null) {
-                        for (int index = 0, count = listBeen.size(); index < count; index ++) {
-                            VideoListBean bean = listBeen.get(index);
-                            VideoListAdapter.IVideoData iVideoData
-                                    = BeanConvert.getIVideoData(bean);
-                            iVideoDatas.add(iVideoData);
+                        if (listBeen.size() <= 0) {
+                            recyclerViewAdapter.setHasMoreData(false);
+                        } else {
+                            for (int index = 0, count = listBeen.size(); index < count; index ++) {
+                                VideoListBean bean = listBeen.get(index);
+                                VideoListAdapter.IVideoData iVideoData
+                                        = BeanConvert.getIVideoData(bean);
+                                iVideoDatas.add(iVideoData);
+                            }
                         }
                     }
                     recyclerViewAdapter.updateList(iVideoDatas);
+                    refreshLayout.setRefreshing(false);
+                    isLoadingData = false;
                 }
 
                 @Override
                 public void onFailed(String error, int state) {
                     showShortToast(error);
+                    refreshLayout.setRefreshing(false);
+                    isLoadingData = false;
                 }
             });
         }
@@ -214,6 +257,7 @@ public class VideoInfoFragment extends BaseFragment
      */
     @Override
     public void onRefresh() {
-
+        getChannelDetail();
+        getVideoList(0);
     }
 }
