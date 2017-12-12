@@ -24,6 +24,7 @@ public class DaoMaster extends AbstractDaoMaster {
         VideoEntityDao.createTable(db, ifNotExists);
         SearchItemEntityDao.createTable(db, ifNotExists);
         HistoryItemEntityDao.createTable(db, ifNotExists);
+        UserItemEntityDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -31,6 +32,7 @@ public class DaoMaster extends AbstractDaoMaster {
         VideoEntityDao.dropTable(db, ifExists);
         SearchItemEntityDao.dropTable(db, ifExists);
         HistoryItemEntityDao.dropTable(db, ifExists);
+        UserItemEntityDao.dropTable(db, ifExists);
     }
 
     /**
@@ -52,6 +54,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(VideoEntityDao.class);
         registerDaoClass(SearchItemEntityDao.class);
         registerDaoClass(HistoryItemEntityDao.class);
+        registerDaoClass(UserItemEntityDao.class);
     }
 
     public DaoSession newSession() {

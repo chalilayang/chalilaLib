@@ -10,6 +10,7 @@ import com.baogetv.app.model.usercenter.activity.FindPasswordActivity;
 import com.baogetv.app.model.usercenter.activity.LoginActivity;
 import com.baogetv.app.model.usercenter.activity.MobileChangeActivity;
 import com.baogetv.app.model.usercenter.activity.RegisterActivity;
+import com.baogetv.app.model.usercenter.present.UserInfoManager;
 import com.baogetv.app.util.SettingManager;
 import com.chalilayang.util.SPUtils;
 
@@ -35,10 +36,9 @@ public class LoginManager {
     public static final String KEY_SINA = "weibo";
     public static final String KEY_QQ = "qq";
 
-    private static UserDetailBean detailBean;
     public static boolean hasLogin(Context context) {
         String token = getUserToken(context);
-        if (!TextUtils.isEmpty(token) && detailBean != null) {
+        if (!TextUtils.isEmpty(token)) {
             return true;
         } else {
             return false;
@@ -46,9 +46,11 @@ public class LoginManager {
     }
 
     public static boolean hasCommentRight(Context context) {
-        if (!hasLogin(context) || detailBean == null) {
+        if (!hasLogin(context)) {
             return false;
         }
+        UserDetailBean detailBean
+                = UserInfoManager.getInstance(context).getUserDetailBean(getUserToken(context));
         int grade = 0;
         try {
             grade = Integer.parseInt(detailBean.getGrade());
@@ -65,14 +67,16 @@ public class LoginManager {
     }
 
     public static boolean hasMobile(Context context) {
-        if (!hasLogin(context) || detailBean == null) {
+        if (!hasLogin(context)) {
             return false;
         }
+        UserDetailBean detailBean
+                = UserInfoManager.getInstance(context).getUserDetailBean(getUserToken(context));
         return !TextUtils.isEmpty(detailBean.getMobile());
     }
 
     public static void updateDetailBean(Context context, UserDetailBean bean) {
-        detailBean = bean;
+        UserInfoManager.getInstance(context).saveUserInfo(bean);
         LoginManager.putUserToken(context, bean.getToken());
         LoginManager.putUserID(context, bean.getUser_id());
         boolean allowComment;
@@ -149,7 +153,7 @@ public class LoginManager {
     }
 
     public static void cleanUserToken(Context context) {
-        detailBean = null;
+        UserInfoManager.getInstance(context).clearUserInfo();
         SPUtils.put(context, KEY_USER_TOKEN, "");
     }
 

@@ -3,6 +3,7 @@ package com.baogetv.app.bean;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.baogetv.app.db.entity.UserItemEntity;
 import com.baogetv.app.model.channel.entity.ChannelData;
 import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
 import com.baogetv.app.model.videodetail.entity.CommentData;
@@ -142,5 +143,161 @@ public class BeanConvert {
         commentData.setReply_user_picid(data.getReply_user_picid());
         commentData.setIs_like(data.getIs_like());
         return commentData;
+    }
+
+    public static UserItemEntity getUserItemEntity(UserDetailBean bean) {
+        /**
+         * user_id : 9
+         * openid :
+         * username : 山南
+         * mobile : 13821049089
+         * device_token : AgNPWWcJ965E_IAmOLh4V2dIJsLMmWDcQE_8a609vg2c
+         * sex : 1
+         * birthday : 1991-01-01
+         * intro :
+         * height : 0
+         * weight : 0
+         * bfr : 0
+         * pic : 0
+         * score : 36
+         * level_id : 1
+         * level_time : 2017-12-03 00:23:51
+         * grade : 2
+         * is_sure : 0
+         * dumb_time : 1970-01-01 08:00:00
+         * is_push_comments : 1
+         * is_push_likes : 1
+         * read_message_ids :
+         * del_message_ids :
+         * login : 17
+         * reg_ip : 2099501355
+         * reg_time : 2017-12-01 12:10:19
+         * last_login_ip : 42.80.233.3
+         * last_login_time : 2017-12-03 13:24:16
+         * status : 1
+         * token : ad748196435a35e5d9fa89a120af158d
+         * pic_url :
+         * level_name : LV1
+         * medal : lv1
+         * level_pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-11-19/5a114121a67ac.jpg
+         * next_level_score : 666
+         * age : 26
+         */
+        UserItemEntity entity = new UserItemEntity(
+                bean.getUser_id(),
+                bean.getOpenid(),
+                bean.getUsername(),
+                bean.getMobile(),
+                bean.getDevice_token(),
+                bean.getSex(),
+                bean.getBirthday(),
+                bean.getIntro(),
+                bean.getHeight(),
+                bean.getWeight(),
+                bean.getBfr(),
+                bean.getPic_url(),
+                bean.getScore(),
+                bean.getLevel_id(),
+                bean.getLevel_time(),
+                bean.getGrade(),
+                bean.getIs_sure(),
+                bean.getDumb_time(),
+                bean.getIs_push_comments(),
+                bean.getIs_push_likes(),
+                bean.getIs_push_comments(),
+                bean.getDel_message_ids(),
+                bean.getLogin(),
+                bean.getReg_ip(),
+                bean.getReg_time(),
+                bean.getLast_login_ip(),
+                bean.getLast_login_time(),
+                bean.getStatus(),
+                bean.getToken(),
+                bean.getPic_url(),
+                bean.getLevel_name(),
+                bean.getMedal(),
+                bean.getLevel_pic_url(),
+                bean.getNext_level_score(),
+                bean.getAge()
+        );
+        return entity;
+    }
+
+    public static UserDetailBean getUserDetailBean(UserItemEntity bean) {
+        /**
+         * user_id : 9
+         * openid :
+         * username : 山南
+         * mobile : 13821049089
+         * device_token : AgNPWWcJ965E_IAmOLh4V2dIJsLMmWDcQE_8a609vg2c
+         * sex : 1
+         * birthday : 1991-01-01
+         * intro :
+         * height : 0
+         * weight : 0
+         * bfr : 0
+         * pic : 0
+         * score : 36
+         * level_id : 1
+         * level_time : 2017-12-03 00:23:51
+         * grade : 2
+         * is_sure : 0
+         * dumb_time : 1970-01-01 08:00:00
+         * is_push_comments : 1
+         * is_push_likes : 1
+         * read_message_ids :
+         * del_message_ids :
+         * login : 17
+         * reg_ip : 2099501355
+         * reg_time : 2017-12-01 12:10:19
+         * last_login_ip : 42.80.233.3
+         * last_login_time : 2017-12-03 13:24:16
+         * status : 1
+         * token : ad748196435a35e5d9fa89a120af158d
+         * pic_url :
+         * level_name : LV1
+         * medal : lv1
+         * level_pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-11-19/5a114121a67ac.jpg
+         * next_level_score : 666
+         * age : 26
+         */
+        UserDetailBean entity = new UserDetailBean(
+                bean.getUser_id(),
+                bean.getOpenid(),
+                bean.getUsername(),
+                bean.getMobile(),
+                bean.getDevice_token(),
+                bean.getSex(),
+                bean.getBirthday(),
+                bean.getIntro(),
+                bean.getHeight(),
+                bean.getWeight(),
+                bean.getBfr(),
+                bean.getPic_url(),
+                bean.getScore(),
+                bean.getLevel_id(),
+                bean.getLevel_time(),
+                bean.getGrade(),
+                bean.getIs_sure(),
+                bean.getDumb_time(),
+                bean.getIs_push_comments(),
+                bean.getIs_push_likes(),
+                bean.getIs_push_comments(),
+                bean.getDel_message_ids(),
+                bean.getLogin(),
+                bean.getReg_ip(),
+                bean.getReg_time(),
+                bean.getLast_login_ip(),
+                bean.getLast_login_time(),
+                bean.getStatus(),
+                bean.getToken(),
+                bean.getPic_url(),
+                bean.getLevel_name(),
+                bean.getMedal(),
+                bean.getLevel_pic_url(),
+                bean.getNext_level_score(),
+                bean.getAge()
+        );
+        return entity;
     }
 }

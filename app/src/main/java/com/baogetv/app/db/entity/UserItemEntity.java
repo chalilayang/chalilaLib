@@ -1,14 +1,15 @@
-package com.baogetv.app.bean;
+package com.baogetv.app.db.entity;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Property;
 
 /**
- * Created by chalilayang on 2017/11/26.
+ * Created by chalilayang on 2017/10/19.
  */
-
-public class UserDetailBean implements Parcelable {
-
+@Entity
+public class UserItemEntity {
 
     /**
      * user_id : 9
@@ -47,44 +48,123 @@ public class UserDetailBean implements Parcelable {
      * next_level_score : 666
      * age : 26
      */
-
+    @Id
+    private Long id;
+    @Property
     private String user_id;
+    @Property
     private String openid;
+    @Property
     private String username;
+    @Property
     private String mobile;
+    @Property
     private String device_token;
+    @Property
     private String sex;
+    @Property
     private String birthday;
+    @Property
     private String intro;
+    @Property
     private String height;
+    @Property
     private String weight;
+    @Property
     private String bfr;
+    @Property
     private String pic;
+    @Property
     private String score;
+    @Property
     private String level_id;
+    @Property
     private String level_time;
+    @Property
     private String grade;
+    @Property
     private String is_sure;
+    @Property
     private String dumb_time;
+    @Property
     private String is_push_comments;
+    @Property
     private String is_push_likes;
+    @Property
     private String read_message_ids;
+    @Property
     private String del_message_ids;
+    @Property
     private String login;
+    @Property
     private String reg_ip;
+    @Property
     private String reg_time;
+    @Property
     private String last_login_ip;
+    @Property
     private String last_login_time;
+    @Property
     private String status;
+    @Property
     private String token;
+    @Property
     private String pic_url;
+    @Property
     private String level_name;
+    @Property
     private String medal;
+    @Property
     private String level_pic_url;
+    @Property
     private String next_level_score;
+    @Property
     private int age;
-
-    public UserDetailBean(String user_id, String openid, String username, String mobile, String device_token,
+    @Generated(hash = 1116634630)
+    public UserItemEntity(Long id, String user_id, String openid, String username, String mobile, String device_token,
+                           String sex, String birthday, String intro, String height, String weight, String bfr, String pic, String score,
+                           String level_id, String level_time, String grade, String is_sure, String dumb_time, String is_push_comments,
+                           String is_push_likes, String read_message_ids, String del_message_ids, String login, String reg_ip,
+                           String reg_time, String last_login_ip, String last_login_time, String status, String token, String pic_url,
+                           String level_name, String medal, String level_pic_url, String next_level_score, int age) {
+        this.id = id;
+        this.user_id = user_id;
+        this.openid = openid;
+        this.username = username;
+        this.mobile = mobile;
+        this.device_token = device_token;
+        this.sex = sex;
+        this.birthday = birthday;
+        this.intro = intro;
+        this.height = height;
+        this.weight = weight;
+        this.bfr = bfr;
+        this.pic = pic;
+        this.score = score;
+        this.level_id = level_id;
+        this.level_time = level_time;
+        this.grade = grade;
+        this.is_sure = is_sure;
+        this.dumb_time = dumb_time;
+        this.is_push_comments = is_push_comments;
+        this.is_push_likes = is_push_likes;
+        this.read_message_ids = read_message_ids;
+        this.del_message_ids = del_message_ids;
+        this.login = login;
+        this.reg_ip = reg_ip;
+        this.reg_time = reg_time;
+        this.last_login_ip = last_login_ip;
+        this.last_login_time = last_login_time;
+        this.status = status;
+        this.token = token;
+        this.pic_url = pic_url;
+        this.level_name = level_name;
+        this.medal = medal;
+        this.level_pic_url = level_pic_url;
+        this.next_level_score = next_level_score;
+        this.age = age;
+    }
+    public UserItemEntity(String user_id, String openid, String username, String mobile, String device_token,
                           String sex, String birthday, String intro, String height, String weight, String bfr, String pic, String score,
                           String level_id, String level_time, String grade, String is_sure, String dumb_time, String is_push_comments,
                           String is_push_likes, String read_message_ids, String del_message_ids, String login, String reg_ip,
@@ -126,382 +206,224 @@ public class UserDetailBean implements Parcelable {
         this.next_level_score = next_level_score;
         this.age = age;
     }
-
-    public String getUser_id() {
-        return user_id;
+    @Generated(hash = 421677132)
+    public UserItemEntity() {
     }
-
+    public Long getId() {
+        return this.id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public String getUser_id() {
+        return this.user_id;
+    }
     public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
-
     public String getOpenid() {
-        return openid;
+        return this.openid;
     }
-
     public void setOpenid(String openid) {
         this.openid = openid;
     }
-
     public String getUsername() {
-        return username;
+        return this.username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
-
     public String getMobile() {
-        return mobile;
+        return this.mobile;
     }
-
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
-
     public String getDevice_token() {
-        return device_token;
+        return this.device_token;
     }
-
     public void setDevice_token(String device_token) {
         this.device_token = device_token;
     }
-
     public String getSex() {
-        return sex;
+        return this.sex;
     }
-
     public void setSex(String sex) {
         this.sex = sex;
     }
-
     public String getBirthday() {
-        return birthday;
+        return this.birthday;
     }
-
     public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
-
     public String getIntro() {
-        return intro;
+        return this.intro;
     }
-
     public void setIntro(String intro) {
         this.intro = intro;
     }
-
     public String getHeight() {
-        return height;
+        return this.height;
     }
-
     public void setHeight(String height) {
         this.height = height;
     }
-
     public String getWeight() {
-        return weight;
+        return this.weight;
     }
-
     public void setWeight(String weight) {
         this.weight = weight;
     }
-
     public String getBfr() {
-        return bfr;
+        return this.bfr;
     }
-
     public void setBfr(String bfr) {
         this.bfr = bfr;
     }
-
     public String getPic() {
-        return pic;
+        return this.pic;
     }
-
     public void setPic(String pic) {
         this.pic = pic;
     }
-
     public String getScore() {
-        return score;
+        return this.score;
     }
-
     public void setScore(String score) {
         this.score = score;
     }
-
     public String getLevel_id() {
-        return level_id;
+        return this.level_id;
     }
-
     public void setLevel_id(String level_id) {
         this.level_id = level_id;
     }
-
     public String getLevel_time() {
-        return level_time;
+        return this.level_time;
     }
-
     public void setLevel_time(String level_time) {
         this.level_time = level_time;
     }
-
     public String getGrade() {
-        return grade;
+        return this.grade;
     }
-
     public void setGrade(String grade) {
         this.grade = grade;
     }
-
     public String getIs_sure() {
-        return is_sure;
+        return this.is_sure;
     }
-
     public void setIs_sure(String is_sure) {
         this.is_sure = is_sure;
     }
-
     public String getDumb_time() {
-        return dumb_time;
+        return this.dumb_time;
     }
-
     public void setDumb_time(String dumb_time) {
         this.dumb_time = dumb_time;
     }
-
     public String getIs_push_comments() {
-        return is_push_comments;
+        return this.is_push_comments;
     }
-
     public void setIs_push_comments(String is_push_comments) {
         this.is_push_comments = is_push_comments;
     }
-
     public String getIs_push_likes() {
-        return is_push_likes;
+        return this.is_push_likes;
     }
-
     public void setIs_push_likes(String is_push_likes) {
         this.is_push_likes = is_push_likes;
     }
-
     public String getRead_message_ids() {
-        return read_message_ids;
+        return this.read_message_ids;
     }
-
     public void setRead_message_ids(String read_message_ids) {
         this.read_message_ids = read_message_ids;
     }
-
     public String getDel_message_ids() {
-        return del_message_ids;
+        return this.del_message_ids;
     }
-
     public void setDel_message_ids(String del_message_ids) {
         this.del_message_ids = del_message_ids;
     }
-
     public String getLogin() {
-        return login;
+        return this.login;
     }
-
     public void setLogin(String login) {
         this.login = login;
     }
-
     public String getReg_ip() {
-        return reg_ip;
+        return this.reg_ip;
     }
-
     public void setReg_ip(String reg_ip) {
         this.reg_ip = reg_ip;
     }
-
     public String getReg_time() {
-        return reg_time;
+        return this.reg_time;
     }
-
     public void setReg_time(String reg_time) {
         this.reg_time = reg_time;
     }
-
     public String getLast_login_ip() {
-        return last_login_ip;
+        return this.last_login_ip;
     }
-
     public void setLast_login_ip(String last_login_ip) {
         this.last_login_ip = last_login_ip;
     }
-
     public String getLast_login_time() {
-        return last_login_time;
+        return this.last_login_time;
     }
-
     public void setLast_login_time(String last_login_time) {
         this.last_login_time = last_login_time;
     }
-
     public String getStatus() {
-        return status;
+        return this.status;
     }
-
     public void setStatus(String status) {
         this.status = status;
     }
-
     public String getToken() {
-        return token;
+        return this.token;
     }
-
     public void setToken(String token) {
         this.token = token;
     }
-
     public String getPic_url() {
-        return pic_url;
+        return this.pic_url;
     }
-
     public void setPic_url(String pic_url) {
         this.pic_url = pic_url;
     }
-
     public String getLevel_name() {
-        return level_name;
+        return this.level_name;
     }
-
     public void setLevel_name(String level_name) {
         this.level_name = level_name;
     }
-
     public String getMedal() {
-        return medal;
+        return this.medal;
     }
-
     public void setMedal(String medal) {
         this.medal = medal;
     }
-
     public String getLevel_pic_url() {
-        return level_pic_url;
+        return this.level_pic_url;
     }
-
     public void setLevel_pic_url(String level_pic_url) {
         this.level_pic_url = level_pic_url;
     }
-
     public String getNext_level_score() {
-        return next_level_score;
+        return this.next_level_score;
     }
-
     public void setNext_level_score(String next_level_score) {
         this.next_level_score = next_level_score;
     }
-
     public int getAge() {
-        return age;
+        return this.age;
     }
-
     public void setAge(int age) {
         this.age = age;
     }
-
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.user_id);
-        dest.writeString(this.openid);
-        dest.writeString(this.username);
-        dest.writeString(this.mobile);
-        dest.writeString(this.device_token);
-        dest.writeString(this.sex);
-        dest.writeString(this.birthday);
-        dest.writeString(this.intro);
-        dest.writeString(this.height);
-        dest.writeString(this.weight);
-        dest.writeString(this.bfr);
-        dest.writeString(this.pic);
-        dest.writeString(this.score);
-        dest.writeString(this.level_id);
-        dest.writeString(this.level_time);
-        dest.writeString(this.grade);
-        dest.writeString(this.is_sure);
-        dest.writeString(this.dumb_time);
-        dest.writeString(this.is_push_comments);
-        dest.writeString(this.is_push_likes);
-        dest.writeString(this.read_message_ids);
-        dest.writeString(this.del_message_ids);
-        dest.writeString(this.login);
-        dest.writeString(this.reg_ip);
-        dest.writeString(this.reg_time);
-        dest.writeString(this.last_login_ip);
-        dest.writeString(this.last_login_time);
-        dest.writeString(this.status);
-        dest.writeString(this.token);
-        dest.writeString(this.pic_url);
-        dest.writeString(this.level_name);
-        dest.writeString(this.medal);
-        dest.writeString(this.level_pic_url);
-        dest.writeString(this.next_level_score);
-        dest.writeInt(this.age);
-    }
-
-    public UserDetailBean() {
-    }
-
-    protected UserDetailBean(Parcel in) {
-        this.user_id = in.readString();
-        this.openid = in.readString();
-        this.username = in.readString();
-        this.mobile = in.readString();
-        this.device_token = in.readString();
-        this.sex = in.readString();
-        this.birthday = in.readString();
-        this.intro = in.readString();
-        this.height = in.readString();
-        this.weight = in.readString();
-        this.bfr = in.readString();
-        this.pic = in.readString();
-        this.score = in.readString();
-        this.level_id = in.readString();
-        this.level_time = in.readString();
-        this.grade = in.readString();
-        this.is_sure = in.readString();
-        this.dumb_time = in.readString();
-        this.is_push_comments = in.readString();
-        this.is_push_likes = in.readString();
-        this.read_message_ids = in.readString();
-        this.del_message_ids = in.readString();
-        this.login = in.readString();
-        this.reg_ip = in.readString();
-        this.reg_time = in.readString();
-        this.last_login_ip = in.readString();
-        this.last_login_time = in.readString();
-        this.status = in.readString();
-        this.token = in.readString();
-        this.pic_url = in.readString();
-        this.level_name = in.readString();
-        this.medal = in.readString();
-        this.level_pic_url = in.readString();
-        this.next_level_score = in.readString();
-        this.age = in.readInt();
-    }
-
-    public static final Creator<UserDetailBean> CREATOR = new Creator<UserDetailBean>() {
-        @Override
-        public UserDetailBean createFromParcel(Parcel source) {
-            return new UserDetailBean(source);
-        }
-
-        @Override
-        public UserDetailBean[] newArray(int size) {
-            return new UserDetailBean[size];
-        }
-    };
+    
 }

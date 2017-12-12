@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.baogetv.app.apiinterface.UserApiService;
@@ -45,10 +46,10 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (LoginManager.hasLogin(getApplicationContext())) {
-            getUserDetail();
-        } else {
+        if (TextUtils.isEmpty(LoginManager.getUserToken(getApplicationContext()))) {
             startVideoLoginActivity();
+        } else {
+            getUserDetail();
         }
     }
 
