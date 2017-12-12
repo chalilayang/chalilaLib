@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.baogetv.app.R;
 import com.baogetv.app.bean.ChannelDetailBean;
 import com.baogetv.app.bean.VideoDetailBean;
+import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.util.TimeUtil;
 import com.bumptech.glide.Glide;
@@ -41,6 +42,8 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
     private ChannelDetailBean channelDetailBean;
     private String playCountFormat;
 
+    private boolean cached;
+
     protected String loadingMore;
     protected String noMoreData;
     protected boolean hasMoreData;
@@ -57,6 +60,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         loadingMore = mContext.getString(R.string.loading_more_data);
         noMoreData = mContext.getString(R.string.no_more_data);
         hasMoreData = true;
+        cached = false;
     }
 
     public void setHasMoreData(boolean hasMoreData) {
@@ -148,6 +152,10 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         private TextView channelDesc;
         private Drawable heartGray;
         private Drawable heartRed;
+        private Drawable cacheGray;
+        private Drawable cacheRed;
+        private Drawable shareGray;
+        private Drawable shareRed;
 
         public void updateInfo() {
             if (videoDetailData != null) {
@@ -156,6 +164,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 playCount.setText(String.format(playCountFormat, bean.getPlay()));
                 desc.setText(bean.getIntro());
                 share.setText(bean.getShares());
+                cache.setText(bean.getCaches());
                 collect.setText(bean.getLikes());
                 List<VideoDetailBean.TagsBean> labels = bean.getTags();
                 flowLayout.removeAllViews();
@@ -204,6 +213,21 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             heartGray.setBounds(0, 0, width, height);
             heartRed = mContext.getResources().getDrawable(R.mipmap.heart_btn_icon);
             heartRed.setBounds(0, 0, width, height);
+
+            shareGray = mContext.getResources().getDrawable(R.mipmap.share_btn_icon_gray);
+            width = shareGray.getIntrinsicWidth();
+            height = shareGray.getIntrinsicHeight();
+            shareGray.setBounds(0, 0, width, height);
+            shareRed = mContext.getResources().getDrawable(R.mipmap.share_btn_icon);
+            shareRed.setBounds(0, 0, width, height);
+
+            cacheGray = mContext.getResources().getDrawable(R.mipmap.cache_btn_icon_gray);
+            width = cacheGray.getIntrinsicWidth();
+            height = cacheGray.getIntrinsicHeight();
+            cacheGray.setBounds(0, 0, width, height);
+            cacheRed = mContext.getResources().getDrawable(R.mipmap.cache_btn_icon);
+            cacheRed.setBounds(0, 0, width, height);
+
             title = (TextView) view.findViewById(R.id.video_name);
             playCount = (TextView) view.findViewById(R.id.video_play_count);
             desc = (TextView) view.findViewById(R.id.video_desc);

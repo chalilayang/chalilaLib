@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/size_30"
-            android:drawableLeft="@mipmap/cache_btn_icon"
+            android:drawableLeft="@mipmap/cache_btn_icon_gray"
             android:drawablePadding="@dimen/size_10"
             android:text="@string/cache"
             android:textSize="@dimen/size_26"
