@@ -427,7 +427,7 @@ public interface UserApiService {
      */
     @FormUrlEncoded
     @POST("index.php?s=/Likes/del")
-    Call<ResponseBean<AddItemBean>> delZan(
+    Call<ResponseBean<List<Object>>> delZan(
             @Field("token") String token,
             @Field("video_id") String video_id,
             @Field("comments_id") String comments_id

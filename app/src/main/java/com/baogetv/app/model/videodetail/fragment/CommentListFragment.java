@@ -23,6 +23,7 @@ import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.activity.MemberDetailActivity;
 import com.baogetv.app.model.usercenter.event.ReportEvent;
 import com.baogetv.app.model.videodetail.activity.CommentDetailActivity;
+import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.CommentListAdapter;
 import com.baogetv.app.model.videodetail.customview.CommentView;
 import com.baogetv.app.model.videodetail.entity.CommentData;
@@ -273,7 +274,17 @@ public class CommentListFragment extends BaseItemFragment
     @Override
     public void onThumbUp(CommentData data) {
         Log.i(TAG, "onThumbUp: ");
-        addZan(videoDetailData.videoDetailBean.getId(), data.getBean().getId());
+        int zan = 0;
+        try {
+            zan = Integer.parseInt(data.getBean().getIs_like());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        if (zan == 0) {
+            addZan(videoDetailData.videoDetailBean.getId(), data.getBean().getId());
+        } else {
+            delZan(videoDetailData.videoDetailBean.getId(), data.getBean().getId());
+        }
     }
 
     @Override
@@ -338,48 +349,66 @@ public class CommentListFragment extends BaseItemFragment
     }
 
     private void addZan(String vid, String comment_id) {
-        UserApiService userApiService
-                = RetrofitManager.getInstance().createReq(UserApiService.class);
-        String token = LoginManager.getUserToken(mActivity);
-        Call<ResponseBean<AddItemBean>> call = userApiService.addZan(
-                token, vid, comment_id);
-        if (call != null) {
-            call.enqueue(new CustomCallBack<AddItemBean>() {
-                @Override
-                public void onSuccess(AddItemBean bean, String msg, int state) {
-                    showShortToast("点赞 success");
-                    Log.i(TAG, "onSuccess: add zan success");
-                    getCommentList(videoDetailData, 0);
-                }
+        if (!LoginManager.hasCommentRight(mActivity.getApplicationContext())) {
+            if (!LoginManager.hasLogin(mActivity.getApplicationContext())) {
+                LoginManager.startLogin(mActivity);
+            } else if (LoginManager.hasMobile(mActivity.getApplicationContext())) {
+                LoginManager.startChangeMobile(mActivity);
+            } else {
+                showShortToast(getString(R.string.no_zan_right));
+            }
+        } else {
+            UserApiService userApiService
+                    = RetrofitManager.getInstance().createReq(UserApiService.class);
+            String token = LoginManager.getUserToken(mActivity);
+            Call<ResponseBean<AddItemBean>> call = userApiService.addZan(
+                    token, vid, comment_id);
+            if (call != null) {
+                call.enqueue(new CustomCallBack<AddItemBean>() {
+                    @Override
+                    public void onSuccess(AddItemBean bean, String msg, int state) {
+                        showShortToast("点赞 success");
+                        Log.i(TAG, "onSuccess: add zan success");
+                        getCommentList(videoDetailData, 0);
+                    }
 
-                @Override
-                public void onFailed(String error, int state) {
-                    showShortToast(error);
-                }
-            });
+                    @Override
+                    public void onFailed(String error, int state) {
+                        showShortToast(error);
+                    }
+                });
+            }
         }
     }
 
     private void delZan(String vid, String comment_id) {
-        UserApiService userApiService
-                = RetrofitManager.getInstance().createReq(UserApiService.class);
-        String token = LoginManager.getUserToken(mActivity);
-        Call<ResponseBean<AddItemBean>> call = userApiService.delZan(
-                token, vid, comment_id);
-        if (call != null) {
-            call.enqueue(new CustomCallBack<AddItemBean>() {
-                @Override
-                public void onSuccess(AddItemBean bean, String msg, int state) {
-                    showShortToast("点赞 success");
-                    Log.i(TAG, "onSuccess: add zan success");
-                    getCommentList(videoDetailData, 0);
-                }
+        if (!LoginManager.hasCommentRight(mActivity.getApplicationContext())) {
+            if (!LoginManager.hasLogin(mActivity.getApplicationContext())) {
+                LoginManager.startLogin(mActivity);
+            } else if (LoginManager.hasMobile(mActivity.getApplicationContext())) {
+                LoginManager.startChangeMobile(mActivity);
+            } else {
+                showShortToast(getString(R.string.no_zan_right));
+            }
+        } else {
+            UserApiService userApiService
+                    = RetrofitManager.getInstance().createReq(UserApiService.class);
+            String token = LoginManager.getUserToken(mActivity);
+            Call<ResponseBean<List<Object>>> call = userApiService.delZan(
+                    token, vid, comment_id);
+            if (call != null) {
+                call.enqueue(new CustomCallBack<List<Object>>() {
+                    @Override
+                    public void onSuccess(List<Object> bean, String msg, int state) {
+                        getCommentList(videoDetailData, 0);
+                    }
 
-                @Override
-                public void onFailed(String error, int state) {
-                    showShortToast(error);
-                }
-            });
+                    @Override
+                    public void onFailed(String error, int state) {
+                        showShortToast(error);
+                    }
+                });
+            }
         }
     }
 
