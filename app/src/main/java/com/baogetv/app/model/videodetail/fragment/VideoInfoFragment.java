@@ -26,6 +26,7 @@ import com.baogetv.app.model.videodetail.adapter.VideoInfoListAdapter;
 import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
+import com.baogetv.app.model.videodetail.event.CollectSuccessEvent;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.util.CacheUtil;
@@ -33,6 +34,7 @@ import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -210,6 +212,29 @@ public class VideoInfoFragment extends BaseFragment
         }
     }
 
+    private void getVideoDetail() {
+        VideoListService listService
+                = RetrofitManager.getInstance().createReq(VideoListService.class);
+        Call<ResponseBean<VideoDetailBean>> call = listService.getVideoDetail(
+                videoDetailData.videoDetailBean.getId());
+        if (call != null) {
+            call.enqueue(new CustomCallBack<VideoDetailBean>() {
+                @Override
+                public void onSuccess(VideoDetailBean data, String msg, int state) {
+                    if (data != null) {
+                        videoDetailData.videoDetailBean = data;
+                        recyclerViewAdapter.setVideoInfo(videoDetailData);
+                    }
+                }
+
+                @Override
+                public void onFailed(String error, int state) {
+                    showShortToast(error);
+                }
+            });
+        }
+    }
+
     @Override
     public void onChannelClick(ChannelDetailBean bean) {
         Log.i(TAG, "onChannelClick: ");
@@ -250,6 +275,16 @@ public class VideoInfoFragment extends BaseFragment
     public void onCollectClick(VideoDetailBean bean) {
         Log.i(TAG, "onCollectClick: ");
         EventBus.getDefault().post(new AddCollectEvent());
+    }
+
+    @Subscribe
+    public void handleCollectEvent(CollectSuccessEvent event) {
+        getVideoDetail();
+    }
+
+    @Override
+    public boolean useEventBus() {
+        return true;
     }
 
     /**

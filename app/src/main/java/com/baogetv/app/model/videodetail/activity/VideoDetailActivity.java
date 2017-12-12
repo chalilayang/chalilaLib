@@ -24,6 +24,7 @@ import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
 import com.baogetv.app.model.videodetail.event.AddHistoryEvent;
+import com.baogetv.app.model.videodetail.event.CollectSuccessEvent;
 import com.baogetv.app.model.videodetail.event.InputSendEvent;
 import com.baogetv.app.model.videodetail.event.NeedCommentEvent;
 import com.baogetv.app.model.videodetail.event.NeedReplyEvent;
@@ -301,6 +302,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                 @Override
                 public void onSuccess(AddItemBean data, String msg, int state) {
                     showShortToast("已收藏");
+                    EventBus.getDefault().post(new CollectSuccessEvent());
                 }
 
                 @Override

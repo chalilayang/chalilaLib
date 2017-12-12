@@ -165,7 +165,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 desc.setText(bean.getIntro());
                 share.setText(bean.getShares());
                 cache.setText(bean.getCaches());
-                collect.setText(bean.getLikes());
+                collect.setText(bean.getCollects());
                 List<VideoDetailBean.TagsBean> labels = bean.getTags();
                 flowLayout.removeAllViews();
                 if (labels != null) {
