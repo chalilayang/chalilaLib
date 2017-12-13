@@ -24,18 +24,24 @@ public class WebReadActivity extends BaseTitleActivity {
     public static final int REQUEST_CODE_WEB = 2313;
     public static final String KEY_WEB_TITLE = "WEB_TITLE";
     public static final String KEY_URL = "URL";
+    public static final String KEY_WITH_TITLE = "WITH_TITLE";
     private WebView webView;
+    private boolean withTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitleActivity(getIntent().getStringExtra(KEY_WEB_TITLE));
         String url = getIntent().getStringExtra(KEY_URL);
+        withTitle = getIntent().getBooleanExtra(KEY_WITH_TITLE, true);
         if (!TextUtils.isEmpty(url)) {
             webView = (WebView) findViewById(R.id.web_view);
             webView.setWebViewClient(new MyWebViewClient());
             webView.getSettings().setJavaScriptEnabled(true);
             webView.setInitialScale(80);
             webView.loadUrl(url);
+        }
+        if (!withTitle) {
+            findViewById(R.id.title_container).setVisibility(View.GONE);
         }
     }
     @Override

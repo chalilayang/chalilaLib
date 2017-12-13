@@ -1,7 +1,9 @@
 package com.baogetv.app.model.videodetail.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +16,9 @@ import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.bean.AdvBean;
 import com.baogetv.app.bean.AdvListBean;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.constant.UrlConstance;
 import com.baogetv.app.model.usercenter.LoginManager;
+import com.baogetv.app.model.usercenter.activity.WebReadActivity;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.CommentCountEvent;
 import com.baogetv.app.net.CustomCallBack;
@@ -23,6 +27,8 @@ import com.baogetv.app.net.RetrofitManager;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 
@@ -84,7 +90,14 @@ public class VideoDetailFragment extends PagerFragment {
             @Override
             public void onClick(View view) {
                 if (advBean != null) {
-                    advClick(advBean.getId());
+                    if (!TextUtils.isEmpty(advBean.getUrl())) {
+                        if (advBean.getUrl().startsWith("http")) {
+                            advClick(advBean.getId());
+                            startWebActivity(advBean.getUrl());
+                        } else {
+                            showShortToast("无效的链接地址");
+                        }
+                    }
                 }
             }
         });
@@ -165,5 +178,36 @@ public class VideoDetailFragment extends PagerFragment {
                 }
             });
         }
+    }
+
+    private void startWebActivity(String url) {
+        Intent intent = new Intent(mActivity, WebReadActivity.class);
+        intent.putExtra(WebReadActivity.KEY_WEB_TITLE, getString(R.string.user_license));
+        intent.putExtra(WebReadActivity.KEY_WITH_TITLE, false);
+        intent.putExtra(WebReadActivity.KEY_URL, url);
+        startActivity(intent);
+    }
+
+    /**
+     * URL检查<br>
+     * <br>
+     * @param pInput     要检查的字符串<br>
+     * @return boolean   返回检查结果<br>
+     */
+    public static boolean isUrl (String pInput) {
+        if(pInput == null){
+            return false;
+        }
+        String regEx = "^(http|https|ftp)//://([a-zA-Z0-9//.//-]+(//:[a-zA-"
+                + "Z0-9//.&%//$//-]+)*@)?((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{"
+                + "2}|[1-9]{1}[0-9]{1}|[1-9])//.(25[0-5]|2[0-4][0-9]|[0-1]{1}"
+                + "[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)//.(25[0-5]|2[0-4][0-9]|"
+                + "[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)//.(25[0-5]|2[0-"
+                + "4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0"
+                + "-9//-]+//.)*[a-zA-Z0-9//-]+//.[a-zA-Z]{2,4})(//:[0-9]+)?(/"
+                + "[^/][a-zA-Z0-9//.//,//?//'///////+&%//$//=~_//-@]*)*$";
+        Pattern p = Pattern.compile(regEx);
+        Matcher matcher = p.matcher(pInput);
+        return matcher.matches();
     }
 }
