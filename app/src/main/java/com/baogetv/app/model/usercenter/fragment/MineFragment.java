@@ -106,8 +106,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             View view = inflater.inflate(R.layout.fragment_mine, container, false);
             init(view);
             contentView = view;
-            updateInfo();
         }
+        updateInfo();
         return contentView;
     }
 
