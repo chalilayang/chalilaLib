@@ -21,6 +21,7 @@ import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.bean.VideoListBean;
 import com.baogetv.app.downloader.domain.DownloadInfo;
 import com.baogetv.app.model.channel.ChannelDetailActivity;
+import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.VideoInfoListAdapter;
 import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
@@ -215,8 +216,12 @@ public class VideoInfoFragment extends BaseFragment
     private void getVideoDetail() {
         VideoListService listService
                 = RetrofitManager.getInstance().createReq(VideoListService.class);
+        String token = null;
+        if (LoginManager.hasLogin(mActivity.getApplicationContext())) {
+            token = LoginManager.getUserToken(mActivity.getApplicationContext());
+        }
         Call<ResponseBean<VideoDetailBean>> call = listService.getVideoDetail(
-                videoDetailData.videoDetailBean.getId());
+                videoDetailData.videoDetailBean.getId(), token);
         if (call != null) {
             call.enqueue(new CustomCallBack<VideoDetailBean>() {
                 @Override

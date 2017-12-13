@@ -65,11 +65,15 @@ public interface VideoListService {
      * 视频详情
      *
      * @param id
+     * @param token
      * @return
      */
     @FormUrlEncoded
     @POST("index.php?s=/Video/detail")
-    Call<ResponseBean<VideoDetailBean>> getVideoDetail(@Field("id") String id);
+    Call<ResponseBean<VideoDetailBean>> getVideoDetail(
+            @Field("id") String id,
+            @Field("token") String token
+    );
 
     /**
      * @return

@@ -130,7 +130,11 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
     private void initData() {
         VideoListService listService
                 = RetrofitManager.getInstance().createReq(VideoListService.class);
-        Call<ResponseBean<VideoDetailBean>> call = listService.getVideoDetail(videoId);
+        String token = null;
+        if (LoginManager.hasLogin(getApplicationContext())) {
+            token = LoginManager.getUserToken(getApplicationContext());
+        }
+        Call<ResponseBean<VideoDetailBean>> call = listService.getVideoDetail(videoId, token);
         if (call != null) {
             call.enqueue(new CustomCallBack<VideoDetailBean>() {
                 @Override

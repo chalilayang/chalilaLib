@@ -161,8 +161,21 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 playCount.setText(String.format(playCountFormat, bean.getPlay()));
                 desc.setText(bean.getIntro());
                 share.setText(bean.getShares());
+                share.setCompoundDrawables(null, shareGray, null, null);
                 cache.setText(bean.getCaches());
+                cache.setCompoundDrawables(null, cacheGray, null, null);
                 collect.setText(bean.getCollects());
+                int isCollect = 0;
+                try {
+                    isCollect = Integer.parseInt(videoDetailData.videoDetailBean.getIs_collect());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                if (isCollect == 0) {
+                    collect.setCompoundDrawables(null, heartGray, null, null);
+                } else {
+                    collect.setCompoundDrawables(null, heartRed, null, null);
+                }
                 List<VideoDetailBean.TagsBean> labels = bean.getTags();
                 flowLayout.removeAllViews();
                 if (labels != null) {
@@ -205,7 +218,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         public HeadViewHolder(View view) {
             super(view);
-            float scale = 2.0f;
+            float scale = 1.0f;
             heartGray = mContext.getResources().getDrawable(R.mipmap.heart_btn_gray);
             int width = (int) (heartGray.getIntrinsicWidth() * scale);
             int height = (int) (heartGray.getIntrinsicHeight() * scale);
