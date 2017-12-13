@@ -184,6 +184,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             Log.i(TAG, "updateInfo: " + detailBean.getPic_url());
             Glide.with(this)
                     .load(detailBean.getPic_url())
+                    .dontAnimate()
                     .placeholder(R.mipmap.user_default_icon)
                     .error(R.mipmap.user_default_icon)
                     .into(userIcon);

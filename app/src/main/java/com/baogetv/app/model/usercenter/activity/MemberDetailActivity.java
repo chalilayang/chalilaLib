@@ -50,7 +50,11 @@ public class MemberDetailActivity extends BaseTitleActivity {
 
     private void updateInfo() {
         if (userBean != null) {
-            Glide.with(this).load(userBean.getPic_url()).into(userIcon);
+            Glide.with(this)
+                    .load(userBean.getPic_url())
+                    .placeholder(R.mipmap.user_default_icon)
+                    .error(R.mipmap.user_default_icon)
+                    .dontAnimate().into(userIcon);
             userIcon.setLogo(userBean.getGrade(), userBean.getLevel_id());
             userName.setText(userBean.getUsername());
             gradeDesc.setText(userBean.getMedal());

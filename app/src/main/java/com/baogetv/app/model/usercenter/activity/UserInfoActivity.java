@@ -309,6 +309,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 .placeholder(R.mipmap.user_default_icon)
                 .error(R.mipmap.user_default_icon)
                 .load(new File(event.img))
+                .dontAnimate()
                 .into(userIconLine.getRightImageView());
     }
 
@@ -338,10 +339,12 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
             LoginManager.startLogin(this);
         } else {
             if (userDetailBean != null) {
+                Log.i(TAG, "freshInfo: " + userDetailBean.getPic_url());
                 Glide.with(this)
                         .load(userDetailBean.getPic_url())
                         .placeholder(R.mipmap.user_default_icon)
                         .error(R.mipmap.user_default_icon)
+                        .dontAnimate()
                         .into(userIconLine.getRightImageView());
                 userGradeLine.setUserLever(userDetailBean);
                 userNickNameLine.setVersion(userDetailBean.getUsername());

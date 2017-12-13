@@ -103,9 +103,12 @@ public class ChannelDetailActivity extends BaseActivity {
 
     private void refreshInfo() {
         if (detailBean != null) {
-            Glide.with(this).load(detailBean.getCover_url())
+            Glide.with(this)
+                    .load(detailBean.getCover_url())
+                    .dontAnimate()
                     .placeholder(R.mipmap.mengceng).into(imageView);
             Glide.with(this).load(detailBean.getPic_url())
+                    .dontAnimate()
                     .placeholder(R.mipmap.user_default_icon).into(circleImageView);
             channelTitle.setText(detailBean.getName());
             String info = String.format(

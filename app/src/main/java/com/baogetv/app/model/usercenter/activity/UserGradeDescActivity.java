@@ -57,6 +57,7 @@ public class UserGradeDescActivity extends BaseTitleActivity {
         if (userDetailBean != null) {
             Glide.with(this)
                     .load(userDetailBean.getPic_url())
+                    .dontAnimate()
                     .placeholder(R.mipmap.user_default_icon)
                     .error(R.mipmap.user_default_icon)
                     .into(userImage);
