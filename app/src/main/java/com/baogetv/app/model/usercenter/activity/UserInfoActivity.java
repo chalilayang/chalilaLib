@@ -235,6 +235,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
 
     private void startNameIntroActivity() {
         Intent intent = new Intent(this, NameModifyActivity.class);
+        intent.putExtra(KEY_USER_DETAIL_BEAN, userDetailBean);
         startActivityForResult(intent, REQUEST_CODE_NAME_MODIFY);
     }
 

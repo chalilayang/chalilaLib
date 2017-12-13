@@ -9,6 +9,7 @@ import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
@@ -17,22 +18,28 @@ import java.util.List;
 
 import retrofit2.Call;
 
+import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
+
 public class NameModifyActivity extends BaseTitleActivity {
 
     public static final int REQUEST_CODE_NAME_MODIFY = 2312;
     private EditText nameEdit;
     private EditText introEdit;
+    private UserDetailBean detailBean;
     private View save;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitleActivity(getString(R.string.name_and_intro));
+        detailBean = getIntent().getParcelableExtra(KEY_USER_DETAIL_BEAN);
         init();
     }
 
     private void init() {
         nameEdit = (EditText) findViewById(R.id.name_edit);
+        nameEdit.setText(detailBean.getUsername());
         introEdit = (EditText) findViewById(R.id.intro_edit);
+        introEdit.setText(detailBean.getIntro());
         save = findViewById(R.id.save_btn);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
