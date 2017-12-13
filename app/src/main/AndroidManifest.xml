@@ -132,7 +132,6 @@
                 <action android:name="com.baogetv.app.downloader.DOWNLOAD_SERVICE"/>
             </intent-filter>
         </service>
-        <service android:name=".push.MyPushIntentService"/>
 
         <meta-data
             android:name="UMENG_APPKEY"

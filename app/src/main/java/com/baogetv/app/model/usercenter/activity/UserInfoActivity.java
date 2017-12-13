@@ -121,6 +121,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 showOrHideBodyFragment(true);
                 break;
             case R.id.user_signature:
+                startNameIntroActivity();
                 break;
         }
     }

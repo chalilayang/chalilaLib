@@ -6,7 +6,6 @@ import android.util.Log;
 import com.baogetv.app.constant.AppConstance;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.net.RetrofitManager;
-import com.baogetv.app.push.MyPushIntentService;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
