@@ -451,6 +451,13 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
         if (playerFragment != null) {
             playerFragment.release();
         }
+        UMShareAPI.get(this).release();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        UMShareAPI.get(this).onSaveInstanceState(outState);
     }
 
     /**

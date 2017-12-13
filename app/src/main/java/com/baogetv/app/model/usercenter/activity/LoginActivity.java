@@ -38,6 +38,9 @@ import retrofit2.Call;
 import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_FIND_PASSWORD_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
+import static com.umeng.socialize.bean.SHARE_MEDIA.QQ;
+import static com.umeng.socialize.bean.SHARE_MEDIA.SINA;
+import static com.umeng.socialize.bean.SHARE_MEDIA.WEIXIN;
 
 public class LoginActivity extends BaseActivity
         implements PasswordInputView.OnForgetClickListener, UMAuthListener {
@@ -59,6 +62,53 @@ public class LoginActivity extends BaseActivity
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_login);
+        UMShareAPI.get(this).fetchAuthResultWithBundle(this, savedInstanceState, new UMAuthListener() {
+            @Override
+            public void onStart(SHARE_MEDIA platform) {
+                hideLoadingDialog();
+            }
+
+            @Override
+            public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+                showShortToast("onRestoreInstanceState Authorize succeed");
+                final Set<Map.Entry<String, String>> entries = data.entrySet();
+                final Iterator<Map.Entry<String, String>> iterator = entries.iterator();
+                while (iterator.hasNext()) {
+                    final Map.Entry<String, String> next = iterator.next();
+                    Log.e(TAG, "====" + next.getKey() + "=======" + next.getValue());
+                }
+                switch (platform) {
+                    case WEIXIN:
+                        String openid = data.get("openid");
+                        String nickName = data.get("name");
+                        String pic = data.get("iconurl");
+                        loginPartner(LoginManager.KEY_WECHAT, openid, nickName, pic);
+                        break;
+                    case QQ:
+                        openid = data.get("openid");
+                        nickName = data.get("name");
+                        pic = data.get("iconurl");
+                        loginPartner(LoginManager.KEY_QQ, openid, nickName, pic);
+                        break;
+                    case SINA:
+                        openid = data.get("uid");
+                        nickName = data.get("name");
+                        pic = data.get("iconurl");
+                        loginPartner(LoginManager.KEY_SINA, openid, nickName, pic);
+                        break;
+                }
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+                showShortToast("onRestoreInstanceState Authorize onError");
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA platform, int action) {
+                showShortToast("onRestoreInstanceState Authorize onCancel");
+            }
+        });
         initView();
     }
 
@@ -179,6 +229,7 @@ public class LoginActivity extends BaseActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_FIND_PASSWORD_ACTIVITY) {
             if (resultCode == RESULT_OK) {
                 showShortToast("请用新密码进行登录");
@@ -189,6 +240,18 @@ public class LoginActivity extends BaseActivity
                 loginSuccess(bean);
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UMShareAPI.get(this).release();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        UMShareAPI.get(this).onSaveInstanceState(outState);
     }
 
     private void loginPartner(String type, String openid, String name, String url) {
@@ -220,15 +283,15 @@ public class LoginActivity extends BaseActivity
 
     //微信登录
     public void wxLogin() {
-        UMShareAPI.get(getApplication()).doOauthVerify(LoginActivity.this, SHARE_MEDIA.WEIXIN, this);
+        UMShareAPI.get(getApplication()).doOauthVerify(LoginActivity.this, WEIXIN, this);
     }
     //QQ登录
     public void qqLogin() {
-        UMShareAPI.get(getApplication()).doOauthVerify(this, SHARE_MEDIA.QQ, this);
+        UMShareAPI.get(getApplication()).doOauthVerify(this, QQ, this);
     }
     //sina登录
     public void sinaLogin() {
-        UMShareAPI.get(getApplication()).doOauthVerify(this, SHARE_MEDIA.SINA, this);
+        UMShareAPI.get(getApplication()).doOauthVerify(this, SINA, this);
     }
 
     /**

@@ -28,6 +28,7 @@ import java.util.Set;
 import retrofit2.Call;
 
 import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_FIND_PASSWORD_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
 
@@ -48,6 +49,53 @@ public class VideoLoginActivity extends BaseActivity implements UMAuthListener {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        UMShareAPI.get(this).fetchAuthResultWithBundle(this, savedInstanceState, new UMAuthListener() {
+            @Override
+            public void onStart(SHARE_MEDIA platform) {
+                hideLoadingDialog();
+            }
+
+            @Override
+            public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+                showShortToast("onRestoreInstanceState Authorize succeed");
+                final Set<Map.Entry<String, String>> entries = data.entrySet();
+                final Iterator<Map.Entry<String, String>> iterator = entries.iterator();
+                while (iterator.hasNext()) {
+                    final Map.Entry<String, String> next = iterator.next();
+                    Log.e(TAG, "====" + next.getKey() + "=======" + next.getValue());
+                }
+                switch (platform) {
+                    case WEIXIN:
+                        String openid = data.get("openid");
+                        String nickName = data.get("name");
+                        String pic = data.get("iconurl");
+                        loginPartner(LoginManager.KEY_WECHAT, openid, nickName, pic);
+                        break;
+                    case QQ:
+                        openid = data.get("openid");
+                        nickName = data.get("name");
+                        pic = data.get("iconurl");
+                        loginPartner(LoginManager.KEY_QQ, openid, nickName, pic);
+                        break;
+                    case SINA:
+                        openid = data.get("uid");
+                        nickName = data.get("name");
+                        pic = data.get("iconurl");
+                        loginPartner(LoginManager.KEY_SINA, openid, nickName, pic);
+                        break;
+                }
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+                showShortToast("onRestoreInstanceState Authorize onError");
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA platform, int action) {
+                showShortToast("onRestoreInstanceState Authorize onCancel");
+            }
+        });
         setContentView(R.layout.activity_video_login);
         init();
     }
@@ -104,6 +152,7 @@ public class VideoLoginActivity extends BaseActivity implements UMAuthListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_LOGIN_ACTIVITY) {
             if (resultCode == RESULT_OK) {
                 UserDetailBean bean = data.getParcelableExtra(KEY_USER_DETAIL_BEAN);
@@ -123,6 +172,13 @@ public class VideoLoginActivity extends BaseActivity implements UMAuthListener {
         if (playerView != null) {
             playerView.release();
         }
+        UMShareAPI.get(this).release();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        UMShareAPI.get(this).onSaveInstanceState(outState);
     }
 
     private void startHomeActivity(UserDetailBean bean) {
@@ -214,7 +270,7 @@ public class VideoLoginActivity extends BaseActivity implements UMAuthListener {
                 platform, new UMAuthListener() {
                     @Override
                     public void onStart(SHARE_MEDIA share_media) {
-
+                        Log.i(TAG, "onStart: ");
                     }
 
                     @Override
@@ -249,12 +305,12 @@ public class VideoLoginActivity extends BaseActivity implements UMAuthListener {
 
                     @Override
                     public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-
+                        Log.i(TAG, "onError: ");
                     }
 
                     @Override
                     public void onCancel(SHARE_MEDIA share_media, int i) {
-
+                        Log.i(TAG, "onCancel: ");
                     }
                 });
     }
