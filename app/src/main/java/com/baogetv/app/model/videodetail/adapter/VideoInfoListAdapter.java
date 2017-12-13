@@ -179,7 +179,8 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 channelTitle.setText(channelDetailBean.getName());
                 channelUpdate.setText(channelDetailBean.getUpdate_time());
                 channelDesc.setText(channelDetailBean.getIntro());
-                Glide.with(mContext).load(channelDetailBean.getPic_url()).into(channelImage);
+                Glide.with(mContext).load(channelDetailBean.getPic_url())
+                        .placeholder(R.mipmap.user_default_icon).into(channelImage);
             }
         }
 
@@ -266,7 +267,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             channelTitle = (TextView) view.findViewById(R.id.channel_title);
             channelUpdate = (TextView) view.findViewById(R.id.channel_update_time);
             channelDesc = (TextView) view.findViewById(R.id.channel_desc);
-            view.setOnClickListener(new View.OnClickListener() {
+            view.findViewById(R.id.channel_info_container).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (mRef != null && mRef.get() != null) {

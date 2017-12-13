@@ -101,6 +101,7 @@
         android:background="@color/channel_list_divider"/>
 
     <com.chalilayang.scaleview.ScaleRelativeLayout
+        android:id="@+id/channel_info_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_160"
         android:layout_marginLeft="@dimen/size_30"
