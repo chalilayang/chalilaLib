@@ -293,9 +293,9 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                 e.printStackTrace();
             }
             if (isCollect == 0) {
-                addCollect(videoDetailBean);
+                addCollect();
             } else {
-                delCollect(videoDetailBean);
+                delCollect();
             }
 
         } else {
@@ -326,14 +326,14 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
         shareAction.open(config);
     }
 
-    private void addCollect(VideoDetailBean bean) {
+    private void addCollect() {
         if (!LoginManager.hasLogin(getApplicationContext())) {
             return;
         }
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getUserToken(getApplicationContext());
-        Call<ResponseBean<AddItemBean>> call = userApiService.addCollect(token, bean.getId());
+        Call<ResponseBean<AddItemBean>> call = userApiService.addCollect(token, videoId);
         if (call != null) {
             call.enqueue(new CustomCallBack<AddItemBean>() {
                 @Override
@@ -351,17 +351,16 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
         }
     }
 
-    private void delCollect(VideoDetailBean bean) {
+    private void delCollect() {
         if (!LoginManager.hasLogin(getApplicationContext())) {
             return;
         }
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getUserToken(getApplicationContext());
-        String id = bean.getId();
-        if (!TextUtils.isEmpty(id)) {
+        if (!TextUtils.isEmpty(videoId)) {
             Call<ResponseBean<List<Object>>> call
-                    = userApiService.deleteCollect(token, id);
+                    = userApiService.deleteCollect(token, videoId);
             if (call != null) {
                 call.enqueue(new CustomCallBack<List<Object>>() {
                     @Override
@@ -376,6 +375,26 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                     }
                 });
             }
+        }
+    }
+
+    private void addShare() {
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(getApplicationContext());
+        Call<ResponseBean<AddItemBean>> call = userApiService.addShare(token, videoId);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<AddItemBean>() {
+                @Override
+                public void onSuccess(AddItemBean data, String msg, int state) {
+                    getVideoDetail();
+                }
+
+                @Override
+                public void onFailed(String error, int state) {
+                    showShortToast(error);
+                }
+            });
         }
     }
 
@@ -396,6 +415,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
             if (platform.name().equals("WEIXIN_FAVORITE")) {
                 if (mActivity != null && mActivity.get() != null) {
                     mActivity.get().showShortToast(platform + " 收藏成功啦");
+                    mActivity.get().addShare();
                 }
             } else {
                 if (platform != SHARE_MEDIA.MORE && platform != SHARE_MEDIA.SMS
@@ -411,6 +431,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                         && platform != SHARE_MEDIA.EVERNOTE) {
                     if (mActivity != null && mActivity.get() != null) {
                         mActivity.get().showShortToast(platform + " 分享成功啦");
+                        mActivity.get().addShare();
                     }
                 }
             }

@@ -272,6 +272,17 @@ public interface UserApiService {
             @Field("user_id") String user_id
     );
 
+    /**
+     * 添加分享
+     *
+     * @param token：（Token，登录凭证）
+     * @param video_id：（视频ID）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Shares/add")
+    Call<ResponseBean<AddItemBean>> addShare(
+            @Field("token") String token, @Field("video_id") String video_id);
 
     /**
      * 添加播放记录
