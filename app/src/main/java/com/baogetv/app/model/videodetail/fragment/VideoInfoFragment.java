@@ -28,6 +28,7 @@ import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
 import com.baogetv.app.model.videodetail.event.CacheEvent;
+import com.baogetv.app.model.videodetail.event.FreshCacheEvent;
 import com.baogetv.app.model.videodetail.event.FreshInfoEvent;
 import com.baogetv.app.model.videodetail.event.ShareEvent;
 import com.baogetv.app.net.CustomCallBack;
@@ -278,6 +279,11 @@ public class VideoInfoFragment extends BaseFragment
     @Subscribe
     public void handleFreshInfoEvent(FreshInfoEvent event) {
         getVideoDetail();
+    }
+
+    @Subscribe
+    public void handleFreshCacheEvent(FreshCacheEvent event) {
+        recyclerViewAdapter.notifyItemChanged(0);
     }
 
     @Override

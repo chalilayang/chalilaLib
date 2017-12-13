@@ -14,7 +14,14 @@ import android.widget.TextView;
 import com.baogetv.app.R;
 import com.baogetv.app.bean.ChannelDetailBean;
 import com.baogetv.app.bean.VideoDetailBean;
+import com.baogetv.app.db.DBController;
+import com.baogetv.app.downloader.DownloadService;
+import com.baogetv.app.downloader.callback.DownloadManager;
+import com.baogetv.app.downloader.domain.DownloadInfo;
 import com.baogetv.app.model.usercenter.LoginManager;
+import com.baogetv.app.model.usercenter.MyDownloadListener;
+import com.baogetv.app.model.usercenter.adapter.MyCacheAdapter;
+import com.baogetv.app.model.usercenter.customview.CacheInfoView;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.util.TimeUtil;
 import com.bumptech.glide.Glide;
@@ -22,8 +29,12 @@ import com.chalilayang.scaleview.ScaleCalculator;
 import com.nex3z.flowlayout.FlowLayout;
 
 import java.lang.ref.SoftReference;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.baogetv.app.downloader.domain.DownloadInfo.STATUS_COMPLETED;
+import static com.baogetv.app.downloader.domain.DownloadInfo.STATUS_WAIT;
 
 public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -41,6 +52,8 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
     private VideoDetailData videoDetailData;
     private ChannelDetailBean channelDetailBean;
     private String playCountFormat;
+    private final DownloadManager downloadManager;
+    private DBController dbController;
 
     protected String loadingMore;
     protected String noMoreData;
@@ -58,6 +71,12 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         loadingMore = mContext.getString(R.string.loading_more_data);
         noMoreData = mContext.getString(R.string.no_more_data);
         hasMoreData = true;
+        downloadManager = DownloadService.getDownloadManager(mContext.getApplicationContext());
+        try {
+            dbController = DBController.getInstance(mContext.getApplicationContext());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setHasMoreData(boolean hasMoreData) {
@@ -153,6 +172,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         private Drawable cacheRed;
         private Drawable shareGray;
         private Drawable shareRed;
+        private DownloadInfo downloadInfo;
 
         public void updateInfo() {
             if (videoDetailData != null) {
@@ -163,7 +183,11 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 share.setText(bean.getShares());
                 share.setCompoundDrawables(null, shareGray, null, null);
                 cache.setText(bean.getCaches());
-                cache.setCompoundDrawables(null, cacheGray, null, null);
+                if (!LoginManager.hasCommentRight(mContext)) {
+                    cache.setCompoundDrawables(null, cacheGray, null, null);
+                } else {
+                    cache.setCompoundDrawables(null, cacheRed, null, null);
+                }
                 collect.setText(bean.getCollects());
                 int isCollect = 0;
                 try {
@@ -191,6 +215,48 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 channelDesc.setText(channelDetailBean.getIntro());
                 Glide.with(mContext).load(channelDetailBean.getPic_url())
                         .placeholder(R.mipmap.user_default_icon).into(channelImage);
+            }
+
+            if (downloadInfo == null) {
+                downloadInfo = downloadManager.getDownloadById(
+                        videoDetailData.videoDetailBean.getFile_url().hashCode());
+                if (downloadInfo != null) {
+                    downloadInfo.setDownloadListener(
+                            new MyDownloadListener(new SoftReference(HeadViewHolder.this)) {
+                                @Override
+                                public void onRefresh() {
+                                    if (getUserTag() != null && getUserTag().get() != null) {
+                                        HeadViewHolder viewHolder = (HeadViewHolder) getUserTag().get();
+                                        viewHolder.refreshCache();
+                                    }
+                                }
+                            });
+                }
+            }
+        }
+
+        private void refreshCache() {
+            if (downloadInfo != null) {
+                switch (downloadInfo.getStatus()) {
+                    case DownloadInfo.STATUS_PAUSED:
+                        cache.setText(mContext.getString(R.string.downloading));
+                        break;
+                    case DownloadInfo.STATUS_ERROR:
+                        cache.setText(mContext.getString(R.string.download_error));
+                        break;
+                    case DownloadInfo.STATUS_DOWNLOADING:
+                    case DownloadInfo.STATUS_PREPARE_DOWNLOAD:
+                        cache.setText(mContext.getString(R.string.downloading));
+                        break;
+                    case STATUS_COMPLETED:
+                        cache.setText(mContext.getString(R.string.downloaded));
+                        break;
+                    case STATUS_WAIT:
+                        cache.setText(mContext.getString(R.string.downloading));
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 

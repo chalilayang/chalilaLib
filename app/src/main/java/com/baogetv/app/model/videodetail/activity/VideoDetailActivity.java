@@ -19,13 +19,17 @@ import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.constant.AppConstance;
 import com.baogetv.app.constant.UrlConstance;
+import com.baogetv.app.downloader.DownloadService;
+import com.baogetv.app.downloader.callback.DownloadManager;
 import com.baogetv.app.downloader.domain.DownloadInfo;
 import com.baogetv.app.model.usercenter.HistoryManager;
 import com.baogetv.app.model.usercenter.LoginManager;
+import com.baogetv.app.model.usercenter.MyDownloadListener;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
 import com.baogetv.app.model.videodetail.event.AddHistoryEvent;
 import com.baogetv.app.model.videodetail.event.CacheEvent;
+import com.baogetv.app.model.videodetail.event.FreshCacheEvent;
 import com.baogetv.app.model.videodetail.event.FreshInfoEvent;
 import com.baogetv.app.model.videodetail.event.InputSendEvent;
 import com.baogetv.app.model.videodetail.event.NeedCommentEvent;
@@ -54,6 +58,7 @@ import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -322,6 +327,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
             if (downloadInfo == null) {
                 if (CacheUtil.cacheVideo(getApplicationContext(), videoDetailBean)) {
                     showShortToast("已添加至缓存列表");
+                    EventBus.getDefault().post(new FreshCacheEvent());
                 } else {
                     showShortToast("缓存失败");
                 }
