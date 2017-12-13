@@ -260,15 +260,25 @@ public class VideoInfoFragment extends BaseFragment
     @Override
     public void onCacheClick(VideoDetailBean bean) {
         Log.i(TAG, "onCacheClick: ");
-        DownloadInfo downloadInfo = CacheUtil.getDownloadInfo(mActivity, bean.getFile_url());
-        if (downloadInfo == null) {
-            if (CacheUtil.cacheVideo(mActivity.getApplicationContext(), bean)) {
-                showShortToast("已添加至缓存列表");
+        if (!LoginManager.hasCommentRight(mActivity.getApplicationContext())) {
+            if (!LoginManager.hasLogin(mActivity.getApplicationContext())) {
+                LoginManager.startLogin(mActivity);
+            } else if (LoginManager.hasMobile(mActivity.getApplicationContext())) {
+                LoginManager.startChangeMobile(mActivity);
             } else {
-                showShortToast("缓存失败");
+                showShortToast(getString(R.string.no_comment_right));
             }
         } else {
-            showShortToast("已在缓存中");
+            DownloadInfo downloadInfo = CacheUtil.getDownloadInfo(mActivity, bean.getFile_url());
+            if (downloadInfo == null) {
+                if (CacheUtil.cacheVideo(mActivity.getApplicationContext(), bean)) {
+                    showShortToast("已添加至缓存列表");
+                } else {
+                    showShortToast("缓存失败");
+                }
+            } else {
+                showShortToast("已在缓存中");
+            }
         }
     }
 
