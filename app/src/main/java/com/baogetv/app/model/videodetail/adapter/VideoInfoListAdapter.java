@@ -42,8 +42,6 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
     private ChannelDetailBean channelDetailBean;
     private String playCountFormat;
 
-    private boolean cached;
-
     protected String loadingMore;
     protected String noMoreData;
     protected boolean hasMoreData;
@@ -60,7 +58,6 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         loadingMore = mContext.getString(R.string.loading_more_data);
         noMoreData = mContext.getString(R.string.no_more_data);
         hasMoreData = true;
-        cached = false;
     }
 
     public void setHasMoreData(boolean hasMoreData) {
@@ -208,23 +205,24 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         public HeadViewHolder(View view) {
             super(view);
+            float scale = 2.0f;
             heartGray = mContext.getResources().getDrawable(R.mipmap.heart_btn_gray);
-            int width = heartGray.getIntrinsicWidth();
-            int height = heartGray.getIntrinsicHeight();
+            int width = (int) (heartGray.getIntrinsicWidth() * scale);
+            int height = (int) (heartGray.getIntrinsicHeight() * scale);
             heartGray.setBounds(0, 0, width, height);
             heartRed = mContext.getResources().getDrawable(R.mipmap.heart_btn_icon);
             heartRed.setBounds(0, 0, width, height);
 
             shareGray = mContext.getResources().getDrawable(R.mipmap.share_btn_icon_gray);
-            width = shareGray.getIntrinsicWidth();
-            height = shareGray.getIntrinsicHeight();
+            width = (int) (shareGray.getIntrinsicWidth() * scale);
+            height = (int) (shareGray.getIntrinsicHeight() * scale);
             shareGray.setBounds(0, 0, width, height);
             shareRed = mContext.getResources().getDrawable(R.mipmap.share_btn_icon);
             shareRed.setBounds(0, 0, width, height);
 
             cacheGray = mContext.getResources().getDrawable(R.mipmap.cache_btn_icon_gray);
-            width = cacheGray.getIntrinsicWidth();
-            height = cacheGray.getIntrinsicHeight();
+            width = (int) (cacheGray.getIntrinsicWidth() * scale);
+            height = (int) (cacheGray.getIntrinsicHeight() * scale);
             cacheGray.setBounds(0, 0, width, height);
             cacheRed = mContext.getResources().getDrawable(R.mipmap.cache_btn_icon);
             cacheRed.setBounds(0, 0, width, height);

@@ -3,7 +3,6 @@ package com.baogetv.app.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,39 +13,44 @@ public class VideoDetailBean implements Parcelable {
 
 
     /**
-     * id : 2
-     * title : 标题222
-     * intro : 简介222
-     * pic : 9
-     * file : 26
-     * tag_ids : 1,3
-     * length : 00:00
-     * is_cnword : 1
+     * id : 26
+     * title : 和Martinez一起练背
+     * intro : 和Martinez一起练背
+     * pic : 64
+     * thumb_pic : 65
+     * file : 75
+     * tag_ids :
+     * length : 12:20
+     * is_cnword : 0
      * is_commend : 0
      * collects : 0
      * likes : 0
      * shares : 0
      * caches : 0
-     * play : 12330
-     * comments : 3
-     * add_time : 1510991024
-     * update_time : 1512226565
-     * lastplay_time : 1512226490
-     * channel_id : 11
-     * channel_name : 频道2
-     * channel_pic : 4
-     * channel_update_time : 1512181383
-     * pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-11-19/5a1130f3f1c95.jpg
-     * file_url :
-     * channel_pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-11-19
-     * /5a112b8fd0391.jpg
-     * tags : [{"id":"3","name":"标签356"},{"id":"1","name":"标签111"}]
+     * play : 3
+     * comments : 0
+     * add_time : 1513092758
+     * update_time : 1513094608
+     * lastplay_time : 1513173328
+     * channel_id : 1
+     * channel_name : 频道12
+     * channel_pic : 22
+     * channel_update_time : 1512302789
+     * channel_intro : 频道1的简介1212
+     * pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-12-13/5a2ffdced869a.jpg
+     * thumb_pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-12-13
+     * /5a2ffdced869a_thumb.jpg
+     * file_url : http://videos.baoge.tv/Uploads/Download/2017-12-12/5a2ff6899cce5.mp4
+     * channel_pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-12-02/5a220e923f440.jpg
+     * is_collect : 0
+     * tags : []
      */
 
     private String id;
     private String title;
     private String intro;
     private String pic;
+    private String thumb_pic;
     private String file;
     private String tag_ids;
     private String length;
@@ -65,9 +69,12 @@ public class VideoDetailBean implements Parcelable {
     private String channel_name;
     private String channel_pic;
     private String channel_update_time;
+    private String channel_intro;
     private String pic_url;
+    private String thumb_pic_url;
     private String file_url;
     private String channel_pic_url;
+    private String is_collect;
     private List<TagsBean> tags;
 
     public String getId() {
@@ -100,6 +107,14 @@ public class VideoDetailBean implements Parcelable {
 
     public void setPic(String pic) {
         this.pic = pic;
+    }
+
+    public String getThumb_pic() {
+        return thumb_pic;
+    }
+
+    public void setThumb_pic(String thumb_pic) {
+        this.thumb_pic = thumb_pic;
     }
 
     public String getFile() {
@@ -246,12 +261,28 @@ public class VideoDetailBean implements Parcelable {
         this.channel_update_time = channel_update_time;
     }
 
+    public String getChannel_intro() {
+        return channel_intro;
+    }
+
+    public void setChannel_intro(String channel_intro) {
+        this.channel_intro = channel_intro;
+    }
+
     public String getPic_url() {
         return pic_url;
     }
 
     public void setPic_url(String pic_url) {
         this.pic_url = pic_url;
+    }
+
+    public String getThumb_pic_url() {
+        return thumb_pic_url;
+    }
+
+    public void setThumb_pic_url(String thumb_pic_url) {
+        this.thumb_pic_url = thumb_pic_url;
     }
 
     public String getFile_url() {
@@ -270,6 +301,14 @@ public class VideoDetailBean implements Parcelable {
         this.channel_pic_url = channel_pic_url;
     }
 
+    public String getIs_collect() {
+        return is_collect;
+    }
+
+    public void setIs_collect(String is_collect) {
+        this.is_collect = is_collect;
+    }
+
     public List<TagsBean> getTags() {
         return tags;
     }
@@ -277,6 +316,7 @@ public class VideoDetailBean implements Parcelable {
     public void setTags(List<TagsBean> tags) {
         this.tags = tags;
     }
+
 
     public static class TagsBean implements Parcelable {
         /**
@@ -336,6 +376,8 @@ public class VideoDetailBean implements Parcelable {
         };
     }
 
+    public VideoDetailBean() {
+    }
 
     @Override
     public int describeContents() {
@@ -348,6 +390,7 @@ public class VideoDetailBean implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.intro);
         dest.writeString(this.pic);
+        dest.writeString(this.thumb_pic);
         dest.writeString(this.file);
         dest.writeString(this.tag_ids);
         dest.writeString(this.length);
@@ -366,13 +409,13 @@ public class VideoDetailBean implements Parcelable {
         dest.writeString(this.channel_name);
         dest.writeString(this.channel_pic);
         dest.writeString(this.channel_update_time);
+        dest.writeString(this.channel_intro);
         dest.writeString(this.pic_url);
+        dest.writeString(this.thumb_pic_url);
         dest.writeString(this.file_url);
         dest.writeString(this.channel_pic_url);
-        dest.writeList(this.tags);
-    }
-
-    public VideoDetailBean() {
+        dest.writeString(this.is_collect);
+        dest.writeTypedList(this.tags);
     }
 
     protected VideoDetailBean(Parcel in) {
@@ -380,6 +423,7 @@ public class VideoDetailBean implements Parcelable {
         this.title = in.readString();
         this.intro = in.readString();
         this.pic = in.readString();
+        this.thumb_pic = in.readString();
         this.file = in.readString();
         this.tag_ids = in.readString();
         this.length = in.readString();
@@ -398,11 +442,13 @@ public class VideoDetailBean implements Parcelable {
         this.channel_name = in.readString();
         this.channel_pic = in.readString();
         this.channel_update_time = in.readString();
+        this.channel_intro = in.readString();
         this.pic_url = in.readString();
+        this.thumb_pic_url = in.readString();
         this.file_url = in.readString();
         this.channel_pic_url = in.readString();
-        this.tags = new ArrayList<TagsBean>();
-        in.readList(this.tags, TagsBean.class.getClassLoader());
+        this.is_collect = in.readString();
+        this.tags = in.createTypedArrayList(TagsBean.CREATOR);
     }
 
     public static final Creator<VideoDetailBean> CREATOR = new Creator<VideoDetailBean>() {

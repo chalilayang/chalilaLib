@@ -31,6 +31,7 @@
 
     <string name="player_time_format">%1$s/%2$s</string>
 
+    <string name="share_to_add_experience">分享+经验</string>
     <string name="cache">缓存</string>
     <string name="simple_introduce">简介</string>
     <string name="comment">评论</string>

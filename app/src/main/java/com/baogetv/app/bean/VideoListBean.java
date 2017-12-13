@@ -5,32 +5,36 @@ package com.baogetv.app.bean;
  */
 
 public class VideoListBean {
+
     /**
-     * id : 3
-     * title : 标题2222
-     * intro : 简介222
-     * pic : 1
-     * length : 00:00
-     * is_cnword : 1
+     * id : 28
+     * title : FST-7三角肌训练教学
+     * intro : FST-7三角肌训练
+     * pic : 44
+     * thumb_pic : 66
+     * length : 10:55
+     * is_cnword : 0
      * is_commend : 0
-     * collects : 0
+     * collects : 3
      * likes : 0
      * shares : 0
      * caches : 0
-     * play : 100
+     * play : 6
      * comments : 0
-     * add_time : 4天前
-     * update_time : 4天前
-     * lastplay_time :
-     * channel_id : 12
-     * channel_name : 频道3
-     * pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-11-20/5a127d675b918.jpg
+     * add_time : 1513093062
+     * update_time : 1513094661
+     * lastplay_time : 1513164504
+     * channel_id : 19
+     * channel_name : 测试
+     * pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-12-08/5a2a0f6337499.jpg
+     * thumb_pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-12-08/5a2a0f6337499_thumb.jpg
      */
 
     private String id;
     private String title;
     private String intro;
     private String pic;
+    private String thumb_pic;
     private String length;
     private String is_cnword;
     private String is_commend;
@@ -46,6 +50,7 @@ public class VideoListBean {
     private String channel_id;
     private String channel_name;
     private String pic_url;
+    private String thumb_pic_url;
 
     public String getId() {
         return id;
@@ -77,6 +82,14 @@ public class VideoListBean {
 
     public void setPic(String pic) {
         this.pic = pic;
+    }
+
+    public String getThumb_pic() {
+        return thumb_pic;
+    }
+
+    public void setThumb_pic(String thumb_pic) {
+        this.thumb_pic = thumb_pic;
     }
 
     public String getLength() {
@@ -197,5 +210,13 @@ public class VideoListBean {
 
     public void setPic_url(String pic_url) {
         this.pic_url = pic_url;
+    }
+
+    public String getThumb_pic_url() {
+        return thumb_pic_url;
+    }
+
+    public void setThumb_pic_url(String thumb_pic_url) {
+        this.thumb_pic_url = thumb_pic_url;
     }
 }
