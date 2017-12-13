@@ -43,8 +43,16 @@ public class NameModifyActivity extends BaseTitleActivity {
                     showShortToast(getString(R.string.nick_name_null));
                     return;
                 }
+                if (name.length() >= 10) {
+                    showShortToast(getString(R.string.nick_name) + getString(R.string.less_than_ten_words));
+                    return;
+                }
                 if (TextUtils.isEmpty(intro)) {
                     showShortToast(getString(R.string.intro_null));
+                    return;
+                }
+                if (intro.length() >= 20) {
+                    showShortToast(getString(R.string.simple_introduce) + getString(R.string.exceed_length));
                     return;
                 }
                 modifyUserInfo(name, intro);
@@ -67,7 +75,8 @@ public class NameModifyActivity extends BaseTitleActivity {
                 @Override
                 public void onSuccess(List<Object> data, String msg, int state) {
                     showShortToast("success");
-
+                    setResult(RESULT_OK);
+                    finish();
                 }
 
                 @Override

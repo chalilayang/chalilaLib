@@ -119,6 +119,7 @@
     <string name="name_and_intro">昵称和自我介绍</string>
     <string name="less_than_ten_num">10个汉字以内</string>
     <string name="user_intro_hint">20个汉字以内的一句话简介</string>
+    <string name="exceed_length">超过长度限制</string>
     <string name="save_modify">保存</string>
     <string name="register">注册</string>
     <string name="login">登录</string>
