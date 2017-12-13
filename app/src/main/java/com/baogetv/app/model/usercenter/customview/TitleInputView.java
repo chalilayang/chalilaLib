@@ -143,6 +143,13 @@ public class TitleInputView extends ScaleFrameLayout {
         }
     }
 
+    public void enableInput(boolean flag) {
+        setEnabled(flag);
+        if (inputEdit != null) {
+            inputEdit.setEnabled(flag);
+        }
+        setAlpha(flag ?1.0f:0.4f);
+    }
     private SoftReference<OnAreaChooseCallback> mRef;
     public void setOnAreaCallBack(OnAreaChooseCallback back) {
         if (back != null) {

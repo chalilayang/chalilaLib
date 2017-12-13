@@ -127,6 +127,7 @@ public class RegisterActivity extends BaseActivity
 
     @Override
     public void startVerifyCountDown() {
+        mobileNumView.enableInput(false);
         verifyCodeView.startCountDown(60);
     }
 
