@@ -306,6 +306,8 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         uploadFile(event.img);
         Glide.with(this)
                 .fromFile()
+                .placeholder(R.mipmap.user_default_icon)
+                .error(R.mipmap.user_default_icon)
                 .load(new File(event.img))
                 .into(userIconLine.getRightImageView());
     }
@@ -338,6 +340,8 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
             if (userDetailBean != null) {
                 Glide.with(this)
                         .load(userDetailBean.getPic_url())
+                        .placeholder(R.mipmap.user_default_icon)
+                        .error(R.mipmap.user_default_icon)
                         .into(userIconLine.getRightImageView());
                 userGradeLine.setUserLever(userDetailBean);
                 userNickNameLine.setVersion(userDetailBean.getUsername());

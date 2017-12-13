@@ -55,7 +55,11 @@ public class UserGradeDescActivity extends BaseTitleActivity {
         scoreTv = (TextView) findViewById(R.id.level_score_desc);
         upgradeProgress = (UpgradeProgress) findViewById(R.id.user_grade_progress);
         if (userDetailBean != null) {
-            Glide.with(this).load(userDetailBean.getPic_url()).into(userImage);
+            Glide.with(this)
+                    .load(userDetailBean.getPic_url())
+                    .placeholder(R.mipmap.user_default_icon)
+                    .error(R.mipmap.user_default_icon)
+                    .into(userImage);
             upgradeProgress.setUpGradeProgress(Integer.parseInt(userDetailBean.getScore()));
         }
         gradeListView = (GradeListView) findViewById(R.id.grade_list_view);
