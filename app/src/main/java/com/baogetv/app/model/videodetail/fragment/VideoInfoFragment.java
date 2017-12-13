@@ -28,6 +28,7 @@ import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
 import com.baogetv.app.model.videodetail.event.CollectSuccessEvent;
+import com.baogetv.app.model.videodetail.event.ShareEvent;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.util.CacheUtil;
@@ -274,6 +275,7 @@ public class VideoInfoFragment extends BaseFragment
     @Override
     public void onShareClick(VideoDetailBean bean) {
         Log.i(TAG, "onShareClick: ");
+        EventBus.getDefault().post(new ShareEvent());
     }
 
     @Override

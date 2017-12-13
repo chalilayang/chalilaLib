@@ -1,7 +1,6 @@
 package com.baogetv.app.model.videodetail.player;
 
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.os.CountDownTimer;
 import android.support.annotation.DrawableRes;
 import android.util.Log;
