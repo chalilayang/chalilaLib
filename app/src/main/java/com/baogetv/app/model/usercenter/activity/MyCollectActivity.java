@@ -117,14 +117,14 @@ public class MyCollectActivity extends BaseTitleActivity
         String token = LoginManager.getUserToken(getApplicationContext());
         String id = "";
         if (data != null) {
-            id = data.getId();
+            id = data.getVideo_id();
         } else {
             List<CollectBean> list = recyclerViewAdapter.getDataList();
             for (int index = 0, count = list.size(); index < count; index ++) {
                 if (index == 0) {
-                    id = list.get(index).getId();
+                    id = list.get(index).getVideo_id();
                 } else {
-                    id = id + "," + list.get(index).getId();
+                    id = id + "," + list.get(index).getVideo_id();
                 }
             }
         }

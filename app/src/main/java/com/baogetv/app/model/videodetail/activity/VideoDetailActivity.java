@@ -158,6 +158,28 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
         }
     }
 
+    private void getVideoDetail() {
+        VideoListService listService
+                = RetrofitManager.getInstance().createReq(VideoListService.class);
+        String token = null;
+        if (LoginManager.hasLogin(getApplicationContext())) {
+            token = LoginManager.getUserToken(getApplicationContext());
+        }
+        Call<ResponseBean<VideoDetailBean>> call = listService.getVideoDetail(videoId, token);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<VideoDetailBean>() {
+                @Override
+                public void onSuccess(VideoDetailBean data, String msg, int state) {
+                    videoDetailBean = data;
+                }
+                @Override
+                public void onFailed(String error, int state) {
+                    showShortToast(error);
+                }
+            });
+        }
+    }
+
     public void showError() {
         View error = findViewById(R.id.error_view);
         if (error != null) {
@@ -264,7 +286,18 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
     public void handleCollectEvent(AddCollectEvent event) {
         Log.i(TAG, "handleCollectEvent: ");
         if (LoginManager.hasLogin(getApplicationContext())) {
-            addCollect(videoDetailBean);
+            int isCollect = 0;
+            try {
+                isCollect = Integer.parseInt(videoDetailBean.getIs_collect());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            if (isCollect == 0) {
+                addCollect(videoDetailBean);
+            } else {
+                delCollect(videoDetailBean);
+            }
+
         } else {
             LoginManager.startLogin(this);
         }
@@ -306,6 +339,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                 @Override
                 public void onSuccess(AddItemBean data, String msg, int state) {
                     showShortToast("已收藏");
+                    getVideoDetail();
                     EventBus.getDefault().post(new CollectSuccessEvent());
                 }
 
@@ -314,6 +348,34 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                     showShortToast(error);
                 }
             });
+        }
+    }
+
+    private void delCollect(VideoDetailBean bean) {
+        if (!LoginManager.hasLogin(getApplicationContext())) {
+            return;
+        }
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = LoginManager.getUserToken(getApplicationContext());
+        String id = bean.getId();
+        if (!TextUtils.isEmpty(id)) {
+            Call<ResponseBean<List<Object>>> call
+                    = userApiService.deleteCollect(token, id);
+            if (call != null) {
+                call.enqueue(new CustomCallBack<List<Object>>() {
+                    @Override
+                    public void onSuccess(List<Object> data, String msg, int state) {
+                        Log.i(TAG, "onSuccess: ");
+                        getVideoDetail();
+                        EventBus.getDefault().post(new CollectSuccessEvent());
+                    }
+                    @Override
+                    public void onFailed(String error, int state) {
+                        showShortToast(error);
+                    }
+                });
+            }
         }
     }
 

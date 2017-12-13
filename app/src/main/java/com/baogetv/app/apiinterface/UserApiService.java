@@ -249,14 +249,14 @@ public interface UserApiService {
      * 取消收藏
      *
      * @param token：（Token，登录凭证）
-     * @param id：（收藏ID，多个ID用逗号隔开）
+     * @param video_id：（多个ID用逗号隔开）
      * @return
      */
     @FormUrlEncoded
     @POST("index.php?s=/Collects/del")
     Call<ResponseBean<List<Object>>> deleteCollect(
             @Field("token") String token,
-            @Field("id") String id);
+            @Field("video_id") String video_id);
 
     /**
      * 我的收藏
