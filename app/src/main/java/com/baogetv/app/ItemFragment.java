@@ -18,6 +18,7 @@ import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoListBean;
 import com.baogetv.app.bean.VideoRankListBean;
 import com.baogetv.app.model.channel.entity.ChannelItemData;
+import com.baogetv.app.model.search.NoResultEvent;
 import com.baogetv.app.model.search.SearchItemData;
 import com.baogetv.app.model.usercenter.entity.MemberItemData;
 import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
@@ -26,6 +27,8 @@ import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageItemData;
 import com.chalilayang.customview.RecyclerViewDivider;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +89,13 @@ public class ItemFragment extends BaseItemFragment
                     int pageNum = iVideoDatas.size() / LOAD_PAGE_SIZE + 1;
                     if (more != 0) {
                         recyclerViewAdapter.setHasMoreData(false);
+                        if (pageData.getType() == PageItemData.TYPE_SEARCH_RELATIVE
+                                || pageData.getType() == PageItemData.TYPE_SEARCH_PLAY_MOST
+                                || pageData.getType() == PageItemData.TYPE_SEARCH_LATEST_PUBLISH) {
+                            if (iVideoDatas.size() <= 0) {
+                                EventBus.getDefault().post(new NoResultEvent());
+                            }
+                        }
                     } else {
                         getVideoList(pageData, pageNum);
                     }
@@ -276,6 +286,9 @@ public class ItemFragment extends BaseItemFragment
                         if (listBeen != null) {
                             if (listBeen.size() <= 0) {
                                 recyclerViewAdapter.setHasMoreData(false);
+                                if (iVideoDatas.size() <= 0) {
+                                    EventBus.getDefault().post(new NoResultEvent());
+                                }
                             } else {
                                 for (int index = 0, count = listBeen.size(); index < count; index ++) {
                                     VideoListBean bean = listBeen.get(index);
@@ -295,6 +308,9 @@ public class ItemFragment extends BaseItemFragment
                         showShortToast(error);
                         refreshLayout.setRefreshing(false);
                         isLoadingData = false;
+                        if (iVideoDatas.size() <= 0) {
+                            EventBus.getDefault().post(new NoResultEvent());
+                        }
                     }
                 });
             }
