@@ -19,12 +19,14 @@ import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.constant.AppConstance;
 import com.baogetv.app.constant.UrlConstance;
+import com.baogetv.app.downloader.domain.DownloadInfo;
 import com.baogetv.app.model.usercenter.HistoryManager;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
 import com.baogetv.app.model.videodetail.event.AddHistoryEvent;
-import com.baogetv.app.model.videodetail.event.CollectSuccessEvent;
+import com.baogetv.app.model.videodetail.event.CacheEvent;
+import com.baogetv.app.model.videodetail.event.FreshInfoEvent;
 import com.baogetv.app.model.videodetail.event.InputSendEvent;
 import com.baogetv.app.model.videodetail.event.NeedCommentEvent;
 import com.baogetv.app.model.videodetail.event.NeedReplyEvent;
@@ -35,6 +37,7 @@ import com.baogetv.app.model.videodetail.fragment.VideoDetailFragment;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageItemData;
+import com.baogetv.app.util.CacheUtil;
 import com.baogetv.app.util.InputUtil;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.ShareContent;
@@ -297,9 +300,34 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
             } else {
                 delCollect();
             }
-
         } else {
             LoginManager.startLogin(this);
+        }
+    }
+
+    @Subscribe
+    public void handleCacheEvent(CacheEvent event) {
+        Log.i(TAG, "onCacheClick: ");
+        if (!LoginManager.hasCommentRight(getApplicationContext())) {
+            if (!LoginManager.hasLogin(getApplicationContext())) {
+                LoginManager.startLogin(this);
+            } else if (LoginManager.hasMobile(getApplicationContext())) {
+                LoginManager.startChangeMobile(this);
+            } else {
+                showShortToast(getString(R.string.no_comment_right));
+            }
+        } else {
+            DownloadInfo downloadInfo = CacheUtil.getDownloadInfo(this,
+                    videoDetailBean.getFile_url());
+            if (downloadInfo == null) {
+                if (CacheUtil.cacheVideo(getApplicationContext(), videoDetailBean)) {
+                    showShortToast("已添加至缓存列表");
+                } else {
+                    showShortToast("缓存失败");
+                }
+            } else {
+                showShortToast("已在缓存中");
+            }
         }
     }
 
@@ -340,7 +368,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                 public void onSuccess(AddItemBean data, String msg, int state) {
                     showShortToast("已收藏");
                     getVideoDetail();
-                    EventBus.getDefault().post(new CollectSuccessEvent());
+                    EventBus.getDefault().post(new FreshInfoEvent());
                 }
 
                 @Override
@@ -367,7 +395,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                     public void onSuccess(List<Object> data, String msg, int state) {
                         Log.i(TAG, "onSuccess: ");
                         getVideoDetail();
-                        EventBus.getDefault().post(new CollectSuccessEvent());
+                        EventBus.getDefault().post(new FreshInfoEvent());
                     }
                     @Override
                     public void onFailed(String error, int state) {
@@ -388,6 +416,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                 @Override
                 public void onSuccess(AddItemBean data, String msg, int state) {
                     getVideoDetail();
+                    EventBus.getDefault().post(new FreshInfoEvent());
                 }
 
                 @Override

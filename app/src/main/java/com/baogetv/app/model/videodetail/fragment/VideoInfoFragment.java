@@ -27,7 +27,8 @@ import com.baogetv.app.model.videodetail.adapter.VideoInfoListAdapter;
 import com.baogetv.app.model.videodetail.adapter.VideoListAdapter;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
-import com.baogetv.app.model.videodetail.event.CollectSuccessEvent;
+import com.baogetv.app.model.videodetail.event.CacheEvent;
+import com.baogetv.app.model.videodetail.event.FreshInfoEvent;
 import com.baogetv.app.model.videodetail.event.ShareEvent;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
@@ -259,27 +260,7 @@ public class VideoInfoFragment extends BaseFragment
 
     @Override
     public void onCacheClick(VideoDetailBean bean) {
-        Log.i(TAG, "onCacheClick: ");
-        if (!LoginManager.hasCommentRight(mActivity.getApplicationContext())) {
-            if (!LoginManager.hasLogin(mActivity.getApplicationContext())) {
-                LoginManager.startLogin(mActivity);
-            } else if (LoginManager.hasMobile(mActivity.getApplicationContext())) {
-                LoginManager.startChangeMobile(mActivity);
-            } else {
-                showShortToast(getString(R.string.no_comment_right));
-            }
-        } else {
-            DownloadInfo downloadInfo = CacheUtil.getDownloadInfo(mActivity, bean.getFile_url());
-            if (downloadInfo == null) {
-                if (CacheUtil.cacheVideo(mActivity.getApplicationContext(), bean)) {
-                    showShortToast("已添加至缓存列表");
-                } else {
-                    showShortToast("缓存失败");
-                }
-            } else {
-                showShortToast("已在缓存中");
-            }
-        }
+        EventBus.getDefault().post(new CacheEvent());
     }
 
     @Override
@@ -295,7 +276,7 @@ public class VideoInfoFragment extends BaseFragment
     }
 
     @Subscribe
-    public void handleCollectEvent(CollectSuccessEvent event) {
+    public void handleFreshInfoEvent(FreshInfoEvent event) {
         getVideoDetail();
     }
 
