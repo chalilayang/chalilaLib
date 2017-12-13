@@ -113,7 +113,7 @@ public class ChannelDetailActivity extends BaseActivity {
             channelTitle.setText(detailBean.getName());
             String info = String.format(
                     infoFormat,
-                    detailBean.getCount(), detailBean.getCount(), detailBean.getCount());
+                    detailBean.getCount(), detailBean.getCollects(), detailBean.getShares());
             channelInfo.setText(info);
             channelDesc.setText(detailBean.getIntro());
         }

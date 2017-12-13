@@ -6,35 +6,40 @@ package com.baogetv.app.bean;
 
 public class ChannelDetailBean {
 
+
     /**
-     * id : 1
-     * name : 频道1
-     * intro :
-     * pic_url :
-     * cover_url :
+     * id : 16
+     * name : BodyBuilding
+     * intro : 美国最大的运动营养品销售平台。
+     * pic : 46
+     * cover : 48
      * sort : 0
-     * count : 0
+     * count : 3
      * is_commend : 0
-     * add_time : 1970-01-01 08:00:00
-     * update_time : 1970-01-01 08:00:00
+     * add_time : 2017-12-08 11:53:10
+     * update_time : 2017-12-13 00:19:11
      * status : 1
-     * pic : 0
-     * cover : 0
+     * pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-12-08/5a2aa6000797d.jpg
+     * cover_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-12-09/5a2b4a4d3490a.png
+     * collects : 2
+     * shares : 0
      */
 
     private String id;
     private String name;
     private String intro;
-    private String pic_url;
-    private String cover_url;
+    private String pic;
+    private String cover;
     private String sort;
     private String count;
     private String is_commend;
     private String add_time;
     private String update_time;
     private String status;
-    private String pic;
-    private String cover;
+    private String pic_url;
+    private String cover_url;
+    private String collects;
+    private String shares;
 
     public String getId() {
         return id;
@@ -60,20 +65,20 @@ public class ChannelDetailBean {
         this.intro = intro;
     }
 
-    public String getPic_url() {
-        return pic_url;
+    public String getPic() {
+        return pic;
     }
 
-    public void setPic_url(String pic_url) {
-        this.pic_url = pic_url;
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 
-    public String getCover_url() {
-        return cover_url;
+    public String getCover() {
+        return cover;
     }
 
-    public void setCover_url(String cover_url) {
-        this.cover_url = cover_url;
+    public void setCover(String cover) {
+        this.cover = cover;
     }
 
     public String getSort() {
@@ -124,19 +129,35 @@ public class ChannelDetailBean {
         this.status = status;
     }
 
-    public String getPic() {
-        return pic;
+    public String getPic_url() {
+        return pic_url;
     }
 
-    public void setPic(String pic) {
-        this.pic = pic;
+    public void setPic_url(String pic_url) {
+        this.pic_url = pic_url;
     }
 
-    public String getCover() {
-        return cover;
+    public String getCover_url() {
+        return cover_url;
     }
 
-    public void setCover(String cover) {
-        this.cover = cover;
+    public void setCover_url(String cover_url) {
+        this.cover_url = cover_url;
+    }
+
+    public String getCollects() {
+        return collects;
+    }
+
+    public void setCollects(String collects) {
+        this.collects = collects;
+    }
+
+    public String getShares() {
+        return shares;
+    }
+
+    public void setShares(String shares) {
+        this.shares = shares;
     }
 }
