@@ -6,16 +6,17 @@ package com.baogetv.app.bean;
 
 public class ZanMeBean {
 
+
     /**
-     * video_id : 1
-     * content : xxs
-     * user_id : 3
-     * username : 15913196454
-     * userpic : http://localhost/test2/Uploads/Picture/2016-12-05/58451c922375d.png
-     * id : 2
-     * comments_id : 1
-     * add_time : 2017-11-12 09:26:21
-     * userpicid : 1
+     * video_id : 12
+     * content : www
+     * user_id : 5
+     * username : 哈哈
+     * userpic : 26
+     * id : 49
+     * comments_id : 46
+     * add_time : 1512803401
+     * userpic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-12-03/5a23cd2b50309.png
      */
 
     private String video_id;
@@ -26,7 +27,7 @@ public class ZanMeBean {
     private String id;
     private String comments_id;
     private String add_time;
-    private String userpicid;
+    private String userpic_url;
 
     public String getVideo_id() {
         return video_id;
@@ -92,11 +93,11 @@ public class ZanMeBean {
         this.add_time = add_time;
     }
 
-    public String getUserpicid() {
-        return userpicid;
+    public String getUserpic_url() {
+        return userpic_url;
     }
 
-    public void setUserpicid(String userpicid) {
-        this.userpicid = userpicid;
+    public void setUserpic_url(String userpic_url) {
+        this.userpic_url = userpic_url;
     }
 }

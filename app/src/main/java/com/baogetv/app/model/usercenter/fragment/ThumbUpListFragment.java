@@ -35,14 +35,11 @@ public class ThumbUpListFragment extends BaseFragment
     private List<ZanMeBean> commentDataList;
     private SwipeRefreshLayout refreshLayout;
     private View contentView;
-    private RecyclerView.LayoutManager layoutManager;
-    private BaseItemAdapter recyclerViewAdapter;
+    private LinearLayoutManager layoutManager;
+    private ThumbUpListAdapter recyclerViewAdapter;
 
     public static ThumbUpListFragment newInstance() {
         ThumbUpListFragment fragment = new ThumbUpListFragment();
-//        Bundle args = new Bundle();
-//        args.putParcelable(PAGE_DATA, data);
-//        fragment.setArguments(args);
         return fragment;
     }
 
@@ -99,20 +96,6 @@ public class ThumbUpListFragment extends BaseFragment
             call.enqueue(new CustomCallBack<List<ZanMeBean>>() {
                 @Override
                 public void onSuccess(List<ZanMeBean> data, String msg, int state) {
-
-                    ZanMeBean zanMeBean = new ZanMeBean();
-                    zanMeBean.setVideo_id("1");
-                    zanMeBean.setContent("xxs");
-                    zanMeBean.setUser_id("3");
-                    zanMeBean.setUsername("123223323443");
-                    zanMeBean.setUserpic("http://localhost/test2/Uploads/Picture/2016-12-05/58451c922375d.png");
-                    zanMeBean.setId("2");
-                    zanMeBean.setComments_id("1");
-                    zanMeBean.setAdd_time("2017-11-12 09:26:21");
-                    zanMeBean.setUserpicid("1");
-                    for (int index = 0; index < 10; index ++) {
-                        data.add(zanMeBean);
-                    }
                     recyclerViewAdapter.update(data);
                 }
 

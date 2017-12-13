@@ -59,13 +59,13 @@ public class ThumbMeView extends ScaleFrameLayout {
     public void setData(ZanMeBean data) {
         commentData = data;
         if (commentData != null) {
-            Glide.with(getContext()).load(data.getUserpic())
+            Glide.with(getContext()).load(data.getUserpic_url())
                     .error(R.mipmap.user_default_icon).into(userLogoImage);
-//            userLogoImage.setLogo(data.);
+//            userLogoImage.setLogo(data.get);
             userName.setText(data.getUsername());
-            userDesc.setText("ddddd");
+            userDesc.setVisibility(INVISIBLE);
             commentContent.setText(data.getContent());
-            commentTime.setText(data.getAdd_time());
+            commentTime.setText(TimeUtil.getTimeStateNew(data.getAdd_time()));
         }
     }
 }
