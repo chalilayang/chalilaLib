@@ -233,6 +233,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                             });
                 }
             }
+            refreshCache();
         }
 
         private void refreshCache() {
@@ -255,6 +256,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                         cache.setText(mContext.getString(R.string.downloading));
                         break;
                     default:
+                        cache.setText(mContext.getString(R.string.cache));
                         break;
                 }
             }
