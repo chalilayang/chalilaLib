@@ -196,7 +196,7 @@ public class VideoInfoFragment extends BaseFragment
                             for (int index = 0, count = listBeen.size(); index < count; index ++) {
                                 VideoListBean bean = listBeen.get(index);
                                 VideoListAdapter.IVideoData iVideoData
-                                        = BeanConvert.getIVideoData(bean);
+                                        = BeanConvert.getIVideoData(bean, true);
                                 iVideoDatas.add(iVideoData);
                             }
                         }

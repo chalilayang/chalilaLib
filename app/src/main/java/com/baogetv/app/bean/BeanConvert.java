@@ -37,9 +37,11 @@ public class BeanConvert {
         }
         return result;
     }
-
     public static VideoListAdapter.IVideoData getIVideoData(VideoListBean data) {
-        String picUrl = data.getPic_url();
+        return getIVideoData(data, false);
+    }
+    public static VideoListAdapter.IVideoData getIVideoData(VideoListBean data, boolean smallPic) {
+        String picUrl = smallPic ? data.getThumb_pic_url() : data.getPic_url();
         String title = data.getTitle();
         String publishTime = data.getAdd_time();
         String playCount = data.getPlay();

@@ -10,12 +10,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.baogetv.app.R;
 import com.baogetv.app.customview.CustomToastUtil;
 import com.baogetv.app.model.videodetail.customview.CustomSeekBar;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
 import com.baogetv.app.model.videodetail.event.ShareEvent;
+import com.baogetv.app.util.FileUtil;
 import com.baogetv.app.util.FileUtils;
 import com.baogetv.app.util.StorageManager;
 import com.chalilayang.scaleview.ScaleTextView;
@@ -60,6 +62,7 @@ public class PlayerController extends NiceVideoPlayerController
 
     private LinearLayout mChangeVolume;
     private ProgressBar mChangeVolumeProgress;
+    private ScaleTextView loadingTip;
 
     public PlayerController(Context context) {
         super(context);
@@ -110,6 +113,7 @@ public class PlayerController extends NiceVideoPlayerController
 
         mChangeVolume = (LinearLayout) findViewById(com.xiao.nicevideoplayer.R.id.change_volume);
         mChangeVolumeProgress = (ProgressBar) findViewById(com.xiao.nicevideoplayer.R.id.change_volume_progress);
+        loadingTip = findViewById(R.id.loading_tip);
     }
 
     /**
@@ -227,31 +231,43 @@ public class PlayerController extends NiceVideoPlayerController
 
     @Override
     protected void onPlayStateChanged(int playState) {
+        Log.i(TAG, "onPlayStateChanged: " + playState);
         switch (playState) {
             case NiceVideoPlayer.STATE_IDLE:
                 playBtn.setImageResource(R.mipmap.play_start);
                 break;
             case NiceVideoPlayer.STATE_PREPARING:
                 playBtn.setImageResource(R.mipmap.play_pause);
+                loadingTip.setVisibility(View.VISIBLE);
+                loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
                 break;
             case NiceVideoPlayer.STATE_PREPARED:
                 playBtn.setImageResource(R.mipmap.play_pause);
+                loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
                 startUpdateProgressTimer();
                 break;
             case NiceVideoPlayer.STATE_PLAYING:
+//                loadingTip.setVisibility(View.GONE);
+                loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
                 playBtn.setImageResource(R.mipmap.play_pause);
                 startDismissTopBottomTimer();
                 break;
             case NiceVideoPlayer.STATE_PAUSED:
+//                loadingTip.setVisibility(View.GONE);
+                loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
                 playBtn.setImageResource(R.mipmap.play_start);
                 cancelDismissTopBottomTimer();
                 break;
             case NiceVideoPlayer.STATE_BUFFERING_PLAYING:
+                loadingTip.setVisibility(View.VISIBLE);
                 playBtn.setImageResource(R.mipmap.play_pause);
+                loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
                 startDismissTopBottomTimer();
                 break;
             case NiceVideoPlayer.STATE_BUFFERING_PAUSED:
+                loadingTip.setVisibility(View.VISIBLE);
                 playBtn.setImageResource(R.mipmap.play_pause);
+                loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
                 break;
             case NiceVideoPlayer.STATE_ERROR:
                 playBtn.setImageResource(R.mipmap.play_start);
@@ -307,6 +323,7 @@ public class PlayerController extends NiceVideoPlayerController
         String dur = NiceUtil.formatTime(duration);
         timeTvSmall.setText(pos);
         durationTvSmall.setText(dur);
+        loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
     }
 
     @Override
