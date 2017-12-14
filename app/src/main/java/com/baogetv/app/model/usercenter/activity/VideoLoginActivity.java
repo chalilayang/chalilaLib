@@ -283,19 +283,19 @@ public class VideoLoginActivity extends BaseActivity implements UMAuthListener {
                         }
                         switch (share_media) {
                             case WEIXIN:
-                                String openid = map.get("openid");
+                                String openid = map.get("refreshToken");
                                 String nickName = map.get("name");
                                 String pic = map.get("iconurl");
                                 loginPartner(LoginManager.KEY_WECHAT, openid, nickName, pic);
                                 break;
                             case QQ:
-                                openid = map.get("openid");
+                                openid = map.get("accessToken");
                                 nickName = map.get("name");
                                 pic = map.get("iconurl");
                                 loginPartner(LoginManager.KEY_QQ, openid, nickName, pic);
                                 break;
                             case SINA:
-                                openid = map.get("uid");
+                                openid = map.get("accessToken");
                                 nickName = map.get("name");
                                 pic = map.get("iconurl");
                                 loginPartner(LoginManager.KEY_SINA, openid, nickName, pic);
