@@ -3,6 +3,7 @@ package com.baogetv.app.model.videodetail.adapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ import static com.baogetv.app.downloader.domain.DownloadInfo.STATUS_WAIT;
 
 public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final String TAG = "VideoInfoListAdapter";
     private final List<VideoListAdapter.IVideoData> mValues;
     public static final int TYPE_NORMAL = 0;
     public static final int TYPE_HEAD = 1;
@@ -238,6 +240,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         private void refreshCache() {
             if (downloadInfo != null) {
+                Log.i(TAG, "refreshCache: " + downloadInfo.getStatus() + " " + downloadInfo.getProgress() + " " + downloadInfo.getSize());
                 switch (downloadInfo.getStatus()) {
                     case DownloadInfo.STATUS_PAUSED:
                         cache.setText(mContext.getString(R.string.downloading));
