@@ -148,7 +148,7 @@ public class CommentDetailFragment extends BaseFragment
                                 List<CommentData> list = new ArrayList<>();
                                 for (int i = 0; i < beanList.size(); i ++) {
                                     CommentData data = new CommentData();
-                                    CommentListBean listBean = bean.get(i);
+                                    CommentListBean listBean = beanList.get(i);
                                     data.setTime(listBean.getAdd_time());
                                     data.setBean(listBean);
                                     list.add(data);
