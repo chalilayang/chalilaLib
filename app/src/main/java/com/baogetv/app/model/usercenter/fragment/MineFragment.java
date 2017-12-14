@@ -21,6 +21,7 @@ import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.constant.AppConstance;
 import com.baogetv.app.customview.LogoCircleImageView;
+import com.baogetv.app.downloader.domain.DownloadInfo;
 import com.baogetv.app.model.usercenter.Level;
 import com.baogetv.app.model.usercenter.LevelUtil;
 import com.baogetv.app.model.usercenter.LoginManager;
@@ -38,6 +39,7 @@ import com.baogetv.app.model.usercenter.customview.MineLineItemView;
 import com.baogetv.app.model.usercenter.customview.UpgradeProgress;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
+import com.baogetv.app.util.CacheUtil;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -109,6 +111,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
         updateInfo();
         return contentView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateInfo();
     }
 
     private void init(View view) {
@@ -226,6 +234,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 }
             } else {
                 getGradeList();
+            }
+            List<DownloadInfo> downloadInfos = CacheUtil.getDownloadingList(mActivity);
+            if (downloadInfos != null && downloadInfos.size() > 0) {
+                myCacheItemView.setNewLogoText(downloadInfos.size()+"");
+            } else {
+                myCacheItemView.setNewLogoText(null);
             }
         }
     }

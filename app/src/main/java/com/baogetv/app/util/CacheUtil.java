@@ -29,6 +29,11 @@ public class CacheUtil {
         return downloadInfo;
     }
 
+    public static List<DownloadInfo> getDownloadingList(Context context) {
+        DownloadManager downloadManager = DownloadService.getDownloadManager(context);
+        return downloadManager.findAllDownloading();
+    }
+
     public static boolean cacheVideo(Context context, VideoDetailBean bean) {
         boolean result = false;
         if (TextUtils.isEmpty(bean.getFile_url())) {
