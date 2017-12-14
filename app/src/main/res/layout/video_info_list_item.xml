@@ -32,6 +32,7 @@
             android:id="@+id/video_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_30"
             android:textAppearance="@style/cache_list_item_desc"/>
     </com.chalilayang.scaleview.ScaleLinearLayout>
 </com.chalilayang.scaleview.ScaleRelativeLayout>

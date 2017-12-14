@@ -37,7 +37,11 @@ public class TimeUtil {
         if ((time_conver / day_conver) < 3) {
             temp_conver = time_conver / day_conver;
             if (temp_conver <= 2 && temp_conver >= 1) {
-                return temp_conver + "天前";
+                if (temp_conver == 1) {
+                    return "昨天";
+                } else {
+                    return temp_conver + "天前";
+                }
             } else {
                 temp_conver = (time_conver / hour_conver);
                 if (temp_conver >= 1) {

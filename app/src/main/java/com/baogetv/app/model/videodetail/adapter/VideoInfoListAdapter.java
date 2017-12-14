@@ -371,8 +371,13 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         public void updateInfo() {
             title.setText(mItem.getTitle());
-            updateTime.setText(TimeUtil.getTimeStateNew(mItem.getPublishTime()));
-            Glide.with(mContext).load(mItem.getPicUrl()).into(mImageView);
+            String time = TimeUtil.getTimeStateNew(mItem.getPublishTime());
+            String count = String.format(playCountFormat, mItem.getPlayCount());
+            updateTime.setText(count + " | " + time);
+            Glide.with(mContext)
+                    .load(mItem.getPicUrl())
+                    .placeholder(R.mipmap.mengceng)
+                    .into(mImageView);
         }
 
         public ViewHolder(View view) {

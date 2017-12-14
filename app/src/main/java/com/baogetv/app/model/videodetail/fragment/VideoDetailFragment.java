@@ -127,7 +127,7 @@ public class VideoDetailFragment extends PagerFragment {
             call.enqueue(new CustomCallBack<List<AdvListBean>>() {
                 @Override
                 public void onSuccess(List<AdvListBean> data, String msg, int state) {
-                    if (data != null) {
+                    if (data != null && data.size() > 0) {
                         getAdvDetail(data.get(0).getId());
                     }
                 }
