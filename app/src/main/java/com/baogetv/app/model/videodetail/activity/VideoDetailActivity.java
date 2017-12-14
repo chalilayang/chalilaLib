@@ -293,6 +293,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
     @Subscribe
     public void handleCollectEvent(AddCollectEvent event) {
         Log.i(TAG, "handleCollectEvent: ");
+        EventBus.getDefault().cancelEventDelivery(event);
         if (LoginManager.hasLogin(getApplicationContext())) {
             int isCollect = 0;
             try {
@@ -313,6 +314,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
     @Subscribe
     public void handleCacheEvent(CacheEvent event) {
         Log.i(TAG, "onCacheClick: ");
+        EventBus.getDefault().cancelEventDelivery(event);
         if (!LoginManager.hasCommentRight(getApplicationContext())) {
             if (!LoginManager.hasLogin(getApplicationContext())) {
                 LoginManager.startLogin(this);
@@ -339,6 +341,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
 
     @Subscribe
     public void handleHistoryEvent(AddHistoryEvent event) {
+        EventBus.getDefault().cancelEventDelivery(event);
         if (LoginManager.hasLogin(getApplicationContext())) {
             addPlayHistory(videoDetailBean);
         }
@@ -347,6 +350,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
     @Subscribe
     public void handleShareEvent(ShareEvent event) {
         Log.i(TAG, "handleShareEvent: ");
+        EventBus.getDefault().cancelEventDelivery(event);
         shareContent = new ShareContent();
         shareContent.mText = videoDetailBean.getTitle();
         UMWeb web = new UMWeb(String.format(UrlConstance.SHARE_BASE_URL, videoDetailBean.getId()));

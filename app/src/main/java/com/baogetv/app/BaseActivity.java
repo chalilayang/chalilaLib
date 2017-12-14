@@ -24,12 +24,17 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PushAgent.getInstance(this).onAppStart();
-        if (useEventBus()) {
-            EventBus.getDefault().register(this);
-        }
         setStatusBarColor(getResources().getColor(R.color.black));
         if (!useActionBar() && getSupportActionBar() != null) {
             getSupportActionBar().hide();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (useEventBus()) {
+            EventBus.getDefault().register(this);
         }
     }
 
@@ -41,9 +46,14 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     protected void initState() {
