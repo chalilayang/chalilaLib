@@ -259,6 +259,8 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                         cache.setText(mContext.getString(R.string.cache));
                         break;
                 }
+            } else {
+                cache.setText(mContext.getString(R.string.cache));
             }
         }
 
