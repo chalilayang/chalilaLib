@@ -2,6 +2,7 @@ package com.baogetv.app.util;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.db.DBController;
@@ -20,33 +21,12 @@ import java.util.List;
 public class CacheUtil {
     private static final String TAG = "CacheUtil";
     public static DownloadInfo getDownloadInfo(Context context, String url) {
-        DownloadInfo result = null;
-        try {
-            DBController dbController = DBController.getInstance(context);
-            List<DownloadInfo> downloadingList
-                    = dbController.findAllDownloading();
-            List<DownloadInfo> downloadedList
-                    = dbController.findAllDownloaded();
-            for (int index = 0, count = downloadedList.size(); index < count; index ++) {
-                DownloadInfo info = downloadedList.get(index);
-                if (info.getUri().equals(url)) {
-                    result = info;
-                    break;
-                }
-            }
-            if (result == null) {
-                for (int index = 0, count = downloadingList.size(); index < count; index ++) {
-                    DownloadInfo info = downloadingList.get(index);
-                    if (info.getUri().equals(url)) {
-                        result = info;
-                        break;
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (TextUtils.isEmpty(url)) {
+            return null;
         }
-        return result;
+        DownloadManager downloadManager = DownloadService.getDownloadManager(context);
+        DownloadInfo downloadInfo = downloadManager.getDownloadById(url.hashCode());
+        return downloadInfo;
     }
 
     public static boolean cacheVideo(Context context, VideoDetailBean bean) {
