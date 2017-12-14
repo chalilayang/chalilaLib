@@ -158,23 +158,23 @@ public class PlayHistoryActivity extends BaseTitleActivity
             UserApiService userApiService
                     = RetrofitManager.getInstance().createReq(UserApiService.class);
             String token = LoginManager.getUserToken(getApplicationContext());
-            String id = "";
+            String video_id = "";
             if (data != null) {
-                id = data.getId();
+                video_id = data.getVideo_id();
             } else {
                 List<HistoryBean> list = recyclerViewAdapter.getDataList();
                 for (int index = 0, count = list.size(); index < count; index ++) {
                     if (index == 0) {
-                        id = list.get(index).getId();
+                        video_id = list.get(index).getId();
                     } else {
-                        id = id + "," + list.get(index).getId();
+                        video_id = video_id + "," + list.get(index).getId();
                     }
                 }
             }
-            if (!TextUtils.isEmpty(id)) {
+            if (!TextUtils.isEmpty(video_id)) {
                 refreshLayout.setRefreshing(true);
                 Call<ResponseBean<List<Object>>> call
-                        = userApiService.deleteHistory(token, id);
+                        = userApiService.deleteHistory(token, video_id);
                 if (call != null) {
                     call.enqueue(new CustomCallBack<List<Object>>() {
                         @Override
