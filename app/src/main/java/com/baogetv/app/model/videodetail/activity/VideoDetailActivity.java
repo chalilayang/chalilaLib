@@ -248,7 +248,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
 
                 @Override
                 public void onFailed(String error, int state) {
-                    showShortToast(error);
+                    Log.i(TAG, "onFailed: save history");
                 }
             });
         }
@@ -342,9 +342,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
     @Subscribe
     public void handleHistoryEvent(AddHistoryEvent event) {
         EventBus.getDefault().cancelEventDelivery(event);
-        if (LoginManager.hasLogin(getApplicationContext())) {
-            addPlayHistory(videoDetailBean);
-        }
+        addPlayHistory(videoDetailBean);
     }
 
     @Subscribe

@@ -23,7 +23,6 @@ import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.activity.MemberDetailActivity;
 import com.baogetv.app.model.usercenter.event.ReportEvent;
 import com.baogetv.app.model.videodetail.activity.CommentDetailActivity;
-import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.CommentListAdapter;
 import com.baogetv.app.model.videodetail.customview.CommentView;
 import com.baogetv.app.model.videodetail.entity.CommentData;
