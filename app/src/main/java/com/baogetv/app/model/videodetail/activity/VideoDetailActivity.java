@@ -1,10 +1,12 @@
 package com.baogetv.app.model.videodetail.activity;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,12 +21,9 @@ import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.constant.AppConstance;
 import com.baogetv.app.constant.UrlConstance;
-import com.baogetv.app.downloader.DownloadService;
-import com.baogetv.app.downloader.callback.DownloadManager;
 import com.baogetv.app.downloader.domain.DownloadInfo;
 import com.baogetv.app.model.usercenter.HistoryManager;
 import com.baogetv.app.model.usercenter.LoginManager;
-import com.baogetv.app.model.usercenter.MyDownloadListener;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
 import com.baogetv.app.model.videodetail.event.AddHistoryEvent;
@@ -58,7 +57,6 @@ import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +80,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
     private ShareAction shareAction = new ShareAction(VideoDetailActivity.this)
             .setDisplayList(AppConstance.SHARE_LIST)
             .setShareboardclickCallback(this);
+    private int screenWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +98,13 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
     }
 
     private void initView() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((WindowManager) getSystemService(Context.WINDOW_SERVICE))
+                .getDefaultDisplay().getMetrics(displayMetrics);
+        screenWidth = displayMetrics.widthPixels;
+        int playerHeight = screenWidth * 720 / 1280;
+        View playerContainer = findViewById(R.id.video_player_fragment_container);
+        playerContainer.getLayoutParams().height = playerHeight;
         editText = (EditText) findViewById(R.id.comment_edit_text);
         sendBtn = findViewById(R.id.comment_send_btn);
         sendBtn.setOnClickListener(new View.OnClickListener() {
