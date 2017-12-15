@@ -137,7 +137,7 @@ public class ImageGetFragment extends BaseFragment implements IHandlerCallBack {
     public void onSuccess(List<String> photoList) {
         Log.i(TAG, "onSuccess: ");
         if (photoList != null && photoList.size() > 0) {
-            EventBus.getDefault().post(new ImageSelectEvent(photoList.get(0)));
+            EventBus.getDefault().postSticky(new ImageSelectEvent(photoList.get(0)));
         }
     }
 

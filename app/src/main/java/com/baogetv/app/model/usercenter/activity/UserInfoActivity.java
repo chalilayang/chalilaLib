@@ -262,12 +262,13 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 @Override
                 public void onSuccess(ImageUploadBean data, String msg, int state) {
                     Log.i(TAG, "onSuccess: ");
-                    showShortToast("图片上传success");
+                    showShortToast("上传成功");
                     modifyUserInfo(data.getId());
                 }
 
                 @Override
                 public void onFailed(String error, int state) {
+                    hideLoadingDialog();
                     showShortToast(error);
                 }
             });
@@ -286,7 +287,6 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 @Override
                 public void onSuccess(List<Object> data, String msg, int state) {
                     Log.i(TAG, "onSuccess: ");
-                    showShortToast("头像修改success");
                     hideLoadingDialog();
                     fetchUserInfo();
                     setResult(RESULT_OK);
@@ -300,11 +300,11 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         }
     }
 
-    @Subscribe
+    @Subscribe(sticky = true)
     public void onImageEvent(ImageSelectEvent event) {
         Log.i(TAG, "onImageEvent: " + event.img);
         showOrHideImageSelectFragment(false);
-        showLoadingDialog("uploading", "上传成功");
+        showLoadingDialog("上传中", "上传成功");
         uploadFile(event.img);
         Glide.with(this)
                 .fromFile()
