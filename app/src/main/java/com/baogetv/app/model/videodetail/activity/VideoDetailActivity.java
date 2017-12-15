@@ -235,7 +235,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
             call.enqueue(new CustomCallBack<AddItemBean>() {
                 @Override
                 public void onSuccess(AddItemBean data, String msg, int state) {
-                    showShortToast("save history success");
+//                    showShortToast("save history success");
                     if (!LoginManager.hasLogin(getApplicationContext())) {
                         String historyId = data.getId();
                         String vid = bean.getId();
@@ -245,16 +245,16 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                                 vid, title, pic);
                         Log.i(TAG, "addPlayHistory: " + vid + " " + title + " ");
                         if (HistoryManager.getInstance(getApplicationContext()).isInHistory(vid)) {
-                            showShortToast("save history success");
+//                            showShortToast("save history success");
                         } else {
-                            showShortToast("save history failed");
+//                            showShortToast("save history failed");
                         }
                     }
                 }
 
                 @Override
                 public void onFailed(String error, int state) {
-                    Log.i(TAG, "onFailed: save history");
+//                    Log.i(TAG, "onFailed: save history");
                 }
             });
         }
