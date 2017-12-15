@@ -144,6 +144,16 @@ public class ItemFragment extends BaseItemFragment
     public void onItemClick(VideoListAdapter.IVideoData data, int position) {
         Log.i(TAG, "onItemClick: " + position);
         Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
+        int count = -1;
+        try {
+            count = Integer.parseInt(data.getPlayCount());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        if (count > 0) {
+            data.setPlayCount(String.valueOf(count+1));
+        }
+        recyclerViewAdapter.notifyItemChanged(position);
         intent.putExtra(KEY_VIDEO_ID, data.getVideoID());
         getActivity().startActivity(intent);
     }

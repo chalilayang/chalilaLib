@@ -98,5 +98,6 @@ public class VideoListAdapter
         String getPlayCount();
         boolean isCHN();
         boolean isPro();
+        void setPlayCount(String count);
     }
 }

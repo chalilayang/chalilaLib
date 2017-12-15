@@ -10,7 +10,7 @@ public class VideoData implements VideoListAdapter.IVideoData {
     private final String picUrl;
     private final String title;
     private final String publishTime;
-    private final String playCount;
+    private String playCount;
     private final String videoDuration;
     private final String videoId;
     private boolean isCHN;
@@ -70,5 +70,10 @@ public class VideoData implements VideoListAdapter.IVideoData {
     @Override
     public boolean isPro() {
         return isPro;
+    }
+
+    @Override
+    public void setPlayCount(String count) {
+        playCount = count;
     }
 }
