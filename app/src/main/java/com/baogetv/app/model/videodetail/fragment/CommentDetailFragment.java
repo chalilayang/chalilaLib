@@ -216,48 +216,48 @@ public class CommentDetailFragment extends BaseFragment
     }
 
     @Override
-    public void onIconClick(CommentData data) {
+    public void onIconClick(CommentData data, int commentIndex) {
         Log.i(TAG, "onIconClick: ");
         startMemberActivity(data.getBean().getUser_id());
     }
 
     @Override
-    public void onThumbUp(CommentData data) {
+    public void onThumbUp(CommentData data, int commentIndex) {
         Log.i(TAG, "onThumbUp: ");
         addZan(videoDetailData.videoDetailBean.getId(), data.getBean().getId());
     }
 
     @Override
-    public void onJuBaoClick(CommentData data) {
+    public void onJuBaoClick(CommentData data, int commentIndex) {
         Log.i(TAG, "onJuBaoClick: ");
         showFragment(data);
     }
 
     @Override
-    public void onReplyerClick(ReplyData data) {
+    public void onReplyerClick(ReplyData data, int commentIndex) {
         Log.i(TAG, "onReplyerClick: ");
 //        startMemberActivity(data.getBean().getUser_id());
     }
 
     @Override
-    public void onReplyToClick(ReplyData data) {
+    public void onReplyToClick(ReplyData data, int commentIndex) {
         Log.i(TAG, "onReplyToClick: ");
 //        startMemberActivity(data.getBean().getUser_id());
     }
 
     @Override
-    public void onReplyClick(ReplyData data) {
+    public void onReplyClick(ReplyData data, int commentIndex) {
         Log.i(TAG, "onReplyClick: ");
         EventBus.getDefault().post(new NeedReplyDetailEvent(data));
     }
 
     @Override
-    public void onMoreComment(CommentData data) {
+    public void onMoreComment(CommentData data, int commentIndex) {
         Log.i(TAG, "onMoreComment: ");
     }
 
     @Override
-    public void onCommentClick(CommentData data) {
+    public void onCommentClick(CommentData data, int commentIndex) {
         EventBus.getDefault().post(new NeedCommentDetailEvent(data));
     }
 

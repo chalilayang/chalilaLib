@@ -48,6 +48,7 @@ public class ReplyView extends ScaleLinearLayout {
     private int timeSize;
 
     private ReplyData replyData;
+    private int commentIndex;
 
     private String replyFormat;
     private String replyFormatNoTo;
@@ -102,7 +103,7 @@ public class ReplyView extends ScaleLinearLayout {
             @Override
             public void onClick(View view) {
                 if (mRef != null && mRef.get() != null) {
-                    mRef.get().onReplyClick(replyData);
+                    mRef.get().onReplyClick(replyData, commentIndex);
                 }
             }
         });
@@ -114,8 +115,9 @@ public class ReplyView extends ScaleLinearLayout {
         addView(bottomContainer, llp);
     }
 
-    public void setReply(final ReplyData data) {
+    public void setReply(final ReplyData data, final int pos) {
         replyData = data;
+        commentIndex = pos;
         if (data != null) {
             contentTv.setMovementMethod(LinkMovementMethod.getInstance());
             contentTv.setHighlightColor(Color.TRANSPARENT);
@@ -143,7 +145,7 @@ public class ReplyView extends ScaleLinearLayout {
                 public void onClick (final View widget) {
                     Log.i(TAG, "onClick: ");
                     if (mRef != null && mRef.get() != null) {
-                        mRef.get().onReplyerClick(data);
+                        mRef.get().onReplyerClick(data, commentIndex);
                     }
                 }
             }, start, nameEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -166,7 +168,7 @@ public class ReplyView extends ScaleLinearLayout {
                     @Override
                     public void onClick (final View widget) {
                         if (mRef != null && mRef.get() != null) {
-                            mRef.get().onReplyToClick(data);
+                            mRef.get().onReplyToClick(data, commentIndex);
                         }
                     }
                 }, start, nameEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -184,7 +186,7 @@ public class ReplyView extends ScaleLinearLayout {
                 @Override
                 public void onClick (final View widget) {
                     if (mRef != null && mRef.get() != null) {
-                        mRef.get().onReplyClick(data);
+                        mRef.get().onReplyClick(data, commentIndex);
                     }
                 }
             }, start, nameEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -200,8 +202,8 @@ public class ReplyView extends ScaleLinearLayout {
     }
 
     public interface OnReplyClickListener {
-        void onReplyerClick(ReplyData data);
-        void onReplyToClick(ReplyData data);
-        void onReplyClick(ReplyData data);
+        void onReplyerClick(ReplyData data, int commentIndex);
+        void onReplyToClick(ReplyData data, int commentIndex);
+        void onReplyClick(ReplyData data, int commentIndex);
     }
 }

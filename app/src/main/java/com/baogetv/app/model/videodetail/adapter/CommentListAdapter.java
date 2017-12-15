@@ -64,7 +64,7 @@ public class CommentListAdapter
                 loadMoreTip.setText(hasMoreData?loadingMore : noMoreData);
             } else {
                 if (mCommentView != null) {
-                    mCommentView.setCommentData(data);
+                    mCommentView.setCommentData(data, pos);
                     mCommentView.setOnCommentListener(CommentListAdapter.this);
                 }
             }
@@ -72,58 +72,58 @@ public class CommentListAdapter
     }
 
     @Override
-    public void onIconClick(CommentData data) {
+    public void onIconClick(CommentData data, int commentIndex) {
         if (mRef != null && mRef.get() != null) {
-            mRef.get().onIconClick(data);
+            mRef.get().onIconClick(data, commentIndex);
         }
     }
 
     @Override
-    public void onThumbUp(CommentData data) {
+    public void onThumbUp(CommentData data, int commentIndex) {
         if (mRef != null && mRef.get() != null) {
-            mRef.get().onThumbUp(data);
+            mRef.get().onThumbUp(data, commentIndex);
         }
     }
 
     @Override
-    public void onJuBaoClick(CommentData data) {
+    public void onJuBaoClick(CommentData data, int commentIndex) {
         if (mRef != null && mRef.get() != null) {
-            mRef.get().onJuBaoClick(data);
+            mRef.get().onJuBaoClick(data, commentIndex);
         }
     }
 
     @Override
-    public void onReplyerClick(ReplyData data) {
+    public void onReplyerClick(ReplyData data, int commentIndex) {
         if (mRef != null && mRef.get() != null) {
-            mRef.get().onReplyerClick(data);
+            mRef.get().onReplyerClick(data, commentIndex);
         }
     }
 
     @Override
-    public void onReplyToClick(ReplyData data) {
+    public void onReplyToClick(ReplyData data, int commentIndex) {
         if (mRef != null && mRef.get() != null) {
-            mRef.get().onReplyToClick(data);
+            mRef.get().onReplyToClick(data, commentIndex);
         }
     }
 
     @Override
-    public void onReplyClick(ReplyData data) {
+    public void onReplyClick(ReplyData data, int commentIndex) {
         if (mRef != null && mRef.get() != null) {
-            mRef.get().onReplyClick(data);
+            mRef.get().onReplyClick(data, commentIndex);
         }
     }
 
     @Override
-    public void onMoreComment(CommentData data) {
+    public void onMoreComment(CommentData data, int commentIndex) {
         if (mRef != null && mRef.get() != null) {
-            mRef.get().onMoreComment(data);
+            mRef.get().onMoreComment(data, commentIndex);
         }
     }
 
     @Override
-    public void onCommentClick(CommentData data) {
+    public void onCommentClick(CommentData data, int commentIndex) {
         if (mRef != null && mRef.get() != null) {
-            mRef.get().onCommentClick(data);
+            mRef.get().onCommentClick(data, commentIndex);
         }
     }
 }

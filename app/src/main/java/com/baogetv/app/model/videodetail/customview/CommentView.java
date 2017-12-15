@@ -32,6 +32,7 @@ public class CommentView extends ScaleFrameLayout
         implements ReplyView.OnReplyClickListener {
 
     private static final String TAG = "CommentView";
+    private int commentIndex;
     private CommentData commentData;
 
     private LogoCircleImageView userLogoImage;
@@ -88,7 +89,8 @@ public class CommentView extends ScaleFrameLayout
         zan = root.findViewById(R.id.comment_thumb_up);
     }
 
-    public void setCommentData(final CommentData data) {
+    public void setCommentData(final CommentData data, int pos) {
+        commentIndex = pos;
         commentData = data;
         replyContainer.setVisibility(GONE);
         replyContainer.removeAllViews();
@@ -96,7 +98,7 @@ public class CommentView extends ScaleFrameLayout
             @Override
             public void onClick(View view) {
                 if (mRef != null && mRef.get() != null) {
-                    mRef.get().onJuBaoClick(data);
+                    mRef.get().onJuBaoClick(data, commentIndex);
                 }
             }
         });
@@ -109,7 +111,7 @@ public class CommentView extends ScaleFrameLayout
             @Override
             public void onClick(View view) {
                 if (mRef != null && mRef.get() != null) {
-                    mRef.get().onCommentClick(data);
+                    mRef.get().onCommentClick(data, commentIndex);
                 }
             }
         });
@@ -117,7 +119,7 @@ public class CommentView extends ScaleFrameLayout
             @Override
             public void onClick(View view) {
                 if (mRef != null && mRef.get() != null) {
-                    mRef.get().onThumbUp(data);
+                    mRef.get().onThumbUp(data, commentIndex);
                 }
             }
         });
@@ -133,7 +135,7 @@ public class CommentView extends ScaleFrameLayout
                 @Override
                 public void onClick(View view) {
                     if (mRef != null && mRef.get() != null) {
-                        mRef.get().onIconClick(commentData);
+                        mRef.get().onIconClick(commentData, commentIndex);
                     }
                 }
             });
@@ -153,7 +155,7 @@ public class CommentView extends ScaleFrameLayout
                                 @Override
                                 public void onClick(View view) {
                                     if (mRef != null && mRef.get() != null) {
-                                        mRef.get().onMoreComment(commentData);
+                                        mRef.get().onMoreComment(commentData, commentIndex);
                                     }
                                 }
                             });
@@ -163,7 +165,7 @@ public class CommentView extends ScaleFrameLayout
                         ReplyData replyData = replyDataList.get(index);
                         ReplyView replyView = new ReplyView(getContext());
                         replyView.setReplyClickListener(this);
-                        replyView.setReply(replyData);
+                        replyView.setReply(replyData, commentIndex);
                         replyContainer.addView(replyView, index);
                     }
                 }
@@ -172,26 +174,26 @@ public class CommentView extends ScaleFrameLayout
     }
 
     @Override
-    public void onReplyerClick(ReplyData data) {
+    public void onReplyerClick(ReplyData data, int index) {
         Log.i(TAG, "onReplyerClick: ");
         if (mRef != null && mRef.get() != null) {
-            mRef.get().onReplyerClick(data);
+            mRef.get().onReplyerClick(data, commentIndex);
         }
     }
 
     @Override
-    public void onReplyToClick(ReplyData data) {
+    public void onReplyToClick(ReplyData data, int index) {
         Log.i(TAG, "onReplyToClick: ");
         if (mRef != null && mRef.get() != null) {
-            mRef.get().onReplyToClick(data);
+            mRef.get().onReplyToClick(data, commentIndex);
         }
     }
 
     @Override
-    public void onReplyClick(ReplyData data) {
+    public void onReplyClick(ReplyData data, int index) {
         Log.i(TAG, "onReplyClick: ");
         if (mRef != null && mRef.get() != null) {
-            mRef.get().onReplyClick(data);
+            mRef.get().onReplyClick(data, commentIndex);
         }
     }
 
@@ -203,10 +205,10 @@ public class CommentView extends ScaleFrameLayout
     }
 
     public interface OnCommentListener extends ReplyView.OnReplyClickListener {
-        void onIconClick(CommentData data);
-        void onThumbUp(CommentData data);
-        void onJuBaoClick(CommentData data);
-        void onMoreComment(CommentData data);
-        void onCommentClick(CommentData data);
+        void onIconClick(CommentData data, int commentIndex);
+        void onThumbUp(CommentData data, int commentIndex);
+        void onJuBaoClick(CommentData data, int commentIndex);
+        void onMoreComment(CommentData data, int commentIndex);
+        void onCommentClick(CommentData data, int commentIndex);
     }
 }
