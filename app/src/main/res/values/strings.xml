@@ -10,7 +10,7 @@
     <string name="cancel">取消</string>
 
     <string name="loading_more_data">正在加载更多数据...</string>
-    <string name="no_more_data">没有更多数据</string>
+    <string name="no_more_data">已经全部加载完毕</string>
     <string name="all">全部</string>
     <string name="ranking">排行榜</string>
     <string name="week_ranking">周排行</string>

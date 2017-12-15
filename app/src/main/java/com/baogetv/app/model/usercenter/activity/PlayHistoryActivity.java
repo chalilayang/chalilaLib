@@ -165,9 +165,9 @@ public class PlayHistoryActivity extends BaseTitleActivity
                 List<HistoryBean> list = recyclerViewAdapter.getDataList();
                 for (int index = 0, count = list.size(); index < count; index ++) {
                     if (index == 0) {
-                        video_id = list.get(index).getId();
+                        video_id = list.get(index).getVideo_id();
                     } else {
-                        video_id = video_id + "," + list.get(index).getId();
+                        video_id = video_id + "," + list.get(index).getVideo_id();
                     }
                 }
             }

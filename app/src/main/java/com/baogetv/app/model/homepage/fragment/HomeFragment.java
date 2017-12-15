@@ -72,11 +72,11 @@ public class HomeFragment extends PagerFragment {
     public BaseFragment createFragment(int pageIndex) {
         if (pageIndex == 1) {
             List<PageItemData> list = new ArrayList<>(2);
-            PageItemData pageItemData = new PageItemData(getString(R.string.all_ranking), PageItemData.TYPE_RANK_VIDEO);
-            list.add(pageItemData);
-            pageItemData = new PageItemData(getString(R.string.week_ranking), PageItemData.TYPE_RANK_VIDEO_WEEK);
+            PageItemData pageItemData = new PageItemData(getString(R.string.week_ranking), PageItemData.TYPE_RANK_VIDEO_WEEK);
             list.add(pageItemData);
             pageItemData = new PageItemData(getString(R.string.month_ranking), PageItemData.TYPE_RANK_VIDEO_MONTH);
+            list.add(pageItemData);
+            pageItemData = new PageItemData(getString(R.string.all_ranking), PageItemData.TYPE_RANK_VIDEO);
             list.add(pageItemData);
             PageData pageData = new PageData(list);
             pageData.setTabStyle(1);
