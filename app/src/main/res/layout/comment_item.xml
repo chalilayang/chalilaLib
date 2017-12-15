@@ -11,4 +11,32 @@
         android:layout_marginRight="@dimen/size_30"
         android:layout_marginTop="@dimen/size_20"
         android:layout_marginBottom="@dimen/size_20"/>
+    <com.chalilayang.scaleview.ScaleRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/comment_view"
+        android:visibility="gone">
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/replay_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部4条评论"
+            android:textSize="@dimen/size_20"
+            android:layout_centerInParent="true"
+            android:textColor="@color/reply_content"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:layout_toLeftOf="@+id/replay_count"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size_10"
+            android:background="@color/channel_list_divider"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/size_10"
+            android:layout_toRightOf="@+id/replay_count"
+            android:background="@color/channel_list_divider"/>
+    </com.chalilayang.scaleview.ScaleRelativeLayout>
 </com.chalilayang.scaleview.ScaleRelativeLayout>

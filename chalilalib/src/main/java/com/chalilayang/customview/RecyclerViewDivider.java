@@ -94,7 +94,7 @@ public class RecyclerViewDivider extends RecyclerView.ItemDecoration {
         final int left = parent.getPaddingLeft();
         final int right = parent.getMeasuredWidth() - parent.getPaddingRight();
         final int childSize = parent.getChildCount();
-        for (int i = 0; i < childSize; i++) {
+        for (int i = startIndex; i < childSize; i++) {
             final View child = parent.getChildAt(i);
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int top = child.getBottom() + layoutParams.bottomMargin;
@@ -114,7 +114,7 @@ public class RecyclerViewDivider extends RecyclerView.ItemDecoration {
         final int top = parent.getPaddingTop();
         final int bottom = parent.getMeasuredHeight() - parent.getPaddingBottom();
         final int childSize = parent.getChildCount();
-        for (int i = 0; i < childSize; i++) {
+        for (int i = startIndex; i < childSize; i++) {
             final View child = parent.getChildAt(i);
             RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int left = child.getRight() + layoutParams.rightMargin;
@@ -129,6 +129,10 @@ public class RecyclerViewDivider extends RecyclerView.ItemDecoration {
         }
     }
 
+    private int startIndex;
+    public void setStartIndex(int index) {
+        startIndex = index;
+    }
     public void setMargin(int marginValue) {
         this.margin = marginValue;
     }
