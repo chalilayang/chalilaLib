@@ -313,6 +313,7 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                 .load(new File(event.img))
                 .dontAnimate()
                 .into(userIconLine.getRightImageView());
+        EventBus.getDefault().removeStickyEvent(ImageSelectEvent.class);
     }
 
     @Subscribe
