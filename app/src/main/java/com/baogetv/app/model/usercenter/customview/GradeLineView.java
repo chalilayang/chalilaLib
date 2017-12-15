@@ -19,7 +19,7 @@ public class GradeLineView extends ScaleFrameLayout {
 
     private static final String TAG = "GradeLineView";
     private TextView titleTv;
-    private ImageView descTv;
+    private TextView descTv;
     private TextView scoreTv;
 
     public GradeLineView(Context context) {
@@ -42,9 +42,9 @@ public class GradeLineView extends ScaleFrameLayout {
         scoreTv = root.findViewById(R.id.grade_score);
     }
 
-    public void setText(String title, String desUrl, String score) {
+    public void setText(String title, String des, String score) {
         titleTv.setText(title);
-        Glide.with(this.getContext()).load(desUrl).into(descTv);
+        descTv.setText(des);
         scoreTv.setText(score);
     }
 }

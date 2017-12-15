@@ -118,7 +118,7 @@ public class UserGradeDescActivity extends BaseTitleActivity {
                         }
                         Collections.sort(grades);
                         int userScore = Integer.parseInt(userDetailBean.getScore());
-                        int pos = 0;
+                        int pos = -1;
                         for (int index = 0, count = grades.size(); index < count; index ++) {
                             if (userScore >= grades.get(index).score) {
                                 pos = index;
@@ -128,7 +128,7 @@ public class UserGradeDescActivity extends BaseTitleActivity {
                             GradeBean bean = data.get(grades.get(index).index);
                             gradeListView.add(
                                     bean.getName(),
-                                    bean.getPic_url(),
+                                    bean.getMedal(),
                                     bean.getScore(),
                                     index == pos,
                                     index == count-1);
