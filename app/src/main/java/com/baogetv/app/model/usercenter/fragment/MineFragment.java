@@ -116,7 +116,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        updateInfo();
+        freshUserInfo(null);
     }
 
     private void init(View view) {
