@@ -66,7 +66,7 @@ public class BeanConvert {
     public static ChannelData getChannelData(ChannelListBean data) {
         String picUrl = data.getPic_url();
         String title = data.getName();
-        String publishTime = data.getAdd_time();
+        String publishTime = data.getUpdate_time();
         int playCount = 0;
         if (!TextUtils.isEmpty(data.getCount())) {
             try {

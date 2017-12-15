@@ -56,7 +56,7 @@ public class PlayerFragment extends BaseFragment {
 
     public void init(View root) {
         mNiceVideoPlayer = (NiceVideoPlayer) root.findViewById(R.id.player_surface);
-        mNiceVideoPlayer.setPlayerType(NiceVideoPlayer.TYPE_IJK);
+        mNiceVideoPlayer.setPlayerType(NiceVideoPlayer.TYPE_NATIVE);
         if (videoDetailBean != null) {
             mNiceVideoPlayer.setUp(videoDetailBean.getFile_url(), null);
             Log.i(TAG, "init: " + videoDetailBean.getFile_url());

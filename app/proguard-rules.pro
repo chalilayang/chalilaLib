@@ -139,3 +139,109 @@
    public static *** i(...);
    public static *** w(...);
  }
+
+
+-dontshrink
+-dontpreverify
+-dontoptimize
+-dontusemixedcaseclassnames
+
+-flattenpackagehierarchy
+-allowaccessmodification
+-printmapping map.txt
+
+-optimizationpasses 7
+-verbose
+-keepattributes Exceptions,InnerClasses
+-dontskipnonpubliclibraryclasses
+-dontskipnonpubliclibraryclassmembers
+-ignorewarnings
+
+-keep class android.support.v4.** { *; }
+-keep interface android.support.v4.** { *; }
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.** { *; }
+-keep class android.support.design.widget.**{*;}
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends java.lang.Throwable {*;}
+-keep public class * extends java.lang.Exception {*;}
+-keep class * extends android.webkit.WebChromeClient {*;}
+-keep class com.baogetv.app.**{*;}
+-keep class tv.danmaku.ijk.**{*;}
+
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+
+-assumenosideeffects class android.util.Log{ public static *** d(...); public static *** i(...); public static *** w(...);public static *** e(...);}
+
+
+-keepclasseswithmembernames class * {  # 保持 native 方法不被混淆
+    native <methods>;
+}
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context);
+}
+-keepclasseswithmembers class * {   # 保持自定义控件类不被混淆
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+-keepclasseswithmembers class * {# 保持自定义控件类不被混淆
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+-keepclassmembers class * extends android.app.Activity { # 保持自定义控件类不被混淆
+    public void *(android.view.View);
+}
+-keepclassmembers enum * {     # 保持枚举 enum 类不被混淆
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+-keep class * implements android.os.Parcelable { # 保持 Parcelable 不被混淆
+    public static final android.os.Parcelable$Creator *;
+}
+
+-keepclassmembers class * implements java.io.Serializable {# 保持 Serializable 不被混淆
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
+# adding this in to preserve line numbers so that the stack traces
+# can be remapped
+#-renamesourcefileattribute SourceFile
+-keepattributes SourceFile,LineNumberTable
+
+##---------------Begin: proguard configuration for Gson  ----------
+# Gson uses generic type information stored in a class file when working with fields. Proguard
+# removes such information by default, so configure it to keep all of it.
+-keepattributes Signature
+
+# For using GSON @Expose annotation
+-keepattributes *Annotation*
+
+# Gson specific classes
+-keep class sun.misc.Unsafe { *; }
+-keep class com.google.gson.stream** { *; }
+##---------------End: proguard configuration for Gson  ----------
+
+-keep  public class java.util.HashMap {
+	public <methods>;
+}
+-keep  public class java.lang.String {
+	public <methods>;
+}
+-keep  public class java.util.List {
+	public <methods>;
+}
