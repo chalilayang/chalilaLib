@@ -302,4 +302,57 @@ public class BeanConvert {
         );
         return entity;
     }
+
+    public static CommentListBean.DataBean getCommentListDataBean(CommentListBean bean) {
+        /**
+         * id : 3
+         * video_id : 2
+         * reply_id : 0
+         * user_id : 3
+         * reply_user_id : 0
+         * content : xsw
+         * likes : 0
+         * add_time : 1510449380
+         * status : 1
+         * username : 15913196454
+         * user_pic : 1
+         * reply_user_username :
+         * reply_user_pic :
+         * level_id : 1
+         * level_name : LV1
+         * grade : 3
+         * intro :
+         * user_pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-11-20
+         * /5a127d675b918.jpg
+         * reply_user_picid : 0
+         * is_like : 0
+         * child : []
+         */
+        CommentListBean.DataBean dataBean = new CommentListBean.DataBean();
+        dataBean.setId(bean.getId());
+        dataBean.setVideo_id(bean.getVideo_id());
+        dataBean.setReply_id(bean.getReply_id());
+        dataBean.setUser_id(bean.getUser_id());
+        dataBean.setReply_user_id(bean.getReply_user_id());
+        dataBean.setContent(bean.getContent());
+        dataBean.setLikes(bean.getLikes());
+        dataBean.setAdd_time(bean.getAdd_time());
+        dataBean.setStatus(bean.getStatus());
+
+        dataBean.setUsername(bean.getUsername());
+        dataBean.setUser_pic(bean.getUser_pic());
+        dataBean.setReply_user_username(bean.getReply_user_username());
+        dataBean.setReply_user_pic(bean.getReply_user_pic());
+
+        dataBean.setLevel_id(bean.getLevel_id());
+        dataBean.setLevel_name(bean.getLevel_name());
+        dataBean.setGrade(bean.getGrade());
+        dataBean.setIntro(bean.getIntro());
+
+        dataBean.setUser_pic_url(bean.getUser_pic_url());
+        dataBean.setReply_user_picid(bean.getReply_user_picid());
+        dataBean.setIs_like(bean.getIs_like());
+
+        return dataBean;
+    }
 }

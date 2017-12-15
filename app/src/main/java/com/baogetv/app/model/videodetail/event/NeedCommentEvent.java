@@ -8,7 +8,9 @@ import com.baogetv.app.model.videodetail.entity.CommentData;
 
 public class NeedCommentEvent {
     public CommentData commentData;
-    public NeedCommentEvent(CommentData p) {
+    public int commentIndex;
+    public NeedCommentEvent(CommentData p, int cIndex) {
         commentData = p;
+        commentIndex = cIndex;
     }
 }

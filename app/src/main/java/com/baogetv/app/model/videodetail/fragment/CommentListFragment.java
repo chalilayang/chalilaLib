@@ -17,6 +17,7 @@ import com.baogetv.app.OnLoadMoreListener;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.AddItemBean;
+import com.baogetv.app.bean.BeanConvert;
 import com.baogetv.app.bean.CommentListBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.model.usercenter.LoginManager;
@@ -231,13 +232,28 @@ public class CommentListFragment extends BaseItemFragment
             Log.i(TAG, "handleSendComment: " + commentEvent + " " + replyEvent);
             if (commentEvent != null) {
                 String commentId = commentEvent.commentData.getBean().getId();
-                addComment(event.content, videoDetailData.videoDetailBean.getId(), commentId, null);
+                addComment(
+                        event.content,
+                        videoDetailData.videoDetailBean.getId(),
+                        commentId,
+                        null,
+                        commentEvent.commentIndex);
             } else if (replyEvent != null) {
                 String commentId = replyEvent.replyData.getBean().getReply_id();
                 String uid = replyEvent.replyData.getBean().getUser_id();
-                addComment(event.content, videoDetailData.videoDetailBean.getId(), commentId, uid);
+                addComment(
+                        event.content,
+                        videoDetailData.videoDetailBean.getId(),
+                        commentId,
+                        uid,
+                        replyEvent.commentIndex);
             } else {
-                addComment(event.content, videoDetailData.videoDetailBean.getId(), null, null);
+                addComment(
+                        event.content,
+                        videoDetailData.videoDetailBean.getId(),
+                        null,
+                        null,
+                        -1);
             }
         }
         Log.i(TAG, "handleSendComment: " + event.content);
@@ -307,7 +323,7 @@ public class CommentListFragment extends BaseItemFragment
     @Override
     public void onReplyClick(ReplyData data, int commentIndex) {
         Log.i(TAG, "onReplyClick: ");
-        EventBus.getDefault().post(new NeedReplyEvent(data));
+        EventBus.getDefault().post(new NeedReplyEvent(data, commentIndex));
     }
 
     @Override
@@ -321,10 +337,15 @@ public class CommentListFragment extends BaseItemFragment
 
     @Override
     public void onCommentClick(CommentData data, int commentIndex) {
-        EventBus.getDefault().post(new NeedCommentEvent(data));
+        EventBus.getDefault().post(new NeedCommentEvent(data, commentIndex));
     }
 
-    private void addComment(String content, String vid, String reply_id, String replay_user_id) {
+    private void addComment(
+            String content,
+            String vid,
+            final String reply_id,
+            final String replay_user_id,
+            final int commentindex) {
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getUserToken(mActivity);
@@ -336,7 +357,39 @@ public class CommentListFragment extends BaseItemFragment
                 public void onSuccess(CommentListBean bean, String msg, int state) {
                     showShortToast("add comment success");
                     Log.i(TAG, "onSuccess: add comment success");
-                    getCommentList(videoDetailData, 0);
+                    if (reply_id == null && replay_user_id == null) {
+                        CommentData data = new CommentData();
+                        CommentListBean listBean = bean;
+                        data.setTime(listBean.getAdd_time());
+                        data.setBean(listBean);
+                        commentList.add(0, data);
+                    } else {
+                        if (commentindex >= 0 && commentindex < commentList.size()) {
+                            CommentData commentData = commentList.get(commentindex);
+                            List<CommentListBean.DataBean> childs = commentData.getBean().getChild();
+                            if (childs == null) {
+                                List<CommentListBean.DataBean> childList = new ArrayList
+                                        <CommentListBean.DataBean>(1);
+                                childList.add(BeanConvert.getCommentListDataBean(bean));
+                                commentData.getBean().setChild(childList);
+                            } else {
+                                childs.add(BeanConvert.getCommentListDataBean(bean));
+                            }
+                            List<ReplyData> replyDataList = commentData.getReplyList();
+                            if (replyDataList == null) {
+                                replyDataList = new ArrayList<>(1);
+                                ReplyData replyData = new ReplyData();
+                                replyData.setBean(BeanConvert.getCommentListDataBean(bean));
+                                replyDataList.add(replyData);
+                                commentData.setReplyList(replyDataList);
+                            } else {
+                                ReplyData replyData = new ReplyData();
+                                replyData.setBean(BeanConvert.getCommentListDataBean(bean));
+                                replyDataList.add(replyData);
+                            }
+                        }
+                    }
+                    recyclerViewAdapter.update(commentList);
                 }
 
                 @Override
