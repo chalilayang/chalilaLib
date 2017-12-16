@@ -213,9 +213,9 @@ public class CommentDetailFragment extends BaseFragment
             e.printStackTrace();
         }
         if (zan == 0) {
-            addZan(videoDetailData.videoDetailBean.getId(), data.getBean().getId());
+            addZan(videoDetailData.videoDetailBean.getId(), data.getBean().getId(), commentIndex);
         } else {
-            delZan(videoDetailData.videoDetailBean.getId(), data.getBean().getId());
+            delZan(videoDetailData.videoDetailBean.getId(), data.getBean().getId(), commentIndex);
         }
     }
 
@@ -278,7 +278,7 @@ public class CommentDetailFragment extends BaseFragment
         }
     }
 
-    private void addZan(String vid, String comment_id) {
+    private void addZan(String vid, String comment_id, final int commentIndex) {
         if (!LoginManager.hasCommentRight(mActivity.getApplicationContext())) {
             if (!LoginManager.hasLogin(mActivity.getApplicationContext())) {
                 LoginManager.startLogin(mActivity);
@@ -298,6 +298,19 @@ public class CommentDetailFragment extends BaseFragment
                     @Override
                     public void onSuccess(AddItemBean bean, String msg, int state) {
                         Log.i(TAG, "onSuccess: add zan success");
+                        CommentData commentData = commentList.get(commentIndex);
+                        commentData.getBean().setIs_like("1");
+                        int zan = -1;
+                        try {
+                            zan = Integer.parseInt(commentData.getBean().getLikes());
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                        if (zan >= 0) {
+                            zan ++;
+                        }
+                        commentData.getBean().setLikes(zan + "");
+                        recyclerViewAdapter.updateItem(commentIndex);
                     }
 
                     @Override
@@ -309,7 +322,7 @@ public class CommentDetailFragment extends BaseFragment
         }
     }
 
-    private void delZan(String vid, String comment_id) {
+    private void delZan(String vid, String comment_id, final int commentIndex) {
         if (!LoginManager.hasCommentRight(mActivity.getApplicationContext())) {
             if (!LoginManager.hasLogin(mActivity.getApplicationContext())) {
                 LoginManager.startLogin(mActivity);
@@ -328,6 +341,20 @@ public class CommentDetailFragment extends BaseFragment
                 call.enqueue(new CustomCallBack<List<Object>>() {
                     @Override
                     public void onSuccess(List<Object> bean, String msg, int state) {
+                        Log.i(TAG, "onSuccess: add zan success");
+                        CommentData commentData = commentList.get(commentIndex);
+                        commentData.getBean().setIs_like("0");
+                        int zan = -1;
+                        try {
+                            zan = Integer.parseInt(commentData.getBean().getLikes());
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                        if (zan > 0) {
+                            zan --;
+                        }
+                        commentData.getBean().setLikes(zan + "");
+                        recyclerViewAdapter.updateItem(commentIndex);
                     }
 
                     @Override

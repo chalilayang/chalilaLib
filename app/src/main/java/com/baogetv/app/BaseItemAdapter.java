@@ -60,6 +60,10 @@ public abstract class BaseItemAdapter<T, D extends ItemViewHolder<T>>
         notifyDataSetChanged();
     }
 
+    public void updateItem(int index) {
+        notifyItemChanged(index);
+    }
+
     @Override
     public D onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_LOAD_MORE) {
