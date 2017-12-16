@@ -11,7 +11,7 @@ public class LogUtil {
     private static final String TAG = "NiceVideoPlayer";
 
     public static void d(String message) {
-        Log.d(TAG, message);
+        Log.i(TAG, message);
     }
 
     public static void i(String message) {

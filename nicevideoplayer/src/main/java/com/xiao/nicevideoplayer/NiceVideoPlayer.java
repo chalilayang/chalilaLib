@@ -208,6 +208,7 @@ public class NiceVideoPlayer extends FrameLayout
         } else if (mCurrentState == STATE_COMPLETED || mCurrentState == STATE_ERROR) {
             mMediaPlayer.reset();
             openMediaPlayer();
+            LogUtil.d("reset openMediaPlayer");
         } else {
             LogUtil.d("NiceVideoPlayer在mCurrentState == " + mCurrentState + "时不能调用restart()方法.");
         }
@@ -233,6 +234,7 @@ public class NiceVideoPlayer extends FrameLayout
     public void seekTo(long pos) {
         if (mMediaPlayer != null) {
             mMediaPlayer.seekTo(pos);
+            LogUtil.d("seekTo " + pos);
         }
     }
 
@@ -407,6 +409,7 @@ public class NiceVideoPlayer extends FrameLayout
         // 屏幕常亮
         mContainer.setKeepScreenOn(true);
         // 设置监听
+        mMediaPlayer.reset();
         mMediaPlayer.setOnPreparedListener(mOnPreparedListener);
         mMediaPlayer.setOnVideoSizeChangedListener(mOnVideoSizeChangedListener);
         mMediaPlayer.setOnCompletionListener(mOnCompletionListener);

@@ -244,18 +244,21 @@ public class PlayerController extends NiceVideoPlayerController
                 loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
                 break;
             case NiceVideoPlayer.STATE_PREPARED:
+                long videoDuration = mNiceVideoPlayer.getDuration();
+                final long position = (long) (videoDuration * playerSeekBarSmall.getProgress() / 100f);
+                mNiceVideoPlayer.seekTo(position);
                 playBtn.setImageResource(R.mipmap.play_pause);
                 loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
                 startUpdateProgressTimer();
                 break;
             case NiceVideoPlayer.STATE_PLAYING:
-//                loadingTip.setVisibility(View.GONE);
+                loadingTip.setVisibility(View.GONE);
                 loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
                 playBtn.setImageResource(R.mipmap.play_pause);
                 startDismissTopBottomTimer();
                 break;
             case NiceVideoPlayer.STATE_PAUSED:
-//                loadingTip.setVisibility(View.GONE);
+                loadingTip.setVisibility(View.GONE);
                 loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
                 playBtn.setImageResource(R.mipmap.play_start);
                 cancelDismissTopBottomTimer();
