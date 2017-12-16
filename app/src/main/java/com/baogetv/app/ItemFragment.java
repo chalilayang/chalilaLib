@@ -386,7 +386,8 @@ public class ItemFragment extends BaseItemFragment
             UserApiService userApiService
                     = RetrofitManager.getInstance().createReq(UserApiService.class);
             Call<ResponseBean<List<CollectBean>>> call
-                    = userApiService.getCollectList(null, channelItemData.getMemberId());
+                    = userApiService.getCollectList(null, channelItemData.getMemberId(),
+                    String.valueOf(pageNum), String.valueOf(LOAD_PAGE_SIZE));
             if (call != null) {
                 refreshLayout.setRefreshing(true);
                 isLoadingData = true;

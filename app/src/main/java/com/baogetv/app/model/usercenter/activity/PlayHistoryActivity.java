@@ -35,7 +35,7 @@ public class PlayHistoryActivity extends BaseTitleActivity
         implements SwipeRefreshLayout.OnRefreshListener,
         ItemViewHolder.ItemClickListener<HistoryBean>,
         ItemViewHolder.ItemDeleteListener<HistoryBean>,
-        OnLoadMoreListener.DataLoadingSubject   {
+        OnLoadMoreListener.DataLoadingSubject {
 
     private static final String TAG = "PlayHistoryActivity";
     private static final int LOAD_PAGE_SIZE = 20;

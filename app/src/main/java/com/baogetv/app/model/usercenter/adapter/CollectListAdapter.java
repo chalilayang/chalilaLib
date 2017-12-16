@@ -41,6 +41,7 @@ public class CollectListAdapter
         margin_30px = ScaleCalculator.getInstance(mContext).scaleWidth(30);
         margin_160px = ScaleCalculator.getInstance(mContext).scaleWidth(160);
         videoCountFormat = mContext.getString(R.string.video_count_format);
+        setNeedLoadMore(true);
     }
 
     @Override
@@ -51,6 +52,14 @@ public class CollectListAdapter
         ViewHolder holder = new ViewHolder(view);
         holder.setItemDeleteListener(this);
         return holder;
+    }
+
+    @Override
+    public ViewHolder createMoreViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.footer, parent, false);
+        view.getLayoutParams().height = ScaleCalculator.getInstance(mContext).scaleWidth(60);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -79,26 +88,36 @@ public class CollectListAdapter
         public final TextView title;
         public final TextView updateTime;
         public final TextView deleteBtn;
+        public final TextView loadMoreTip;
         protected SoftReference<ItemDeleteListener> mDeleteRef;
         @Override
         public void bindData(CollectBean data, int pos) {
-            title.setText(data.getType_name());
-            updateTime.setText(data.getAdd_time());
-            Glide.with(mContext).load(data.getPic_url()).crossFade().into(mImageView);
+            if (loadMoreTip != null) {
+                loadMoreTip.setText(hasMoreData?loadingMore : noMoreData);
+            } else {
+                title.setText(data.getType_name());
+                updateTime.setText(data.getAdd_time());
+                Glide.with(mContext).load(data.getPic_url()).crossFade().into(mImageView);
+            }
         }
 
         public ViewHolder(View view) {
             super(view);
 //            mView = view;
+            loadMoreTip = view.findViewById(R.id.load_more_tip);
             contentRoot = view.findViewById(R.id.item_content_view);
-            contentRoot.setOnClickListener(this);
-            contentRoot.setPadding(margin_30px, 0, 0, 0);
+            if (contentRoot != null) {
+                contentRoot.setOnClickListener(this);
+                contentRoot.setPadding(margin_30px, 0, 0, 0);
+            }
             mImageView = (ImageView) view.findViewById(R.id.video_item_icon);
             title = (TextView) view.findViewById(R.id.video_title);
             updateTime = (TextView) view.findViewById(R.id.video_time);
             deleteBtn = (TextView) view.findViewById(R.id.btn_delete);
-            deleteBtn.getLayoutParams().width = margin_160px;
-            deleteBtn.setOnClickListener(this);
+            if (deleteBtn != null) {
+                deleteBtn.getLayoutParams().width = margin_160px;
+                deleteBtn.setOnClickListener(this);
+            }
         }
 
         public void setItemDeleteListener(ItemDeleteListener<CollectBean> listener) {

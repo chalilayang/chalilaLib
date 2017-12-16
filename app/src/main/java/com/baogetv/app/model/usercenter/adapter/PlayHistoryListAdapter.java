@@ -72,7 +72,7 @@ public class PlayHistoryListAdapter
     public void deleteItem(int pos) {
         if (pos >= 0 && pos < getItemCount()) {
             mValues.remove(pos);
-            notifyItemChanged(pos);
+            notifyItemRemoved(pos);
         }
     }
 

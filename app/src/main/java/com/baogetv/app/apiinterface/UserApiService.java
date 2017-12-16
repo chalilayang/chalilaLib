@@ -263,13 +263,17 @@ public interface UserApiService {
      *
      * @param token：（Token，登录凭证）
      * @param user_id：（会员ID，不传就看token是哪个用户）
+     * @param p：（分页，第几页）
+     * @param r：（分页，每页显示多少条数据）
      * @return
      */
     @FormUrlEncoded
     @POST("index.php?s=/Collects/my")
     Call<ResponseBean<List<CollectBean>>> getCollectList(
             @Field("token") String token,
-            @Field("user_id") String user_id
+            @Field("user_id") String user_id,
+            @Field("p") String p,
+            @Field("r") String r
     );
 
     /**
