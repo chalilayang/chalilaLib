@@ -562,11 +562,16 @@ public interface UserApiService {
     /**
      * 系统信息列表
      * @param token：（Token，登录凭证）
+     * @param p：（分页，第几页）
+     * @param r：（分页，每页显示多少条数据）
      * @return
      */
     @FormUrlEncoded
     @POST("index.php?s=/Message/index")
-    Call<ResponseBean<List<SystemInfoBean>>> getSystemInfoList(@Field("token") String token);
+    Call<ResponseBean<List<SystemInfoBean>>> getSystemInfoList(
+            @Field("token") String token,
+            @Field("p") String p,
+            @Field("r") String r);
 
     /**
      * 删除信息

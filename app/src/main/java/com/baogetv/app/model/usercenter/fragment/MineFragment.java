@@ -30,7 +30,7 @@ import com.baogetv.app.model.usercenter.activity.MyCollectActivity;
 import com.baogetv.app.model.usercenter.activity.PlayHistoryActivity;
 import com.baogetv.app.model.usercenter.activity.ResponseActivity;
 import com.baogetv.app.model.usercenter.activity.SettingActivity;
-import com.baogetv.app.model.usercenter.activity.SystemNotifyAcitvity;
+import com.baogetv.app.model.usercenter.activity.SystemNotifyActivity;
 import com.baogetv.app.model.usercenter.activity.ThumbUpActivity;
 import com.baogetv.app.model.usercenter.activity.UserGradeDescActivity;
 import com.baogetv.app.model.usercenter.activity.UserInfoActivity;
@@ -294,7 +294,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 if (!LoginManager.hasLogin(mActivity)) {
                     LoginManager.startLogin(mActivity);
                 } else {
-                    intent = new Intent(this.getActivity(), SystemNotifyAcitvity.class);
+                    intent = new Intent(this.getActivity(), SystemNotifyActivity.class);
                     startActivity(intent);
                 }
                 break;

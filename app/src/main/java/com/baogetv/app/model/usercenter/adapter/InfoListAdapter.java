@@ -39,6 +39,7 @@ public class InfoListAdapter extends BaseItemAdapter<SystemInfoBean, InfoListAda
         margin_30px = ScaleCalculator.getInstance(mContext).scaleWidth(30);
         margin_160px = ScaleCalculator.getInstance(mContext).scaleWidth(160);
         videoCountFormat = mContext.getString(R.string.video_count_format);
+        setNeedLoadMore(true);
     }
 
     @Override
@@ -48,6 +49,14 @@ public class InfoListAdapter extends BaseItemAdapter<SystemInfoBean, InfoListAda
         ViewHolder holder = new ViewHolder(view);
         holder.setItemDeleteListener(this);
         return holder;
+    }
+
+    @Override
+    public ViewHolder createMoreViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.footer, parent, false);
+        view.getLayoutParams().height = ScaleCalculator.getInstance(mContext).scaleWidth(60);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -65,32 +74,42 @@ public class InfoListAdapter extends BaseItemAdapter<SystemInfoBean, InfoListAda
         public final TextView deleteBtn;
         public final TextView infoTv;
         public final View infoTip;
+        public final TextView loadMoreTip;
         @Override
         public void bindData(SystemInfoBean data, int pos) {
-            title.setText(data.getTitle());
-            updateTime.setText(TimeUtil.getTimeStateNew(data.getAdd_time()));
-            int isUnRead = 1;
-            try {
-                isUnRead = Integer.parseInt(data.getIs_unread());
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
+            if (loadMoreTip != null) {
+                loadMoreTip.setText(hasMoreData?loadingMore : noMoreData);
+            } else {
+                title.setText(data.getTitle());
+                updateTime.setText(TimeUtil.getTimeStateNew(data.getAdd_time()));
+                int isUnRead = 1;
+                try {
+                    isUnRead = Integer.parseInt(data.getIs_unread());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+                infoTip.setVisibility(isUnRead == 0 ? View.INVISIBLE:View.VISIBLE);
+                infoTv.setText(data.getContent());
             }
-            infoTip.setVisibility(isUnRead == 0 ? View.INVISIBLE:View.VISIBLE);
-            infoTv.setText(data.getContent());
         }
 
         public ViewHolder(View view) {
             super(view);
+            loadMoreTip = view.findViewById(R.id.load_more_tip);
             contentRoot = view.findViewById(R.id.item_content_view);
-            contentRoot.setOnClickListener(this);
-            contentRoot.setPadding(margin_30px, 0, margin_30px, 0);
+            if (contentRoot != null) {
+                contentRoot.setOnClickListener(this);
+                contentRoot.setPadding(margin_30px, 0, margin_30px, 0);
+            }
             title = (TextView) view.findViewById(R.id.info_title);
             infoTip = view.findViewById(R.id.info_tip);
             updateTime = (TextView) view.findViewById(R.id.info_time);
             infoTv = (TextView) view.findViewById(R.id.info_content);
             deleteBtn = (TextView) view.findViewById(R.id.btn_delete);
-            deleteBtn.getLayoutParams().width = margin_160px;
-            deleteBtn.setOnClickListener(this);
+            if (deleteBtn != null) {
+                deleteBtn.getLayoutParams().width = margin_160px;
+                deleteBtn.setOnClickListener(this);
+            }
         }
 
         public void setItemDeleteListener(ItemDeleteListener<SystemInfoBean> listener) {

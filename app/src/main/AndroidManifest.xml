@@ -97,7 +97,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".model.usercenter.activity.SystemNotifyAcitvity"
+            android:name=".model.usercenter.activity.SystemNotifyActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity

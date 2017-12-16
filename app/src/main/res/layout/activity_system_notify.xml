@@ -11,9 +11,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         layout="@layout/base_title_layout"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/info_list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/info_list_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/title_container"/>
+        android:layout_below="@+id/title_container">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/info_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </com.chalilayang.scaleview.ScaleRelativeLayout>

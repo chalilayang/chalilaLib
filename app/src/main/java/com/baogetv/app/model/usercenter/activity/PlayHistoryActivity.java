@@ -112,7 +112,6 @@ public class PlayHistoryActivity extends BaseTitleActivity
 
     private void getHistoryList(final int pageNum, final int pageSize) {
         if (LoginManager.hasLogin(getApplicationContext())) {
-            refreshLayout.setRefreshing(true);
             UserApiService userApiService
                     = RetrofitManager.getInstance().createReq(UserApiService.class);
             String token = LoginManager.getUserToken(getApplicationContext());
