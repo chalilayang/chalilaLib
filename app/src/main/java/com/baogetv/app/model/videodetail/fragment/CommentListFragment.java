@@ -337,6 +337,7 @@ public class CommentListFragment extends BaseItemFragment
 
     @Override
     public void onCommentClick(CommentData data, int commentIndex) {
+        Log.i(TAG, "onCommentClick: ");
         EventBus.getDefault().post(new NeedCommentEvent(data, commentIndex));
     }
 

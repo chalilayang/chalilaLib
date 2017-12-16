@@ -23,7 +23,6 @@ import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.activity.MemberDetailActivity;
 import com.baogetv.app.model.usercenter.event.ReportEvent;
 import com.baogetv.app.model.videodetail.adapter.CommentDetailAdapter;
-import com.baogetv.app.model.videodetail.adapter.CommentListAdapter;
 import com.baogetv.app.model.videodetail.customview.CommentView;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
@@ -169,14 +168,15 @@ public class CommentDetailFragment extends BaseFragment
             NeedReplyDetailEvent replyEvent = event.replyEvent;
             Log.i(TAG, "handleSendComment: " + commentEvent + " " + replyEvent);
             if (commentEvent != null) {
-                String commentid = commentEvent.commentData.getBean().getId();
+                String commentid = commentData.getBean().getId();
                 addComment(event.content, videoDetailData.videoDetailBean.getId(), commentid, null);
             } else if (replyEvent != null) {
                 String commentid = replyEvent.replyData.getBean().getReply_id();
                 String uid = replyEvent.replyData.getBean().getUser_id();
                 addComment(event.content, videoDetailData.videoDetailBean.getId(), commentid, uid);
             } else {
-                addComment(event.content, videoDetailData.videoDetailBean.getId(), null, null);
+                String commentid = commentData.getBean().getId();
+                addComment(event.content, videoDetailData.videoDetailBean.getId(), commentid, null);
             }
         }
         Log.i(TAG, "handleSendComment: " + event.content);
@@ -221,26 +221,19 @@ public class CommentDetailFragment extends BaseFragment
 
     @Override
     public void onJuBaoClick(CommentData data, int commentIndex) {
-        Log.i(TAG, "onJuBaoClick: ");
         showFragment(data);
     }
 
     @Override
     public void onReplyerClick(ReplyData data, int commentIndex) {
-        Log.i(TAG, "onReplyerClick: ");
-//        startMemberActivity(data.getBean().getUser_id());
     }
 
     @Override
     public void onReplyToClick(ReplyData data, int commentIndex) {
-        Log.i(TAG, "onReplyToClick: ");
-//        startMemberActivity(data.getBean().getUser_id());
     }
 
     @Override
     public void onReplyClick(ReplyData data, int commentIndex) {
-        Log.i(TAG, "onReplyClick: ");
-        EventBus.getDefault().post(new NeedReplyDetailEvent(data));
     }
 
     @Override
@@ -250,7 +243,12 @@ public class CommentDetailFragment extends BaseFragment
 
     @Override
     public void onCommentClick(CommentData data, int commentIndex) {
-        EventBus.getDefault().post(new NeedCommentDetailEvent(data));
+        if (commentIndex == 0) {
+            EventBus.getDefault().post(new NeedCommentDetailEvent(commentData));
+        } else {
+            ReplyData replyData = commentData.getReplyList().get(commentIndex);
+            EventBus.getDefault().post(new NeedReplyDetailEvent(replyData));
+        }
     }
 
     private void addComment(String content, String vid, String reply_id, String replay_user_id) {
