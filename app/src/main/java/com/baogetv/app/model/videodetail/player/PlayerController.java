@@ -167,13 +167,15 @@ public class PlayerController extends NiceVideoPlayerController
         } else if (v.getId() == R.id.player_share) {
             EventBus.getDefault().post(new ShareEvent());
         } else if (v == this) {
-            if (mNiceVideoPlayer.isPlaying()
-                    || mNiceVideoPlayer.isPaused()
-                    || mNiceVideoPlayer.isBufferingPlaying()
-                    || mNiceVideoPlayer.isBufferingPaused()
-                    || mNiceVideoPlayer.isCompleted()) {
-                setControllerVisibility(!controllerVisible);
-            }
+//            if (mNiceVideoPlayer.isPlaying()
+//                    || mNiceVideoPlayer.isPaused()
+//                    || mNiceVideoPlayer.isBufferingPlaying()
+//                    || mNiceVideoPlayer.isBufferingPaused()
+//                    || mNiceVideoPlayer.isCompleted()
+//                    || mNiceVideoPlayer.isError()) {
+//                setControllerVisibility(!controllerVisible);
+//            }
+            setControllerVisibility(!controllerVisible);
         }
     }
 
@@ -272,10 +274,13 @@ public class PlayerController extends NiceVideoPlayerController
             case NiceVideoPlayer.STATE_ERROR:
                 playBtn.setImageResource(R.mipmap.play_start);
                 cancelUpdateProgressTimer();
+                setControllerVisibility(true);
+                mNiceVideoPlayer.restart();
                 break;
             case NiceVideoPlayer.STATE_COMPLETED:
                 playBtn.setImageResource(R.mipmap.play_start);
                 cancelUpdateProgressTimer();
+                setControllerVisibility(true);
                 break;
         }
     }
@@ -309,6 +314,16 @@ public class PlayerController extends NiceVideoPlayerController
     @Override
     protected void reset() {
         cancelUpdateProgressTimer();
+    }
+
+    @Override
+    public void onSeekRelease() {
+        if (mNiceVideoPlayer.isBufferingPaused() || mNiceVideoPlayer.isPaused()) {
+            mNiceVideoPlayer.restart();
+        }
+        long position = (long) (mNiceVideoPlayer.getDuration() * playerSeekBarSmall.getProgress() / 100f);
+        mNiceVideoPlayer.seekTo(position);
+        startDismissTopBottomTimer();
     }
 
     @Override

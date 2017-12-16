@@ -126,6 +126,10 @@ public class CustomSeekBar extends View {
         }
     }
 
+    public int getProgress() {
+        return progress;
+    }
+
     public void setSecondaryProgress(int p) {
         Log.i(TAG, "setSecondaryProgress: " + p);
         secondProgress = p;
@@ -179,6 +183,9 @@ public class CustomSeekBar extends View {
             case MotionEvent.ACTION_CANCEL:
                 if (isDragging) {
                     isDragging = false;
+                    if (this.mCallback != null) {
+                        this.mCallback.onSeekRelease();
+                    }
                 }
                 invalidate();
                 break;
@@ -326,6 +333,7 @@ public class CustomSeekBar extends View {
     }
 
     public interface OnSeekUpdateListener {
+        void onSeekRelease();
         void onSeekUpdate(int value, boolean fromUser);
     }
 }

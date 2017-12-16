@@ -246,6 +246,11 @@ public class LocalePlayerController extends NiceVideoPlayerController
     }
 
     @Override
+    public void onSeekRelease() {
+
+    }
+
+    @Override
     protected void updateProgress() {
         long position = mNiceVideoPlayer.getCurrentPosition();
         long duration = mNiceVideoPlayer.getDuration();

@@ -492,6 +492,7 @@ public class NiceVideoPlayer extends FrameLayout
             if (what != -38 && what != -2147483648 && extra != -38 && extra != -2147483648) {
                 mCurrentState = STATE_ERROR;
                 mController.onPlayStateChanged(mCurrentState);
+                Log.i(TAG, "onError: onPlayStateChanged: " + what + " " + extra);
                 LogUtil.d("onError ——> STATE_ERROR ———— what：" + what + ", extra: " + extra);
             }
             return true;
