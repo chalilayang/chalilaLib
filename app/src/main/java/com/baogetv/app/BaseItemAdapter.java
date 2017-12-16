@@ -64,6 +64,13 @@ public abstract class BaseItemAdapter<T, D extends ItemViewHolder<T>>
         notifyItemChanged(index);
     }
 
+    public void removeItem(int index) {
+        if (index >= 0 && index < getItemCount()) {
+            mValues.remove(index);
+            notifyItemRemoved(index);
+        }
+    }
+
     @Override
     public D onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == TYPE_LOAD_MORE) {

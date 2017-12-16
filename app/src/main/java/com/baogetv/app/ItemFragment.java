@@ -230,7 +230,6 @@ public class ItemFragment extends BaseItemFragment
                     listBeanCall = listService.getRankVideoList(2,
                             String.valueOf(pageNum), String.valueOf(LOAD_PAGE_SIZE));
                     break;
-
             }
             if (listBeanCall != null) {
                 refreshLayout.setRefreshing(true);

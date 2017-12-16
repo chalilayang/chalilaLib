@@ -350,12 +350,16 @@ public interface UserApiService {
      * 我的播放记录
      *
      * @param token：（Token，登录凭证）
+     * @param p：（分页，第几页）
+     * @param r：（分页，每页显示多少条数据）
      * @return
      */
     @FormUrlEncoded
     @POST("index.php?s=/Play/my")
     Call<ResponseBean<List<HistoryBean>>> getHistoryList(
-            @Field("token") String token);
+            @Field("token") String token,
+            @Field("p") String p,
+            @Field("r") String r);
 
     /**
      * 评论列表

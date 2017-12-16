@@ -10,18 +10,16 @@ import android.util.Log;
 
 import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.ItemViewHolder;
+import com.baogetv.app.OnLoadMoreListener;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.HistoryBean;
 import com.baogetv.app.bean.ResponseBean;
-import com.baogetv.app.db.entity.HistoryItemEntity;
-import com.baogetv.app.model.usercenter.HistoryManager;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.adapter.PlayHistoryListAdapter;
 import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
-import com.baogetv.app.util.TimeUtil;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
 
@@ -35,13 +33,18 @@ import static com.baogetv.app.constant.AppConstance.KEY_VIDEO_ID;
 
 public class PlayHistoryActivity extends BaseTitleActivity
         implements SwipeRefreshLayout.OnRefreshListener,
-        ItemViewHolder.ItemClickListener<HistoryBean>, ItemViewHolder.ItemDeleteListener<HistoryBean>  {
+        ItemViewHolder.ItemClickListener<HistoryBean>,
+        ItemViewHolder.ItemDeleteListener<HistoryBean>,
+        OnLoadMoreListener.DataLoadingSubject   {
 
     private static final String TAG = "PlayHistoryActivity";
+    private static final int LOAD_PAGE_SIZE = 20;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     private PlayHistoryListAdapter recyclerViewAdapter;
+    private OnLoadMoreListener onLoadMoreListener;
+    private List<HistoryBean> historyBeanList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,6 @@ public class PlayHistoryActivity extends BaseTitleActivity
         setTitleActivity(getString(R.string.user_play_history));
         setRightTitle(getString(R.string.all_delete));
         init();
-        getHistoryList();
     }
 
     @Override
@@ -63,6 +65,7 @@ public class PlayHistoryActivity extends BaseTitleActivity
     }
 
     public void init() {
+        historyBeanList = new ArrayList<>();
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.collect_list_container);
         recyclerView = (RecyclerView) findViewById(R.id.collect_list);
         RecyclerViewDivider divider
@@ -76,63 +79,74 @@ public class PlayHistoryActivity extends BaseTitleActivity
         recyclerViewAdapter = new PlayHistoryListAdapter(this);
         recyclerViewAdapter.setItemClick(this);
         recyclerViewAdapter.setItemDeleteListener(this);
+        onLoadMoreListener = new OnLoadMoreListener(layoutManager, this) {
+            @Override
+            public void onLoadMore(int totalItemCount) {
+                Log.i(TAG, "onLoadMore: " + totalItemCount);
+                int more = historyBeanList.size() % LOAD_PAGE_SIZE;
+                int pageNum = historyBeanList.size() / LOAD_PAGE_SIZE + 1;
+                if (more != 0) {
+                    recyclerViewAdapter.setHasMoreData(false);
+                } else {
+                    getHistoryList(pageNum, LOAD_PAGE_SIZE);
+                }
+            }
+        };
+        recyclerView.addOnScrollListener(onLoadMoreListener);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setRefreshing(true);
     }
 
-    private void getHistoryList() {
+    @Override
+    public boolean isLoading() {
+        return isLoadingData;
+    }
+
+    private boolean isLoadingData;
+    @Override
+    public boolean needLoadMore() {
+        return true;
+    }
+
+    private void getHistoryList(final int pageNum, final int pageSize) {
         if (LoginManager.hasLogin(getApplicationContext())) {
             refreshLayout.setRefreshing(true);
             UserApiService userApiService
                     = RetrofitManager.getInstance().createReq(UserApiService.class);
             String token = LoginManager.getUserToken(getApplicationContext());
-            Call<ResponseBean<List<HistoryBean>>> call = userApiService.getHistoryList(token);
+            Call<ResponseBean<List<HistoryBean>>> call = userApiService.getHistoryList(
+                    token, String.valueOf(pageNum), String.valueOf(pageSize));
             if (call != null) {
+                refreshLayout.setRefreshing(true);
+                isLoadingData = true;
                 call.enqueue(new CustomCallBack<List<HistoryBean>>() {
                     @Override
                     public void onSuccess(List<HistoryBean> data, String msg, int state) {
-                        recyclerViewAdapter.update(data);
+                        if (pageNum <= 1) {
+                            historyBeanList.clear();
+                        }
+                        if (data != null) {
+                            if (data.size() <= 0) {
+                                recyclerViewAdapter.setHasMoreData(false);
+                            } else {
+                                for (int index = 0, count = data.size(); index < count; index ++) {
+                                    HistoryBean bean = data.get(index);
+                                    historyBeanList.add(bean);
+                                }
+                            }
+                        }
+                        recyclerViewAdapter.update(historyBeanList);
                         refreshLayout.setRefreshing(false);
+                        isLoadingData = false;
                     }
 
                     @Override
                     public void onFailed(String error, int state) {
                         showShortToast(error);
                         refreshLayout.setRefreshing(false);
-                    }
-                });
-            }
-        } else {
-            refreshLayout.setRefreshing(true);
-            UserApiService userApiService
-                    = RetrofitManager.getInstance().createReq(UserApiService.class);
-            String id = "";
-            List<HistoryItemEntity> list
-                    = HistoryManager.getInstance(getApplicationContext()).getHistoryList();
-            if (list != null) {
-                for (int index = 0, count = list.size(); index < count; index ++) {
-                    if (index == 0) {
-                        id = list.get(index).getHistoryId();
-                    } else {
-                        id = id + "," + list.get(index).getHistoryId();
-                    }
-                }
-            }
-            Call<ResponseBean<List<HistoryBean>>> call = userApiService.getHistoryListById(id);
-            if (call != null) {
-                call.enqueue(new CustomCallBack<List<HistoryBean>>() {
-                    @Override
-                    public void onSuccess(List<HistoryBean> data, String msg, int state) {
-                        recyclerViewAdapter.update(data);
-                        refreshLayout.setRefreshing(false);
-                    }
-
-                    @Override
-                    public void onFailed(String error, int state) {
-                        showShortToast(error);
-                        refreshLayout.setRefreshing(false);
+                        isLoadingData = false;
                     }
                 });
             }
@@ -176,35 +190,44 @@ public class PlayHistoryActivity extends BaseTitleActivity
                 Call<ResponseBean<List<Object>>> call
                         = userApiService.deleteHistory(token, video_id);
                 if (call != null) {
+                    refreshLayout.setRefreshing(true);
+                    isLoadingData = true;
                     call.enqueue(new CustomCallBack<List<Object>>() {
                         @Override
                         public void onSuccess(List<Object> data, String msg, int state) {
                             Log.i(TAG, "onSuccess: ");
-                            getHistoryList();
                             refreshLayout.setRefreshing(false);
+                            isLoadingData = false;
+                            if (data == null) {
+                                getHistoryList(0, 2 * historyBeanList.size());
+                            } else {
+                                historyBeanList.remove(pos);
+                                recyclerViewAdapter.removeItem(pos);
+                            }
                         }
 
                         @Override
                         public void onFailed(String error, int state) {
                             showShortToast(error);
                             refreshLayout.setRefreshing(false);
+                            isLoadingData = false;
                         }
                     });
                 }
             }
         } else {
-            if (data != null) {
-                HistoryManager.getInstance(getApplicationContext()).deleteHistory(data.getVideo_id());
-            } else {
-                HistoryManager.getInstance(getApplicationContext()).clearHistory();
-            }
-            getHistoryList();
+//            if (data != null) {
+//                HistoryManager.getInstance(getApplicationContext()).deleteHistory(data.getVideo_id());
+//            } else {
+//                HistoryManager.getInstance(getApplicationContext()).clearHistory();
+//            }
+//            getHistoryList();
         }
     }
 
     @Override
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");
-        getHistoryList();
+        getHistoryList(0, LOAD_PAGE_SIZE);
     }
 }
