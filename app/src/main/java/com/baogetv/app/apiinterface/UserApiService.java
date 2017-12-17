@@ -488,11 +488,17 @@ public interface UserApiService {
      * 回复我的
      *
      * @param token：（Token，登录凭证）
+     * @param p：（分页，第几页）
+     * @param r：（分页，每页显示多少条数据）
      * @return
      */
     @FormUrlEncoded
     @POST("index.php?s=/Comments/atMe")
-    Call<ResponseBean<List<ResponseMeBean>>> getResponseMeList(@Field("token") String token);
+    Call<ResponseBean<List<ResponseMeBean>>> getResponseMeList(
+            @Field("token") String token,
+            @Field("p") String p,
+            @Field("r") String r
+    );
 
     /**
      * 未读回复

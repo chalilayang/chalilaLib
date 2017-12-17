@@ -31,6 +31,27 @@ public class ResponseMeBean {
     private String add_time;
     private String pic;
     private String userpicid;
+    /**
+     * level_id : 1
+     * level_name : LV.1
+     * level_medal : 臂维40可以光膀子练
+     * grade : 2
+     * intro : 巴巴爸
+     * status : 1
+     * userpic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-12-13/5a30d531adef1.png
+     * is_collect : 0
+     * is_like : 0
+     */
+
+    private String level_id;
+    private String level_name;
+    private String level_medal;
+    private String grade;
+    private String intro;
+    private String status;
+    private String userpic_url;
+    private String is_collect;
+    private String is_like;
 
     public String getVideo_id() {
         return video_id;
@@ -118,5 +139,77 @@ public class ResponseMeBean {
 
     public void setUserpicid(String userpicid) {
         this.userpicid = userpicid;
+    }
+
+    public String getLevel_id() {
+        return level_id;
+    }
+
+    public void setLevel_id(String level_id) {
+        this.level_id = level_id;
+    }
+
+    public String getLevel_name() {
+        return level_name;
+    }
+
+    public void setLevel_name(String level_name) {
+        this.level_name = level_name;
+    }
+
+    public String getLevel_medal() {
+        return level_medal;
+    }
+
+    public void setLevel_medal(String level_medal) {
+        this.level_medal = level_medal;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getUserpic_url() {
+        return userpic_url;
+    }
+
+    public void setUserpic_url(String userpic_url) {
+        this.userpic_url = userpic_url;
+    }
+
+    public String getIs_collect() {
+        return is_collect;
+    }
+
+    public void setIs_collect(String is_collect) {
+        this.is_collect = is_collect;
+    }
+
+    public String getIs_like() {
+        return is_like;
+    }
+
+    public void setIs_like(String is_like) {
+        this.is_like = is_like;
     }
 }

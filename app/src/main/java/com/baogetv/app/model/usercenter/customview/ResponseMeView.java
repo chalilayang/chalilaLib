@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.baogetv.app.R;
 import com.baogetv.app.bean.ResponseMeBean;
 import com.baogetv.app.customview.LogoCircleImageView;
+import com.baogetv.app.util.TimeUtil;
 import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleFrameLayout;
 
@@ -67,11 +68,13 @@ public class ResponseMeView extends ScaleFrameLayout {
     public void setData(final ResponseMeBean data) {
         commentData = data;
         if (commentData != null) {
-            Glide.with(getContext()).load(data.getUserpic())
+            Glide.with(getContext()).load(data.getUserpic_url())
+                    .placeholder(R.mipmap.user_default_icon)
                     .error(R.mipmap.user_default_icon).into(userLogoImage);
+            userLogoImage.setLogo(data.getGrade(), data.getLevel_id());
             userName.setText(data.getUsername());
-            userDesc.setText("dddd");
-            commentTime.setText(data.getAdd_time());
+            userDesc.setText(data.getLevel_medal());
+            commentTime.setText(TimeUtil.getTimeStateNew(data.getAdd_time()));
             responseContent.setText(data.getContent());
             titleContainer.setMovementMethod(LinkMovementMethod.getInstance());
             titleContainer.setHighlightColor(Color.TRANSPARENT);

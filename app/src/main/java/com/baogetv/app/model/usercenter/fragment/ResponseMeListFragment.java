@@ -1,5 +1,6 @@
 package com.baogetv.app.model.usercenter.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,12 +13,15 @@ import android.view.ViewGroup;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.BaseItemAdapter;
 import com.baogetv.app.ItemViewHolder;
+import com.baogetv.app.OnLoadMoreListener;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.ResponseMeBean;
+import com.baogetv.app.bean.SystemInfoBean;
 import com.baogetv.app.bean.ZanMeBean;
 import com.baogetv.app.model.usercenter.LoginManager;
+import com.baogetv.app.model.usercenter.activity.MemberDetailActivity;
 import com.baogetv.app.model.usercenter.adapter.ResponseMeListAdapter;
 import com.baogetv.app.model.usercenter.adapter.ThumbUpListAdapter;
 import com.baogetv.app.model.usercenter.customview.ResponseMeView;
@@ -26,27 +30,33 @@ import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 
+import static com.baogetv.app.model.usercenter.activity.MemberDetailActivity.KEY_MEMBER_ID;
+
 
 public class ResponseMeListFragment extends BaseFragment
         implements SwipeRefreshLayout.OnRefreshListener,
-        ItemViewHolder.ItemClickListener<ResponseMeBean>, ResponseMeView.OnCommentClickListener {
+        ItemViewHolder.ItemClickListener<ResponseMeBean>,
+        ResponseMeView.OnCommentClickListener,
+        OnLoadMoreListener.DataLoadingSubject  {
 
     private static final String TAG = "ResponseMeListFragment";
+    private static final int LOAD_PAGE_SIZE = 20;
     private List<ResponseMeBean> commentDataList;
     private SwipeRefreshLayout refreshLayout;
     private View contentView;
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     private ResponseMeListAdapter recyclerViewAdapter;
+    private OnLoadMoreListener onLoadMoreListener;
+    private RecyclerView recyclerView;
+    private List<ResponseMeBean> historyBeanList;
 
     public static ResponseMeListFragment newInstance() {
         ResponseMeListFragment fragment = new ResponseMeListFragment();
-//        Bundle args = new Bundle();
-//        args.putParcelable(PAGE_DATA, data);
-//        fragment.setArguments(args);
         return fragment;
     }
 
@@ -54,10 +64,24 @@ public class ResponseMeListFragment extends BaseFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        historyBeanList = new ArrayList<>();
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerViewAdapter = new ResponseMeListAdapter(getActivity());
         recyclerViewAdapter.setItemClick(this);
         recyclerViewAdapter.setCommentClickListener(this);
+        onLoadMoreListener = new OnLoadMoreListener(layoutManager, this) {
+            @Override
+            public void onLoadMore(int totalItemCount) {
+                Log.i(TAG, "onLoadMore: " + totalItemCount);
+                int more = historyBeanList.size() % LOAD_PAGE_SIZE;
+                int pageNum = historyBeanList.size() / LOAD_PAGE_SIZE + 1;
+                if (more != 0) {
+                    recyclerViewAdapter.setHasMoreData(false);
+                } else {
+                    getList(pageNum, LOAD_PAGE_SIZE);
+                }
+            }
+        };
     }
 
     @Override
@@ -72,16 +96,26 @@ public class ResponseMeListFragment extends BaseFragment
             int margin_30px = ScaleCalculator.getInstance(getActivity()).scaleWidth(30);
             divider.setMargin(margin_30px);
             refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl);
-            RecyclerView child = refreshLayout.findViewById(R.id.list);
-            child.setLayoutManager(layoutManager);
-            child.addItemDecoration(divider);
-            child.setAdapter(recyclerViewAdapter);
+            recyclerView = refreshLayout.findViewById(R.id.list);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.addItemDecoration(divider);
+            recyclerView.addOnScrollListener(onLoadMoreListener);
+            recyclerView.setAdapter(recyclerViewAdapter);
             refreshLayout.setOnRefreshListener(this);
-            refreshLayout.setEnabled(false);
             contentView = view;
-            getZanList();
         }
         return contentView;
+    }
+
+    @Override
+    public boolean isLoading() {
+        return isLoadingData;
+    }
+
+    private boolean isLoadingData;
+    @Override
+    public boolean needLoadMore() {
+        return true;
     }
 
     /**
@@ -97,34 +131,41 @@ public class ResponseMeListFragment extends BaseFragment
      * pic : 1
      * userpicid : 1
      */
-    private void getZanList() {
+    private void getList(final int pageNum, final int pageSize) {
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getUserToken(mActivity);
-        Call<ResponseBean<List<ResponseMeBean>>> call = userApiService.getResponseMeList(token);
+        Call<ResponseBean<List<ResponseMeBean>>> call = userApiService.getResponseMeList(
+                token, String.valueOf(pageNum), String.valueOf(pageSize));
         if (call != null) {
+            refreshLayout.setRefreshing(true);
+            isLoadingData = true;
             call.enqueue(new CustomCallBack<List<ResponseMeBean>>() {
                 @Override
                 public void onSuccess(List<ResponseMeBean> data, String msg, int state) {
-                    ResponseMeBean zanMeBean = new ResponseMeBean();
-                    zanMeBean.setVideo_id("1");
-                    zanMeBean.setContent("xxs");
-                    zanMeBean.setTitle("测试");
-                    zanMeBean.setType_name("频道1");
-                    zanMeBean.setUsername("123223323443");
-                    zanMeBean.setUserpic("http://localhost/test2/Uploads/Picture/2016-12-05/58451c922375d.png");
-                    zanMeBean.setId("2");
-                    zanMeBean.setAdd_time("2017-11-12 09:26:21");
-                    zanMeBean.setUserpicid("1");
-                    for (int index = 0; index < 10; index ++) {
-                        data.add(zanMeBean);
+                    if (pageNum <= 1) {
+                        historyBeanList.clear();
                     }
-                    recyclerViewAdapter.update(data);
+                    if (data != null) {
+                        if (data.size() <= 0) {
+                            recyclerViewAdapter.setHasMoreData(false);
+                        } else {
+                            for (int index = 0, count = data.size(); index < count; index ++) {
+                                ResponseMeBean bean = data.get(index);
+                                historyBeanList.add(bean);
+                            }
+                        }
+                    }
+                    recyclerViewAdapter.update(historyBeanList);
+                    refreshLayout.setRefreshing(false);
+                    isLoadingData = false;
                 }
 
                 @Override
                 public void onFailed(String error, int state) {
                     showShortToast(error);
+                    refreshLayout.setRefreshing(false);
+                    isLoadingData = false;
                 }
             });
         }
@@ -132,16 +173,23 @@ public class ResponseMeListFragment extends BaseFragment
 
     @Override
     public void onRefresh() {
-
+        getList(0, LOAD_PAGE_SIZE);
     }
 
     @Override
     public void onTitleClick(ResponseMeBean data) {
         Log.i(TAG, "onTitleClick: ");
+//        startMemberActivity(data.getus);
     }
 
     @Override
     public void onItemClick(ResponseMeBean data, int position) {
         Log.i(TAG, "onItemClick: ");
+    }
+
+    private void startMemberActivity(String uid) {
+        Intent intent = new Intent(mActivity, MemberDetailActivity.class);
+        intent.putExtra(KEY_MEMBER_ID, uid);
+        mActivity.startActivity(intent);
     }
 }
