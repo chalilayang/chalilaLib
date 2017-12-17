@@ -54,6 +54,14 @@ public class ExpandTextView extends RelativeLayout {
         <attr name="expandTextSize" format="float" />
 	 */
 
+	public ExpandTextView(Context context) {
+		this(context, null);
+	}
+
+	public ExpandTextView(Context context, AttributeSet attrs) {
+		this(context, attrs, 0);
+	}
+
 	public ExpandTextView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		mContext = context;
@@ -63,24 +71,17 @@ public class ExpandTextView extends RelativeLayout {
 		if(TextUtils.isEmpty(mString)){
 			mString = "";
 		}
-		mDescSize = a.getFloat(R.styleable.ExpandTextView_descSize, 14);
+		mDescSize = 14;
 		mCharSize = mDescSize;
 		mDescColor = a.getColor(R.styleable.ExpandTextView_descColor, 0);
 		mExpandTextOpen = a.getString(R.styleable.ExpandTextView_expandTextOpen);
 		mExpandTextClose = a.getString(R.styleable.ExpandTextView_expandTextClose);
 		mExpandTextColor = a.getColor(R.styleable.ExpandTextView_expandTextColor, 0);
-		mExpandTextSize = a.getFloat(R.styleable.ExpandTextView_expandTextSize, 14);
+		mExpandTextSize = 14;
 		mOpenResId = a.getResourceId(R.styleable.ExpandTextView_expandTextOpenDrawable, 0);
 		mCloseResId = a.getResourceId(R.styleable.ExpandTextView_expandTextCloseDrawable, 0);
+		a.recycle();
 		init(context);
-	}
-
-	public ExpandTextView(Context context, AttributeSet attrs) {
-		this(context, attrs,0);
-	}
-
-	public ExpandTextView(Context context) {
-		this(context,null);
 	}
 
 	/**
