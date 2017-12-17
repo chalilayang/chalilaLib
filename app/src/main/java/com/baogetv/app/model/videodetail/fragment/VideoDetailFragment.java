@@ -41,6 +41,7 @@ public class VideoDetailFragment extends PagerFragment {
     private VideoDetailData videoDetailData;
     private TextView advBtn;
     private AdvBean advBean;
+    private View advContainer;
     public static VideoDetailFragment newInstance(VideoDetailData data) {
         VideoDetailFragment fragment = new VideoDetailFragment();
         Bundle args = new Bundle();
@@ -85,6 +86,7 @@ public class VideoDetailFragment extends PagerFragment {
     @Override
     public void init(View root) {
         super.init(root);
+        advContainer = root.findViewById(R.id.video_detail_title_container);
         advBtn = root.findViewById(R.id.ad_link);
         advBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,7 +130,10 @@ public class VideoDetailFragment extends PagerFragment {
                 @Override
                 public void onSuccess(List<AdvListBean> data, String msg, int state) {
                     if (data != null && data.size() > 0) {
+                        advContainer.setVisibility(View.VISIBLE);
                         getAdvDetail(data.get(0).getId());
+                    } else {
+                        advContainer.setVisibility(View.GONE);
                     }
                 }
 
