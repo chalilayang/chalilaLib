@@ -12,10 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.baogetv.app.ItemViewHolder;
+import com.baogetv.app.OnLoadMoreListener;
 import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.bean.BeanConvert;
 import com.baogetv.app.bean.ChannelListBean;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.bean.ZanMeBean;
 import com.baogetv.app.model.channel.ChannelDetailActivity;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
@@ -35,13 +37,15 @@ import retrofit2.Call;
  */
 
 public class ChannelListFragment extends BaseFragment
-        implements SwipeRefreshLayout.OnRefreshListener, ItemViewHolder.ItemClickListener<ChannelData> {
+        implements SwipeRefreshLayout.OnRefreshListener,
+        ItemViewHolder.ItemClickListener<ChannelData>, OnLoadMoreListener.DataLoadingSubject {
     private static final String TAG = "ChannelListFragment";
+    private static final int LOAD_PAGE_SIZE = 20;
     private View root;
-    private View backBtn;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
+    private OnLoadMoreListener onLoadMoreListener;
+    private LinearLayoutManager layoutManager;
     private ChannelListAdapter recyclerViewAdapter;
     private List<ChannelData> channelDataList;
 
@@ -56,6 +60,23 @@ public class ChannelListFragment extends BaseFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        channelDataList = new ArrayList<>();
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerViewAdapter = new ChannelListAdapter(getActivity());
+        recyclerViewAdapter.setItemClick(this);
+        onLoadMoreListener = new OnLoadMoreListener(layoutManager, this) {
+            @Override
+            public void onLoadMore(int totalItemCount) {
+                Log.i(TAG, "onLoadMore: " + totalItemCount);
+                int more = channelDataList.size() % LOAD_PAGE_SIZE;
+                int pageNum = channelDataList.size() / LOAD_PAGE_SIZE + 1;
+                if (more != 0) {
+                    recyclerViewAdapter.setHasMoreData(false);
+                } else {
+                    getChannelList(pageNum, LOAD_PAGE_SIZE);
+                }
+            }
+        };
     }
 
     @Override
@@ -64,25 +85,12 @@ public class ChannelListFragment extends BaseFragment
         if (root == null) {
             root = inflater.inflate(R.layout.fragment_channel_list, container, false);
             init(root);
-            if (channelDataList.size() <= 0) {
-                getChannelList();
-            }
         }
         return root;
     }
 
     public void init(View root) {
-        backBtn = root.findViewById(R.id.back_icon);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         refreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.channel_srl);
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerViewAdapter = new ChannelListAdapter(getActivity());
-        recyclerViewAdapter.setItemClick(this);
         recyclerView = (RecyclerView) root.findViewById(R.id.channel_list);
         RecyclerViewDivider divider
                 = new RecyclerViewDivider(getActivity(),
@@ -91,6 +99,7 @@ public class ChannelListFragment extends BaseFragment
         recyclerView.addItemDecoration(divider);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.addOnScrollListener(onLoadMoreListener);
         refreshLayout.setOnRefreshListener(this);
     }
 
@@ -101,30 +110,50 @@ public class ChannelListFragment extends BaseFragment
         getActivity().startActivity(intent);
     }
 
-    private void getChannelList() {
+    @Override
+    public boolean isLoading() {
+        return isLoadingData;
+    }
+
+    private boolean isLoadingData;
+    @Override
+    public boolean needLoadMore() {
+        return true;
+    }
+
+    private void getChannelList(final int pageNum, final int pageSize) {
         VideoListService listService
                 = RetrofitManager.getInstance().createReq(VideoListService.class);
-        Call<ResponseBean<List<ChannelListBean>>> beanCall = listService.getChannelList(null, null);
+        Call<ResponseBean<List<ChannelListBean>>> beanCall = listService.getChannelList(
+                null, null, String.valueOf(pageNum), String.valueOf(pageSize));
         if (beanCall != null) {
             refreshLayout.setRefreshing(true);
+            isLoadingData = true;
             beanCall.enqueue(new CustomCallBack<List<ChannelListBean>>() {
                 @Override
                 public void onSuccess(List<ChannelListBean> listBeen, String msg, int state) {
-                    channelDataList.clear();
+                    if (pageNum <= 1) {
+                        channelDataList.clear();
+                    }
                     if (listBeen != null) {
-                        for (int index = 0, count = listBeen.size(); index < count; index ++) {
-                            ChannelListBean bean = listBeen.get(index);
-                            ChannelData iVideoData
-                                    = BeanConvert.getChannelData(bean);
-                            channelDataList.add(iVideoData);
+                        if (listBeen.size() <= 0) {
+                            recyclerViewAdapter.setHasMoreData(false);
+                        } else {
+                            for (int index = 0, count = listBeen.size(); index < count; index ++) {
+                                ChannelListBean bean = listBeen.get(index);
+                                channelDataList.add(BeanConvert.getChannelData(bean));
+                            }
                         }
                     }
                     recyclerViewAdapter.update(channelDataList);
                     refreshLayout.setRefreshing(false);
+                    isLoadingData = false;
                 }
                 @Override
                 public void onFailed(String error, int state) {
+                    showShortToast(error);
                     refreshLayout.setRefreshing(false);
+                    isLoadingData = false;
                 }
             });
         } else {
@@ -135,6 +164,6 @@ public class ChannelListFragment extends BaseFragment
     @Override
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");
-        getChannelList();
+        getChannelList(0, LOAD_PAGE_SIZE);
     }
 }

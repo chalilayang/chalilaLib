@@ -96,12 +96,18 @@ public interface VideoListService {
      *
      * @param name：（频道名称）
      * @param intro：（频道简介）
+     * @param p：（分页，第几页）
+     * @param r：（分页，每页显示多少条数据）
      * @return
      */
     @FormUrlEncoded
     @POST("index.php?s=/Channel/index")
     Call<ResponseBean<List<ChannelListBean>>> getChannelList(
-            @Field("name") String name, @Field("intro") String intro);
+            @Field("name") String name,
+            @Field("intro") String intro,
+            @Field("p") String p,
+            @Field("r") String r
+    );
 
     /**
      * 广告列表
