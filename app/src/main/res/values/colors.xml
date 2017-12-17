@@ -8,6 +8,7 @@
     <color name="search_label_text">#777777</color>
 
     <color name="reshape_red">#dc4c39</color>
+    <color name="reshape_yellow">#d9b692</color>
     <color name="reshape_red_40">#66dc4c39</color>
     <color name="reshape_gray">#d4d4d4</color>
     <color name="channel_list_divider">#dfdfdf</color>

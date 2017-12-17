@@ -96,7 +96,7 @@ public class LogoCircleImageView extends CircleImageView {
         if (grade == 3) {
             circlePaint.setColor(getResources().getColor(R.color.reshape_red));
         } else {
-            circlePaint.setColor(getResources().getColor(R.color.transparent));
+            circlePaint.setColor(getResources().getColor(R.color.reshape_yellow));
         }
         invalidate();
     }
