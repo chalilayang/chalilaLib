@@ -371,15 +371,15 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
         Log.i(TAG, "handleShareEvent: ");
         EventBus.getDefault().cancelEventDelivery(event);
         shareContent = new ShareContent();
-        shareContent.mText = videoDetailBean.getTitle();
+        shareContent.mText = "1";
         UMWeb web = new UMWeb(String.format(UrlConstance.SHARE_BASE_URL, videoDetailBean.getId()));
-        web.setTitle(videoDetailBean.getTitle());
-        web.setThumb(new UMImage(this, R.mipmap.app_launcher));
-        web.setDescription(videoDetailBean.getChannel_name());
+        web.setTitle(videoDetailBean.getTitle() + " | " + videoDetailBean.getChannel_name());
+        web.setThumb(new UMImage(this, videoDetailBean.getPic_url()));
+        web.setDescription(videoDetailBean.getIntro());
         shareContent.mMedia = web;
         ShareBoardConfig config = new ShareBoardConfig();
         config.setShareboardPostion(ShareBoardConfig.SHAREBOARD_POSITION_CENTER);
-        config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_NONE);
+        config.setMenuItemBackgroundShape(ShareBoardConfig.BG_SHAPE_CIRCULAR);
         shareAction.open(config);
     }
 
