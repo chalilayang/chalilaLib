@@ -54,12 +54,20 @@
                 android:textSize="@dimen/size_26"
                 android:textColor="@color/reply_time"/>
         </com.chalilayang.scaleview.ScaleRelativeLayout>
-        <com.chalilayang.scaleview.ScaleTextView
+        <com.chalilayang.customview.ExpandTextView
             android:id="@+id/info_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_26"
             android:textColor="@color/reply_time"
+            app:descColor="@color/reply_time"
+            app:descText="sssssssssssssddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            app:descZoomRows="2"
+            app:descSize="@dimen/size_26"
+            app:expandTextColor="@color/reshape_red"
+            app:expandTextSize="@dimen/size_26"
+            app:expandTextClose="open all"
+            app:expandTextOpen="close all"
             android:layout_marginBottom="@dimen/size_30"/>
     </com.chalilayang.scaleview.ScaleLinearLayout>
     <com.chalilayang.scaleview.ScaleTextView

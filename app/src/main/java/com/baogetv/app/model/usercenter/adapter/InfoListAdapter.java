@@ -11,6 +11,7 @@ import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
 import com.baogetv.app.bean.SystemInfoBean;
 import com.baogetv.app.util.TimeUtil;
+import com.chalilayang.customview.ExpandTextView;
 import com.chalilayang.scaleview.ScaleCalculator;
 
 import java.lang.ref.SoftReference;
@@ -72,7 +73,7 @@ public class InfoListAdapter extends BaseItemAdapter<SystemInfoBean, InfoListAda
         public final TextView title;
         public final TextView updateTime;
         public final TextView deleteBtn;
-        public final TextView infoTv;
+        public final ExpandTextView infoTv;
         public final View infoTip;
         public final TextView loadMoreTip;
         @Override
@@ -89,7 +90,7 @@ public class InfoListAdapter extends BaseItemAdapter<SystemInfoBean, InfoListAda
                     e.printStackTrace();
                 }
                 infoTip.setVisibility(isUnRead == 0 ? View.INVISIBLE:View.VISIBLE);
-                infoTv.setText(data.getContent());
+//                infoTv.setText(data.getContent());
             }
         }
 
@@ -104,7 +105,7 @@ public class InfoListAdapter extends BaseItemAdapter<SystemInfoBean, InfoListAda
             title = (TextView) view.findViewById(R.id.info_title);
             infoTip = view.findViewById(R.id.info_tip);
             updateTime = (TextView) view.findViewById(R.id.info_time);
-            infoTv = (TextView) view.findViewById(R.id.info_content);
+            infoTv = (ExpandTextView) view.findViewById(R.id.info_content);
             deleteBtn = (TextView) view.findViewById(R.id.btn_delete);
             if (deleteBtn != null) {
                 deleteBtn.getLayoutParams().width = margin_160px;
