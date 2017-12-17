@@ -66,7 +66,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                 @Override
                 public void onFailed(String error, int state) {
                     Log.i(TAG, "onFailed: " + error);
-                    registerView.registerFailed("RegisterBean failed " + error);
+                    registerView.registerFailed("注册失败： " + error);
                 }
             });
             return true;
