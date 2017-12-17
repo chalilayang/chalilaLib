@@ -34,6 +34,7 @@ public class CommentListBean implements Parcelable {
      * /5a127d675b918.jpg
      * reply_user_picid : 0
      * is_like : 0
+     * level_medal ：
      * child : []
      */
 
@@ -54,6 +55,7 @@ public class CommentListBean implements Parcelable {
     private String level_name;
     private String grade;
     private String intro;
+    private String level_medal;
     private String user_pic_url;
     private int reply_user_picid;
     private String is_like;
@@ -223,6 +225,14 @@ public class CommentListBean implements Parcelable {
         return child;
     }
 
+    public String getLevel_medal() {
+        return level_medal;
+    }
+
+    public void setLevel_medal(String level_medal) {
+        this.level_medal = level_medal;
+    }
+
     public void setChild(List<DataBean> child) {
         this.child = child;
     }
@@ -272,6 +282,7 @@ public class CommentListBean implements Parcelable {
         private String level_id;
         private String level_name;
         private String grade;
+        private String level_medal;
         private String intro;
 
         public String getLevel_id() {
@@ -443,6 +454,14 @@ public class CommentListBean implements Parcelable {
         }
 
 
+        public String getLevel_medal() {
+            return level_medal;
+        }
+
+        public void setLevel_medal(String level_medal) {
+            this.level_medal = level_medal;
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -470,6 +489,7 @@ public class CommentListBean implements Parcelable {
             dest.writeString(this.level_id);
             dest.writeString(this.level_name);
             dest.writeString(this.grade);
+            dest.writeString(this.level_medal);
             dest.writeString(this.intro);
         }
 
@@ -497,6 +517,7 @@ public class CommentListBean implements Parcelable {
             this.level_id = in.readString();
             this.level_name = in.readString();
             this.grade = in.readString();
+            this.level_medal = in.readString();
             this.intro = in.readString();
         }
 
@@ -540,6 +561,7 @@ public class CommentListBean implements Parcelable {
         dest.writeString(this.user_pic_url);
         dest.writeInt(this.reply_user_picid);
         dest.writeString(this.is_like);
+        dest.writeString(this.level_medal);
         dest.writeTypedList(this.child);
     }
 
@@ -567,6 +589,7 @@ public class CommentListBean implements Parcelable {
         this.user_pic_url = in.readString();
         this.reply_user_picid = in.readInt();
         this.is_like = in.readString();
+        this.level_medal = in.readString();
         this.child = in.createTypedArrayList(DataBean.CREATOR);
     }
 

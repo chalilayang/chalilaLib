@@ -64,7 +64,7 @@ public class CommentData implements Parcelable {
         this.bean = bean;
         UserData replyer = new UserData();
         replyer.setNickName(bean.getUsername());
-        replyer.setDesc(bean.getIntro());
+        replyer.setDesc(bean.getLevel_medal());
         replyer.setGrage(bean.getGrade());
         replyer.setIconUrl(bean.getUser_pic_url());
         setOwner(replyer);

@@ -348,7 +348,7 @@ public class BeanConvert {
         dataBean.setLevel_name(bean.getLevel_name());
         dataBean.setGrade(bean.getGrade());
         dataBean.setIntro(bean.getIntro());
-
+        dataBean.setLevel_medal(bean.getLevel_medal());
         dataBean.setUser_pic_url(bean.getUser_pic_url());
         dataBean.setReply_user_picid(bean.getReply_user_picid());
         dataBean.setIs_like(bean.getIs_like());
