@@ -143,6 +143,7 @@ public class BeanConvert {
         commentData.setIntro(data.getIntro());
         commentData.setUser_pic_url(data.getUser_pic_url());
         commentData.setReply_user_picid(data.getReply_user_picid());
+        commentData.setLevel_medal(data.getLevel_medal());
         commentData.setIs_like(data.getIs_like());
         return commentData;
     }

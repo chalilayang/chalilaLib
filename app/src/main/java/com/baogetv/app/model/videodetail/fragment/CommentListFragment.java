@@ -199,7 +199,6 @@ public class CommentListFragment extends BaseItemFragment
                         }
                     }
                     recyclerViewAdapter.update(commentList);
-                    EventBus.getDefault().post(new CommentCountEvent(commentList.size()));
                     refreshLayout.setRefreshing(false);
                     isLoadingData = false;
                 }
@@ -268,6 +267,7 @@ public class CommentListFragment extends BaseItemFragment
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");
         getCommentList(videoDetailData, 0);
+        EventBus.getDefault().post(new CommentCountEvent(commentList.size()));
     }
 
     @Override
@@ -390,6 +390,7 @@ public class CommentListFragment extends BaseItemFragment
                             }
                         }
                     }
+                    EventBus.getDefault().post(new CommentCountEvent(commentList.size()));
                     recyclerViewAdapter.update(commentList);
                 }
 

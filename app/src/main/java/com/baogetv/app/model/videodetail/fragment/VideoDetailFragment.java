@@ -16,6 +16,7 @@ import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.bean.AdvBean;
 import com.baogetv.app.bean.AdvListBean;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.constant.UrlConstance;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.activity.WebReadActivity;
@@ -64,18 +65,13 @@ public class VideoDetailFragment extends PagerFragment {
         View root = inflater.inflate(R.layout.fragment_video_detail, container, false);
         init(root);
         getAdvList();
+        getVideoDetail();
         return root;
     }
 
     @Subscribe
     public void handleCommentCount(CommentCountEvent event) {
-        if (tabLayout != null) {
-            TabLayout.Tab tab = tabLayout.getTabAt(1);
-            if (tab != null) {
-                String content = getString(R.string.comment) + "(" + event.count + ")";
-                tab.setText(content);
-            }
-        }
+        getVideoDetail();
     }
 
     @Override
@@ -180,6 +176,35 @@ public class VideoDetailFragment extends PagerFragment {
                 @Override
                 public void onFailed(String error, int state) {
 
+                }
+            });
+        }
+    }
+
+    private void getVideoDetail() {
+        VideoListService listService
+                = RetrofitManager.getInstance().createReq(VideoListService.class);
+        String token = null;
+        if (LoginManager.hasLogin(mActivity)) {
+            token = LoginManager.getUserToken(mActivity);
+        }
+        Call<ResponseBean<VideoDetailBean>> call = listService.getVideoDetail(
+                videoDetailData.videoDetailBean.getId(), token);
+        if (call != null) {
+            call.enqueue(new CustomCallBack<VideoDetailBean>() {
+                @Override
+                public void onSuccess(VideoDetailBean data, String msg, int state) {
+                    if (tabLayout != null) {
+                        TabLayout.Tab tab = tabLayout.getTabAt(1);
+                        if (tab != null) {
+                            String content = getString(R.string.comment) + "(" + data.getComments() + ")";
+                            tab.setText(content);
+                        }
+                    }
+                }
+                @Override
+                public void onFailed(String error, int state) {
+                    showShortToast(error);
                 }
             });
         }
