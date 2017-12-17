@@ -32,12 +32,15 @@
                 android:id="@+id/video_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:text="@string/action_settings"
+                android:maxLines="1"
                 android:textAppearance="@style/cache_list_item_title"/>
             <com.chalilayang.scaleview.ScaleTextView
                 android:id="@+id/video_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_30"
                 android:textAppearance="@style/cache_list_item_desc"/>
         </com.chalilayang.scaleview.ScaleLinearLayout>
     </com.chalilayang.scaleview.ScaleRelativeLayout>
