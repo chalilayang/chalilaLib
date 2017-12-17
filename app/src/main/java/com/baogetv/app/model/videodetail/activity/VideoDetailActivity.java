@@ -92,8 +92,23 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
         getWindow().setAttributes(params);
         setContentView(R.layout.activity_video_detail);
         videoId = getIntent().getStringExtra(KEY_VIDEO_ID);
+        Log.i(TAG, "onCreate: " + videoId);
         customShareListener = new CustomShareListener(this);
         initView();
+        initData();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.i(TAG, "onNewIntent: ");
+        videoId = intent.getStringExtra(KEY_VIDEO_ID);
+        videoDetailFragment = null;
+        Log.i(TAG, "onNewIntent: videoId " + videoId);
+        if (playerFragment != null) {
+            playerFragment.release();
+            playerFragment = null;
+        }
         initData();
     }
 
