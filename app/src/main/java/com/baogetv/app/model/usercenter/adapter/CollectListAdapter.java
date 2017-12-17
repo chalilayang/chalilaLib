@@ -97,7 +97,7 @@ public class CollectListAdapter
             } else {
                 title.setText(data.getType_name());
                 updateTime.setText(data.getAdd_time());
-                Glide.with(mContext).load(data.getPic_url()).crossFade().into(mImageView);
+                Glide.with(mContext).load(data.getPic_url()).placeholder(R.mipmap.pic_loding).crossFade().into(mImageView);
             }
         }
 

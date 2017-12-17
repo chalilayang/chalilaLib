@@ -87,7 +87,7 @@ public class MyCacheAdapter
 
         @Override
         public void bindData(MyBusinessInfo data, int pos) {
-            Glide.with(mContext).load(data.getIcon()).crossFade().into(mImageView);
+            Glide.with(mContext).load(data.getIcon()).placeholder(R.mipmap.pic_loding).crossFade().into(mImageView);
             cacheInfoView.setTitleTv(data.getName());
             downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());
             if (downloadInfo != null) {

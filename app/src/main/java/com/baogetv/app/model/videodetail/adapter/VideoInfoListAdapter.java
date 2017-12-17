@@ -376,7 +376,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             updateTime.setText(count + " | " + time);
             Glide.with(mContext)
                     .load(mItem.getPicUrl())
-                    .placeholder(R.mipmap.mengceng)
+                    .placeholder(R.mipmap.pic_loding)
                     .into(mImageView);
         }
 

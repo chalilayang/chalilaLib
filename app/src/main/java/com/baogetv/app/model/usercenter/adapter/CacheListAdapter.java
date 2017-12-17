@@ -102,7 +102,7 @@ public class CacheListAdapter extends RecyclerView.Adapter<CacheListAdapter.View
 
         @SuppressWarnings("unchecked")
         public void bindData(final MyBusinessInfo data, int position, final Context context) {
-            Glide.with(context).load(data.getIcon()).into(iv_icon);
+            Glide.with(context).load(data.getIcon()).placeholder(R.mipmap.pic_loding).into(iv_icon);
             tv_name.setText(data.getName());
             downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());
             if (downloadInfo != null) {

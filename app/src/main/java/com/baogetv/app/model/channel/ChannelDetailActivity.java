@@ -106,7 +106,7 @@ public class ChannelDetailActivity extends BaseActivity {
             Glide.with(this)
                     .load(detailBean.getCover_url())
                     .dontAnimate()
-                    .placeholder(R.mipmap.mengceng).into(imageView);
+                    .placeholder(R.mipmap.pic_loding).into(imageView);
             Glide.with(this).load(detailBean.getPic_url())
                     .dontAnimate()
                     .placeholder(R.mipmap.user_default_icon).into(circleImageView);

@@ -84,6 +84,7 @@ public class VideoListAdapter
                 Glide.with(mContext)
                         .load(pic)
                         .crossFade()
+                        .placeholder(R.mipmap.pic_loding)
                         .into(mContentView);
             }
         }
