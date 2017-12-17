@@ -38,13 +38,17 @@
             android:layout_height="wrap_content"
             android:hint="@string/send_edit_hint"
             android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/size_20"
             android:layout_marginLeft="@dimen/size_30"
             android:layout_toLeftOf="@+id/comment_send_btn"
             android:textCursorDrawable="@drawable/edit_text_cursor"
             android:cursorVisible="true"
+            android:scrollbars="vertical"
+            android:singleLine="false"
             android:textSize="@dimen/size_32"
+            android:scrollHorizontally="false"
+            android:inputType="textMultiLine"
             android:textColor="@color/send_edit_text_color"
-            android:inputType="text"
             android:background="@color/transparent"/>
         <ImageView
             android:id="@+id/comment_send_btn"
