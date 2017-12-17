@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,12 @@ import android.view.ViewGroup;
 import com.baogetv.app.BaseFragment;
 import com.baogetv.app.BaseItemAdapter;
 import com.baogetv.app.ItemViewHolder;
+import com.baogetv.app.OnLoadMoreListener;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.CollectBean;
 import com.baogetv.app.bean.ResponseBean;
+import com.baogetv.app.bean.ResponseMeBean;
 import com.baogetv.app.bean.ZanMeBean;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.adapter.ThumbUpListAdapter;
@@ -23,20 +26,25 @@ import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 
 
 public class ThumbUpListFragment extends BaseFragment
-        implements SwipeRefreshLayout.OnRefreshListener, ItemViewHolder.ItemClickListener<ZanMeBean>{
+        implements SwipeRefreshLayout.OnRefreshListener,
+        ItemViewHolder.ItemClickListener<ZanMeBean>, OnLoadMoreListener.DataLoadingSubject {
 
     private static final String TAG = "ThumbUpListFragment";
-    private List<ZanMeBean> commentDataList;
+    private static final int LOAD_PAGE_SIZE = 20;
     private SwipeRefreshLayout refreshLayout;
     private View contentView;
     private LinearLayoutManager layoutManager;
     private ThumbUpListAdapter recyclerViewAdapter;
+    private OnLoadMoreListener onLoadMoreListener;
+    private RecyclerView recyclerView;
+    private List<ZanMeBean> historyBeanList;
 
     public static ThumbUpListFragment newInstance() {
         ThumbUpListFragment fragment = new ThumbUpListFragment();
@@ -46,9 +54,23 @@ public class ThumbUpListFragment extends BaseFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        historyBeanList = new ArrayList<>();
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerViewAdapter = new ThumbUpListAdapter(getActivity());
         recyclerViewAdapter.setItemClick(this);
+        onLoadMoreListener = new OnLoadMoreListener(layoutManager, this) {
+            @Override
+            public void onLoadMore(int totalItemCount) {
+                Log.i(TAG, "onLoadMore: " + totalItemCount);
+                int more = historyBeanList.size() % LOAD_PAGE_SIZE;
+                int pageNum = historyBeanList.size() / LOAD_PAGE_SIZE + 1;
+                if (more != 0) {
+                    recyclerViewAdapter.setHasMoreData(false);
+                } else {
+                    getList(pageNum, LOAD_PAGE_SIZE);
+                }
+            }
+        };
     }
 
     @Override
@@ -63,45 +85,63 @@ public class ThumbUpListFragment extends BaseFragment
             int margin_30px = ScaleCalculator.getInstance(getActivity()).scaleWidth(30);
             divider.setMargin(margin_30px);
             refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.srl);
-            RecyclerView child = refreshLayout.findViewById(R.id.list);
-            child.setLayoutManager(layoutManager);
-            child.addItemDecoration(divider);
-            child.setAdapter(recyclerViewAdapter);
+            recyclerView = refreshLayout.findViewById(R.id.list);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.addItemDecoration(divider);
+            recyclerView.addOnScrollListener(onLoadMoreListener);
+            recyclerView.setAdapter(recyclerViewAdapter);
             refreshLayout.setOnRefreshListener(this);
-            refreshLayout.setEnabled(false);
             contentView = view;
-            getZanList();
         }
         return contentView;
     }
 
-    /**
-     * video_id : 1
-     * content : xxs
-     * user_id : 3
-     * username : 15913196454
-     * userpic : http://localhost/test2/Uploads/Picture/2016-12-05/58451c922375d.png
-     * id : 2
-     * comments_id : 1
-     * add_time : 2017-11-12 09:26:21
-     * userpicid : 1
-     */
+    @Override
+    public boolean isLoading() {
+        return isLoadingData;
+    }
 
-    private void getZanList() {
+    private boolean isLoadingData;
+    @Override
+    public boolean needLoadMore() {
+        return true;
+    }
+
+    private void getList(final int pageNum, final int pageSize) {
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String token = LoginManager.getUserToken(mActivity);
-        Call<ResponseBean<List<ZanMeBean>>> call = userApiService.getZanMeList(token);
+        Call<ResponseBean<List<ZanMeBean>>> call = userApiService.getZanMeList(
+                token, String.valueOf(pageNum), String.valueOf(pageSize));
         if (call != null) {
+            refreshLayout.setRefreshing(true);
+            isLoadingData = true;
             call.enqueue(new CustomCallBack<List<ZanMeBean>>() {
                 @Override
                 public void onSuccess(List<ZanMeBean> data, String msg, int state) {
-                    recyclerViewAdapter.update(data);
+                    if (pageNum <= 1) {
+                        historyBeanList.clear();
+                    }
+                    if (data != null) {
+                        if (data.size() <= 0) {
+                            recyclerViewAdapter.setHasMoreData(false);
+                        } else {
+                            for (int index = 0, count = data.size(); index < count; index ++) {
+                                ZanMeBean bean = data.get(index);
+                                historyBeanList.add(bean);
+                            }
+                        }
+                    }
+                    recyclerViewAdapter.update(historyBeanList);
+                    refreshLayout.setRefreshing(false);
+                    isLoadingData = false;
                 }
 
                 @Override
                 public void onFailed(String error, int state) {
                     showShortToast(error);
+                    refreshLayout.setRefreshing(false);
+                    isLoadingData = false;
                 }
             });
         }
@@ -109,7 +149,7 @@ public class ThumbUpListFragment extends BaseFragment
 
     @Override
     public void onRefresh() {
-
+        getList(0, LOAD_PAGE_SIZE);
     }
 
     @Override

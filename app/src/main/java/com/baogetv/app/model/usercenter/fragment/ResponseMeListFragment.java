@@ -42,11 +42,10 @@ public class ResponseMeListFragment extends BaseFragment
         implements SwipeRefreshLayout.OnRefreshListener,
         ItemViewHolder.ItemClickListener<ResponseMeBean>,
         ResponseMeView.OnCommentClickListener,
-        OnLoadMoreListener.DataLoadingSubject  {
+        OnLoadMoreListener.DataLoadingSubject {
 
     private static final String TAG = "ResponseMeListFragment";
     private static final int LOAD_PAGE_SIZE = 20;
-    private List<ResponseMeBean> commentDataList;
     private SwipeRefreshLayout refreshLayout;
     private View contentView;
     private LinearLayoutManager layoutManager;
