@@ -67,6 +67,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private LogoCircleImageView userIcon;
     private TextView userName;
     private TextView mobileNum;
+    private TextView mobileNumBtn;
     private ImageView gradeIcon;
     private TextView gradeDesc;
     private MineBodyInfoView mineBodyInfoView;
@@ -155,6 +156,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         userName = view.findViewById(R.id.mine_name);
         userIcon = view.findViewById(R.id.mine_icon);
         mobileNum = view.findViewById(R.id.user_mobile_num);
+        mobileNumBtn = (TextView) view.findViewById(R.id.change_mobile_num);
         view.findViewById(R.id.change_mobile_num).setOnClickListener(this);
         gradeIcon = view.findViewById(R.id.user_grade_icon);
         gradeDesc = view.findViewById(R.id.user_grade_desc);
@@ -199,7 +201,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             Glide.with(this).load(detailBean.getLevel_pic_url()).into(gradeIcon);
             userIcon.setLogo(detailBean.getGrade(), detailBean.getLevel_id());
             userName.setText(detailBean.getUsername());
-            mobileNum.setText(detailBean.getMobile());
+            if (TextUtils.isEmpty(detailBean.getMobile())) {
+                mobileNum.setText(getString(R.string.no_mobile_num));
+                mobileNumBtn.setText("去绑定");
+            } else {
+                mobileNum.setText(detailBean.getMobile());
+                mobileNumBtn.setText(getString(R.string.change_mobile_num));
+            }
             gradeDesc.setText(detailBean.getLevel_name());
             int height = 0;
             try {
