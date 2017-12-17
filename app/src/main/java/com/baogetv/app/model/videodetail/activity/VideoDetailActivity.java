@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
@@ -120,6 +121,8 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
         int playerHeight = screenWidth * 720 / 1280;
         View playerContainer = findViewById(R.id.video_player_fragment_container);
         playerContainer.getLayoutParams().height = playerHeight;
+        View detailContainer = findViewById(R.id.video_detail_fragment_container);
+        ((RelativeLayout.LayoutParams)detailContainer.getLayoutParams()).topMargin = playerHeight;
         editText = (EditText) findViewById(R.id.comment_edit_text);
         sendBtn = findViewById(R.id.comment_send_btn);
         sendBtn.setOnClickListener(new View.OnClickListener() {

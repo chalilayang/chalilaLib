@@ -1,9 +1,9 @@
 <com.chalilayang.scaleview.ScaleRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.baogetv.app.model.videodetail.fragment.VideoDetailFragment">
 
     <com.chalilayang.scaleview.ScaleLinearLayout
@@ -14,16 +14,19 @@
         android:orientation="vertical">
         <com.chalilayang.scaleview.ScaleRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_70">
+            android:layout_height="wrap_content">
             <com.chalilayang.scaleview.ScaleTextView
                 android:id="@+id/ad_link"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginLeft="@dimen/size_30"
+                android:includeFontPadding="false"
                 android:textSize="@dimen/size_26"
                 android:textColor="@color/reply_content"
                 android:drawablePadding="@dimen/size_20"
+                android:layout_marginTop="@dimen/size_10"
+                android:layout_marginBottom="@dimen/size_10"
                 android:drawableRight="@mipmap/click_to_view"/>
         </com.chalilayang.scaleview.ScaleRelativeLayout>
         <View
