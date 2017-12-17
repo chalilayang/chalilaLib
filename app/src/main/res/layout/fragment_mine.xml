@@ -78,7 +78,7 @@
                             android:text="@string/register"
                             android:textSize="@dimen/size_30"
                             android:gravity="center"
-                            android:background="@drawable/register_bg"/>
+                            android:background="@drawable/register_btn_selector"/>
                         <com.chalilayang.scaleview.ScaleTextView
                             android:id="@+id/login_btn"
                             android:layout_width="@dimen/size_180"

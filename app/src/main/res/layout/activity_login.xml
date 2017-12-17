@@ -63,7 +63,7 @@
             android:id="@+id/login_tv"
             android:layout_width="match_parent"
             android:layout_height="@dimen/video_login_btn_bg_height"
-            android:background="@drawable/video_login_red_bg"
+            android:background="@drawable/video_register_btn_selector"
             android:layout_marginTop="@dimen/size_110"
             android:gravity="center"
             android:text="@string/login"
