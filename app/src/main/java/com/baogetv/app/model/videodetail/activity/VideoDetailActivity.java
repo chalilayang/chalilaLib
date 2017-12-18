@@ -376,7 +376,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
         shareContent = new ShareContent();
         shareContent.mText = "1";
         UMWeb web = new UMWeb(String.format(UrlConstance.SHARE_BASE_URL, videoDetailBean.getId()));
-        web.setTitle(videoDetailBean.getTitle() + " | " + videoDetailBean.getChannel_name());
+        web.setTitle(videoDetailBean.getTitle() + " | " + "豹哥健身 | 每日精彩健身视频");
         web.setThumb(new UMImage(this, videoDetailBean.getPic_url()));
         web.setDescription(videoDetailBean.getIntro());
         shareContent.mMedia = web;
