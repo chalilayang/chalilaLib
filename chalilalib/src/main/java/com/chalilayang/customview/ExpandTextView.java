@@ -54,14 +54,6 @@ public class ExpandTextView extends RelativeLayout {
         <attr name="expandTextSize" format="float" />
 	 */
 
-	public ExpandTextView(Context context) {
-		this(context, null);
-	}
-
-	public ExpandTextView(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
-	}
-
 	public ExpandTextView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		mContext = context;
@@ -71,17 +63,24 @@ public class ExpandTextView extends RelativeLayout {
 		if(TextUtils.isEmpty(mString)){
 			mString = "";
 		}
-		mDescSize = 14;
+		mDescSize = a.getFloat(R.styleable.ExpandTextView_descSize, 14);
 		mCharSize = mDescSize;
 		mDescColor = a.getColor(R.styleable.ExpandTextView_descColor, 0);
 		mExpandTextOpen = a.getString(R.styleable.ExpandTextView_expandTextOpen);
 		mExpandTextClose = a.getString(R.styleable.ExpandTextView_expandTextClose);
 		mExpandTextColor = a.getColor(R.styleable.ExpandTextView_expandTextColor, 0);
-		mExpandTextSize = 14;
+		mExpandTextSize = a.getFloat(R.styleable.ExpandTextView_expandTextSize, 14);
 		mOpenResId = a.getResourceId(R.styleable.ExpandTextView_expandTextOpenDrawable, 0);
 		mCloseResId = a.getResourceId(R.styleable.ExpandTextView_expandTextCloseDrawable, 0);
-		a.recycle();
 		init(context);
+	}
+
+	public ExpandTextView(Context context, AttributeSet attrs) {
+		this(context, attrs,0);
+	}
+
+	public ExpandTextView(Context context) {
+		this(context,null);
 	}
 
 	/**
@@ -296,7 +295,7 @@ public class ExpandTextView extends RelativeLayout {
 	 * @return
 	 */
 	private int dp2px(int dp){
-		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp,getContext().getResources().getDisplayMetrics());
+		return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp,getContext().getResources().getDisplayMetrics());
 	}
 
 	/**
@@ -336,7 +335,7 @@ public class ExpandTextView extends RelativeLayout {
 	/**
 	 * 设置显示的展开缩放文本
 	 */
-	public void setExpandText(String open, String close){
+	public void setExpandText(String open,String close){
 		mExpandTextOpen = open;
 		mExpandTextClose = close;
 		requestLay();
