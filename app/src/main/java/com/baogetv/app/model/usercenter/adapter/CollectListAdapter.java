@@ -95,7 +95,7 @@ public class CollectListAdapter
             if (loadMoreTip != null) {
                 loadMoreTip.setText(hasMoreData?loadingMore : noMoreData);
             } else {
-                title.setText(data.getTitle() + " | " +data.getType_name());
+                title.setText(data.getTitle());
                 updateTime.setText(data.getAdd_time());
                 Glide.with(mContext).load(data.getPic_url()).placeholder(R.mipmap.pic_loding).crossFade().into(mImageView);
             }
