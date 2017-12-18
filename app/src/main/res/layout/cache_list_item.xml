@@ -18,6 +18,7 @@
             android:layout_width="@dimen/size_256"
             android:layout_height="@dimen/size_135"
             android:background="@color/transparent"
+            android:scaleType="fitXY"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"/>
         <com.baogetv.app.model.usercenter.customview.CacheInfoView

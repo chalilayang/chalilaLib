@@ -53,7 +53,7 @@
         android:visibility="gone"/>
 
     <com.chalilayang.scaleview.ScaleRelativeLayout
-        android:layout_width="@dimen/size_360"
+        android:layout_width="@dimen/size_480"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/size_30"
         android:layout_marginTop="@dimen/size_30">
@@ -91,14 +91,14 @@
             android:layout_marginTop="@dimen/size_20"
             android:drawableLeft="@mipmap/share_big"
             android:drawablePadding="@dimen/size_10"
-            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:textSize="@dimen/size_26"
             android:textColor="@color/reply_name"/>
         <com.chalilayang.scaleview.ScaleTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/video_share"
+            android:layout_marginLeft="-40px"
             android:layout_alignParentTop="true"
             android:text="@string/share_to_add_experience"
             android:textSize="@dimen/size_12"
