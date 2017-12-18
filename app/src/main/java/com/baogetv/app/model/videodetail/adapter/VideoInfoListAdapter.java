@@ -183,12 +183,12 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 playCount.setText(String.format(playCountFormat, bean.getPlay()));
                 desc.setText(bean.getIntro());
                 share.setText(bean.getShares());
-                share.setCompoundDrawables(null, shareGray, null, null);
+                share.setCompoundDrawables(shareGray, null, null, null);
                 cache.setText(bean.getCaches());
                 if (!LoginManager.hasCommentRight(mContext)) {
-                    cache.setCompoundDrawables(null, cacheGray, null, null);
+                    cache.setCompoundDrawables(cacheGray, null, null, null);
                 } else {
-                    cache.setCompoundDrawables(null, cacheRed, null, null);
+                    cache.setCompoundDrawables(cacheRed, null, null, null);
                 }
                 collect.setText(bean.getCollects());
                 int isCollect = 0;
@@ -198,9 +198,9 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                     e.printStackTrace();
                 }
                 if (isCollect == 0) {
-                    collect.setCompoundDrawables(null, heartGray, null, null);
+                    collect.setCompoundDrawables(heartGray, null, null, null);
                 } else {
-                    collect.setCompoundDrawables(null, heartRed, null, null);
+                    collect.setCompoundDrawables(heartRed, null, null, null);
                 }
                 List<VideoDetailBean.TagsBean> labels = bean.getTags();
                 flowLayout.removeAllViews();
@@ -292,25 +292,25 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         public HeadViewHolder(View view) {
             super(view);
             float scale = 1.0f;
-            heartGray = mContext.getResources().getDrawable(R.mipmap.heart_btn_gray);
+            heartGray = mContext.getResources().getDrawable(R.mipmap.collect_big);
             int width = (int) (heartGray.getIntrinsicWidth() * scale);
             int height = (int) (heartGray.getIntrinsicHeight() * scale);
             heartGray.setBounds(0, 0, width, height);
-            heartRed = mContext.getResources().getDrawable(R.mipmap.heart_btn_icon);
+            heartRed = mContext.getResources().getDrawable(R.mipmap.collect_big_red);
             heartRed.setBounds(0, 0, width, height);
 
-            shareGray = mContext.getResources().getDrawable(R.mipmap.share_btn_icon_gray);
+            shareGray = mContext.getResources().getDrawable(R.mipmap.share_big);
             width = (int) (shareGray.getIntrinsicWidth() * scale);
             height = (int) (shareGray.getIntrinsicHeight() * scale);
             shareGray.setBounds(0, 0, width, height);
-            shareRed = mContext.getResources().getDrawable(R.mipmap.share_btn_icon);
+            shareRed = mContext.getResources().getDrawable(R.mipmap.share_big);
             shareRed.setBounds(0, 0, width, height);
 
-            cacheGray = mContext.getResources().getDrawable(R.mipmap.cache_btn_icon_gray);
+            cacheGray = mContext.getResources().getDrawable(R.mipmap.cache_big);
             width = (int) (cacheGray.getIntrinsicWidth() * scale);
             height = (int) (cacheGray.getIntrinsicHeight() * scale);
             cacheGray.setBounds(0, 0, width, height);
-            cacheRed = mContext.getResources().getDrawable(R.mipmap.cache_btn_icon);
+            cacheRed = mContext.getResources().getDrawable(R.mipmap.cache_big);
             cacheRed.setBounds(0, 0, width, height);
 
             int size_26 = ScaleCalculator.getInstance(mContext).scaleTextSize(26);

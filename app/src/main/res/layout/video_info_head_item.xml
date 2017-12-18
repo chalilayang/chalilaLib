@@ -52,76 +52,64 @@
         android:textColor="@color/reply_time"
         android:visibility="gone"/>
 
-    <com.chalilayang.scaleview.ScaleLinearLayout
-        android:layout_width="match_parent"
+    <com.chalilayang.scaleview.ScaleRelativeLayout
+        android:layout_width="@dimen/size_360"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/size_30"
         android:layout_marginTop="@dimen/size_30">
         <com.chalilayang.scaleview.ScaleTextView
             android:id="@+id/video_heart"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/heart_btn_gray"
+            android:drawableLeft="@mipmap/collect_big"
             android:drawablePadding="@dimen/size_10"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
             android:text="0"
             android:textSize="@dimen/size_26"
             android:textColor="@color/reply_name"
             android:gravity="center"/>
         <com.chalilayang.scaleview.ScaleTextView
             android:id="@+id/video_cache"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/cache_btn_icon_gray"
+            android:drawableLeft="@mipmap/cache_big"
+            android:layout_marginLeft="@dimen/size_60"
+            android:layout_toRightOf="@+id/video_heart"
             android:drawablePadding="@dimen/size_10"
+            android:layout_alignParentBottom="true"
             android:text="@string/cache"
             android:textSize="@dimen/size_26"
             android:textColor="@color/reply_name"
             android:gravity="center"/>
         <com.chalilayang.scaleview.ScaleTextView
             android:id="@+id/video_share"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@mipmap/share_btn_icon_gray"
+            android:layout_marginLeft="@dimen/size_40"
+            android:layout_toRightOf="@+id/video_cache"
+            android:layout_marginTop="@dimen/size_20"
+            android:drawableLeft="@mipmap/share_big"
             android:drawablePadding="@dimen/size_10"
-            android:text="0"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:textSize="@dimen/size_26"
-            android:textColor="@color/reply_name"
-            android:gravity="center"/>
-    </com.chalilayang.scaleview.ScaleLinearLayout>
-    <com.chalilayang.scaleview.ScaleLinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <View
-            android:layout_width="0dp"
+            android:textColor="@color/reply_name"/>
+        <com.chalilayang.scaleview.ScaleTextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
-        <com.chalilayang.scaleview.ScaleFrameLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-            <com.chalilayang.scaleview.ScaleTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/share_to_add_experience"
-                android:textSize="@dimen/size_20"
-                android:paddingLeft="@dimen/size_20"
-                android:paddingRight="@dimen/size_20"
-                android:paddingTop="@dimen/size_10"
-                android:paddingBottom="@dimen/size_10"
-                android:textColor="@color/white"
-                android:layout_gravity="center"
-                android:background="@drawable/login_btn_bg"/>
-        </com.chalilayang.scaleview.ScaleFrameLayout>
-    </com.chalilayang.scaleview.ScaleLinearLayout>
-
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/share_to_add_experience"
+            android:textSize="@dimen/size_12"
+            android:paddingLeft="@dimen/size_12"
+            android:paddingRight="@dimen/size_12"
+            android:paddingTop="@dimen/size_2"
+            android:paddingBottom="@dimen/size_2"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:background="@drawable/login_btn_bg"/>
+    </com.chalilayang.scaleview.ScaleRelativeLayout>
 
     <View
         android:layout_width="match_parent"
