@@ -6,9 +6,11 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -44,6 +46,7 @@ public class ExpandTextView extends RelativeLayout {
 
     private int mOpenResId;//展开右边的图片资源id
     private int mCloseResId;//收缩右边的图片资源id
+    private DisplayMetrics displayMetrics;
 
 	/*
      *
@@ -58,6 +61,9 @@ public class ExpandTextView extends RelativeLayout {
     public ExpandTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
+        displayMetrics = new DisplayMetrics();
+        ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE))
+                .getDefaultDisplay().getMetrics(displayMetrics);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ExpandTextView);
         mZoomRows = a.getInt(R.styleable.ExpandTextView_descZoomRows, 2);
         mString = a.getString(R.styleable.ExpandTextView_descText);
@@ -90,17 +96,9 @@ public class ExpandTextView extends RelativeLayout {
      * @param context
      */
     private void init(Context context) {
-        //ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(this).inflate(R.layout
-		// .activity_expand, null);
-        //setContentView(viewGroup);
         mFlowLayout = new FlowLayout(context);
         this.addView(mFlowLayout);
-        //初始化TextView，用于计算每个字符占的宽度
-        mTextView = getTextView(mCharSize);//(TextView) findViewById(R.id.details_desc);//new
-		// TextView(this);//getTextView(18);
-
-        //expandText(false);
-        //初始化展开文本
+        mTextView = getTextView(mCharSize);
         mTextViewExpand = new TextView(mContext);
         mTextViewExpand.setTextSize(TypedValue.COMPLEX_UNIT_PX, mExpandTextSize);
         mTextViewExpand.setTextColor(mExpandTextColor);
@@ -128,37 +126,20 @@ public class ExpandTextView extends RelativeLayout {
     }
 
     /**
-     * 判断时候是英文字母
-     *
-     * @param ch
-     * @return
-     */
-    private boolean isA_z(char ch) {
-        if ('A' <= ch && ch <= 'Z' || 'a' <= ch && ch <= 'z') {
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * @return 返回指定笔和指定字符串的长度
      */
-    public static float getFontlength(Paint paint, String str) {
+    public float getFontLength(Paint paint, String str) {
         return paint.measureText(str);
     }
 
-    public static float getFontlength(Paint paint, char str) {
-        char[] tmp = new char[1];
-        tmp[0] = str;
-        return paint.measureText(new String(tmp));
-    }
-
-    /**
-     * @return 返回指定笔的文字高度
-     */
-    public static float getFontHeight(Paint paint) {
-        Paint.FontMetrics fm = paint.getFontMetrics();
-        return fm.descent - fm.ascent;
+    public float getFontLength(Paint paint, char str) {
+        TextView tv = new TextView(mContext);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCharSize);
+        tv.setText(String.valueOf(str));
+        tv.setIncludeFontPadding(false);
+        int size = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+        tv.measure(size, size);
+        return tv.getMeasuredWidth();
     }
 
     /**
@@ -167,32 +148,16 @@ public class ExpandTextView extends RelativeLayout {
      * @param isExpand
      */
     private void expandText(boolean isExpand) {
-        //DisplayMetrics metric = new DisplayMetrics();
-        //getWindowManager().getDefaultDisplay().getMetrics(metric);
-        //int widthScreen = metric.widthPixels;     // 屏幕宽度（像素）
         int widthScreen = mWidthSize;
         float width = 0;//计算一行的宽度
         int index = 0;//记住每行开头的下标索引
         int rows = 0;//计算行数
-        int isNullCharIndex = 0;//英文状态下的空格，用于计算英文单词
-
         List<String> strings = new ArrayList<String>();
         for (int i = 0; i < mString.length(); i++) {
             float charWidth = getCharWidth(mTextView, (char) mString.charAt(i));
             if (width + charWidth <= widthScreen) {
                 width += charWidth;
             } else {
-                if (mString.length() - 1 >= i + 1 && isA_z((char) mString.charAt(i))) {
-                    i = isNullCharIndex;
-                    if (mString.length() != i) {
-                        strings.add(mString.substring(index, i + 1));
-                        index = i + 1;
-                        width = 0;
-                        //width += charWidth;
-                        rows++;
-                    }
-                    continue;
-                }
                 if (mString.length() != i) {
                     strings.add(mString.substring(index, i));
                     index = i;
@@ -201,7 +166,6 @@ public class ExpandTextView extends RelativeLayout {
                     rows++;
                 }
             }
-
             //第一种情况：在收缩文本行数以内 （展开和收缩都是一样的，所以就没有收缩和展开）
             if (rows <= mZoomRows && !isExpand && mString.length() - 1 == i) {
                 strings.add(mString.substring(index, i + 1));//加最后一行
@@ -280,7 +244,7 @@ public class ExpandTextView extends RelativeLayout {
      */
     private float getCharWidth(TextView textView, char c) {
         Paint paint = textView.getPaint();
-        return getFontlength(paint, c);
+        return getFontLength(paint, c) * displayMetrics.density;
     }
 
     /**

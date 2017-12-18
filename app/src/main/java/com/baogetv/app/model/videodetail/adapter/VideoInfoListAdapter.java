@@ -156,7 +156,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         private TextView title;
         private TextView playCount;
-        private ExpandTextView desc;
+        private TextView desc;
 
         private TextView share;
         private TextView collect;
@@ -174,6 +174,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         private Drawable shareGray;
         private Drawable shareRed;
         private DownloadInfo downloadInfo;
+        private ImageView arrow;
 
         public void updateInfo() {
             if (videoDetailData != null) {
@@ -315,9 +316,22 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             int size_26 = ScaleCalculator.getInstance(mContext).scaleTextSize(26);
             title = (TextView) view.findViewById(R.id.video_name);
             playCount = (TextView) view.findViewById(R.id.video_play_count);
-            desc = (ExpandTextView) view.findViewById(R.id.video_desc);
-            desc.setExpandTextSize(size_26);
-            desc.setTextSize(size_26);
+            desc = (TextView) view.findViewById(R.id.video_desc);
+            arrow = view.findViewById(R.id.arrow);
+            arrow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (playCount.getVisibility() != View.VISIBLE) {
+                        playCount.setVisibility(View.VISIBLE);
+                        desc.setVisibility(View.VISIBLE);
+                        arrow.setRotation(180);
+                    } else {
+                        playCount.setVisibility(View.GONE);
+                        desc.setVisibility(View.GONE);
+                        arrow.setRotation(0);
+                    }
+                }
+            });
             share = (TextView) view.findViewById(R.id.video_share);
             share.setOnClickListener(new View.OnClickListener() {
                 @Override
