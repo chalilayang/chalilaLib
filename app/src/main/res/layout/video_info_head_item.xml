@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <com.chalilayang.scaleview.ScaleTextView
@@ -27,16 +28,20 @@
         android:textSize="@dimen/size_24"
         android:textColor="@color/reply_time"/>
 
-    <com.chalilayang.scaleview.ScaleTextView
+    <com.chalilayang.customview.ExpandTextView
         android:id="@+id/video_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_30"
         android:layout_marginLeft="@dimen/size_30"
         android:layout_marginRight="@dimen/size_30"
-        android:text="@string/less_than_ten_words"
-        android:textSize="@dimen/size_26"
-        android:textColor="@color/reply_name"/>
+        app:descColor="@color/reply_time"
+        app:descZoomRows="2"
+        app:expandTextColor="@color/reshape_red"
+        app:expandTextClose="收缩"
+        app:expandTextCloseDrawable="@mipmap/close"
+        app:expandTextOpen="展开"
+        app:expandTextOpenDrawable="@mipmap/open"/>
 
     <com.chalilayang.scaleview.ScaleLinearLayout
         android:layout_width="match_parent"

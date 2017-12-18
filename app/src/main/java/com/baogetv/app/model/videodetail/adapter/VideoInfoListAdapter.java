@@ -21,11 +21,10 @@ import com.baogetv.app.downloader.callback.DownloadManager;
 import com.baogetv.app.downloader.domain.DownloadInfo;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.MyDownloadListener;
-import com.baogetv.app.model.usercenter.adapter.MyCacheAdapter;
-import com.baogetv.app.model.usercenter.customview.CacheInfoView;
 import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.util.TimeUtil;
 import com.bumptech.glide.Glide;
+import com.chalilayang.customview.ExpandTextView;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.nex3z.flowlayout.FlowLayout;
 
@@ -157,7 +156,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         private TextView title;
         private TextView playCount;
-        private TextView desc;
+        private ExpandTextView desc;
 
         private TextView share;
         private TextView collect;
@@ -313,9 +312,12 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             cacheRed = mContext.getResources().getDrawable(R.mipmap.cache_btn_icon);
             cacheRed.setBounds(0, 0, width, height);
 
+            int size_26 = ScaleCalculator.getInstance(mContext).scaleTextSize(26);
             title = (TextView) view.findViewById(R.id.video_name);
             playCount = (TextView) view.findViewById(R.id.video_play_count);
-            desc = (TextView) view.findViewById(R.id.video_desc);
+            desc = (ExpandTextView) view.findViewById(R.id.video_desc);
+            desc.setExpandTextSize(size_26);
+            desc.setTextSize(size_26);
             share = (TextView) view.findViewById(R.id.video_share);
             share.setOnClickListener(new View.OnClickListener() {
                 @Override

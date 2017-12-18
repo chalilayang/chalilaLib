@@ -2,6 +2,7 @@ package com.chalilayang.customview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -98,7 +99,7 @@ public class ExpandTextView extends RelativeLayout {
 		//expandText(false);
 		//初始化展开文本
 		mTextViewExpand = new TextView(mContext);
-		mTextViewExpand.setTextSize(mExpandTextSize);
+		mTextViewExpand.setTextSize(TypedValue.COMPLEX_UNIT_PX, mExpandTextSize);
 		mTextViewExpand.setTextColor(mExpandTextColor);
 		mTextViewExpand.setGravity(Gravity.CENTER_VERTICAL);
 	}
@@ -132,6 +133,25 @@ public class ExpandTextView extends RelativeLayout {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * @return 返回指定笔和指定字符串的长度
+	 */
+	public static float getFontlength(Paint paint, String str) {
+		return paint.measureText(str);
+	}
+	public static float getFontlength(Paint paint, char str) {
+		char[] tmp = new char[1];
+		tmp[0] = str;
+		return paint.measureText(new String(tmp));
+	}
+	/**
+	 * @return 返回指定笔的文字高度
+	 */
+	public static float getFontHeight(Paint paint)  {
+		Paint.FontMetrics fm = paint.getFontMetrics();
+		return fm.descent - fm.ascent;
 	}
 
 	/**
@@ -191,7 +211,7 @@ public class ExpandTextView extends RelativeLayout {
 				strings.add(mString.substring(index, i+1));//加最后一行
 				for(int j=0;j<strings.size();j++){
 					TextView textView = new TextView(mContext);
-					textView.setTextSize(mCharSize);
+					textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCharSize);
 					textView.setTextColor(mDescColor);
 					textView.setText(strings.get(j));
 					//textView.setBackgroundColor(Color.RED);
@@ -204,7 +224,7 @@ public class ExpandTextView extends RelativeLayout {
 				strings.add(mString.substring(index, i+1));//加最后一行
 				for(int j=0;j<strings.size();j++){
 					TextView textView = new TextView(mContext);
-					textView.setTextSize(mCharSize);
+					textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCharSize);
 					textView.setText(strings.get(j));
 					textView.setTextColor(mDescColor);
 					//textView.setBackgroundColor(Color.GREEN);
@@ -231,7 +251,7 @@ public class ExpandTextView extends RelativeLayout {
 				strings.add("...");
 				for(int j=0;j<strings.size();j++){
 					TextView textView = new TextView(mContext);
-					textView.setTextSize(mCharSize);
+					textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCharSize);
 					textView.setText(strings.get(j));
 					textView.setTextColor(mDescColor);
 					//textView.setBackgroundColor(Color.BLUE);
@@ -262,9 +282,8 @@ public class ExpandTextView extends RelativeLayout {
 	 * @return
 	 */
 	private float getCharWidth(TextView textView, char c) {
-		textView.setText(String.valueOf(c));
-		textView.measure(0, 0);
-		return textView.getMeasuredWidth();
+		Paint paint = textView.getPaint();
+		return getFontlength(paint, c);
 	}
 
 	/**
@@ -275,7 +294,7 @@ public class ExpandTextView extends RelativeLayout {
 	private TextView getTextView(float size){
 		TextView textView = new TextView(mContext);
 		textView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-		textView.setTextSize(size);
+		textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
 		return textView;
 	}
 	/**
@@ -286,16 +305,6 @@ public class ExpandTextView extends RelativeLayout {
 		Drawable drawable = mContext.getResources().getDrawable(resId);
 		drawable.setBounds(0,0,drawable.getMinimumWidth() ,drawable.getMinimumHeight() );
 		mTextViewExpand.setCompoundDrawables(null, null, drawable, null);
-		mTextViewExpand.setCompoundDrawablePadding(dp2px(2)) ;
-	}
-
-	/**
-	 * dp转px
-	 * @param dp
-	 * @return
-	 */
-	private int dp2px(int dp){
-		return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp,getContext().getResources().getDisplayMetrics());
 	}
 
 	/**
@@ -362,6 +371,7 @@ public class ExpandTextView extends RelativeLayout {
 	 */
 	public void setExpandTextSize(float size){
 		mExpandTextSize = size;
+		mTextViewExpand.setTextSize(TypedValue.COMPLEX_UNIT_PX, mExpandTextSize);
 		requestLay();
 	}
 
