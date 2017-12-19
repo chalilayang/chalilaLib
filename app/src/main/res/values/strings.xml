@@ -84,6 +84,7 @@
 
     <string name="my_grade">我的等级</string>
 
+    <string name="mobile_net_tip">正在使用移动流量，确定继续播放？</string>
     <string name="setting_4g_2g">缓存允许使用2G/3G/4G网络</string>
     <string name="clear_cache">清空缓存</string>
     <string name="thumb_up_push">推送赞的通知</string>

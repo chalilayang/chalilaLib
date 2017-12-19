@@ -1,5 +1,6 @@
 package com.baogetv.app.model.videodetail.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.baogetv.app.BaseFragment;
+import com.baogetv.app.CustomDialog;
 import com.baogetv.app.R;
 import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.model.videodetail.player.PlayerController;
@@ -73,15 +75,35 @@ public class PlayerFragment extends BaseFragment {
         super.onResume();
         Log.i(TAG, "onResume: ");
         showShortToast(NetWorkUtil.getNetworkStringByType(NetWorkUtil.getNetworkType(mActivity)));
+        if (NetWorkUtil.isMobile(mActivity)) {
+            if (dialog == null) {
+                CustomDialog.Builder builder = new CustomDialog.Builder(mActivity);
+                builder.setMessage(R.string.mobile_net_tip).setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (dialog != null) {
+                            dialog.cancel();
+                        }
+                    }
+                }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mNiceVideoPlayer.start();
+                        if (dialog != null) {
+                            dialog.cancel();
+                        }
+                    }
+                });
+                dialog = builder.create();
+            }
+            dialog.show();
+        } else {
+            mNiceVideoPlayer.start();
+        }
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.i(TAG, "onStart: ");
-        mNiceVideoPlayer.start();
-    }
-
+    private CustomDialog dialog;
     @Override
     public void onPause() {
         super.onPause();
@@ -93,6 +115,9 @@ public class PlayerFragment extends BaseFragment {
     public void onStop() {
         Log.i(TAG, "onStop: ");
         super.onStop();
+        if (dialog != null) {
+            dialog.cancel();
+        }
     }
 
     public void release() {

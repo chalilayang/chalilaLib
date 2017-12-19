@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.baogetv.app.bean.UserDetailBean;
+import com.baogetv.app.net.NetWorkUtil;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.baogetv.app.BaseActivity;
 import com.baogetv.app.R;
@@ -52,6 +53,12 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         initData();
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NetWorkUtil.initNetworkType(getApplicationContext());
     }
 
     private void initData() {
