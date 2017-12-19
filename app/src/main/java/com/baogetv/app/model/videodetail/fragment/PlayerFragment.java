@@ -11,11 +11,14 @@ import com.baogetv.app.BaseFragment;
 import com.baogetv.app.CustomDialog;
 import com.baogetv.app.R;
 import com.baogetv.app.bean.VideoDetailBean;
+import com.baogetv.app.event.NetStateEvent;
 import com.baogetv.app.model.videodetail.player.PlayerController;
 import com.baogetv.app.net.NetWorkUtil;
 import com.xiao.nicevideoplayer.NiceVideoPlayer;
 import com.xiao.nicevideoplayer.NiceVideoPlayerController;
 import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import static com.baogetv.app.constant.AppConstance.KEY_VIDEO_DETAIL;
 
@@ -104,6 +107,42 @@ public class PlayerFragment extends BaseFragment {
     }
 
     private CustomDialog dialog;
+
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
+
+    @Subscribe
+    public void handleNetWorkEvent(NetStateEvent event) {
+        Log.i(TAG, "handleNetWorkEvent: ");
+        if (NetWorkUtil.isMobile(mActivity) && mNiceVideoPlayer.isPlaying()) {
+            mNiceVideoPlayer.pause();
+            if (dialog == null) {
+                CustomDialog.Builder builder = new CustomDialog.Builder(mActivity);
+                builder.setMessage(R.string.mobile_net_tip).setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if (dialog != null) {
+                                    dialog.cancel();
+                                }
+                            }
+                        }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mNiceVideoPlayer.start();
+                        if (dialog != null) {
+                            dialog.cancel();
+                        }
+                    }
+                });
+                dialog = builder.create();
+            }
+            dialog.show();
+        }
+    }
+    
     @Override
     public void onPause() {
         super.onPause();

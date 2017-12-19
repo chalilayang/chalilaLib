@@ -7,8 +7,11 @@ import android.util.Log;
 
 import com.baogetv.app.R;
 import com.baogetv.app.customview.CustomToastUtil;
+import com.baogetv.app.event.NetStateEvent;
 import com.baogetv.app.util.CacheUtil;
 import com.baogetv.app.util.SettingManager;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by chalilayang on 2017/12/7.
@@ -21,6 +24,7 @@ public class NetStateReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equalsIgnoreCase(ANDROID_NET_CHANGE_ACTION)) {
             NetWorkUtil.initNetworkType(context);
+            EventBus.getDefault().post(new NetStateEvent());
             if (NetUtil.isNetworkConnected(context)) {
                 if (NetUtil.isWifiConnected(context)) {
                     Log.d("same_info>>", "net wifi");
