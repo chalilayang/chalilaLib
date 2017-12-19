@@ -13,6 +13,7 @@ import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.customview.MineLineItemView;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
+import com.baogetv.app.util.DataCleanManager;
 import com.baogetv.app.util.SettingManager;
 import com.baogetv.app.util.SystemUtil;
 
@@ -48,6 +49,7 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
             }
         });
         clearCache = (MineLineItemView) findViewById(R.id.cache_clear);
+        clearCache.setVersion(DataCleanManager.getCacheSize(getApplicationContext()));
         clearCache.setOnClickListener(this);
         thumbUpPush = (MineLineItemView) findViewById(R.id.thumb_up_push);
         thumbUpPush.setOpenState(SettingManager.allowZanNotify(getApplicationContext()));
@@ -106,6 +108,8 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
                 startActivityForResult(intent, AdviceActivity.REQUEST_CODE_ADVICE);
                 break;
             case R.id.cache_clear:
+                DataCleanManager.cleanInternalCache(getApplicationContext());
+                clearCache.setVersion(DataCleanManager.getCacheSize(getApplicationContext()));
                 break;
             case R.id.video_introduce:
                 intent = new Intent(this, WebReadActivity.class);
