@@ -63,6 +63,7 @@ public class PlayerController extends NiceVideoPlayerController
     private LinearLayout mChangeVolume;
     private ProgressBar mChangeVolumeProgress;
     private ScaleTextView loadingTip;
+    private LinearLayout mLoading;
 
     public PlayerController(Context context) {
         super(context);
@@ -114,6 +115,7 @@ public class PlayerController extends NiceVideoPlayerController
         mChangeVolume = (LinearLayout) findViewById(com.xiao.nicevideoplayer.R.id.change_volume);
         mChangeVolumeProgress = (ProgressBar) findViewById(com.xiao.nicevideoplayer.R.id.change_volume_progress);
         loadingTip = findViewById(R.id.loading_tip);
+        mLoading = findViewById(R.id.loading);
     }
 
     /**
@@ -239,48 +241,49 @@ public class PlayerController extends NiceVideoPlayerController
                 playBtn.setImageResource(R.mipmap.play_start);
                 break;
             case NiceVideoPlayer.STATE_PREPARING:
+                playBtn.setVisibility(GONE);
                 playBtn.setImageResource(R.mipmap.play_pause);
-                loadingTip.setVisibility(View.VISIBLE);
-                loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
+                mLoading.setVisibility(View.VISIBLE);
+                loadingTip.setText("正在准备...");
                 break;
             case NiceVideoPlayer.STATE_PREPARED:
                 long videoDuration = mNiceVideoPlayer.getDuration();
                 final long position = (long) (videoDuration * playerSeekBarSmall.getProgress() / 100f);
                 mNiceVideoPlayer.seekTo(position);
                 playBtn.setImageResource(R.mipmap.play_pause);
-                loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
                 startUpdateProgressTimer();
                 break;
             case NiceVideoPlayer.STATE_PLAYING:
-                loadingTip.setVisibility(View.GONE);
-                loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
+                playBtn.setVisibility(VISIBLE);
+                mLoading.setVisibility(View.GONE);
                 playBtn.setImageResource(R.mipmap.play_pause);
                 startDismissTopBottomTimer();
                 break;
             case NiceVideoPlayer.STATE_PAUSED:
-                loadingTip.setVisibility(View.GONE);
-                loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
+                mLoading.setVisibility(View.GONE);
                 playBtn.setImageResource(R.mipmap.play_start);
                 cancelDismissTopBottomTimer();
                 break;
             case NiceVideoPlayer.STATE_BUFFERING_PLAYING:
-                loadingTip.setVisibility(View.VISIBLE);
+                mLoading.setVisibility(View.VISIBLE);
+                loadingTip.setText("正在缓冲....");
                 playBtn.setImageResource(R.mipmap.play_pause);
-                loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
                 startDismissTopBottomTimer();
                 break;
             case NiceVideoPlayer.STATE_BUFFERING_PAUSED:
-                loadingTip.setVisibility(View.VISIBLE);
+                mLoading.setVisibility(View.VISIBLE);
+                loadingTip.setText("正在缓冲....");
                 playBtn.setImageResource(R.mipmap.play_pause);
-                loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
                 break;
             case NiceVideoPlayer.STATE_ERROR:
+                mLoading.setVisibility(View.GONE);
                 playBtn.setImageResource(R.mipmap.play_start);
                 cancelUpdateProgressTimer();
                 setControllerVisibility(true);
                 mNiceVideoPlayer.restart();
                 break;
             case NiceVideoPlayer.STATE_COMPLETED:
+                mLoading.setVisibility(View.GONE);
                 playBtn.setImageResource(R.mipmap.play_start);
                 cancelUpdateProgressTimer();
                 setControllerVisibility(true);
@@ -341,7 +344,6 @@ public class PlayerController extends NiceVideoPlayerController
         String dur = NiceUtil.formatTime(duration);
         timeTvSmall.setText(pos);
         durationTvSmall.setText(dur);
-        loadingTip.setText("正在缓冲...."+ FileUtil.formatFileSize(mNiceVideoPlayer.getTcpSpeed()) + "/s");
     }
 
     @Override
