@@ -86,7 +86,7 @@ public class NetWorkUtil {
 
     private static final int getMobileType(Context context) {
         int type;
-        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService("phone");
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         switch (telephonyManager.getNetworkType()) {
             case 0:
                 type = 2;
@@ -195,7 +195,6 @@ public class NetWorkUtil {
         if (isMobileConnected(context)) {
             ret = getMobileType(context) == 3;
         }
-
         return ret;
     }
 
@@ -204,7 +203,6 @@ public class NetWorkUtil {
         if (isMobileConnected(context)) {
             ret = getMobileType(context) == 4;
         }
-
         return ret;
     }
 
@@ -213,7 +211,6 @@ public class NetWorkUtil {
         if (isMobileConnected(context)) {
             ret = getMobileType(context) == 5;
         }
-
         return ret;
     }
 

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sneagle.scaleview.ScaleFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/round_corner_dialog">
+
+    <com.sneagle.scaleview.ScaleLinearLayout
+        android:layout_width="560px"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        android:orientation="vertical">
+
+        <com.sneagle.scaleview.ScaleTextView
+            android:id="@+id/tv_dialog_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="60px"
+            android:layout_marginBottom="50px"
+            android:textColor="#666666"
+            android:textSize="30px" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#e5e5e5" />
+
+        <com.sneagle.scaleview.ScaleLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="98px"
+            android:orientation="horizontal">
+
+            <com.sneagle.scaleview.ScaleButton
+                android:id="@+id/btn_dialog_negative"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:text="@string/qly_cancel"
+                android:textColor="@drawable/selector_custom_dialog_btn_text"
+                android:textSize="34px" />
+
+            <View
+                android:id="@+id/view_dialog_button_divider"
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="#e5e5e5" />
+
+            <com.sneagle.scaleview.ScaleButton
+                android:id="@+id/btn_dialog_positive"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="@color/faceunityYellow"
+                android:textSize="34px" />
+
+
+        </com.sneagle.scaleview.ScaleLinearLayout>
+
+    </com.sneagle.scaleview.ScaleLinearLayout>
+</com.sneagle.scaleview.ScaleFrameLayout>

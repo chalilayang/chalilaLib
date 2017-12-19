@@ -10,6 +10,7 @@ import com.baogetv.app.BaseFragment;
 import com.baogetv.app.R;
 import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.model.videodetail.player.PlayerController;
+import com.baogetv.app.net.NetWorkUtil;
 import com.xiao.nicevideoplayer.NiceVideoPlayer;
 import com.xiao.nicevideoplayer.NiceVideoPlayerController;
 import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
@@ -71,6 +72,7 @@ public class PlayerFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         Log.i(TAG, "onResume: ");
+        showShortToast(NetWorkUtil.getNetworkStringByType(NetWorkUtil.getNetworkType(mActivity)));
     }
 
     @Override

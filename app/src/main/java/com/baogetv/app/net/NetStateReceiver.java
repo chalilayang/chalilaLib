@@ -20,7 +20,8 @@ public class NetStateReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equalsIgnoreCase(ANDROID_NET_CHANGE_ACTION)) {
-            if (NetUtil.isNetworkAvailable(context)) {
+            NetWorkUtil.initNetworkType(context);
+            if (NetUtil.isNetworkConnected(context)) {
                 if (NetUtil.isWifiConnected(context)) {
                     Log.d("same_info>>", "net wifi");
                     CacheUtil.resumeAllCaching(context.getApplicationContext());
