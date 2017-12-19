@@ -276,7 +276,8 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             for (int index = 0, count = mData.size(); index < count; index ++) {
                 final TextView view = new TextView(mContext);
-                view.setText(mData.get(index).getName());
+                final String label = mData.get(index).getName();
+                view.setText(label);
                 view.setTextColor(mContext.getResources().getColor(R.color.search_label_text));
                 view.setGravity(Gravity.CENTER);
                 view.setIncludeFontPadding(false);
@@ -285,6 +286,14 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                         TypedValue.COMPLEX_UNIT_PX,
                         ScaleCalculator.getInstance(mContext).scaleTextSize(26));
                 view.setBackgroundResource(R.drawable.search_label_bg);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (mRef != null && mRef.get() != null) {
+                            mRef.get().onLabelClick(label);
+                        }
+                    }
+                });
                 flowLayout.addView(view);
             }
         }
@@ -440,5 +449,6 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         void onShareClick(VideoDetailBean bean);
         void onCollectClick(VideoDetailBean bean);
         void onVideoClick(String vid);
+        void onLabelClick(String label);
     }
 }

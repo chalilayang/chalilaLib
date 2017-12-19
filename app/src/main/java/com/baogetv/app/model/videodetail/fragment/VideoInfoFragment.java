@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.bean.VideoListBean;
 import com.baogetv.app.downloader.domain.DownloadInfo;
 import com.baogetv.app.model.channel.ChannelDetailActivity;
+import com.baogetv.app.model.search.SearchResultActivity;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.model.videodetail.adapter.VideoInfoListAdapter;
@@ -274,6 +276,15 @@ public class VideoInfoFragment extends BaseFragment
     public void onCollectClick(VideoDetailBean bean) {
         Log.i(TAG, "onCollectClick: ");
         EventBus.getDefault().post(new AddCollectEvent());
+    }
+
+    @Override
+    public void onLabelClick(String label) {
+        if (!TextUtils.isEmpty(label)) {
+            Intent intent = new Intent(mActivity, SearchResultActivity.class);
+            intent.putExtra(SearchResultActivity.KEY_SEARCH, label);
+            startActivity(intent);
+        }
     }
 
     @Subscribe

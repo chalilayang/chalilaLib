@@ -10,14 +10,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.baogetv.app.R;
 import com.baogetv.app.customview.CustomToastUtil;
 import com.baogetv.app.model.videodetail.customview.CustomSeekBar;
 import com.baogetv.app.model.videodetail.event.AddCollectEvent;
 import com.baogetv.app.model.videodetail.event.ShareEvent;
-import com.baogetv.app.util.FileUtil;
 import com.baogetv.app.util.FileUtils;
 import com.baogetv.app.util.StorageManager;
 import com.chalilayang.scaleview.ScaleTextView;
