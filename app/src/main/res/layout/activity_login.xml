@@ -108,20 +108,20 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <ImageView
+            <com.baogetv.app.customview.PressImageView
                 android:id="@+id/wechat_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_weixin"/>
 
-            <ImageView
+            <com.baogetv.app.customview.PressImageView
                 android:id="@+id/qq_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/size_110"
                 android:src="@mipmap/ic_qq"/>
 
-            <ImageView
+            <com.baogetv.app.customview.PressImageView
                 android:id="@+id/sina_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

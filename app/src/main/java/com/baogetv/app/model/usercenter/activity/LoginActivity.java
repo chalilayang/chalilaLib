@@ -16,6 +16,7 @@ import com.baogetv.app.bean.HistoryBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.UserDetailBean;
 import com.baogetv.app.customview.CustomToastUtil;
+import com.baogetv.app.customview.PressImageView;
 import com.baogetv.app.db.entity.HistoryItemEntity;
 import com.baogetv.app.model.usercenter.HistoryManager;
 import com.baogetv.app.model.usercenter.LoginManager;
@@ -48,9 +49,9 @@ public class LoginActivity extends BaseActivity
     private TitleInputView mobileNumView;
     private PasswordInputView passwordView;
     private View loginBtn;
-    private View wechatBtn;
-    private View sinaBtn;
-    private View qqBtn;
+    private PressImageView wechatBtn;
+    private PressImageView sinaBtn;
+    private PressImageView qqBtn;
     private View newUserRegister;
     private boolean isFetchingResult;
 
@@ -136,22 +137,22 @@ public class LoginActivity extends BaseActivity
                 LoginManager.startRegister(LoginActivity.this);
             }
         });
-        wechatBtn = findViewById(R.id.wechat_login);
-        wechatBtn.setOnClickListener(new View.OnClickListener() {
+        wechatBtn = (PressImageView) findViewById(R.id.wechat_login);
+        wechatBtn.setOnClickBack(new PressImageView.OnClickBack() {
             @Override
             public void onClick(View view) {
                 wxLogin();
             }
         });
-        sinaBtn = findViewById(R.id.sina_login);
-        sinaBtn.setOnClickListener(new View.OnClickListener() {
+        sinaBtn = (PressImageView) findViewById(R.id.sina_login);
+        sinaBtn.setOnClickBack(new PressImageView.OnClickBack() {
             @Override
             public void onClick(View view) {
                 sinaLogin();
             }
         });
-        qqBtn = findViewById(R.id.qq_login);
-        qqBtn.setOnClickListener(new View.OnClickListener() {
+        qqBtn = (PressImageView) findViewById(R.id.qq_login);
+        qqBtn.setOnClickBack(new PressImageView.OnClickBack() {
             @Override
             public void onClick(View view) {
                 qqLogin();
