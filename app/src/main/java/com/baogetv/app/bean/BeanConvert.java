@@ -83,7 +83,7 @@ public class BeanConvert {
 
     public static  VideoListAdapter.IVideoData getIVideoData(CollectBean data) {
         String picUrl = data.getPic_url();
-        String title = data.getType_name();
+        String title = data.getTitle();
         String publishTime = data.getAdd_time();
         String playCount = data.getPlay();
         String duration = data.getLength();

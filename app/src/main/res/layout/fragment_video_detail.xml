@@ -25,8 +25,8 @@
                 android:textSize="@dimen/size_26"
                 android:textColor="@color/reply_content"
                 android:drawablePadding="@dimen/size_20"
-                android:layout_marginTop="@dimen/size_10"
-                android:layout_marginBottom="@dimen/size_10"
+                android:layout_marginTop="@dimen/size_20"
+                android:layout_marginBottom="@dimen/size_20"
                 android:drawableRight="@mipmap/click_to_view"/>
         </com.chalilayang.scaleview.ScaleRelativeLayout>
         <View
