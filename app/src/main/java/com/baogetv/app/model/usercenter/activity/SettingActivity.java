@@ -110,7 +110,7 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
             case R.id.video_introduce:
                 intent = new Intent(this, WebReadActivity.class);
                 intent.putExtra(WebReadActivity.KEY_WEB_TITLE, getString(R.string.video_introduce));
-                intent.putExtra(WebReadActivity.KEY_URL, String.format(UrlConstance.KEY_WEB_BASE, "3"));
+                intent.putExtra(WebReadActivity.KEY_URL, String.format(UrlConstance.KEY_WEB_BASE, "1"));
                 startActivity(intent);
                 break;
             case R.id.user_license:
@@ -122,7 +122,7 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
             case R.id.version_right:
                 intent = new Intent(this, WebReadActivity.class);
                 intent.putExtra(WebReadActivity.KEY_WEB_TITLE, getString(R.string.version_right));
-                intent.putExtra(WebReadActivity.KEY_URL, String.format(UrlConstance.KEY_WEB_BASE, "3"));
+                intent.putExtra(WebReadActivity.KEY_URL, String.format(UrlConstance.KEY_WEB_BASE, "5"));
                 startActivity(intent);
                 break;
             case R.id.login_out:
