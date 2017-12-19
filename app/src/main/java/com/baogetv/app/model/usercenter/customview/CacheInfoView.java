@@ -8,6 +8,7 @@ import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ public class CacheInfoView extends ScaleFrameLayout {
     private TextView curSizeTv;
     private ProgressBar progressBar;
     private String sizeFormat;
+    private ImageView stateIcon;
 
     private String stateDownloading;
     private String stateDownloaded;
@@ -81,6 +83,7 @@ public class CacheInfoView extends ScaleFrameLayout {
         stateTv = root.findViewById(R.id.cache_state);
         curSizeTv = root.findViewById(R.id.cache_size);
         progressBar = root.findViewById(R.id.cache_progress);
+        stateIcon = root.findViewById(R.id.state_icon);
         colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.reshape_red));
     }
 
@@ -93,6 +96,7 @@ public class CacheInfoView extends ScaleFrameLayout {
     public void setCacheState(@Event int state) {
         switch (state) {
             case STATE_DOWNLOADED:
+                stateIcon.setImageResource(R.mipmap.download_complete);
                 progressBar.setVisibility(INVISIBLE);
                 curSizeTv.setVisibility(INVISIBLE);
                 String size = FileUtil.formatFileSize(fileSize);
@@ -103,6 +107,7 @@ public class CacheInfoView extends ScaleFrameLayout {
                 stateTv.setText(content);
                 break;
             case STATE_ERROR:
+                stateIcon.setImageResource(R.mipmap.resume_download);
                 progressBar.setVisibility(INVISIBLE);
                 curSizeTv.setVisibility(INVISIBLE);
                 stateTv.setText(stateError);
@@ -111,10 +116,13 @@ public class CacheInfoView extends ScaleFrameLayout {
             case STATE_WAITING:
             case STATE_PAUSED:
                 if (state == STATE_DOWNLOADING) {
+                    stateIcon.setImageResource(R.mipmap.pause_download);
                     stateTv.setText(stateDownloading);
                 } else if (state == STATE_WAITING) {
+                    stateIcon.setImageResource(R.mipmap.pause_download);
                     stateTv.setText(stateWaiting);
                 } else {
+                    stateIcon.setImageResource(R.mipmap.resume_download);
                     stateTv.setText(statePausing);
                 }
                 progressBar.setVisibility(VISIBLE);
