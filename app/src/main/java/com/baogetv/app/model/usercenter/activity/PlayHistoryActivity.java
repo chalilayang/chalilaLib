@@ -1,5 +1,6 @@
 package com.baogetv.app.model.usercenter.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.baogetv.app.BaseTitleActivity;
+import com.baogetv.app.CustomDialog;
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.OnLoadMoreListener;
 import com.baogetv.app.R;
@@ -45,6 +47,7 @@ public class PlayHistoryActivity extends BaseTitleActivity
     private PlayHistoryListAdapter recyclerViewAdapter;
     private OnLoadMoreListener onLoadMoreListener;
     private List<HistoryBean> historyBeanList;
+    private CustomDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +59,28 @@ public class PlayHistoryActivity extends BaseTitleActivity
 
     @Override
     public void onRightClick() {
-        delete(null, 0);
+        if (dialog == null) {
+            CustomDialog.Builder builder = new CustomDialog.Builder(this);
+            builder.setMessage(R.string.confirm_delete_all).setNegativeButton(R.string.cancel,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (dialog != null) {
+                                dialog.cancel();
+                            }
+                        }
+                    }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    delete(null, 0);
+                    if (dialog != null) {
+                        dialog.cancel();
+                    }
+                }
+            });
+            dialog = builder.create();
+        }
+        dialog.show();
     }
 
     @Override
@@ -127,6 +151,7 @@ public class PlayHistoryActivity extends BaseTitleActivity
                             historyBeanList.clear();
                         }
                         if (data != null) {
+                            Log.i(TAG, "onSuccess: " + data.size());
                             if (data.size() <= 0) {
                                 recyclerViewAdapter.setHasMoreData(false);
                             } else {
@@ -193,7 +218,7 @@ public class PlayHistoryActivity extends BaseTitleActivity
                     isLoadingData = true;
                     call.enqueue(new CustomCallBack<List<Object>>() {
                         @Override
-                        public void onSuccess(List<Object> data, String msg, int state) {
+                        public void onSuccess(List<Object> result, String msg, int state) {
                             Log.i(TAG, "onSuccess: ");
                             refreshLayout.setRefreshing(false);
                             isLoadingData = false;
@@ -228,5 +253,13 @@ public class PlayHistoryActivity extends BaseTitleActivity
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");
         getHistoryList(0, LOAD_PAGE_SIZE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (dialog != null) {
+            dialog.cancel();
+        }
     }
 }

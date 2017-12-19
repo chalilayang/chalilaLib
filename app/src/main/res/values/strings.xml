@@ -165,6 +165,7 @@
     <string name="all_delete">全部删除</string>
     <string name="tag_read">标记已读</string>
     <string name="all_tag_read">全部标记已读</string>
+    <string name="confirm_delete_all">确定全部删除？</string>
 
     <string name="download_size_format">%1$s/%2$s</string>
     <string name="downloading">缓存中</string>
