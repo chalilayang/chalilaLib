@@ -216,9 +216,9 @@ public class MineLineItemView extends RelativeLayout {
 
     public void setOpenState(boolean openState) {
         if (openState) {
-            moreView.setImageResource(R.mipmap.closed_icon);
-        } else {
             moreView.setImageResource(R.mipmap.opened_icon);
+        } else {
+            moreView.setImageResource(R.mipmap.closed_icon);
         }
         open = openState;
     }

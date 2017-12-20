@@ -51,6 +51,7 @@
     <string name="comment_detail">评论详情</string>
     <string name="no_comment_right">您暂时没有评论权限</string>
     <string name="no_zan_right">您暂时没有点赞权限</string>
+    <string name="no_cache_right">您暂时没有缓存视频的权限</string>
     <string name="replay_count">全部%d条评论</string>
 
     <string name="mine">我的</string>
@@ -85,6 +86,7 @@
     <string name="my_grade">我的等级</string>
 
     <string name="mobile_net_tip">正在使用移动流量，确定继续播放？</string>
+    <string name="mobile_net_cache_tip">正在使用移动流量，确定继续下载？</string>
     <string name="setting_4g_2g">缓存允许使用2G/3G/4G网络</string>
     <string name="clear_cache">清空缓存</string>
     <string name="thumb_up_push">推送赞的通知</string>

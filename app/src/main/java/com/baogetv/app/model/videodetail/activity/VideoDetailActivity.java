@@ -2,6 +2,7 @@ package com.baogetv.app.model.videodetail.activity;
 
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.baogetv.app.BaseActivity;
+import com.baogetv.app.CustomDialog;
 import com.baogetv.app.R;
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.apiinterface.VideoListService;
@@ -39,6 +41,7 @@ import com.baogetv.app.model.videodetail.event.ShareEvent;
 import com.baogetv.app.model.videodetail.fragment.PlayerFragment;
 import com.baogetv.app.model.videodetail.fragment.VideoDetailFragment;
 import com.baogetv.app.net.CustomCallBack;
+import com.baogetv.app.net.NetWorkUtil;
 import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageItemData;
 import com.baogetv.app.util.CacheUtil;
@@ -82,6 +85,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
             .setDisplayList(AppConstance.SHARE_LIST)
             .setShareboardclickCallback(this);
     private int screenWidth;
+    private CustomDialog cacheTipDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -345,17 +349,40 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
             } else if (LoginManager.hasMobile(getApplicationContext())) {
                 LoginManager.startChangeMobile(this);
             } else {
-                showShortToast(getString(R.string.no_comment_right));
+                showShortToast(getString(R.string.no_cache_right));
             }
         } else {
             DownloadInfo downloadInfo = CacheUtil.getDownloadInfo(this,
                     videoDetailBean.getFile_url());
             if (downloadInfo == null) {
-                if (CacheUtil.cacheVideo(getApplicationContext(), videoDetailBean)) {
-                    showShortToast("已添加至缓存列表");
-                    EventBus.getDefault().post(new FreshCacheEvent());
-                } else {
-                    showShortToast("缓存失败");
+                if (NetWorkUtil.isMobile(getApplicationContext())) {
+                    if (cacheTipDialog == null) {
+                        CustomDialog.Builder builder = new CustomDialog.Builder(this);
+                        builder.setMessage(R.string.mobile_net_cache_tip).setNegativeButton(R.string.cancel,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        if (cacheTipDialog != null) {
+                                            cacheTipDialog.cancel();
+                                        }
+                                    }
+                                }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if (cacheTipDialog != null) {
+                                    cacheTipDialog.cancel();
+                                }
+                                if (CacheUtil.cacheVideo(getApplicationContext(), videoDetailBean)) {
+                                    showShortToast("已添加至缓存列表");
+                                    EventBus.getDefault().post(new FreshCacheEvent());
+                                } else {
+                                    showShortToast("缓存失败");
+                                }
+                            }
+                        });
+                        cacheTipDialog = builder.create();
+                    }
+                    cacheTipDialog.show();
                 }
             } else {
                 showShortToast("已在缓存中");
