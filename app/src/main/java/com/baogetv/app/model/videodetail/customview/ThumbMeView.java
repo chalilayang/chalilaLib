@@ -1,6 +1,7 @@
 package com.baogetv.app.model.videodetail.customview;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -61,9 +62,13 @@ public class ThumbMeView extends ScaleFrameLayout {
         if (commentData != null) {
             Glide.with(getContext()).load(data.getUserpic_url())
                     .error(R.mipmap.user_default_icon).into(userLogoImage);
-//            userLogoImage.setLogo(data.get);
+            userLogoImage.setLogo(data.getGrade(), data.getLevel_id());
             userName.setText(data.getUsername());
-            userDesc.setVisibility(INVISIBLE);
+            if (TextUtils.isEmpty(data.getLevel_medal())) {
+                userDesc.setText(data.getLevel_medal());
+            } else {
+                userDesc.setVisibility(INVISIBLE);
+            }
             commentContent.setText(data.getContent());
             commentTime.setText(TimeUtil.getTimeStateNew(data.getAdd_time()));
         }

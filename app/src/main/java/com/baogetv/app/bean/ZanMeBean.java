@@ -17,6 +17,10 @@ public class ZanMeBean {
      * comments_id : 46
      * add_time : 1512803401
      * userpic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-12-03/5a23cd2b50309.png
+     * grade : 3
+     * intro :
+     * level_medal ：
+     * level_id : 1
      */
 
     private String video_id;
@@ -28,6 +32,10 @@ public class ZanMeBean {
     private String comments_id;
     private String add_time;
     private String userpic_url;
+    private String grade;
+    private String intro;
+    private String level_medal;
+    private String level_id;
 
     public String getVideo_id() {
         return video_id;
@@ -99,5 +107,37 @@ public class ZanMeBean {
 
     public void setUserpic_url(String userpic_url) {
         this.userpic_url = userpic_url;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
+    }
+
+    public String getLevel_medal() {
+        return level_medal;
+    }
+
+    public void setLevel_medal(String level_medal) {
+        this.level_medal = level_medal;
+    }
+
+    public String getLevel_id() {
+        return level_id;
+    }
+
+    public void setLevel_id(String level_id) {
+        this.level_id = level_id;
     }
 }
