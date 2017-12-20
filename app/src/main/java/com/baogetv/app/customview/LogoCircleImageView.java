@@ -101,6 +101,47 @@ public class LogoCircleImageView extends CircleImageView {
         invalidate();
     }
 
+    public int getProLogo(String gradeStr, String levelStr) {
+        int grade = Integer.parseInt(gradeStr);
+        int level = Integer.parseInt(levelStr);
+        int result = -1;
+        switch (level) {
+            case 1:
+                result = R.mipmap.user_grade_one_yellow_icon;
+                if (grade == 3) {
+                    result = R.mipmap.user_grade_one_icon;
+                }
+                break;
+            case 2:
+                result = R.mipmap.user_grade_two_yellow_icon;
+                if (grade == 3) {
+                    result = R.mipmap.user_grade_two_icon;
+                }
+                break;
+            case 3:
+                result = R.mipmap.user_grade_three_yellow_icon;
+                if (grade == 3) {
+                    result = R.mipmap.user_grade_three_icon;
+                }
+                break;
+            case 4:
+                result = R.mipmap.user_grade_four_yellow_icon;
+                if (grade == 3) {
+                    result = R.mipmap.user_grade_four_icon;
+                }
+                break;
+            case 5:
+                result = R.mipmap.user_grade_five_yellow_icon;
+                if (grade == 3) {
+                    result = R.mipmap.user_grade_five_icon;
+                }
+                break;
+            default:
+                break;
+        }
+        return result;
+    }
+
     public void setLogo(String gradeStr, String levelStr) {
         int grade = Integer.parseInt(gradeStr);
         int level = Integer.parseInt(levelStr);

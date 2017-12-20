@@ -1,6 +1,7 @@
 package com.baogetv.app.model.usercenter.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -198,7 +199,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     .placeholder(R.mipmap.user_default_icon)
                     .error(R.mipmap.user_default_icon)
                     .into(userIcon);
-            Glide.with(this).load(detailBean.getLevel_pic_url()).into(gradeIcon);
+//            Glide.with(this).load(detailBean.getLevel_pic_url()).into(gradeIcon);
+            int logo = userIcon.getProLogo(detailBean.getGrade(), detailBean.getLevel_id());
+            if (logo > 0) {
+                gradeIcon.setImageResource(logo);
+            }
             userIcon.setLogo(detailBean.getGrade(), detailBean.getLevel_id());
             userName.setText(detailBean.getUsername());
             if (TextUtils.isEmpty(detailBean.getMobile())) {
@@ -208,7 +213,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 mobileNum.setText(detailBean.getMobile());
                 mobileNumBtn.setText(getString(R.string.change_mobile_num));
             }
-            gradeDesc.setText(detailBean.getLevel_name());
+            gradeDesc.setText(detailBean.getMedal());
             int height = 0;
             try {
                 height = Integer.parseInt(detailBean.getHeight());
