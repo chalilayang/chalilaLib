@@ -13,6 +13,7 @@ import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.customview.MineLineItemView;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
+import com.baogetv.app.util.CacheUtil;
 import com.baogetv.app.util.DataCleanManager;
 import com.baogetv.app.util.SettingManager;
 import com.baogetv.app.util.SystemUtil;
@@ -46,6 +47,9 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
             public void onMoreViewClick() {
                 netSet.setOpenState(!netSet.isOpen());
                 SettingManager.putAllowCacheWithMobile(getApplicationContext(), netSet.isOpen());
+                if (!SettingManager.allowCacheWithMobile(getApplicationContext())) {
+                    CacheUtil.pauseAllCaching(getApplicationContext());
+                }
             }
         });
         clearCache = (MineLineItemView) findViewById(R.id.cache_clear);
