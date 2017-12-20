@@ -17,7 +17,6 @@ import com.baogetv.app.downloader.callback.DownloadManager;
 import com.baogetv.app.downloader.domain.DownloadInfo;
 import com.baogetv.app.model.usercenter.MyDownloadListener;
 import com.baogetv.app.model.usercenter.customview.CacheInfoView;
-import com.baogetv.app.util.FileUtil;
 import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleCalculator;
 
@@ -91,6 +90,26 @@ public class MyCacheAdapter
             cacheInfoView.setTitleTv(data.getName());
             downloadInfo = downloadManager.getDownloadById(data.getUrl().hashCode());
             if (downloadInfo != null) {
+                cacheInfoView.setControlListener(new CacheInfoView.ControlListener() {
+                    @Override
+                    public void onCacheBtnClick(View view) {
+                        switch (downloadInfo.getStatus()) {
+                            case DownloadInfo.STATUS_NONE:
+                            case DownloadInfo.STATUS_PAUSED:
+                            case DownloadInfo.STATUS_ERROR:
+                                downloadManager.resume(downloadInfo);
+                                break;
+                            case DownloadInfo.STATUS_DOWNLOADING:
+                            case DownloadInfo.STATUS_PREPARE_DOWNLOAD:
+                            case DownloadInfo.STATUS_WAIT:
+                                downloadManager.pause(downloadInfo);
+                                break;
+//                            case DownloadInfo.STATUS_COMPLETED:
+//                                downloadManager.remove(downloadInfo);
+//                                break;
+                        }
+                    }
+                });
                 downloadInfo.setDownloadListener(
                         new MyDownloadListener(new SoftReference(ViewHolder.this)) {
                             @Override
@@ -129,7 +148,6 @@ public class MyCacheAdapter
         }
 
         private void refresh() {
-            cacheInfoView.update(30 * 1024 * 1024, 100 * 1024 * 1024);
             if (downloadInfo == null) {
                 return;
             }

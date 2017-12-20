@@ -19,6 +19,7 @@ import com.chalilayang.scaleview.ScaleFrameLayout;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.ref.SoftReference;
 
 /**
  * Created by chalilayang on 2017/11/19.
@@ -85,6 +86,14 @@ public class CacheInfoView extends ScaleFrameLayout {
         progressBar = root.findViewById(R.id.cache_progress);
         stateIcon = root.findViewById(R.id.state_icon);
         colorSpan = new ForegroundColorSpan(getResources().getColor(R.color.reshape_red));
+        stateIcon.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mRef != null && mRef.get() != null) {
+                    mRef.get().onCacheBtnClick(stateIcon);
+                }
+            }
+        });
     }
 
     public void setTitleTv(String title) {
@@ -147,5 +156,15 @@ public class CacheInfoView extends ScaleFrameLayout {
     public void update(long progressSize, long sum_size) {
         curSize = progressSize;
         fileSize = sum_size;
+    }
+
+    private SoftReference<ControlListener> mRef;
+    public void setControlListener(ControlListener listener) {
+        if (listener != null) {
+            mRef = new SoftReference<ControlListener>(listener);
+        }
+    }
+    public interface ControlListener {
+        void onCacheBtnClick(View view);
     }
 }
