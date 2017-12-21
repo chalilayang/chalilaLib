@@ -17,6 +17,18 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+    productFlavors {
+//        default_channel {}
+        "_yingyongbao" {}
+//        "_1" {}
+//        "_2" {}
+//        "_3" {}
+//        "_4" {}
+//        "_5" {}
+    }
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
     signingConfigs {
         release {
             keyAlias 'key0'
@@ -38,7 +50,7 @@ android {
             signingConfig signingConfigs.release
         }
         debug {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
         }
