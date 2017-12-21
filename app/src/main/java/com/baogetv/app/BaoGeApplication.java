@@ -61,7 +61,7 @@ public class BaoGeApplication extends Application {
         QueuedWork.isUseThreadPool = false;
         UMShareAPI.get(this);
 
-        PlatformConfig.setWeixin(AppConstance.WEICHAT_APP_ID, AppConstance.WEICHAT_APP_SECRET);
+        PlatformConfig.setWeixin(AppConstance.WE_CHAT_APP_ID, AppConstance.WE_CHAT_APP_SECRET);
         PlatformConfig.setQQZone(AppConstance.QQ_APP_ID, AppConstance.QQ_APP_KEY);
 
         StyleManager s = new StyleManager();
