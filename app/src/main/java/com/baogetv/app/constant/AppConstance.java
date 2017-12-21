@@ -33,8 +33,8 @@ public class AppConstance {
     public static final String WEICHAT_APP_ID = "wx5f458bd391d3d86f";
     public static final String WEICHAT_APP_SECRET = "82a20462f78cd6f099d587026713b6e4";
 
-    public static final String SINA_APP_ID = "wx5f458bd391d3d86f";
-    public static final String SINA_APP_SECRET = null;
+    public static final String SINA_APP_ID = "3430665296";
+    public static final String SINA_APP_SECRET = "7f18b7eba3a3256a93ea9ef71b3e64ab";
 
     public static final SHARE_MEDIA[] SHARE_LIST = {SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
             SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SINA /*,SHARE_MEDIA.DOUBAN*/};
