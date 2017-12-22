@@ -90,6 +90,10 @@ public class CommentView extends ScaleFrameLayout
     }
 
     public void setCommentData(final CommentData data, int pos) {
+        setCommentData(data, pos, true);
+    }
+
+    public void setCommentData(final CommentData data, int pos, boolean childVisible) {
         commentIndex = pos;
         commentData = data;
         replyContainer.setVisibility(GONE);
@@ -143,30 +147,32 @@ public class CommentView extends ScaleFrameLayout
             userDesc.setText(data.getOwner().getDesc());
             commentContent.setText(data.getContent());
             commentTime.setText(TimeUtil.getTimeStateNew(String.valueOf(data.getTime())));
-            List<ReplyData> replyDataList = commentData.getReplyList();
-            if (replyDataList != null) {
-                int count = replyDataList.size();
-                if (count > 0) {
-                    replyContainer.setVisibility(VISIBLE);
-                    for (int index = 0; index < count; index ++) {
-                        if (index == 3) {
-                            moreReplyBtn.setText(String.format(moreReplyFormat, count));
-                            moreReplyBtn.setOnClickListener(new OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    if (mRef != null && mRef.get() != null) {
-                                        mRef.get().onMoreComment(commentData, commentIndex);
+            if (childVisible) {
+                List<ReplyData> replyDataList = commentData.getReplyList();
+                if (replyDataList != null) {
+                    int count = replyDataList.size();
+                    if (count > 0) {
+                        replyContainer.setVisibility(VISIBLE);
+                        for (int index = 0; index < count; index ++) {
+                            if (index == 3) {
+                                moreReplyBtn.setText(String.format(moreReplyFormat, count));
+                                moreReplyBtn.setOnClickListener(new OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        if (mRef != null && mRef.get() != null) {
+                                            mRef.get().onMoreComment(commentData, commentIndex);
+                                        }
                                     }
-                                }
-                            });
-                            replyContainer.addView(moreReplyBtn, index);
-                            break;
+                                });
+                                replyContainer.addView(moreReplyBtn, index);
+                                break;
+                            }
+                            ReplyData replyData = replyDataList.get(index);
+                            ReplyView replyView = new ReplyView(getContext());
+                            replyView.setReplyClickListener(this);
+                            replyView.setReply(replyData, commentIndex);
+                            replyContainer.addView(replyView, index);
                         }
-                        ReplyData replyData = replyDataList.get(index);
-                        ReplyView replyView = new ReplyView(getContext());
-                        replyView.setReplyClickListener(this);
-                        replyView.setReply(replyData, commentIndex);
-                        replyContainer.addView(replyView, index);
                     }
                 }
             }

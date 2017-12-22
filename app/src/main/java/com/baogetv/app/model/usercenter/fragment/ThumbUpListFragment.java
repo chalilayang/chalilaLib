@@ -1,5 +1,6 @@
 package com.baogetv.app.model.usercenter.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import com.baogetv.app.bean.ResponseMeBean;
 import com.baogetv.app.bean.ZanMeBean;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.adapter.ThumbUpListAdapter;
+import com.baogetv.app.model.videodetail.activity.CommentDetailActivity;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.customview.RecyclerViewDivider;
@@ -30,6 +32,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
+
+import static com.baogetv.app.constant.AppConstance.KEY_VIDEO_ID;
+import static com.baogetv.app.model.videodetail.activity.CommentDetailActivity.KEY_COMMENT_ID;
 
 
 public class ThumbUpListFragment extends BaseFragment
@@ -154,6 +159,9 @@ public class ThumbUpListFragment extends BaseFragment
 
     @Override
     public void onItemClick(ZanMeBean data, int position) {
-
+        Intent intent = new Intent(mActivity, CommentDetailActivity.class);
+        intent.putExtra(KEY_VIDEO_ID, data.getVideo_id());
+        intent.putExtra(KEY_COMMENT_ID, data.getComments_id());
+        mActivity.startActivity(intent);
     }
 }

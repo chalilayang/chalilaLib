@@ -28,24 +28,25 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import static com.baogetv.app.PagerFragment.PAGE_DATA;
+import static com.baogetv.app.constant.AppConstance.KEY_VIDEO_ID;
 
 public class CommentDetailActivity extends BaseTitleActivity {
     private static final String TAG = "CommentDetailActivity";
     private CommentDetailFragment fragment;
-    private CommentData commentData;
-    private VideoDetailData videoDetailData;
-    public static final String KEY_COMMENT_DATA = "COMMENT_DATA";
+    private String videoID;
+    public static final String KEY_COMMENT_ID = "COMMENT_ID";
     private EditText editText;
     private View sendBtn;
     private View editContainer;
+    private String commentId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitleActivity(getString(R.string.comment_detail));
         initView();
-        commentData = getIntent().getParcelableExtra(KEY_COMMENT_DATA);
-        videoDetailData = getIntent().getParcelableExtra(PAGE_DATA);
-        showFragment(videoDetailData, commentData);
+        commentId = getIntent().getStringExtra(KEY_COMMENT_ID);
+        videoID = getIntent().getStringExtra(KEY_VIDEO_ID);
+        showFragment(videoID, commentId);
     }
 
     public void initView() {
@@ -126,7 +127,7 @@ public class CommentDetailActivity extends BaseTitleActivity {
     protected int getRootView() {
         return R.layout.activity_comment_detail;
     }
-    private void showFragment(VideoDetailData v, CommentData c) {
+    private void showFragment(String v, String c) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (fragment == null) {
             fragment = CommentDetailFragment.newInstance(v, c);

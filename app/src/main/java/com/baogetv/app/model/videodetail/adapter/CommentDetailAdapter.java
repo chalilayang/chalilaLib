@@ -73,7 +73,7 @@ public class CommentDetailAdapter
                             ((View)replayCount.getParent()).setVisibility(View.GONE);
                         }
                     }
-                    mCommentView.setCommentData(data, pos);
+                    mCommentView.setCommentData(data, pos, false);
                     mCommentView.setOnCommentListener(CommentDetailAdapter.this);
                 }
             }

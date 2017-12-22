@@ -46,8 +46,9 @@ import java.util.List;
 
 import retrofit2.Call;
 
+import static com.baogetv.app.constant.AppConstance.KEY_VIDEO_ID;
 import static com.baogetv.app.model.usercenter.activity.MemberDetailActivity.KEY_MEMBER_ID;
-import static com.baogetv.app.model.videodetail.activity.CommentDetailActivity.KEY_COMMENT_DATA;
+import static com.baogetv.app.model.videodetail.activity.CommentDetailActivity.KEY_COMMENT_ID;
 
 
 public class CommentListFragment extends BaseItemFragment
@@ -273,10 +274,9 @@ public class CommentListFragment extends BaseItemFragment
     @Override
     public void onItemClick(CommentData data, int position) {
         Log.i(TAG, "onItemClick: " + position);
-        Log.i(TAG, "onMoreComment: ");
         Intent intent = new Intent(mActivity, CommentDetailActivity.class);
-        intent.putExtra(PAGE_DATA, videoDetailData);
-        intent.putExtra(KEY_COMMENT_DATA, data);
+        intent.putExtra(KEY_VIDEO_ID, videoDetailData.videoDetailBean.getId());
+        intent.putExtra(KEY_COMMENT_ID, data.getBean().getId());
         mActivity.startActivity(intent);
     }
 
@@ -330,8 +330,8 @@ public class CommentListFragment extends BaseItemFragment
     public void onMoreComment(CommentData data, int commentIndex) {
         Log.i(TAG, "onMoreComment: ");
         Intent intent = new Intent(mActivity, CommentDetailActivity.class);
-        intent.putExtra(PAGE_DATA, videoDetailData);
-        intent.putExtra(KEY_COMMENT_DATA, data);
+        intent.putExtra(KEY_VIDEO_ID, videoDetailData.videoDetailBean.getId());
+        intent.putExtra(KEY_COMMENT_ID, data.getBean().getId());
         mActivity.startActivity(intent);
     }
 
