@@ -89,7 +89,7 @@ public class CommentReportFragment extends BaseFragment implements ItemViewHolde
             public void onClick(View view) {
                 if (typeDatas != null && typeDatas.size() > curSelect) {
                     String type = typeDatas.get(curSelect).bean.getId();
-                    String content = typeDatas.get(curSelect).bean.getName();
+                    String content = commentData.getContent();
                     String videoId = commentData.getBean().getVideo_id();
                     String userId = commentData.getBean().getUser_id();
                     report(type, content, videoId, userId);

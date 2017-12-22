@@ -37,7 +37,7 @@ public class MyCollectActivity extends BaseTitleActivity
         implements SwipeRefreshLayout.OnRefreshListener,
         ItemViewHolder.ItemClickListener<CollectBean>,
         ItemViewHolder.ItemDeleteListener<CollectBean>,
-        OnLoadMoreListener.DataLoadingSubject  {
+        OnLoadMoreListener.DataLoadingSubject {
     private static final String TAG = "MyCollectActivity";
     private static final int LOAD_PAGE_SIZE = 20;
     private SwipeRefreshLayout refreshLayout;

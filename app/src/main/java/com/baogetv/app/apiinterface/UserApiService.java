@@ -370,6 +370,7 @@ public interface UserApiService {
      *
      * @param video_id：（视频ID）
      * @param token：（Token，登录凭证）
+     * @param id：（ID）
      * @param p：（分页，第几页）
      * @param r：（分页，每页显示多少条数据）
      * @return
@@ -379,6 +380,7 @@ public interface UserApiService {
     Call<ResponseBean<List<CommentListBean>>> getCommentList(
             @Field("video_id") String video_id,
             @Field("token") String token,
+            @Field("id") String id,
             @Field("p") String p,
             @Field("r") String r
     );

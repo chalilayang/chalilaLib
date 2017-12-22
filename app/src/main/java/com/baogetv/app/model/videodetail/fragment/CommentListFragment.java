@@ -164,7 +164,7 @@ public class CommentListFragment extends BaseItemFragment
         }
         Call<ResponseBean<List<CommentListBean>>> call = userApiService.getCommentList(
                         videoDetailData.videoDetailBean.getId(),
-                token, String.valueOf(pageNum), String.valueOf(LOAD_PAGE_SIZE));
+                token, null, String.valueOf(pageNum), String.valueOf(LOAD_PAGE_SIZE));
         if (call != null) {
             refreshLayout.setRefreshing(true);
             isLoadingData = true;

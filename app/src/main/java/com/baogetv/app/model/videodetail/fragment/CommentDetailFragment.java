@@ -107,7 +107,6 @@ public class CommentDetailFragment extends BaseFragment
             recyclerView.addItemDecoration(divider);
             recyclerView.setAdapter(recyclerViewAdapter);
             refreshLayout.setOnRefreshListener(this);
-            refreshLayout.setEnabled(false);
             contentView = view;
             getCommentList(commentData);
         }
@@ -122,32 +121,6 @@ public class CommentDetailFragment extends BaseFragment
             fragment = CommentReportFragment.newInstance(commentData);
         }
         transaction.replace(R.id.floating_fragment_container, fragment).commit();
-    }
-
-    public void getCommentList(CommentData commentData) {
-        commentList.clear();
-        CommentData data = new CommentData();
-        CommentListBean listBean = commentData.getBean();
-        data.setTime(listBean.getAdd_time());
-        data.setBean(listBean);
-        commentList.add(data);
-        List<CommentListBean.DataBean> replyDataList
-                = commentData.getBean().getChild();
-        if (replyDataList != null) {
-            List<CommentListBean> beanList = new ArrayList<>();
-            for (CommentListBean.DataBean dataBean: replyDataList) {
-                CommentListBean commentBean = BeanConvert.getCommentListBean(dataBean);
-                beanList.add(commentBean);
-            }
-            for (int i = 0; i < beanList.size(); i ++) {
-                data = new CommentData();
-                listBean = beanList.get(i);
-                data.setTime(listBean.getAdd_time());
-                data.setBean(listBean);
-                commentList.add(data);
-            }
-            recyclerViewAdapter.update(commentList);
-        }
     }
 
     @Subscribe
@@ -190,6 +163,7 @@ public class CommentDetailFragment extends BaseFragment
     @Override
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");
+        getCommentList(commentData);
     }
 
     @Override
@@ -370,5 +344,63 @@ public class CommentDetailFragment extends BaseFragment
         Intent intent = new Intent(mActivity, MemberDetailActivity.class);
         intent.putExtra(KEY_MEMBER_ID, uid);
         mActivity.startActivity(intent);
+    }
+
+    public void getCommentList(CommentData videoDetailData) {
+        Log.i(TAG, "getCommentList: ");
+        UserApiService userApiService
+                = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String token = null;
+        if (LoginManager.hasLogin(mActivity)) {
+            token = LoginManager.getUserToken(mActivity);
+        }
+        Call<ResponseBean<List<CommentListBean>>> call = userApiService.getCommentList(
+                videoDetailData.getBean().getVideo_id(),
+                token,
+                videoDetailData.getBean().getId(), null, null);
+        if (call != null) {
+            refreshLayout.setRefreshing(true);
+            call.enqueue(new CustomCallBack<List<CommentListBean>>() {
+                @Override
+                public void onSuccess(List<CommentListBean> bean, String msg, int state) {
+                    commentList.clear();
+                    if (bean != null) {
+                        if (bean.size() <= 0) {
+                            recyclerViewAdapter.setHasMoreData(false);
+                        } else {
+                            CommentListBean listBean = bean.get(0);
+                            CommentData data = new CommentData();
+                            data.setTime(listBean.getAdd_time());
+                            data.setBean(listBean);
+                            commentList.add(data);
+                            List<CommentListBean.DataBean> replyDataList = listBean.getChild();
+                            if (replyDataList != null) {
+                                List<CommentListBean> beanList = new ArrayList<>();
+                                for (CommentListBean.DataBean dataBean: replyDataList) {
+                                    CommentListBean commentBean = BeanConvert.getCommentListBean(dataBean);
+                                    beanList.add(commentBean);
+                                }
+                                for (int i = 0; i < beanList.size(); i ++) {
+                                    data = new CommentData();
+                                    listBean = beanList.get(i);
+                                    data.setTime(listBean.getAdd_time());
+                                    data.setBean(listBean);
+                                    commentList.add(data);
+                                }
+                                recyclerViewAdapter.update(commentList);
+                            }
+                        }
+                    }
+                    recyclerViewAdapter.update(commentList);
+                    refreshLayout.setRefreshing(false);
+                }
+
+                @Override
+                public void onFailed(String error, int state) {
+                    showShortToast(error);
+                    refreshLayout.setRefreshing(false);
+                }
+            });
+        }
     }
 }
