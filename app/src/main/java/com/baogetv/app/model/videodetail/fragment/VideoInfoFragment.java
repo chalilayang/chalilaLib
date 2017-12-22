@@ -218,6 +218,43 @@ public class VideoInfoFragment extends BaseFragment
         }
     }
 
+    private void getVideoRelated() {
+        String vid = videoDetailData.videoDetailBean.getId();
+        VideoListService listService
+                = RetrofitManager.getInstance().createReq(VideoListService.class);
+        Call<ResponseBean<List<VideoListBean>>> call = listService.getVideoListRelated(vid);
+        if (call != null) {
+            refreshLayout.setRefreshing(true);
+            isLoadingData = true;
+            call.enqueue(new CustomCallBack<List<VideoListBean>>() {
+                @Override
+                public void onSuccess(List<VideoListBean> listBeen, String msg, int state) {
+                    recyclerViewAdapter.setHasMoreData(false);
+                    if (listBeen != null) {
+                        if (listBeen.size() > 0) {
+                            for (int index = 0, count = listBeen.size(); index < count; index ++) {
+                                VideoListBean bean = listBeen.get(index);
+                                VideoListAdapter.IVideoData iVideoData
+                                        = BeanConvert.getIVideoData(bean, true);
+                                iVideoDatas.add(iVideoData);
+                            }
+                        }
+                    }
+                    recyclerViewAdapter.updateList(iVideoDatas);
+                    refreshLayout.setRefreshing(false);
+                    isLoadingData = false;
+                }
+
+                @Override
+                public void onFailed(String error, int state) {
+                    showShortToast(error);
+                    refreshLayout.setRefreshing(false);
+                    isLoadingData = false;
+                }
+            });
+        }
+    }
+
     private void getVideoDetail() {
         VideoListService listService
                 = RetrofitManager.getInstance().createReq(VideoListService.class);

@@ -47,6 +47,17 @@ public interface VideoListService {
             @Field("r") String r);
 
     /**
+     * 关联视频列表
+     *
+     * @param id（视频ID）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("index.php?s=/Video/same")
+    Call<ResponseBean<List<VideoListBean>>> getVideoListRelated(
+            @Field("id") String id);
+
+    /**
      * 排行榜
      *
      * @param type             排行榜类型：0.总榜 1.周榜 2.月榜
