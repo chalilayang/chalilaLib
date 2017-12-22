@@ -20,7 +20,6 @@ import com.baogetv.app.bean.ChannelDetailBean;
 import com.baogetv.app.bean.ResponseBean;
 import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.bean.VideoListBean;
-import com.baogetv.app.downloader.domain.DownloadInfo;
 import com.baogetv.app.model.channel.ChannelDetailActivity;
 import com.baogetv.app.model.search.SearchResultActivity;
 import com.baogetv.app.model.usercenter.LoginManager;
@@ -35,7 +34,6 @@ import com.baogetv.app.model.videodetail.event.FreshInfoEvent;
 import com.baogetv.app.model.videodetail.event.ShareEvent;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
-import com.baogetv.app.util.CacheUtil;
 import com.chalilayang.customview.RecyclerViewDivider;
 import com.chalilayang.scaleview.ScaleCalculator;
 
@@ -61,6 +59,7 @@ public class VideoInfoFragment extends BaseFragment
 
     private static final String TAG = "VideoInfoFragment";
     private static final int LOAD_PAGE_SIZE = 10;
+    private static final int VIDEO_COUNT = 15;
     private View contentView;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
@@ -70,6 +69,7 @@ public class VideoInfoFragment extends BaseFragment
     private List<VideoListAdapter.IVideoData> iVideoDatas;
     private ChannelDetailBean channelDetailBean;
     private OnLoadMoreListener onLoadMoreListener;
+    private boolean hasGotRelated;
 
     public VideoInfoFragment() {
         iVideoDatas = new ArrayList<>();
@@ -88,18 +88,23 @@ public class VideoInfoFragment extends BaseFragment
         if (getArguments() != null) {
             videoDetailData = getArguments().getParcelable(PAGE_DATA);
         }
+        hasGotRelated = false;
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerViewAdapter = new VideoInfoListAdapter(getActivity());
         onLoadMoreListener = new OnLoadMoreListener(layoutManager, this) {
             @Override
             public void onLoadMore(int totalItemCount) {
                 Log.i(TAG, "onLoadMore: " + totalItemCount);
-                int more = iVideoDatas.size() % LOAD_PAGE_SIZE;
-                int pageNum = iVideoDatas.size() / LOAD_PAGE_SIZE + 1;
-                if (more != 0) {
+                if (hasGotRelated) {
                     recyclerViewAdapter.setHasMoreData(false);
                 } else {
-                    getVideoList(pageNum);
+                    int more = iVideoDatas.size() % LOAD_PAGE_SIZE;
+                    int pageNum = iVideoDatas.size() / LOAD_PAGE_SIZE + 1;
+                    if (more != 0) {
+                        recyclerViewAdapter.setHasMoreData(false);
+                    } else {
+                        getVideoList(pageNum);
+                    }
                 }
             }
         };
@@ -193,13 +198,24 @@ public class VideoInfoFragment extends BaseFragment
                     }
                     if (listBeen != null) {
                         if (listBeen.size() <= 0) {
-                            recyclerViewAdapter.setHasMoreData(false);
+                            if (!hasGotRelated) {
+                                if (iVideoDatas.size() < VIDEO_COUNT) {
+                                    getVideoRelated(VIDEO_COUNT - iVideoDatas.size());
+                                }
+                            } else {
+                                recyclerViewAdapter.setHasMoreData(false);
+                            }
                         } else {
                             for (int index = 0, count = listBeen.size(); index < count; index ++) {
                                 VideoListBean bean = listBeen.get(index);
                                 VideoListAdapter.IVideoData iVideoData
                                         = BeanConvert.getIVideoData(bean, true);
                                 iVideoDatas.add(iVideoData);
+                            }
+                            if (listBeen.size() < LOAD_PAGE_SIZE) {
+                                if (iVideoDatas.size() < VIDEO_COUNT) {
+                                    getVideoRelated(VIDEO_COUNT - iVideoDatas.size());
+                                }
                             }
                         }
                     }
@@ -218,11 +234,12 @@ public class VideoInfoFragment extends BaseFragment
         }
     }
 
-    private void getVideoRelated() {
+    private void getVideoRelated(int size) {
         String vid = videoDetailData.videoDetailBean.getId();
         VideoListService listService
                 = RetrofitManager.getInstance().createReq(VideoListService.class);
-        Call<ResponseBean<List<VideoListBean>>> call = listService.getVideoListRelated(vid);
+        Call<ResponseBean<List<VideoListBean>>> call = listService.getVideoListRelated(
+                vid, String.valueOf(0), String.valueOf(size));
         if (call != null) {
             refreshLayout.setRefreshing(true);
             isLoadingData = true;
@@ -230,6 +247,7 @@ public class VideoInfoFragment extends BaseFragment
                 @Override
                 public void onSuccess(List<VideoListBean> listBeen, String msg, int state) {
                     recyclerViewAdapter.setHasMoreData(false);
+                    hasGotRelated = true;
                     if (listBeen != null) {
                         if (listBeen.size() > 0) {
                             for (int index = 0, count = listBeen.size(); index < count; index ++) {
@@ -344,6 +362,7 @@ public class VideoInfoFragment extends BaseFragment
      */
     @Override
     public void onRefresh() {
+        hasGotRelated = false;
         getChannelDetail();
         getVideoList(0);
     }

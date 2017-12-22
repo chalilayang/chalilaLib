@@ -50,12 +50,16 @@ public interface VideoListService {
      * 关联视频列表
      *
      * @param id（视频ID）
+     * @param p：（分页，第几页）
+     * @param r：（分页，每页显示多少条数据）
      * @return
      */
     @FormUrlEncoded
     @POST("index.php?s=/Video/same")
     Call<ResponseBean<List<VideoListBean>>> getVideoListRelated(
-            @Field("id") String id);
+            @Field("id") String id,
+            @Field("p") String p,
+            @Field("r") String r);
 
     /**
      * 排行榜

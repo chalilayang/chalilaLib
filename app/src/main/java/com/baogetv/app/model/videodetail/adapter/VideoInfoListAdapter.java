@@ -149,7 +149,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemCount() {
-        return mValues.size() + 1;
+        return mValues.size() + 2;
     }
 
     public class HeadViewHolder extends RecyclerView.ViewHolder {
