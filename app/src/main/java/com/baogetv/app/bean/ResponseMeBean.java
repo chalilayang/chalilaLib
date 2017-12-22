@@ -6,49 +6,45 @@ package com.baogetv.app.bean;
 
 public class ResponseMeBean {
 
-    /**
-     * video_id : 1
-     * pic_url : http://localhost/test2/Uploads/Picture/2016-12-05/58451c922375d.png
-     * title : 测试
-     * type_name : 频道1
-     * username : 15913196454
-     * userpic : http://localhost/test2/Uploads/Picture/2016-12-05/58451c922375d.png
-     * id : 2
-     * content : 内容
-     * add_time : 2017-11-12 09:16:20
-     * pic : 1
-     * userpicid : 1
-     */
 
-    private String video_id;
-    private String pic_url;
-    private String title;
-    private String type_name;
-    private String username;
-    private String userpic;
-    private String id;
-    private String content;
-    private String add_time;
-    private String pic;
-    private String userpicid;
     /**
+     * video_id : 15
+     * pic : 146
+     * title : 逝者安息-纪念达拉斯
+     * type_name : 达拉斯
+     * username : 安静
+     * userpic : 87
      * level_id : 1
      * level_name : LV.1
      * level_medal : 臂维40可以光膀子练
      * grade : 2
      * intro : 巴巴爸
+     * id : 430
+     * add_time : 1513864907
+     * content : Jjj
      * status : 1
-     * userpic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-12-13/5a30d531adef1.png
+     * pic_url : http://videos.baoge.tv/Uploads/Picture/2017-12-20/5a39bbb9bf262.jpg
+     * userpic_url : http://videos.baoge.tv/Uploads/Picture/2017-12-13/5a30d531adef1.png
      * is_collect : 0
      * is_like : 0
      */
 
+    private String video_id;
+    private String pic;
+    private String title;
+    private String type_name;
+    private String username;
+    private String userpic;
     private String level_id;
     private String level_name;
     private String level_medal;
     private String grade;
     private String intro;
+    private String id;
+    private String add_time;
+    private String content;
     private String status;
+    private String pic_url;
     private String userpic_url;
     private String is_collect;
     private String is_like;
@@ -61,12 +57,12 @@ public class ResponseMeBean {
         this.video_id = video_id;
     }
 
-    public String getPic_url() {
-        return pic_url;
+    public String getPic() {
+        return pic;
     }
 
-    public void setPic_url(String pic_url) {
-        this.pic_url = pic_url;
+    public void setPic(String pic) {
+        this.pic = pic;
     }
 
     public String getTitle() {
@@ -99,46 +95,6 @@ public class ResponseMeBean {
 
     public void setUserpic(String userpic) {
         this.userpic = userpic;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getAdd_time() {
-        return add_time;
-    }
-
-    public void setAdd_time(String add_time) {
-        this.add_time = add_time;
-    }
-
-    public String getPic() {
-        return pic;
-    }
-
-    public void setPic(String pic) {
-        this.pic = pic;
-    }
-
-    public String getUserpicid() {
-        return userpicid;
-    }
-
-    public void setUserpicid(String userpicid) {
-        this.userpicid = userpicid;
     }
 
     public String getLevel_id() {
@@ -181,12 +137,44 @@ public class ResponseMeBean {
         this.intro = intro;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAdd_time() {
+        return add_time;
+    }
+
+    public void setAdd_time(String add_time) {
+        this.add_time = add_time;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPic_url() {
+        return pic_url;
+    }
+
+    public void setPic_url(String pic_url) {
+        this.pic_url = pic_url;
     }
 
     public String getUserpic_url() {

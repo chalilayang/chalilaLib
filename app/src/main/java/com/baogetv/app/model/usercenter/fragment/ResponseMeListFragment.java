@@ -25,6 +25,7 @@ import com.baogetv.app.model.usercenter.activity.MemberDetailActivity;
 import com.baogetv.app.model.usercenter.adapter.ResponseMeListAdapter;
 import com.baogetv.app.model.usercenter.adapter.ThumbUpListAdapter;
 import com.baogetv.app.model.usercenter.customview.ResponseMeView;
+import com.baogetv.app.model.videodetail.activity.VideoDetailActivity;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
 import com.chalilayang.customview.RecyclerViewDivider;
@@ -35,6 +36,7 @@ import java.util.List;
 
 import retrofit2.Call;
 
+import static com.baogetv.app.constant.AppConstance.KEY_VIDEO_ID;
 import static com.baogetv.app.model.usercenter.activity.MemberDetailActivity.KEY_MEMBER_ID;
 
 
@@ -117,6 +119,14 @@ public class ResponseMeListFragment extends BaseFragment
         return true;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (recyclerViewAdapter != null) {
+            recyclerViewAdapter.notifyDataSetChanged();
+        }
+    }
+
     /**
      * video_id : 1
      * pic_url : http://localhost/test2/Uploads/Picture/2016-12-05/58451c922375d.png
@@ -184,6 +194,9 @@ public class ResponseMeListFragment extends BaseFragment
     @Override
     public void onItemClick(ResponseMeBean data, int position) {
         Log.i(TAG, "onItemClick: ");
+        Intent intent = new Intent(getActivity(), VideoDetailActivity.class);
+        intent.putExtra(KEY_VIDEO_ID, data.getVideo_id());
+        getActivity().startActivity(intent);
     }
 
     private void startMemberActivity(String uid) {

@@ -61,7 +61,7 @@ public class ResponseMeListAdapter
                 loadMoreTip.setText(hasMoreData?loadingMore : noMoreData);
             } else {
                 thumbMeView.setData(data);
-                thumbMeView.setCommentClickListener(ResponseMeListAdapter.this);
+//                thumbMeView.setCommentClickListener(ResponseMeListAdapter.this);
             }
         }
 
