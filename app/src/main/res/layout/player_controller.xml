@@ -191,13 +191,16 @@
         android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_centerInParent="true">
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/size_30"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/small_screen_controller">
 
         <ProgressBar
-            android:layout_width="@dimen/size_120"
-            android:layout_height="@dimen/size_120"
+            android:layout_width="@dimen/size_30"
+            android:layout_height="@dimen/size_30"
+            android:layout_marginRight="@dimen/size_20"
+            android:layout_gravity="center_vertical"
             android:indeterminateBehavior="repeat"
             android:indeterminateDrawable="@drawable/progress_bg"/>
 
@@ -205,6 +208,7 @@
             android:id="@+id/loading_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/white"
             android:textSize="@dimen/size_30"/>
     </com.chalilayang.scaleview.ScaleLinearLayout>
