@@ -26,7 +26,6 @@ import com.baogetv.app.model.videodetail.adapter.CommentDetailAdapter;
 import com.baogetv.app.model.videodetail.customview.CommentView;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
-import com.baogetv.app.model.videodetail.entity.VideoDetailData;
 import com.baogetv.app.model.videodetail.event.InputSendDetailEvent;
 import com.baogetv.app.model.videodetail.event.NeedCommentDetailEvent;
 import com.baogetv.app.model.videodetail.event.NeedReplyDetailEvent;
@@ -58,7 +57,7 @@ public class CommentDetailFragment extends BaseFragment
     private View contentView;
     private RecyclerView.LayoutManager layoutManager;
     private CommentDetailAdapter recyclerViewAdapter;
-    private String videoid;
+    private String videoId;
     private String commentId;
 
     private List<CommentData> commentList;
@@ -79,7 +78,7 @@ public class CommentDetailFragment extends BaseFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            videoid = getArguments().getString(KEY_VIDEO_ID);
+            videoId = getArguments().getString(KEY_VIDEO_ID);
             commentId = getArguments().getString(KEY_COMMENT_ID);
         }
         layoutManager = new LinearLayoutManager(getActivity());
@@ -108,11 +107,15 @@ public class CommentDetailFragment extends BaseFragment
             recyclerView.setAdapter(recyclerViewAdapter);
             refreshLayout.setOnRefreshListener(this);
             contentView = view;
-            getCommentList(videoid, commentId);
         }
         return contentView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getCommentList(videoId, commentId);
+    }
 
     private CommentReportFragment fragment;
     private void showFragment(CommentData commentData) {
@@ -142,14 +145,14 @@ public class CommentDetailFragment extends BaseFragment
             Log.i(TAG, "handleSendComment: " + commentEvent + " " + replyEvent);
             if (commentEvent != null) {
                 String commentid = commentId;
-                addComment(event.content, videoid, commentid, null);
+                addComment(event.content, videoId, commentid, null);
             } else if (replyEvent != null) {
                 String commentid = replyEvent.replyData.getBean().getReply_id();
                 String uid = replyEvent.replyData.getBean().getUser_id();
-                addComment(event.content, videoid, commentid, uid);
+                addComment(event.content, videoId, commentid, uid);
             } else {
                 String commentid = commentId;
-                addComment(event.content, videoid, commentid, null);
+                addComment(event.content, videoId, commentid, null);
             }
         }
         Log.i(TAG, "handleSendComment: " + event.content);
@@ -163,7 +166,7 @@ public class CommentDetailFragment extends BaseFragment
     @Override
     public void onRefresh() {
         Log.i(TAG, "onRefresh: ");
-        getCommentList(videoid, commentId);
+        getCommentList(videoId, commentId);
     }
 
     @Override
@@ -187,9 +190,9 @@ public class CommentDetailFragment extends BaseFragment
             e.printStackTrace();
         }
         if (zan == 0) {
-            addZan(videoid, data.getBean().getId(), commentIndex);
+            addZan(videoId, data.getBean().getId(), commentIndex);
         } else {
-            delZan(videoid, data.getBean().getId(), commentIndex);
+            delZan(videoId, data.getBean().getId(), commentIndex);
         }
     }
 
