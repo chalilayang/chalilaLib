@@ -372,17 +372,19 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                                 if (cacheTipDialog != null) {
                                     cacheTipDialog.cancel();
                                 }
-                                if (CacheUtil.cacheVideo(getApplicationContext(), videoDetailBean)) {
-                                    showShortToast("已添加至缓存列表");
-                                    EventBus.getDefault().post(new FreshCacheEvent());
-                                } else {
-                                    showShortToast("缓存失败");
-                                }
+
                             }
                         });
                         cacheTipDialog = builder.create();
                     }
                     cacheTipDialog.show();
+                } else {
+                    if (CacheUtil.cacheVideo(getApplicationContext(), videoDetailBean)) {
+                        showShortToast("已添加至缓存列表");
+                        EventBus.getDefault().post(new FreshCacheEvent());
+                    } else {
+                        showShortToast("缓存失败");
+                    }
                 }
             } else {
                 showShortToast("已在缓存中");

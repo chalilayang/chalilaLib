@@ -56,14 +56,12 @@ public class NetWorkUtil {
 
     public static final void initNetworkType(Context context) {
         NetworkInfo info = null;
-
         try {
             ConnectivityManager mConnectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             info = mConnectivity.getActiveNetworkInfo();
         } catch (Exception var3) {
             LogUtils.e(var3);
         }
-
         if (info != null && info.isAvailable()) {
             if (info.getTypeName().toLowerCase(Locale.ENGLISH).equals("wifi")) {
                 networkType = 1;
@@ -73,7 +71,6 @@ public class NetWorkUtil {
         } else {
             networkType = 0;
         }
-
     }
 
     public static final int getNetworkType(Context context) {
