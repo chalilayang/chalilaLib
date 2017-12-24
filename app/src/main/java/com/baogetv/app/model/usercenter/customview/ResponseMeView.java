@@ -69,6 +69,7 @@ public class ResponseMeView extends ScaleFrameLayout {
         commentData = data;
         if (commentData != null) {
             Glide.with(getContext()).load(data.getUserpic_url())
+                    .dontAnimate()
                     .placeholder(R.mipmap.user_default_icon)
                     .error(R.mipmap.user_default_icon).into(userLogoImage);
             userLogoImage.setLogo(data.getGrade(), data.getLevel_id());

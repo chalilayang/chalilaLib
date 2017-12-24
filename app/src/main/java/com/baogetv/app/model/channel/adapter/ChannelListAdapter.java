@@ -1,7 +1,7 @@
 package com.baogetv.app.model.channel.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +15,9 @@ import com.chalilayang.scaleview.ScaleCalculator;
 import com.baogetv.app.R;
 import com.baogetv.app.model.channel.entity.ChannelData;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ChannelListAdapter extends BaseItemAdapter<ChannelData, ChannelListAdapter.ViewHolder> {
 
+    private static final String TAG = "ChannelListAdapter";
     private Context mContext;
     private int margin_8px;
     private int margin_15px;
@@ -75,6 +73,7 @@ public class ChannelListAdapter extends BaseItemAdapter<ChannelData, ChannelList
 
         @Override
         public void bindData(ChannelData data, int pos) {
+            Log.i(TAG, "bindData: ");
             if (loadMoreTip != null) {
                 loadMoreTip.setText(hasMoreData?loadingMore : noMoreData);
             } else {
@@ -82,7 +81,9 @@ public class ChannelListAdapter extends BaseItemAdapter<ChannelData, ChannelList
                 updateTime.setText(String.valueOf(data.updateTime));
                 videoCount.setText(String.format(videoCountFormat, data.videoCount));
                 desc.setText(data.description);
-                Glide.with(mContext).load(data.iConUrl).placeholder(R.mipmap.pic_loding).into(mContentView);
+                Glide.with(mContext).load(data.iConUrl).dontAnimate()
+                        .error(R.mipmap.pic_loding)
+                        .placeholder(R.mipmap.pic_loding).into(mContentView);
             }
         }
     }

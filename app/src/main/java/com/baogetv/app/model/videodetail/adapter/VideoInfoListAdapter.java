@@ -216,7 +216,9 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 channelUpdate.setText(channelDetailBean.getUpdate_time());
                 channelDesc.setText(channelDetailBean.getIntro());
                 Glide.with(mContext).load(channelDetailBean.getPic_url())
-                        .placeholder(R.mipmap.user_default_icon).into(channelImage);
+                        .dontAnimate()
+                        .placeholder(R.mipmap.user_default_icon)
+                        .error(R.mipmap.user_default_icon).into(channelImage);
             }
 
             if (downloadInfo == null) {

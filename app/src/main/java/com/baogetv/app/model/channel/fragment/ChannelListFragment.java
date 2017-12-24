@@ -17,7 +17,6 @@ import com.baogetv.app.apiinterface.VideoListService;
 import com.baogetv.app.bean.BeanConvert;
 import com.baogetv.app.bean.ChannelListBean;
 import com.baogetv.app.bean.ResponseBean;
-import com.baogetv.app.bean.ZanMeBean;
 import com.baogetv.app.model.channel.ChannelDetailActivity;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
@@ -101,6 +100,12 @@ public class ChannelListFragment extends BaseFragment
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.addOnScrollListener(onLoadMoreListener);
         refreshLayout.setOnRefreshListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "onResume: ");
     }
 
     @Override

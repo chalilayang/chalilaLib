@@ -133,7 +133,9 @@ public class CommentView extends ScaleFrameLayout
         zan.setCompoundDrawables(thumbDrawable, null, null, null);
         if (commentData != null) {
             Glide.with(getContext()).load(data.getOwner()
-                            .getIconUrl()).error(R.mipmap.user_default_icon).into(userLogoImage);
+                            .getIconUrl()).dontAnimate()
+                    .placeholder(R.mipmap.user_default_icon)
+                    .error(R.mipmap.user_default_icon).into(userLogoImage);
             userLogoImage.setLogo(data.getBean().getGrade(), data.getBean().getLevel_id());
             userLogoImage.setOnClickListener(new OnClickListener() {
                 @Override
