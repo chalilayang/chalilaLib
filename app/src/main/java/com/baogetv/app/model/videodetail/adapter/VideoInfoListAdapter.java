@@ -3,6 +3,7 @@ package com.baogetv.app.model.videodetail.adapter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -181,6 +182,13 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 VideoDetailBean bean = videoDetailData.videoDetailBean;
                 title.setText(bean.getTitle());
                 playCount.setText(String.format(playCountFormat, bean.getPlay()));
+                if (TextUtils.isEmpty(bean.getIntro())) {
+                    desc.setVisibility(View.GONE);
+                    arrow.setVisibility(View.GONE);
+                } else {
+                    arrow.setVisibility(View.VISIBLE);
+                    desc.setVisibility(View.GONE);
+                }
                 desc.setText(bean.getIntro());
                 share.setText(bean.getShares());
                 share.setCompoundDrawables(shareGray, null, null, null);
@@ -332,12 +340,10 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             arrow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (playCount.getVisibility() != View.VISIBLE) {
-                        playCount.setVisibility(View.VISIBLE);
+                    if (desc.getVisibility() != View.VISIBLE) {
                         desc.setVisibility(View.VISIBLE);
                         arrow.setRotation(180);
                     } else {
-                        playCount.setVisibility(View.GONE);
                         desc.setVisibility(View.GONE);
                         arrow.setRotation(0);
                     }

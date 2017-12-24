@@ -21,8 +21,9 @@
             android:textColor="@color/reply_content"/>
         <ImageView
             android:id="@+id/arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/size_30"
+            android:layout_height="@dimen/size_30"
+            android:scaleType="center"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@mipmap/xiala"/>
@@ -38,8 +39,7 @@
         android:layout_marginTop="@dimen/size_20"
         android:text="@string/less_than_ten_words"
         android:textSize="@dimen/size_24"
-        android:textColor="@color/reply_time"
-        android:visibility="gone"/>
+        android:textColor="@color/reply_time"/>
 
     <com.chalilayang.scaleview.ScaleTextView
         android:id="@+id/video_desc"
