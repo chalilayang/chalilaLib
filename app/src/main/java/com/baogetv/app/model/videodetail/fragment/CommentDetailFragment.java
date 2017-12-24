@@ -223,8 +223,15 @@ public class CommentDetailFragment extends BaseFragment
         if (commentIndex == 0) {
             EventBus.getDefault().post(new NeedCommentDetailEvent(data));
         } else {
-            ReplyData replyData = data.getReplyList().get(commentIndex);
-            EventBus.getDefault().post(new NeedReplyDetailEvent(replyData));
+            /**
+             * 特殊处理了，评论列表里的楼中楼处理成普通评论了，这里的data指的是主评论中的第commentIndex个回复
+             */
+            if (commentIndex > 0 && commentList != null && commentList.size() > 1) {
+                CommentData commentData = commentList.get(0);
+                int childIndex = commentIndex - 1;
+                ReplyData replyData = commentData.getReplyList().get(childIndex);
+                EventBus.getDefault().post(new NeedReplyDetailEvent(replyData));
+            }
         }
     }
 

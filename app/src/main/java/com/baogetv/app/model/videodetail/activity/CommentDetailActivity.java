@@ -117,7 +117,7 @@ public class CommentDetailActivity extends BaseTitleActivity {
         replyEvent = event;
         ReplyData data = event.replyData;
         CommentListBean.DataBean bean = data.getBean();
-        editText.setHint("@"+bean.getReply_user_username());
+        editText.setHint("@"+bean.getUsername());
         editContainer.setVisibility(View.VISIBLE);
         editText.requestFocus();
         InputUtil.ShowKeyboard(editText);
