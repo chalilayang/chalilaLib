@@ -3,21 +3,12 @@ package com.baogetv.app.model.usercenter.activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.baogetv.app.BaseTitleActivity;
 import com.baogetv.app.R;
-import com.baogetv.app.apiinterface.UserApiService;
-import com.baogetv.app.bean.AdviceBean;
-import com.baogetv.app.bean.ResponseBean;
-import com.baogetv.app.model.usercenter.LoginManager;
-import com.baogetv.app.net.CustomCallBack;
-import com.baogetv.app.net.RetrofitManager;
-
-import retrofit2.Call;
 
 public class WebReadActivity extends BaseTitleActivity {
 
@@ -36,8 +27,15 @@ public class WebReadActivity extends BaseTitleActivity {
         if (!TextUtils.isEmpty(url)) {
             webView = (WebView) findViewById(R.id.web_view);
             webView.setWebViewClient(new MyWebViewClient());
-            webView.getSettings().setJavaScriptEnabled(true);
-            webView.setInitialScale(80);
+            WebSettings webSettings = webView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+//            webSettings.setUseWideViewPort(true);
+//            webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+//            webSettings.setLoadWithOverviewMode(true);
+            webSettings.setAllowFileAccess(true); //设置可以访问文件
+            webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
+            webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
+            webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
             webView.loadUrl(url);
         }
         if (!withTitle) {
