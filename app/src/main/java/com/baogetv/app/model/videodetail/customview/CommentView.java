@@ -19,8 +19,6 @@ import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleFrameLayout;
 import com.chalilayang.scaleview.ScaleTextView;
 
-import org.w3c.dom.Text;
-
 import java.lang.ref.SoftReference;
 import java.util.List;
 
@@ -182,10 +180,10 @@ public class CommentView extends ScaleFrameLayout
     }
 
     @Override
-    public void onReplyerClick(ReplyData data, int index) {
-        Log.i(TAG, "onReplyerClick: ");
+    public void onReplyNameClick(ReplyData data, int index) {
+        Log.i(TAG, "onReplyNameClick: ");
         if (mRef != null && mRef.get() != null) {
-            mRef.get().onReplyerClick(data, commentIndex);
+            mRef.get().onReplyNameClick(data, commentIndex);
         }
     }
 

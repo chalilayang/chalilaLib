@@ -19,7 +19,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baogetv.app.R;
-import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
 import com.baogetv.app.util.TimeUtil;
 import com.chalilayang.scaleview.ScaleCalculator;
@@ -145,7 +144,7 @@ public class ReplyView extends ScaleLinearLayout {
                 public void onClick (final View widget) {
                     Log.i(TAG, "onClick: ");
                     if (mRef != null && mRef.get() != null) {
-                        mRef.get().onReplyerClick(data, commentIndex);
+                        mRef.get().onReplyNameClick(data, commentIndex);
                     }
                 }
             }, start, nameEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -202,7 +201,7 @@ public class ReplyView extends ScaleLinearLayout {
     }
 
     public interface OnReplyClickListener {
-        void onReplyerClick(ReplyData data, int commentIndex);
+        void onReplyNameClick(ReplyData data, int commentIndex);
         void onReplyToClick(ReplyData data, int commentIndex);
         void onReplyClick(ReplyData data, int commentIndex);
     }

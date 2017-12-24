@@ -102,9 +102,9 @@ public class CommentDetailAdapter
     }
 
     @Override
-    public void onReplyerClick(ReplyData data, int commentIndex) {
+    public void onReplyNameClick(ReplyData data, int commentIndex) {
         if (mRef != null && mRef.get() != null) {
-            mRef.get().onReplyerClick(data, commentIndex);
+            mRef.get().onReplyNameClick(data, commentIndex);
         }
     }
 

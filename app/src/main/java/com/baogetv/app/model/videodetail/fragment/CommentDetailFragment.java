@@ -202,7 +202,7 @@ public class CommentDetailFragment extends BaseFragment
     }
 
     @Override
-    public void onReplyerClick(ReplyData data, int commentIndex) {
+    public void onReplyNameClick(ReplyData data, int commentIndex) {
     }
 
     @Override

@@ -309,8 +309,8 @@ public class CommentListFragment extends BaseItemFragment
     }
 
     @Override
-    public void onReplyerClick(ReplyData data, int commentIndex) {
-        Log.i(TAG, "onReplyerClick: ");
+    public void onReplyNameClick(ReplyData data, int commentIndex) {
+        Log.i(TAG, "onReplyNameClick: ");
         startMemberActivity(data.getBean().getUser_id());
     }
 

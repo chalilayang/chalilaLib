@@ -10,13 +10,11 @@ import com.baogetv.app.BaseItemAdapter;
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.R;
 import com.baogetv.app.model.videodetail.customview.CommentView;
-import com.baogetv.app.model.videodetail.customview.ReplyView;
 import com.baogetv.app.model.videodetail.entity.CommentData;
 import com.baogetv.app.model.videodetail.entity.ReplyData;
 import com.chalilayang.scaleview.ScaleCalculator;
 
 import java.lang.ref.SoftReference;
-import java.util.List;
 
 public class CommentListAdapter
         extends BaseItemAdapter<CommentData, CommentListAdapter.ViewHolder> implements CommentView.OnCommentListener {
@@ -93,9 +91,9 @@ public class CommentListAdapter
     }
 
     @Override
-    public void onReplyerClick(ReplyData data, int commentIndex) {
+    public void onReplyNameClick(ReplyData data, int commentIndex) {
         if (mRef != null && mRef.get() != null) {
-            mRef.get().onReplyerClick(data, commentIndex);
+            mRef.get().onReplyNameClick(data, commentIndex);
         }
     }
 
