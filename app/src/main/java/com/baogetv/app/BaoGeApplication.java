@@ -63,6 +63,7 @@ public class BaoGeApplication extends Application {
 
         PlatformConfig.setWeixin(AppConstance.WE_CHAT_APP_ID, AppConstance.WE_CHAT_APP_SECRET);
         PlatformConfig.setQQZone(AppConstance.QQ_APP_ID, AppConstance.QQ_APP_KEY);
+        PlatformConfig.setSinaWeibo(AppConstance.SINA_APP_ID, AppConstance.SINA_APP_SECRET, "https://www.baoge.tv/callback");
 
         StyleManager s = new StyleManager();
         s.Anim(false).repeatTime(0).contentSize(-1).intercept(true);
