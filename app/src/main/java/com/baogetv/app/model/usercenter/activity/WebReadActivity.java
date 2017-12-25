@@ -3,6 +3,7 @@ package com.baogetv.app.model.usercenter.activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -26,7 +27,7 @@ public class WebReadActivity extends BaseTitleActivity {
         withTitle = getIntent().getBooleanExtra(KEY_WITH_TITLE, true);
         if (!TextUtils.isEmpty(url)) {
             webView = (WebView) findViewById(R.id.web_view);
-            webView.setWebViewClient(new MyWebViewClient());
+            webView.setWebChromeClient(new WebChromeClient());
             WebSettings webSettings = webView.getSettings();
             webSettings.setJavaScriptEnabled(true);
 //            webSettings.setUseWideViewPort(true);
@@ -45,15 +46,5 @@ public class WebReadActivity extends BaseTitleActivity {
     @Override
     protected int getRootView() {
         return R.layout.activity_web_read;
-    }
-
-    private class MyWebViewClient extends WebViewClient
-    {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url)
-        {
-            view.loadUrl(url);
-            return true;
-        }
     }
 }
