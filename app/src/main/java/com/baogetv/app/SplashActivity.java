@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.baogetv.app.apiinterface.UserApiService;
 import com.baogetv.app.bean.ResponseBean;
@@ -17,6 +18,7 @@ import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.activity.VideoLoginActivity;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
+import com.baogetv.app.util.SystemUtil;
 
 import retrofit2.Call;
 
@@ -29,6 +31,8 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        String versionName = SystemUtil.getAppVersionName(getApplicationContext());
+        ((TextView)findViewById(R.id.version_tv)).setText("版本号：" + versionName);
         try {
             Config config = new Config();
             //set download quantity at the same time.
