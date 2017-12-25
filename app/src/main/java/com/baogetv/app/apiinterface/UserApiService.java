@@ -39,6 +39,7 @@ public interface UserApiService {
      * @param authentication：（登录凭证字符串）
      * @param username：（昵称）
      * @param pic_url：（图片URL）
+     * @param device_token：（设备token）
      * @return
      */
     @FormUrlEncoded
@@ -47,7 +48,8 @@ public interface UserApiService {
             @Field("type") String type,
             @Field("authentication") String authentication,
             @Field("username") String username,
-            @Field("pic_url") String pic_url);
+            @Field("pic_url") String pic_url,
+            @Field("device_token") String device_token);
 
     /**
      * 登录

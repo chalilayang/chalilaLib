@@ -22,11 +22,19 @@ public class LogoCircleImageView extends CircleImageView {
     private Drawable three;
     private Drawable four;
     private Drawable five;
+    private Drawable six;
+    private Drawable seven;
+    private Drawable eight;
+    private Drawable nine;
     private Drawable oneYellow;
     private Drawable twoYellow;
     private Drawable threeYellow;
     private Drawable fourYellow;
     private Drawable fiveYellow;
+    private Drawable sixYellow;
+    private Drawable sevenYellow;
+    private Drawable eightYellow;
+    private Drawable nineYellow;
 
     private Paint circlePaint;
     public LogoCircleImageView(Context context) {
@@ -44,11 +52,19 @@ public class LogoCircleImageView extends CircleImageView {
         three = context.getResources().getDrawable(R.mipmap.user_grade_three_icon);
         four = context.getResources().getDrawable(R.mipmap.user_grade_four_icon);
         five = context.getResources().getDrawable(R.mipmap.user_grade_five_icon);
+        six = context.getResources().getDrawable(R.mipmap.user_grade_six_icon);
+        seven = context.getResources().getDrawable(R.mipmap.user_grade_seven_icon);
+        eight = context.getResources().getDrawable(R.mipmap.user_grade_eight_icon);
+        nine = context.getResources().getDrawable(R.mipmap.user_grade_nine_icon);
         oneYellow = context.getResources().getDrawable(R.mipmap.user_grade_one_yellow_icon);
         twoYellow = context.getResources().getDrawable(R.mipmap.user_grade_two_yellow_icon);
         threeYellow = context.getResources().getDrawable(R.mipmap.user_grade_three_yellow_icon);
         fourYellow = context.getResources().getDrawable(R.mipmap.user_grade_four_yellow_icon);
         fiveYellow = context.getResources().getDrawable(R.mipmap.user_grade_five_yellow_icon);
+        sixYellow = context.getResources().getDrawable(R.mipmap.user_grade_six_icon_yellow);
+        sevenYellow = context.getResources().getDrawable(R.mipmap.user_grade_sevent_icon_yellow);
+        eightYellow = context.getResources().getDrawable(R.mipmap.user_grade_eight_icon_yellow);
+        nineYellow = context.getResources().getDrawable(R.mipmap.user_grade_nine_icon_yellow);
         circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         circlePaint.setColor(getResources().getColor(R.color.reshape_red));
         int paintWidth = ScaleCalculator.getInstance(context).scaleWidth(4);
@@ -86,6 +102,30 @@ public class LogoCircleImageView extends CircleImageView {
                 proLogo = fiveYellow;
                 if (grade == 3) {
                     proLogo = five;
+                }
+                break;
+            case 6:
+                proLogo = sixYellow;
+                if (grade == 3) {
+                    proLogo = six;
+                }
+                break;
+            case 7:
+                proLogo = sevenYellow;
+                if (grade == 3) {
+                    proLogo = seven;
+                }
+                break;
+            case 8:
+                proLogo = eightYellow;
+                if (grade == 3) {
+                    proLogo = eight;
+                }
+                break;
+            case 9:
+                proLogo = nineYellow;
+                if (grade == 3) {
+                    proLogo = nine;
                 }
                 break;
             default:

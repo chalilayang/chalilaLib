@@ -194,8 +194,9 @@ public class VideoLoginActivity extends BaseActivity implements UMAuthListener {
     private void loginPartner(String type, String openid, String name, String url) {
         UserApiService listService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
+        String deviceToken = LoginManager.getDeviceToken(getApplicationContext());
         Call<ResponseBean<UserDetailBean>> beanCall
-                = listService.loginPartner(type, openid, name, url);
+                = listService.loginPartner(type, openid, name, url, deviceToken);
         if (beanCall != null) {
             showLoadingDialog("正在登录", "");
             isFetchingResult = true;
