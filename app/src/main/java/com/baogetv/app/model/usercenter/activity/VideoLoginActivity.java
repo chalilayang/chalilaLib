@@ -33,7 +33,7 @@ import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_FIND_PASSWORD_A
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_LOGIN_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_REGISTER_ACTIVITY;
 
-public class VideoLoginActivity extends BaseActivity implements UMAuthListener {
+public class VideoLoginActivity extends BaseActivity implements UMAuthListener, PressImageView.OnClickBack {
 
     private static final String TAG = "VideoLoginActivity";
     private View loginBtn;
@@ -128,26 +128,27 @@ public class VideoLoginActivity extends BaseActivity implements UMAuthListener {
             }
         });
         wechatBtn = (PressImageView) findViewById(R.id.wechat_login);
-        wechatBtn.setOnClickBack(new PressImageView.OnClickBack() {
-            @Override
-            public void onClick(View view) {
-                wxLogin();
-            }
-        });
+        wechatBtn.setOnClickBack(this);
         sinaBtn = (PressImageView) findViewById(R.id.sina_login);
-        sinaBtn.setOnClickBack(new PressImageView.OnClickBack() {
-            @Override
-            public void onClick(View view) {
-                sinaLogin();
-            }
-        });
+        sinaBtn.setOnClickBack(this);
         qqBtn = (PressImageView) findViewById(R.id.qq_login);
-        qqBtn.setOnClickBack(new PressImageView.OnClickBack() {
-            @Override
-            public void onClick(View view) {
+        qqBtn.setOnClickBack(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        Log.i(TAG, "onClick: ");
+        switch (view.getId()) {
+            case R.id.wechat_login:
+                wxLogin();
+                break;
+            case R.id.qq_login:
                 qqLogin();
-            }
-        });
+                break;
+            case R.id.sina_login:
+                sinaLogin();
+                break;
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -14,6 +15,7 @@ import java.lang.ref.SoftReference;
  */
 
 public class PressImageView extends AppCompatImageView {
+    private static final String TAG = "PressImageView";
     public PressImageView(Context context) {
         this(context, null);
     }
@@ -48,6 +50,7 @@ public class PressImageView extends AppCompatImageView {
 
     private SoftReference<OnClickBack> mRef;
     public void setOnClickBack(OnClickBack back) {
+        Log.i(TAG, "setOnClickBack: ");
         mRef = new SoftReference<OnClickBack>(back);
     }
     public interface OnClickBack {
