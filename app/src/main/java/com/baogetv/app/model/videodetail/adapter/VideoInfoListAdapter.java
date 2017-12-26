@@ -158,6 +158,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
         private TextView title;
         private TextView playCount;
         private TextView desc;
+        private TextView descFull;
 
         private TextView share;
         private TextView collect;
@@ -184,12 +185,20 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 playCount.setText(String.format(playCountFormat, bean.getPlay()));
                 if (TextUtils.isEmpty(bean.getIntro())) {
                     desc.setVisibility(View.GONE);
+                    descFull.setVisibility(View.GONE);
                     arrow.setVisibility(View.GONE);
                 } else {
                     arrow.setVisibility(View.VISIBLE);
-                    desc.setVisibility(View.GONE);
+                    if (arrow.getRotation() == 0) {
+                        desc.setVisibility(View.VISIBLE);
+                        descFull.setVisibility(View.GONE);
+                    } else {
+                        desc.setVisibility(View.GONE);
+                        descFull.setVisibility(View.VISIBLE);
+                    }
                 }
                 desc.setText(bean.getIntro());
+                descFull.setText(bean.getIntro());
                 share.setText(bean.getShares());
                 share.setCompoundDrawables(shareGray, null, null, null);
                 cache.setText(bean.getCaches());
@@ -336,16 +345,19 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             title = (TextView) view.findViewById(R.id.video_name);
             playCount = (TextView) view.findViewById(R.id.video_play_count);
             desc = (TextView) view.findViewById(R.id.video_desc);
+            descFull = (TextView) view.findViewById(R.id.video_desc_full);
             arrow = view.findViewById(R.id.arrow);
             arrow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (desc.getVisibility() != View.VISIBLE) {
-                        desc.setVisibility(View.VISIBLE);
+                    if (arrow.getRotation() == 0) {
                         arrow.setRotation(180);
-                    } else {
                         desc.setVisibility(View.GONE);
+                        descFull.setVisibility(View.VISIBLE);
+                    } else {
                         arrow.setRotation(0);
+                        desc.setVisibility(View.VISIBLE);
+                        descFull.setVisibility(View.GONE);
                     }
                 }
             });

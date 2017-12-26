@@ -41,16 +41,30 @@
         android:textSize="@dimen/size_24"
         android:textColor="@color/reply_time"/>
 
-    <com.chalilayang.scaleview.ScaleTextView
-        android:id="@+id/video_desc"
-        android:layout_width="wrap_content"
+    <com.chalilayang.scaleview.ScaleFrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_30"
         android:layout_marginLeft="@dimen/size_30"
-        android:layout_marginRight="@dimen/size_30"
-        android:textSize="@dimen/size_24"
-        android:textColor="@color/reply_time"
-        android:visibility="gone"/>
+        android:layout_marginRight="@dimen/size_30">
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/video_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="@dimen/size_24"
+            android:textColor="@color/reply_time"
+            android:visibility="gone"/>
+        <com.chalilayang.scaleview.ScaleTextView
+            android:id="@+id/video_desc_full"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/size_24"
+            android:textColor="@color/reply_time"
+            android:visibility="gone"/>
+    </com.chalilayang.scaleview.ScaleFrameLayout>
+
 
     <com.chalilayang.scaleview.ScaleRelativeLayout
         android:layout_width="@dimen/size_480"
