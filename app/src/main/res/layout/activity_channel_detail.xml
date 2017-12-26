@@ -76,8 +76,7 @@
                     android:layout_marginTop="@dimen/size_26"
                     android:text="@string/large_text"
                     android:textSize="@dimen/size_26"
-                    android:textColor="@color/reply_name"
-                    android:maxLines="2"/>
+                    android:textColor="@color/reply_name"/>
                 <View
                     android:id="@+id/bottom_divider"
                     android:layout_width="match_parent"

@@ -182,6 +182,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textSize="@dimen/size_26"
                 android:text="@string/less_than_ten_words"
                 android:textColor="@color/reply_name"/>
