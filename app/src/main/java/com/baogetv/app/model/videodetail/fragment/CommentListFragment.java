@@ -356,7 +356,7 @@ public class CommentListFragment extends BaseItemFragment
             call.enqueue(new CustomCallBack<CommentListBean>() {
                 @Override
                 public void onSuccess(CommentListBean bean, String msg, int state) {
-                    showShortToast("add comment success");
+//                    showShortToast("add comment success");
                     Log.i(TAG, "onSuccess: add comment success");
                     if (reply_id == null && replay_user_id == null) {
                         CommentData data = new CommentData();
@@ -403,14 +403,8 @@ public class CommentListFragment extends BaseItemFragment
     }
 
     private void addZan(String vid, String comment_id) {
-        if (!LoginManager.hasCommentRight(mActivity.getApplicationContext())) {
-            if (!LoginManager.hasLogin(mActivity.getApplicationContext())) {
-                LoginManager.startLogin(mActivity);
-            } else if (LoginManager.hasMobile(mActivity.getApplicationContext())) {
-                LoginManager.startChangeMobile(mActivity);
-            } else {
-                showShortToast(getString(R.string.no_zan_right));
-            }
+        if (!LoginManager.hasLogin(mActivity.getApplicationContext())) {
+            LoginManager.startLogin(mActivity);
         } else {
             UserApiService userApiService
                     = RetrofitManager.getInstance().createReq(UserApiService.class);
@@ -421,7 +415,7 @@ public class CommentListFragment extends BaseItemFragment
                 call.enqueue(new CustomCallBack<AddItemBean>() {
                     @Override
                     public void onSuccess(AddItemBean bean, String msg, int state) {
-                        showShortToast("点赞 success");
+//                        showShortToast("点赞 success");
                         Log.i(TAG, "onSuccess: add zan success");
                         getCommentList(videoDetailData, 0);
                     }

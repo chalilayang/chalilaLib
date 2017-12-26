@@ -263,14 +263,8 @@ public class CommentDetailFragment extends BaseFragment
     }
 
     private void addZan(String vid, String comment_id, final int commentIndex) {
-        if (!LoginManager.hasCommentRight(mActivity.getApplicationContext())) {
-            if (!LoginManager.hasLogin(mActivity.getApplicationContext())) {
-                LoginManager.startLogin(mActivity);
-            } else if (LoginManager.hasMobile(mActivity.getApplicationContext())) {
-                LoginManager.startChangeMobile(mActivity);
-            } else {
-                showShortToast(getString(R.string.no_zan_right));
-            }
+        if (!LoginManager.hasLogin(mActivity.getApplicationContext())) {
+            LoginManager.startLogin(mActivity);
         } else {
             UserApiService userApiService
                     = RetrofitManager.getInstance().createReq(UserApiService.class);
