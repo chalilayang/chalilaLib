@@ -63,7 +63,7 @@ public class ChannelDetailActivity extends BaseActivity {
         size_180px = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(180);
         sumHeight = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(682);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
-        appBarLayout.getLayoutParams().height = sumHeight;
+        appBarLayout.getLayoutParams().height = AppBarLayout.LayoutParams.WRAP_CONTENT;
         imageView = (ImageView) findViewById(R.id.image_view);
         imageView.getLayoutParams().height = imageHeight;
         circleImageContainer = findViewById(R.id.circle_image_container);
@@ -78,11 +78,6 @@ public class ChannelDetailActivity extends BaseActivity {
         channelTitle = (TextView) findViewById(R.id.channel_title);
         channelInfo = (TextView) findViewById(R.id.channel_info);
         channelDesc = (TextView) findViewById(R.id.channel_desc);
-
-        View bottomDivider = findViewById(R.id.bottom_divider);
-        rlp = (RelativeLayout.LayoutParams) bottomDivider.getLayoutParams();
-        rlp.height = ScaleCalculator.getInstance(getApplicationContext()).scaleWidth(20);
-        rlp.topMargin = sumHeight - 2 * rlp.height;
     }
 
     private void showHomeFragment() {
