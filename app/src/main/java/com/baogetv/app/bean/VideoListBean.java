@@ -6,31 +6,34 @@ package com.baogetv.app.bean;
 
 public class VideoListBean {
 
+
     /**
-     * id : 28
-     * title : FST-7三角肌训练教学
-     * intro : FST-7三角肌训练
-     * pic : 44
-     * thumb_pic : 66
-     * length : 10:55
-     * is_cnword : 0
-     * is_commend : 0
-     * collects : 3
-     * likes : 0
-     * shares : 0
+     * id : 39
+     * code : RlLUWl
+     * title : 和维克多一起练背
+     * intro : 和维克多一起练背，无冕之王维克多.马丁内兹训练讲解经典系列。来自YouTube频道Sportslifeclub
+     * pic : 184
+     * thumb_pic : 185
+     * length : 12:20
+     * is_cnword : 1
+     * is_commend : 1
+     * collects : 6
+     * likes : 21
+     * shares : 7
      * caches : 0
-     * play : 6
-     * comments : 0
-     * add_time : 1513093062
-     * update_time : 1513094661
-     * lastplay_time : 1513164504
-     * channel_id : 19
-     * channel_name : 测试
-     * pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-12-08/5a2a0f6337499.jpg
-     * thumb_pic_url : http://120.77.176.101/jianshen/Uploads/Picture/2017-12-08/5a2a0f6337499_thumb.jpg
+     * play : 228
+     * comments : 227
+     * add_time : 1513701103
+     * update_time : 1514126246
+     * lastplay_time : 1514256161
+     * channel_id : 26
+     * channel_name : 维克多
+     * pic_url : http://videos.baoge.tv/Uploads/Picture/2017-12-20/5a39be723aa5a.jpg
+     * thumb_pic_url : http://videos.baoge.tv/Uploads/Picture/2017-12-20/5a39be723aa5a_thumb.jpg
      */
 
     private String id;
+    private String code;
     private String title;
     private String intro;
     private String pic;
@@ -58,6 +61,14 @@ public class VideoListBean {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getTitle() {

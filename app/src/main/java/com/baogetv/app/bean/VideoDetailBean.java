@@ -14,6 +14,7 @@ public class VideoDetailBean implements Parcelable {
 
     /**
      * id : 26
+     * code : RlLUWl
      * title : 和Martinez一起练背
      * intro : 和Martinez一起练背
      * pic : 64
@@ -47,6 +48,7 @@ public class VideoDetailBean implements Parcelable {
      */
 
     private String id;
+    private String code;
     private String title;
     private String intro;
     private String pic;
@@ -83,6 +85,14 @@ public class VideoDetailBean implements Parcelable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getTitle() {
@@ -387,6 +397,7 @@ public class VideoDetailBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
+        dest.writeString(this.code);
         dest.writeString(this.title);
         dest.writeString(this.intro);
         dest.writeString(this.pic);
@@ -420,6 +431,7 @@ public class VideoDetailBean implements Parcelable {
 
     protected VideoDetailBean(Parcel in) {
         this.id = in.readString();
+        this.code = in.readString();
         this.title = in.readString();
         this.intro = in.readString();
         this.pic = in.readString();
