@@ -382,6 +382,22 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                     if (CacheUtil.cacheVideo(getApplicationContext(), videoDetailBean)) {
                         showShortToast("已添加至缓存列表");
                         EventBus.getDefault().post(new FreshCacheEvent());
+                        UserApiService userApiService
+                                = RetrofitManager.getInstance().createReq(UserApiService.class);
+                        String token = LoginManager.getUserToken(getApplicationContext());
+                        Call<ResponseBean<AddItemBean>> call = userApiService.addCache(token, videoId);
+                        if (call != null) {
+                            call.enqueue(new CustomCallBack<AddItemBean>() {
+                                @Override
+                                public void onSuccess(AddItemBean data, String msg, int state) {
+                                }
+
+                                @Override
+                                public void onFailed(String error, int state) {
+                                    showShortToast(error);
+                                }
+                            });
+                        }
                     } else {
                         showShortToast("缓存失败");
                     }
