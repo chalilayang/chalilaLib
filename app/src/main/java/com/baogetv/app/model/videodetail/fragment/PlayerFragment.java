@@ -14,6 +14,7 @@ import com.baogetv.app.bean.VideoDetailBean;
 import com.baogetv.app.event.NetStateEvent;
 import com.baogetv.app.model.videodetail.player.PlayerController;
 import com.baogetv.app.net.NetWorkUtil;
+import com.baogetv.app.util.SettingManager;
 import com.xiao.nicevideoplayer.NiceVideoPlayer;
 import com.xiao.nicevideoplayer.NiceVideoPlayerController;
 import com.xiao.nicevideoplayer.NiceVideoPlayerManager;
@@ -78,7 +79,7 @@ public class PlayerFragment extends BaseFragment {
         super.onResume();
         Log.i(TAG, "onResume: ");
         showShortToast(NetWorkUtil.getNetworkStringByType(NetWorkUtil.getNetworkType(mActivity)));
-        if (NetWorkUtil.isMobile(mActivity)) {
+        if (NetWorkUtil.isMobile(mActivity) && !SettingManager.allowCacheWithMobile(mActivity)) {
             if (dialog == null) {
                 CustomDialog.Builder builder = new CustomDialog.Builder(mActivity);
                 builder.setMessage(R.string.mobile_net_tip).setNegativeButton(R.string.cancel,

@@ -46,6 +46,7 @@ import com.baogetv.app.net.RetrofitManager;
 import com.baogetv.app.parcelables.PageItemData;
 import com.baogetv.app.util.CacheUtil;
 import com.baogetv.app.util.InputUtil;
+import com.baogetv.app.util.SettingManager;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.ShareContent;
 import com.umeng.socialize.UMShareAPI;
@@ -355,7 +356,8 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
             DownloadInfo downloadInfo = CacheUtil.getDownloadInfo(this,
                     videoDetailBean.getFile_url());
             if (downloadInfo == null) {
-                if (NetWorkUtil.isMobile(getApplicationContext())) {
+                if (NetWorkUtil.isMobile(getApplicationContext())
+                        && !SettingManager.allowCacheWithMobile(getApplicationContext())) {
                     if (cacheTipDialog == null) {
                         CustomDialog.Builder builder = new CustomDialog.Builder(this);
                         builder.setMessage(R.string.mobile_net_cache_tip).setNegativeButton(R.string.cancel,

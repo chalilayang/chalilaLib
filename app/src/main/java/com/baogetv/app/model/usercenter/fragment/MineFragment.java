@@ -50,8 +50,10 @@ import retrofit2.Call;
 
 import static com.baogetv.app.constant.AppConstance.KEY_LEVEL_LIST;
 import static com.baogetv.app.constant.AppConstance.KEY_USER_DETAIL_BEAN;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_RESPONSE_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_SETTING_ACTIVITY;
 import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_USER_INFO_ACTIVITY;
+import static com.baogetv.app.constant.AppConstance.REQUEST_CODE_ZAN_ACTIVITY;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -292,7 +294,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     LoginManager.startLogin(mActivity);
                 } else {
                     intent = new Intent(this.getActivity(), ResponseActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, REQUEST_CODE_RESPONSE_ACTIVITY);
                 }
                 break;
             case R.id.thumb_up:
@@ -300,7 +302,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     LoginManager.startLogin(mActivity);
                 } else {
                     intent = new Intent(this.getActivity(), ThumbUpActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, REQUEST_CODE_ZAN_ACTIVITY);
                 }
                 break;
             case R.id.system_notify:
@@ -345,9 +347,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     updateInfo();
                 }
             }
-            getNewZanCount();
-            getNewResponseMeCount();
+            freshResponseZanCount();
         }
+    }
+
+    public void freshResponseZanCount() {
+        getNewZanCount();
+        getNewResponseMeCount();
     }
 
     private void fetchUserInfo(String token) {
@@ -422,6 +428,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                             }
                             if (count > 0) {
                                 thumbUpItemView.setNewLogoText(String.valueOf(data.getCount()));
+                            } else {
+                                thumbUpItemView.setNewLogoText(null);
                             }
                         }
                     }
@@ -444,6 +452,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 call.enqueue(new CustomCallBack<NewCountBean>() {
                     @Override
                     public void onSuccess(NewCountBean data, String msg, int state) {
+                        Log.i(TAG, "onSuccess: data.getCount() " + data.getCount());
                         if (mActivity != null && !mActivity.isFinishing()) {
                             int count = 0;
                             try {
@@ -453,6 +462,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                             }
                             if (count > 0) {
                                 responseItemView.setNewLogoText(String.valueOf(data.getCount()));
+                            } else {
+                                responseItemView.setNewLogoText(null);
                             }
                         }
                     }
