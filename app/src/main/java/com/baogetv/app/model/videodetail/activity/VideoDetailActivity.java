@@ -52,7 +52,7 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.media.UMWeb;
+import com.umeng.socialize.media.UMVideo;
 import com.umeng.socialize.shareboard.ShareBoardConfig;
 import com.umeng.socialize.shareboard.SnsPlatform;
 import com.umeng.socialize.utils.ShareBoardlistener;
@@ -404,7 +404,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
         EventBus.getDefault().cancelEventDelivery(event);
         shareContent = new ShareContent();
         shareContent.mText = "1";
-        UMWeb web = new UMWeb(String.format(UrlConstance.SHARE_BASE_URL, videoDetailBean.getCode()));
+        UMVideo web = new UMVideo(String.format(UrlConstance.SHARE_BASE_URL, videoDetailBean.getCode()));
         web.setTitle(videoDetailBean.getTitle() + " | " + "豹哥健身 | 每日精彩健身视频");
         web.setThumb(new UMImage(this, videoDetailBean.getPic_url()));
         web.setDescription(videoDetailBean.getIntro());
