@@ -44,7 +44,7 @@ import static com.umeng.socialize.bean.SHARE_MEDIA.SINA;
 import static com.umeng.socialize.bean.SHARE_MEDIA.WEIXIN;
 
 public class LoginActivity extends BaseActivity
-        implements PasswordInputView.OnForgetClickListener, UMAuthListener {
+        implements PasswordInputView.OnForgetClickListener, UMAuthListener, PressImageView.OnClickBack {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private TitleInputView mobileNumView;
     private PasswordInputView passwordView;
@@ -138,26 +138,27 @@ public class LoginActivity extends BaseActivity
             }
         });
         wechatBtn = (PressImageView) findViewById(R.id.wechat_login);
-        wechatBtn.setOnClickBack(new PressImageView.OnClickBack() {
-            @Override
-            public void onClick(View view) {
-                wxLogin();
-            }
-        });
+        wechatBtn.setOnClickBack(this);
         sinaBtn = (PressImageView) findViewById(R.id.sina_login);
-        sinaBtn.setOnClickBack(new PressImageView.OnClickBack() {
-            @Override
-            public void onClick(View view) {
-                sinaLogin();
-            }
-        });
+        sinaBtn.setOnClickBack(this);
         qqBtn = (PressImageView) findViewById(R.id.qq_login);
-        qqBtn.setOnClickBack(new PressImageView.OnClickBack() {
-            @Override
-            public void onClick(View view) {
+        qqBtn.setOnClickBack(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        Log.i(TAG, "onClick: ");
+        switch (view.getId()) {
+            case R.id.wechat_login:
+                wxLogin();
+                break;
+            case R.id.qq_login:
                 qqLogin();
-            }
-        });
+                break;
+            case R.id.sina_login:
+                sinaLogin();
+                break;
+        }
     }
 
     private void tryLogin() {

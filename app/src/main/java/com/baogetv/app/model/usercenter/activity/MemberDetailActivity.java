@@ -107,7 +107,6 @@ public class MemberDetailActivity extends BaseTitleActivity {
                 @Override
                 public void onSuccess(UserDetailBean data, String msg, int state) {
                     userBean = data;
-                    LoginManager.updateDetailBean(MemberDetailActivity.this, data);
                     updateInfo();
                 }
 
