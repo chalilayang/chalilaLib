@@ -392,10 +392,12 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                             call.enqueue(new CustomCallBack<AddItemBean>() {
                                 @Override
                                 public void onSuccess(AddItemBean data, String msg, int state) {
+                                    Log.i(TAG, "addCache onSuccess: ");
                                 }
 
                                 @Override
                                 public void onFailed(String error, int state) {
+                                    Log.i(TAG, "addCache onFailed: ");
                                     showShortToast(error);
                                 }
                             });
@@ -421,7 +423,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
         Log.i(TAG, "handleShareEvent: ");
         EventBus.getDefault().cancelEventDelivery(event);
         shareContent = new ShareContent();
-        shareContent.mText = "1";
+        shareContent.mText = "";
         UMVideo web = new UMVideo(String.format(UrlConstance.SHARE_BASE_URL, videoDetailBean.getCode()));
         web.setTitle(videoDetailBean.getTitle() + " | " + "豹哥健身 | 每日精彩健身视频");
         web.setThumb(new UMImage(this, videoDetailBean.getPic_url()));
