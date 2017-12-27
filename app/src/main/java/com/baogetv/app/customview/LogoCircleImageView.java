@@ -50,7 +50,7 @@ public class LogoCircleImageView extends CircleImageView {
 
     public LogoCircleImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        rate = 0.3f;
+        rate = 0.36f;
         zero = context.getResources().getDrawable(R.mipmap.user_grade_zero_icon);
         one = context.getResources().getDrawable(R.mipmap.user_grade_one_icon);
         two = context.getResources().getDrawable(R.mipmap.user_grade_two_icon);
