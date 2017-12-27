@@ -37,7 +37,7 @@ public class BaoGeApplication extends Application {
         Log.i(TAG, "onCreate: ");
         RetrofitManager.init(this.getApplicationContext());
         PushAgent mPushAgent = PushAgent.getInstance(this);
-        mPushAgent.setDebugMode(true);
+        mPushAgent.setDebugMode(AppConstance.DEBUG);
         mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE);
         //注册推送服务，每次调用register方法都会回调该接口
         mPushAgent.register(new IUmengRegisterCallback() {
@@ -57,7 +57,7 @@ public class BaoGeApplication extends Application {
         });
 
         //mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_P
-        Config.DEBUG = true;
+        Config.DEBUG = AppConstance.DEBUG;
         QueuedWork.isUseThreadPool = false;
         UMShareAPI.get(this);
 

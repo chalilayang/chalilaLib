@@ -7,7 +7,7 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
  */
 
 public class AppConstance {
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
 
 
     public static int REQUEST_CODE_LOGIN_ACTIVITY = 1000;
