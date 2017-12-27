@@ -37,12 +37,18 @@ public final class DownloadManagerImpl implements DownloadManager, DownloadTaskI
     private final Config config;
     private long lastExecuteTime;
 
-    private DownloadManagerImpl(Context context, Config config) {
+    private DownloadManagerImpl(Context context, Config cig) {
         this.context = context;
-        if (config == null) {
-            this.config = new Config();
+        if (cig == null) {
+            config = new Config();
+            //set download quantity at the same time.
+            config.setDownloadThread(1);
+            //set each download info thread number
+            config.setEachDownloadThread(1);
+            config.setConnectTimeout(10000);
+            config.setReadTimeout(10000);
         } else {
-            this.config = config;
+            this.config = cig;
         }
 
         if (config.getDownloadDBController() == null) {

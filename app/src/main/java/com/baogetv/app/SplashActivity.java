@@ -33,18 +33,6 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
         String versionName = SystemUtil.getAppVersionName(getApplicationContext());
         ((TextView)findViewById(R.id.version_tv)).setText("版本号：" + versionName);
-        try {
-            Config config = new Config();
-            //set download quantity at the same time.
-            config.setDownloadThread(1);
-            //set each download info thread number
-            config.setEachDownloadThread(1);
-            config.setConnectTimeout(10000);
-            config.setReadTimeout(10000);
-            DownloadService.getDownloadManager(this.getApplicationContext(), config);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

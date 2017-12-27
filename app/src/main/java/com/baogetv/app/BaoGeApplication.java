@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.baogetv.app.constant.AppConstance;
+import com.baogetv.app.downloader.DownloadService;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.net.RetrofitManager;
 import com.umeng.message.IUmengRegisterCallback;
@@ -68,5 +69,17 @@ public class BaoGeApplication extends Application {
         StyleManager s = new StyleManager();
         s.Anim(false).repeatTime(0).contentSize(-1).intercept(true);
         LoadingDialog.initStyle(s);
+        try {
+            com.baogetv.app.downloader.config.Config config = new com.baogetv.app.downloader.config.Config();
+            //set download quantity at the same time.
+            config.setDownloadThread(1);
+            //set each download info thread number
+            config.setEachDownloadThread(1);
+            config.setConnectTimeout(10000);
+            config.setReadTimeout(10000);
+            DownloadService.getDownloadManager(getApplicationContext(), config);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
