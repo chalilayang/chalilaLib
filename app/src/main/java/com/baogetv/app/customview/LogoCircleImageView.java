@@ -17,6 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class LogoCircleImageView extends CircleImageView {
     private Drawable proLogo;
+    private Drawable zero;
     private Drawable one;
     private Drawable two;
     private Drawable three;
@@ -26,6 +27,7 @@ public class LogoCircleImageView extends CircleImageView {
     private Drawable seven;
     private Drawable eight;
     private Drawable nine;
+    private Drawable zeroYellow;
     private Drawable oneYellow;
     private Drawable twoYellow;
     private Drawable threeYellow;
@@ -35,6 +37,7 @@ public class LogoCircleImageView extends CircleImageView {
     private Drawable sevenYellow;
     private Drawable eightYellow;
     private Drawable nineYellow;
+    private float rate;
 
     private Paint circlePaint;
     public LogoCircleImageView(Context context) {
@@ -47,6 +50,8 @@ public class LogoCircleImageView extends CircleImageView {
 
     public LogoCircleImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        rate = 0.3f;
+        zero = context.getResources().getDrawable(R.mipmap.user_grade_zero_icon);
         one = context.getResources().getDrawable(R.mipmap.user_grade_one_icon);
         two = context.getResources().getDrawable(R.mipmap.user_grade_two_icon);
         three = context.getResources().getDrawable(R.mipmap.user_grade_three_icon);
@@ -56,11 +61,12 @@ public class LogoCircleImageView extends CircleImageView {
         seven = context.getResources().getDrawable(R.mipmap.user_grade_seven_icon);
         eight = context.getResources().getDrawable(R.mipmap.user_grade_eight_icon);
         nine = context.getResources().getDrawable(R.mipmap.user_grade_nine_icon);
-        oneYellow = context.getResources().getDrawable(R.mipmap.user_grade_one_yellow_icon);
-        twoYellow = context.getResources().getDrawable(R.mipmap.user_grade_two_yellow_icon);
-        threeYellow = context.getResources().getDrawable(R.mipmap.user_grade_three_yellow_icon);
-        fourYellow = context.getResources().getDrawable(R.mipmap.user_grade_four_yellow_icon);
-        fiveYellow = context.getResources().getDrawable(R.mipmap.user_grade_five_yellow_icon);
+        zeroYellow = context.getResources().getDrawable(R.mipmap.user_grade_zero_icon_yellow);
+        oneYellow = context.getResources().getDrawable(R.mipmap.user_grade_one_icon_yellow);
+        twoYellow = context.getResources().getDrawable(R.mipmap.user_grade_two_icon_yellow);
+        threeYellow = context.getResources().getDrawable(R.mipmap.user_grade_three_icon_yellow);
+        fourYellow = context.getResources().getDrawable(R.mipmap.user_grade_four_icon_yellow);
+        fiveYellow = context.getResources().getDrawable(R.mipmap.user_grade_five_icon_yellow);
         sixYellow = context.getResources().getDrawable(R.mipmap.user_grade_six_icon_yellow);
         sevenYellow = context.getResources().getDrawable(R.mipmap.user_grade_sevent_icon_yellow);
         eightYellow = context.getResources().getDrawable(R.mipmap.user_grade_eight_icon_yellow);
@@ -73,7 +79,14 @@ public class LogoCircleImageView extends CircleImageView {
     }
 
     public void setLogo(int grade, int level) {
+        level = level - 1;
         switch (level) {
+            case 0:
+                proLogo = zeroYellow;
+                if (grade == 3) {
+                    proLogo = zero;
+                }
+                break;
             case 1:
                 proLogo = oneYellow;
                 if (grade == 3) {
@@ -145,35 +158,66 @@ public class LogoCircleImageView extends CircleImageView {
         int grade = Integer.parseInt(gradeStr);
         int level = Integer.parseInt(levelStr);
         int result = -1;
+        level = level - 1;
         switch (level) {
+            case 0:
+                result = R.mipmap.user_grade_zero_icon_yellow;
+                if (grade == 3) {
+                    result = R.mipmap.user_grade_zero_icon;
+                }
+                break;
             case 1:
-                result = R.mipmap.user_grade_one_yellow_icon;
+                result = R.mipmap.user_grade_one_icon_yellow;
                 if (grade == 3) {
                     result = R.mipmap.user_grade_one_icon;
                 }
                 break;
             case 2:
-                result = R.mipmap.user_grade_two_yellow_icon;
+                result = R.mipmap.user_grade_two_icon_yellow;
                 if (grade == 3) {
                     result = R.mipmap.user_grade_two_icon;
                 }
                 break;
             case 3:
-                result = R.mipmap.user_grade_three_yellow_icon;
+                result = R.mipmap.user_grade_three_icon_yellow;
                 if (grade == 3) {
                     result = R.mipmap.user_grade_three_icon;
                 }
                 break;
             case 4:
-                result = R.mipmap.user_grade_four_yellow_icon;
+                result = R.mipmap.user_grade_four_icon_yellow;
                 if (grade == 3) {
                     result = R.mipmap.user_grade_four_icon;
                 }
                 break;
             case 5:
-                result = R.mipmap.user_grade_five_yellow_icon;
+                result = R.mipmap.user_grade_five_icon_yellow;
                 if (grade == 3) {
                     result = R.mipmap.user_grade_five_icon;
+                }
+                break;
+            case 6:
+                result = R.mipmap.user_grade_six_icon_yellow;
+                if (grade == 3) {
+                    result = R.mipmap.user_grade_six_icon;
+                }
+                break;
+            case 7:
+                result = R.mipmap.user_grade_sevent_icon_yellow;
+                if (grade == 3) {
+                    result = R.mipmap.user_grade_seven_icon;
+                }
+                break;
+            case 8:
+                result = R.mipmap.user_grade_eight_icon_yellow;
+                if (grade == 3) {
+                    result = R.mipmap.user_grade_eight_icon;
+                }
+                break;
+            case 9:
+                result = R.mipmap.user_grade_nine_icon_yellow;
+                if (grade == 3) {
+                    result = R.mipmap.user_grade_nine_icon;
                 }
                 break;
             default:
@@ -203,8 +247,11 @@ public class LogoCircleImageView extends CircleImageView {
             float cx = width / 2.0f;
             float cy = height / 2.0f;
             canvas.drawCircle(cx, cy, cx - circlePaint.getStrokeWidth()/2, circlePaint);
-            int left = width - proLogo.getIntrinsicWidth();
-            int top = height - proLogo.getIntrinsicHeight();
+            float widthDrawable = rate * width;
+            float heightDrawable
+                    = widthDrawable * proLogo.getIntrinsicHeight() / proLogo.getIntrinsicWidth();
+            int left = width - (int) widthDrawable;
+            int top = height - (int) heightDrawable;
             int right = width;
             int bottom = height;
             proLogo.setBounds(left, top, right, bottom);

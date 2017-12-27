@@ -51,16 +51,26 @@ public class MineLineItemView extends RelativeLayout {
 
     private ImageView levelIcon;
     private TextView levelTv;
+    private Drawable zero;
     private Drawable one;
     private Drawable two;
     private Drawable three;
     private Drawable four;
     private Drawable five;
+    private Drawable six;
+    private Drawable seven;
+    private Drawable eight;
+    private Drawable nine;
+    private Drawable zeroYellow;
     private Drawable oneYellow;
     private Drawable twoYellow;
     private Drawable threeYellow;
     private Drawable fourYellow;
     private Drawable fiveYellow;
+    private Drawable sixYellow;
+    private Drawable sevenYellow;
+    private Drawable eightYellow;
+    private Drawable nineYellow;
 
     public MineLineItemView(Context context) {
         this(context, null);
@@ -88,16 +98,26 @@ public class MineLineItemView extends RelativeLayout {
         size_30px = ScaleCalculator.getInstance(context).scaleWidth(30);
         size_110px = ScaleCalculator.getInstance(context).scaleWidth(110);
 
+        zero = context.getResources().getDrawable(R.mipmap.user_grade_zero_icon);
         one = context.getResources().getDrawable(R.mipmap.user_grade_one_icon);
         two = context.getResources().getDrawable(R.mipmap.user_grade_two_icon);
         three = context.getResources().getDrawable(R.mipmap.user_grade_three_icon);
         four = context.getResources().getDrawable(R.mipmap.user_grade_four_icon);
         five = context.getResources().getDrawable(R.mipmap.user_grade_five_icon);
-        oneYellow = context.getResources().getDrawable(R.mipmap.user_grade_one_yellow_icon);
-        twoYellow = context.getResources().getDrawable(R.mipmap.user_grade_two_yellow_icon);
-        threeYellow = context.getResources().getDrawable(R.mipmap.user_grade_three_yellow_icon);
-        fourYellow = context.getResources().getDrawable(R.mipmap.user_grade_four_yellow_icon);
-        fiveYellow = context.getResources().getDrawable(R.mipmap.user_grade_five_yellow_icon);
+        six = context.getResources().getDrawable(R.mipmap.user_grade_six_icon);
+        seven = context.getResources().getDrawable(R.mipmap.user_grade_seven_icon);
+        eight = context.getResources().getDrawable(R.mipmap.user_grade_eight_icon);
+        nine = context.getResources().getDrawable(R.mipmap.user_grade_nine_icon);
+        zeroYellow = context.getResources().getDrawable(R.mipmap.user_grade_zero_icon_yellow);
+        oneYellow = context.getResources().getDrawable(R.mipmap.user_grade_one_icon_yellow);
+        twoYellow = context.getResources().getDrawable(R.mipmap.user_grade_two_icon_yellow);
+        threeYellow = context.getResources().getDrawable(R.mipmap.user_grade_three_icon_yellow);
+        fourYellow = context.getResources().getDrawable(R.mipmap.user_grade_four_icon_yellow);
+        fiveYellow = context.getResources().getDrawable(R.mipmap.user_grade_five_icon_yellow);
+        sixYellow = context.getResources().getDrawable(R.mipmap.user_grade_six_icon_yellow);
+        sevenYellow = context.getResources().getDrawable(R.mipmap.user_grade_sevent_icon_yellow);
+        eightYellow = context.getResources().getDrawable(R.mipmap.user_grade_eight_icon_yellow);
+        nineYellow = context.getResources().getDrawable(R.mipmap.user_grade_nine_icon_yellow);
 
         textView = new ScaleTextView(context);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, 30);
@@ -238,7 +258,7 @@ public class MineLineItemView extends RelativeLayout {
     }
 
     public void setUserLever( UserDetailBean bean) {
-        int levelValue = 0;
+        int levelValue = -1;
         levelValue = Integer.parseInt(bean.getLevel_id());
         int grade = 0;
         try {
@@ -247,7 +267,14 @@ public class MineLineItemView extends RelativeLayout {
             e.printStackTrace();
         }
         Drawable proLogo;
+        levelValue = levelValue - 1;
         switch (levelValue) {
+            case 0:
+                proLogo = zeroYellow;
+                if (grade == 3) {
+                    proLogo = zero;
+                }
+                break;
             case 1:
                 proLogo = oneYellow;
                 if (grade == 3) {
@@ -276,6 +303,30 @@ public class MineLineItemView extends RelativeLayout {
                 proLogo = fiveYellow;
                 if (grade == 3) {
                     proLogo = five;
+                }
+                break;
+            case 6:
+                proLogo = sixYellow;
+                if (grade == 3) {
+                    proLogo = six;
+                }
+                break;
+            case 7:
+                proLogo = sevenYellow;
+                if (grade == 3) {
+                    proLogo = seven;
+                }
+                break;
+            case 8:
+                proLogo = eightYellow;
+                if (grade == 3) {
+                    proLogo = eight;
+                }
+                break;
+            case 9:
+                proLogo = nineYellow;
+                if (grade == 3) {
+                    proLogo = nine;
                 }
                 break;
             default:
