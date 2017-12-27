@@ -398,7 +398,7 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
                                 @Override
                                 public void onFailed(String error, int state) {
                                     Log.i(TAG, "addCache onFailed: ");
-                                    showShortToast(error);
+//                                    showShortToast(error);
                                 }
                             });
                         }
