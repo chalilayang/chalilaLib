@@ -311,14 +311,15 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         showOrHideImageSelectFragment(false);
         showLoadingDialog("上传中", "上传成功");
         long size = FileUtils.getFileSize(event.img);
-        if (size > 1024 * 1024 * 2) {
-            float rate = size * 1.0f / (1024 * 1024 * 2);
+        if (size > 1024 * 1024 * 1.5) {
+            float rate = size * 1.0f / (1024 * 1024 * 1.5f);
             int quality = 100;
             if (rate <= 2) {
-                quality = 50;
+                quality = 60;
             } else {
-                quality = 25;
+                quality = 30;
             }
+            Log.i(TAG, "onImageEvent: size " + size);
             new Compressor(this).setQuality(quality)
                     .compressToFileAsFlowable(new File(event.img))
                     .subscribeOn(Schedulers.io())
@@ -326,6 +327,8 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
                     .subscribe(new Consumer<File>() {
                         @Override
                         public void accept(File file) {
+                            long size = FileUtils.getFileSize(file.getAbsolutePath());
+                            Log.i(TAG, "onImageEvent: ccc size " + size);
                             uploadFile(file.getAbsolutePath());
                         }
                     }, new Consumer<Throwable>() {
