@@ -1,6 +1,7 @@
 package com.baogetv.app.model.usercenter.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -106,9 +107,21 @@ public class SettingActivity extends BaseTitleActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
+        Intent intent = null;
         switch (view.getId()) {
+            case R.id.give_score:
+                try{
+                    Uri uri = Uri.parse("market://details?id="+getPackageName());
+                    intent = new Intent(Intent.ACTION_VIEW,uri);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }catch(Exception e){
+                    showShortToast("您的手机没有安装任何Android应用市场");
+                    e.printStackTrace();
+                }
+                break;
             case R.id.advice:
-                Intent intent = new Intent(this, AdviceActivity.class);
+                intent = new Intent(this, AdviceActivity.class);
                 startActivityForResult(intent, AdviceActivity.REQUEST_CODE_ADVICE);
                 break;
             case R.id.cache_clear:
