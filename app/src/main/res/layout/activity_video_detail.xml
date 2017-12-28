@@ -35,7 +35,8 @@
         <com.chalilayang.scaleview.ScaleEditText
             android:id="@+id/comment_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:hint="@string/send_edit_hint"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/size_20"

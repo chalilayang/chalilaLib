@@ -36,7 +36,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if (TextUtils.isEmpty(LoginManager.getUserToken(getApplicationContext()))) {
             startVideoLoginActivity();

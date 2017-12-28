@@ -56,7 +56,7 @@ public class HomePageActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         NetWorkUtil.initNetworkType(getApplicationContext());
     }

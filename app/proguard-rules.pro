@@ -245,3 +245,16 @@
 -keep  public class java.util.List {
 	public <methods>;
 }
+
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+
+-keep public class com.baogetv.app.R$*{
+public static final int *;
+}
+
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}

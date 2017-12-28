@@ -13,6 +13,7 @@ import android.view.WindowManager;
 
 import com.baogetv.app.customview.CustomToastUtil;
 import com.bumptech.glide.Glide;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
@@ -44,7 +45,14 @@ public class BaseActivity extends AppCompatActivity {
     public boolean useEventBus() {
         return false;
     }
-
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
     @Override
     protected void onStop() {
         super.onStop();
