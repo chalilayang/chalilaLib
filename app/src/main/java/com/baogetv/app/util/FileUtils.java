@@ -166,4 +166,13 @@ public class FileUtils {
             file.delete();
         }
     }
+
+    public static long getFileSize(String path) {
+        if (FileUtils.isValid(path)) {
+            File file = new File(path);
+            return file.length();
+        } else {
+            return 0;
+        }
+    }
 }

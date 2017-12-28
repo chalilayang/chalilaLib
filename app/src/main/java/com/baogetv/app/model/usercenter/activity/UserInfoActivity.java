@@ -30,6 +30,7 @@ import com.baogetv.app.model.usercenter.fragment.ImageGetFragment;
 import com.baogetv.app.model.usercenter.fragment.SexSelectFragment;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
+import com.baogetv.app.util.FileUtils;
 import com.baogetv.app.util.TimeUtil;
 import com.bumptech.glide.Glide;
 
@@ -39,6 +40,10 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.File;
 import java.util.List;
 
+import id.zelory.compressor.Compressor;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -249,8 +254,8 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         }
     }
 
-    private void uploadFile(final String filePath) {
-        File file = new File(filePath);
+    private void uploadFile(String path) {
+        File file = new File(path);
         RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part imageBodyPart = MultipartBody.Part.createFormData("pic", file.getName(), imageBody);
         FileUploadService fileUploadService
@@ -305,7 +310,35 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         Log.i(TAG, "onImageEvent: " + event.img);
         showOrHideImageSelectFragment(false);
         showLoadingDialog("上传中", "上传成功");
-        uploadFile(event.img);
+        long size = FileUtils.getFileSize(event.img);
+        if (size > 1024 * 1024 * 2) {
+            float rate = size * 1.0f / (1024 * 1024 * 2);
+            int quality = 100;
+            if (rate <= 2) {
+                quality = 50;
+            } else {
+                quality = 25;
+            }
+            new Compressor(this).setQuality(quality)
+                    .compressToFileAsFlowable(new File(event.img))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<File>() {
+                        @Override
+                        public void accept(File file) {
+                            uploadFile(file.getAbsolutePath());
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) {
+                            throwable.printStackTrace();
+                            Log.i(TAG, "accept: " + throwable.getMessage());
+                        }
+                    });
+        } else {
+            uploadFile(event.img);
+        }
+
         Glide.with(this)
                 .fromFile()
                 .placeholder(R.mipmap.user_default_icon)
