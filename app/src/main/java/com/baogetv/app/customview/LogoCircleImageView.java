@@ -244,9 +244,11 @@ public class LogoCircleImageView extends CircleImageView {
         int width = canvas.getWidth();
         int height = canvas.getHeight();
         if (proLogo != null && width > 0 && height > 0) {
-            float cx = width / 2.0f;
-            float cy = height / 2.0f;
-            canvas.drawCircle(cx, cy, cx - circlePaint.getStrokeWidth()/2, circlePaint);
+            float imageSize = Math.min(width, height);
+            float cx = imageSize / 2.0f + (width-imageSize)/2;
+            float cy = imageSize / 2.0f + (height-imageSize)/2;
+            float circleRadius = imageSize / 2 - circlePaint.getStrokeWidth()/2;
+            canvas.drawCircle(cx, cy, circleRadius, circlePaint);
             float widthDrawable = rate * width;
             float heightDrawable
                     = widthDrawable * proLogo.getIntrinsicHeight() / proLogo.getIntrinsicWidth();
