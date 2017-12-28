@@ -151,7 +151,7 @@ public class FileUtils {
             return false;
         }
         File mFile = new File(file);
-        if (!mFile.exists() || mFile.length() <= 0) {
+        if (!mFile.exists()) {
             return false;
         }
         return true;

@@ -20,6 +20,7 @@ import com.baogetv.app.downloader.callback.DownloadManager;
 import com.baogetv.app.downloader.domain.DownloadInfo;
 import com.baogetv.app.model.usercenter.MyDownloadListener;
 import com.baogetv.app.util.FileUtil;
+import com.baogetv.app.util.FileUtils;
 import com.baogetv.app.util.StorageManager;
 import com.bumptech.glide.Glide;
 
@@ -182,6 +183,11 @@ public class CacheListAdapter extends RecyclerView.Adapter<CacheListAdapter.View
             if (downloadInfo.getStatus() == STATUS_REMOVED) {
                 try {
                     dbController.deleteMyDownloadInfo(downloadInfo.getUri().hashCode());
+                    String filePath = downloadInfo.getPath();
+                    if (FileUtils.isValid(filePath)) {
+                        File file = new File(filePath);
+                        file.delete();
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
