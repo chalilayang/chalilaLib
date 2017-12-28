@@ -4,7 +4,7 @@
     android:id="@+id/ll_gallery_pick_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gallery_blue"
+    android:background="@color/gallery_black"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical"

@@ -20,8 +20,8 @@ public class UCropUtils {
                 .withMaxResultSize(maxWidth, maxHeight);
 
         UCrop.Options options = new UCrop.Options();
-        options.setToolbarColor(mActivity.getResources().getColor(R.color.gallery_blue));
-        options.setStatusBarColor(mActivity.getResources().getColor(R.color.gallery_blue));
+        options.setToolbarColor(mActivity.getResources().getColor(R.color.gallery_black));
+        options.setStatusBarColor(mActivity.getResources().getColor(R.color.gallery_black));
         uCrop.withOptions(options);
 
 

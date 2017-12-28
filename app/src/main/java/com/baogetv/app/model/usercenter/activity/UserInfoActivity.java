@@ -78,7 +78,6 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         setTitleActivity(getString(R.string.user_info));
         userDetailBean = getIntent().getParcelableExtra(KEY_USER_DETAIL_BEAN);
         gradeBeanList = getIntent().getParcelableArrayListExtra(KEY_LEVEL_LIST);
-        Log.i(TAG, "onCreate: " + gradeBeanList.size());
         init();
     }
 

@@ -65,8 +65,7 @@ public class ImageGetFragment extends BaseFragment implements IHandlerCallBack {
                 .provider("com.baogetv.app.fileprovider")
                 .pathList(path)                         // 记录已选的图片
                 .multiSelect(false)                      // 是否多选   默认：false
-                .crop(false)                             // 快捷开启裁剪功能，仅当单选 或直接开启相机时有效
-                .crop(false, 1, 1, 500, 500)
+                .crop(true)                             // 快捷开启裁剪功能，仅当单选 或直接开启相机时有效
                 .isShowCamera(true)                     // 是否现实相机按钮  默认：false
                 .filePath("/Gallery/Pictures")          // 图片存放路径
                 .build();
