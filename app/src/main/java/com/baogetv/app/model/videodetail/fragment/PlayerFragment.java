@@ -78,7 +78,6 @@ public class PlayerFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         Log.i(TAG, "onResume: ");
-        showShortToast(NetWorkUtil.getNetworkStringByType(NetWorkUtil.getNetworkType(mActivity)));
         if (NetWorkUtil.isMobile(mActivity) && !SettingManager.allowCacheWithMobile(mActivity)) {
             if (dialog == null) {
                 CustomDialog.Builder builder = new CustomDialog.Builder(mActivity);
