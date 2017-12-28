@@ -9,8 +9,7 @@
         android:layout_width="@dimen/size_120"
         android:layout_height="@dimen/size_120"
         android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:background="@mipmap/user_default_icon"/>
+        android:layout_alignParentLeft="true"/>
     <com.chalilayang.scaleview.ScaleLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
