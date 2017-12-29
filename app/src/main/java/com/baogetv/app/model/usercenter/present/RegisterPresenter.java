@@ -14,6 +14,7 @@ import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.model.usercenter.contracts.RegisterContract;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class RegisterPresenter implements RegisterContract.Presenter {
                     if (data != null) {
                         LoginManager.updateDetailBean(mContext, data);
                         registerView.showSuccess(data);
+                        MobclickAgent.onProfileSignIn(data.getUser_id());
                     } else {
                         registerView.registerFailed("RegisterBean failed null ");
                     }

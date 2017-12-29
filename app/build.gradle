@@ -7,6 +7,7 @@ android {
     defaultConfig {
         applicationId "com.baogetv.app"
         minSdkVersion 16
+        //当xml中的targetSdkVersion=x(x<23)时候, 可以正常获取信息(相当于跳过了6.0权限检查)
         targetSdkVersion 22
         versionCode 100
         versionName "1.0.0"

@@ -7,6 +7,7 @@ import com.baogetv.app.constant.AppConstance;
 import com.baogetv.app.downloader.DownloadService;
 import com.baogetv.app.model.usercenter.LoginManager;
 import com.baogetv.app.net.RetrofitManager;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
@@ -66,6 +67,7 @@ public class BaoGeApplication extends Application {
         PlatformConfig.setQQZone(AppConstance.QQ_APP_ID, AppConstance.QQ_APP_KEY);
         PlatformConfig.setSinaWeibo(AppConstance.SINA_APP_ID, AppConstance.SINA_APP_SECRET, "https://www.baoge.tv/callback");
 
+        MobclickAgent.setScenarioType(getApplicationContext(), MobclickAgent.EScenarioType.E_UM_NORMAL);
         StyleManager s = new StyleManager();
         s.Anim(false).repeatTime(0).contentSize(-1).intercept(true);
         LoadingDialog.initStyle(s);

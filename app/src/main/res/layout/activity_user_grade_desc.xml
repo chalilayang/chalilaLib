@@ -52,6 +52,7 @@
                 android:text="@string/special_grade_desc"
                 android:layout_below="@+id/grade_list_view"
                 android:layout_marginTop="@dimen/size_60"
+                android:layout_marginBottom="@dimen/size_60"
                 android:layout_marginRight="@dimen/size_30"
                 android:layout_marginLeft="@dimen/size_30"
                 android:textColor="@color/reply_time"

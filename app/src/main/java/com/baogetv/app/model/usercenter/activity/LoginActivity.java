@@ -24,6 +24,7 @@ import com.baogetv.app.model.usercenter.customview.PasswordInputView;
 import com.baogetv.app.model.usercenter.customview.TitleInputView;
 import com.baogetv.app.net.CustomCallBack;
 import com.baogetv.app.net.RetrofitManager;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -199,6 +200,7 @@ public class LoginActivity extends BaseActivity
                         LoginManager.updateDetailBean(getApplicationContext(), data);
                         uploadHistory(getApplicationContext(), data);
                         loginSuccess(data);
+                        MobclickAgent.onProfileSignIn(data.getUser_id());
                     } else {
                         loginFailed("LoginBean null");
                     }
@@ -256,7 +258,7 @@ public class LoginActivity extends BaseActivity
         UMShareAPI.get(this).onSaveInstanceState(outState);
     }
 
-    private void loginPartner(String type, String openid, String name, String url) {
+    private void loginPartner(final String type, String openid, String name, String url) {
         UserApiService listService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         String deviceToken = LoginManager.getDeviceToken(getApplicationContext());
@@ -271,6 +273,7 @@ public class LoginActivity extends BaseActivity
                     if (data != null) {
                         LoginManager.updateDetailBean(getApplicationContext(), data);
                         uploadHistory(getApplicationContext(), data);
+                        MobclickAgent.onProfileSignIn(type, data.getUser_id());
                     } else {
                         loginFailed("LoginBean null");
                     }
