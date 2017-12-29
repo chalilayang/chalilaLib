@@ -16,7 +16,7 @@ public class HistoryBean {
      * username : aa
      * userpic :
      * id : 2
-     * add_time : 2017-11-07 23:41:44
+     * add_time :
      * pic : 1
      * userpicid : 0
      * is_collect : 1

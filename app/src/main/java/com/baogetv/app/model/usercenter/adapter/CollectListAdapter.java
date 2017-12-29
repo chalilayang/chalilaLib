@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.baogetv.app.BaseItemAdapter;
 import com.baogetv.app.ItemViewHolder;
 import com.baogetv.app.bean.CollectBean;
+import com.baogetv.app.util.TimeUtil;
 import com.bumptech.glide.Glide;
 import com.chalilayang.scaleview.ScaleCalculator;
 import com.baogetv.app.R;
@@ -96,7 +97,7 @@ public class CollectListAdapter
                 loadMoreTip.setText(hasMoreData?loadingMore : noMoreData);
             } else {
                 title.setText(data.getTitle());
-                updateTime.setText(data.getAdd_time());
+                updateTime.setText(TimeUtil.getTimeStateNew(data.getAdd_time()));
                 Glide.with(mContext).load(data.getPic_url()).placeholder(R.mipmap.pic_loding).crossFade().into(mImageView);
             }
         }

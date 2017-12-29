@@ -230,7 +230,7 @@ public class VideoInfoListAdapter extends RecyclerView.Adapter<RecyclerView.View
             }
             if (channelDetailBean != null) {
                 channelTitle.setText(channelDetailBean.getName());
-                channelUpdate.setText(channelDetailBean.getUpdate_time());
+                channelUpdate.setText(TimeUtil.getTimeStateNew(channelDetailBean.getUpdate_time()));
                 channelDesc.setText(channelDetailBean.getIntro());
                 Glide.with(mContext).load(channelDetailBean.getPic_url())
                         .dontAnimate()
