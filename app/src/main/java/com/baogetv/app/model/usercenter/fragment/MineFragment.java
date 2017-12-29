@@ -357,6 +357,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void fetchUserInfo(String token) {
+        if (mActivity.isFinishing()) {
+            return;
+        }
         UserApiService userApiService
                 = RetrofitManager.getInstance().createReq(UserApiService.class);
         Call<ResponseBean<UserDetailBean>> call
@@ -365,12 +368,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             call.enqueue(new CustomCallBack<UserDetailBean>() {
                 @Override
                 public void onSuccess(UserDetailBean data, String msg, int state) {
-                    detailBean = data;
-                    LoginManager.updateDetailBean(mActivity.getApplicationContext(), data);
-                    updateInfo();
-                    hasLoginView.setVisibility(View.VISIBLE);
+                    if (mActivity != null) {
+                        detailBean = data;
+                        LoginManager.updateDetailBean(mActivity.getApplicationContext(), data);
+                        updateInfo();
+                        hasLoginView.setVisibility(View.VISIBLE);
+                    }
                 }
-
                 @Override
                 public void onFailed(String error, int state) {
                     LoginManager.cleanUserToken(mActivity);
