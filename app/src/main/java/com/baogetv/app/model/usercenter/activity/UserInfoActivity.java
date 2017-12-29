@@ -308,7 +308,14 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
     public void onImageEvent(ImageSelectEvent event) {
         Log.i(TAG, "onImageEvent: " + event.img);
         showOrHideImageSelectFragment(false);
-        showLoadingDialog("上传中", "上传成功");
+        EventBus.getDefault().removeStickyEvent(ImageSelectEvent.class);
+        if (event.img == null) {
+            return;
+        }
+        if (!FileUtils.isValid(event.img)) {
+            showShortToast("文件不存在");
+            return;
+        }
         long size = FileUtils.getFileSize(event.img);
         if (size > 1024 * 1024 * 1.5) {
             float rate = size * 1.0f / (1024 * 1024 * 1.5f);
@@ -340,7 +347,6 @@ public class UserInfoActivity extends BaseTitleActivity implements View.OnClickL
         } else {
             uploadFile(event.img);
         }
-
         Glide.with(this)
                 .fromFile()
                 .placeholder(R.mipmap.user_default_icon)
