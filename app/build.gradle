@@ -20,7 +20,7 @@ android {
     }
     productFlavors {
 //        default_channel {}
-        "_yingyongbao" {}
+        "yingyongbao" {}
 //        "_1" {}
 //        "_2" {}
 //        "_3" {}

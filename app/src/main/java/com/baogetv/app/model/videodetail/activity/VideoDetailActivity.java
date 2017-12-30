@@ -289,6 +289,8 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
     public void handleCommentEvent(NeedCommentEvent event) {
         Log.i(TAG, "handleCommentEvent: ss ");
         if (replyEvent != null || commentEvent != null) {
+            //只要发出事件保证键盘能弹出响应
+            InputUtil.ShowKeyboard(editText);
             return;
         }
         commentEvent = event;
@@ -300,6 +302,8 @@ public class VideoDetailActivity extends BaseActivity implements ShareBoardliste
     @Subscribe
     public void handleReplyEvent(NeedReplyEvent event) {
         if (replyEvent != null || commentEvent != null) {
+            //只要发出事件保证键盘能弹出响应
+            InputUtil.ShowKeyboard(editText);
             return;
         }
         replyEvent = event;

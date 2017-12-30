@@ -97,6 +97,8 @@ public class CommentDetailActivity extends BaseTitleActivity {
     public void handleCommentEvent(NeedCommentDetailEvent event) {
         Log.i(TAG, "handleCommentEvent: dd ");
         if (replyEvent != null || commentEvent != null) {
+            //只要发出事件保证键盘能弹出响应
+            InputUtil.ShowKeyboard(editText);
             return;
         }
         commentEvent = event;
@@ -111,6 +113,8 @@ public class CommentDetailActivity extends BaseTitleActivity {
     @Subscribe
     public void handleReplyEvent(NeedReplyDetailEvent event) {
         if (replyEvent != null || commentEvent != null) {
+            //只要发出事件保证键盘能弹出响应
+            InputUtil.ShowKeyboard(editText);
             return;
         }
         Log.i(TAG, "handleReplyEvent: ");
